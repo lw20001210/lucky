@@ -1,0 +1,44 @@
+{
+  "id": "4044756",
+  "name": "chat",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "思环聊天app",
+  "glyphs": [
+    {
+      "icon_id": "34279452",
+      "name": "相机，拍照",
+      "font_class": "a-xiangjipaizhao",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "6333671",
+      "name": "相机",
+      "font_class": "xiangji",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "599914",
+      "name": "QQ",
+      "font_class": "qq",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "14055577",
+      "name": "微博",
+      "font_class": "weibo1",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "15933094",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    }
+  ]
+}
