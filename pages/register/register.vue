@@ -113,7 +113,7 @@
         let result = JSON.parse(res.data);
         console.log(result);
         if (result.code == 200) {
-          userPower.addUser(result.obj)
+          userPower.registeriUser(result.obj)
           showMsg(result.msg, 1000, 'loading')
           uni.reLaunch({
             url: '/pages/login/login'

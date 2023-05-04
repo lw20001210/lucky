@@ -37,6 +37,8 @@
 </template>
 <script setup>
 import { reactive } from 'vue';
+import { userStore } from '@/pinia/userInfo/userInfo.js';
+import { showMsg } from '../../utils/Toast';
   let userInfo=reactive({
     username:'',
     password:''
@@ -48,10 +50,15 @@ import { reactive } from 'vue';
    });
   }
   // 点击登录跳转到主页
+  const user=userStore();
 function goHome(){
-  uni.switchTab({
-  	url: '/pages/home/home'
-  })
+  if(userInfo.username==''||userInfo.password==''){
+    return showMsg('请完善登录信息')
+  }
+  user.loginUser(userInfo)
+  // uni.switchTab({
+  // 	url: '/pages/home/home'
+  // })
 }
 </script>
 
