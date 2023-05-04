@@ -4,8 +4,8 @@
       <text>欢迎来到思环!</text>
     </view>
     <view class="avatar">
-      <uni-file-picker :del-icon="false" limit="1" :imageStyles="imageStyles" file-mediatype="image" @select="select" disable-preview
-	return-type="object">
+      <uni-file-picker :del-icon="false" limit="1" :imageStyles="imageStyles" file-mediatype="image" @select="select"
+        disable-preview return-type="object">
         <view class="content">
           <text class="iconfont">&#xe614</text>
           <text>选择头像</text>
@@ -23,7 +23,7 @@
       </view>
       <view class="item">
         <label for="">密码</label>
-        <input type="text" name="" v-model="userInfo.password" id="" placeholder="请输入你的密码">
+        <input type="password" name="" v-model="userInfo.password" id="" placeholder="请输入你的密码">
       </view>
     </view>
     <!-- 按钮区域 -->
@@ -52,8 +52,8 @@
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
   import { showMsg } from '@/utils/Toast.js';
-  import {userStore} from '@/pinia/userInfo/userInfo.js';
-  const userPower=userStore()
+  import { userStore } from '@/pinia/userInfo/userInfo.js';
+  const userPower = userStore()
   // 注册用户的数据
   let userInfo = reactive({
     username: '',
@@ -70,13 +70,13 @@
     }
   })
   // 拿到所选头像后触发
-  function select(res:any){
-     userInfo.avatar = res.tempFilePaths[0]
+  function select(res : any) {
+    userInfo.avatar = res.tempFilePaths[0]
   }
   // 注册账号
   function addUser() {
     let passwordLimit = /^[a-zA-Z0-9_]{4,15}$/;
-    let usernameLimit = /^1[0-9]{10}$/;
+    let usernameLimit = /^[a-zA-Z0-9_]{4,}$/;
     if (userInfo.avatar == '') {
       return showMsg('你还未选择头像')
     } else if (userInfo.nickname == '') {
@@ -91,52 +91,59 @@
       } else if (!usernameLimit.test(userInfo.username)) {
         return showMsg('账号格式有误')
       } else {
-        uni.showLoading({
-        	title: '加载中'
-        });
-        userPower.addUser(userInfo)
-         // upload()//这种方法也可以
+        // userPower.addUser(userInfo)
+        upload()//这种方法也可以
       }
     }
   }
-    
-  // function upload(){
-  //   let param = {
-  //   	nickname: userInfo.nickname,
-  //   	username: userInfo.username,
-  //   	password:userInfo.password
-  //   }
-  //   uni.uploadFile({
-  //   			url: 'http://127.0.0.1:3000/user/add', //仅为示例，非真实的接口地址
-  //   			filePath: userInfo.avatar,
-  //   			name: 'avatar',
-  //   			formData: param,
-  //   			success: (res) => {
-  //   				console.log(res.data);
-  //   			}
-  //   		});
-  // }
+  // 注册导入图片
+  function upload() {
+    let param = {
+      nickname: userInfo.nickname,
+      username: userInfo.username,
+      password: userInfo.password
+    }
+    uni.uploadFile({
+      url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
+      filePath: userInfo.avatar,
+      name: 'avatar',
+      timeout:1000,
+      formData: param,
+      success: (res) => {
+        let result = JSON.parse(res.data);
+        console.log(result);
+        if (result.code == 200) {
+          userPower.addUser(result.obj)
+          showMsg(result.msg, 1000, 'loading')
+          uni.reLaunch({
+            url: '/pages/login/login'
+          })
+        } else {
+          showMsg(result.msg, 1000)
+        }
+      }, fail: () => {
+        showMsg('没开后台')
+      }
+    });
+  }
 </script>
-
 <style lang="less" scoped>
   .container {
     padding: 15rpx 80rpx 0;
 
     .welcome {
-      margin-top: 60rpx;
+      margin-top: 260rpx;
       text-align: center;
       font-family: KaiTi;
       font-size: 52rpx;
       font-weight: normal;
     }
-
     .avatar {
       margin-top: 50rpx;
 
       /deep/ .uni-file-picker__container {
         justify-content: center;
       }
-
       .content {
         color: white;
         font-size: 30rpx;

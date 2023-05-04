@@ -16,7 +16,7 @@
    </view>
    <text class="forget">忘记密码？</text>
    <view class="ability">
-    <button type="primary">登录</button>
+    <button type="primary" @click="goHome">登录</button>
   <button plain @click="goRegister">注册</button>
    </view>
    <view class="distance">
@@ -35,7 +35,6 @@
    </view>
   </view>
 </template>
-
 <script setup>
 import { reactive } from 'vue';
   let userInfo=reactive({
@@ -48,17 +47,22 @@ import { reactive } from 'vue';
    	url: '/pages/register/register'
    });
   }
+  // 点击登录跳转到主页
+function goHome(){
+  uni.switchTab({
+  	url: '/pages/home/home'
+  })
+}
 </script>
 
 <style scoped lang="less">
   .container{
   padding: 60rpx 80rpx 0;
    .welcome {
-     margin-top: 30rpx;
+     margin-top: 220rpx;
    	display: flex;
    	flex-direction: column;
    	text-align: center;
-   
    	.w1 {
    		font-family: FangSong;
    		font-size: 66rpx;
@@ -66,7 +70,6 @@ import { reactive } from 'vue';
    		color: #707070;
    		margin-bottom: 12rpx;
    	}
-   
    	.w2 {
    		font-family: FangSong;
    		font-size: 32rpx;

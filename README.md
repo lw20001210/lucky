@@ -55,6 +55,17 @@
 const BASE_URL = 'http://192.168.242.20:3000'
 ```
 
+## uni.showloading于Toast兼容性问题
+
+```js
+解决方法。把toast也加个定时器
+  setTimeout(() => {
+          showMsg('注册成功')
+        }, 500)
+```
+
+
+
 ## 待处理问题
 
 * 通过手机端上传的图片。无法通过得到是对象直接拿到图片

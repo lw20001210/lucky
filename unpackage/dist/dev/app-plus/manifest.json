@@ -17,6 +17,8 @@
     "url": ""
   },
   "permissions": {
+    "Camera": {},
+    "Barcode": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -34,7 +36,6 @@
     },
     "popGesture": "close",
     "launchwebview": {
-      "render": "always",
       "id": "1",
       "kernel": "WKWebview"
     },
@@ -114,6 +115,12 @@
       "enable": false
     },
     "allowsInlineMediaPlayback": true,
+    "safearea": {
+      "background": "#ffffff",
+      "bottom": {
+        "offset": "auto"
+      }
+    },
     "uni-app": {
       "control": "uni-v3",
       "vueVersion": "3",
@@ -127,6 +134,46 @@
       "webView": {
         "minUserAgentVersion": "49.0"
       }
+    },
+    "tabBar": {
+      "position": "bottom",
+      "color": "#7A7E83",
+      "selectedColor": "#2680EB",
+      "borderStyle": "rgba(0,0,0,0.4)",
+      "blurEffect": "none",
+      "fontSize": "10px",
+      "iconWidth": "24px",
+      "spacing": "3px",
+      "height": "50px",
+      "backgroundColor": "#ffffff",
+      "list": [
+        {
+          "pagePath": "pages/home/home",
+          "iconPath": "/static/images/home.png",
+          "selectedIconPath": "/static/images/select_home.png",
+          "text": "首页"
+        },
+        {
+          "pagePath": "pages/linkman/linkman",
+          "iconPath": "/static/images/linkman.png",
+          "selectedIconPath": "/static/images/select_linkman.png",
+          "text": "好友"
+        },
+        {
+          "pagePath": "pages/video/video",
+          "iconPath": "/static/images/video.png",
+          "selectedIconPath": "/static/images/select_video.png",
+          "text": "视频"
+        },
+        {
+          "pagePath": "pages/star/star",
+          "iconPath": "/static/images/star.png",
+          "selectedIconPath": "/static/images/select_star.png",
+          "text": "我的"
+        }
+      ],
+      "selectedIndex": 0,
+      "shown": true
     }
   },
   "launch_path": "__uniappview.html"

@@ -5,7 +5,7 @@ const request = (url,method,data) => {
 			url: BASE_URL + url,
 			method,
 			data,
-			timeout:5000,
+			timeout:3000,
 			header:{
 				authorization: uni.getStorageSync('userinfo').Token
 			},

@@ -38,7 +38,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$5 = {
+  const _sfc_main$9 = {
     __name: "login",
     setup(__props) {
       let userInfo = vue.reactive({
@@ -48,6 +48,11 @@ if (uni.restoreGlobal) {
       function goRegister() {
         uni.navigateTo({
           url: "/pages/register/register"
+        });
+      }
+      function goHome() {
+        uni.switchTab({
+          url: "/pages/home/home"
         });
       }
       return (_ctx, _cache) => {
@@ -92,7 +97,10 @@ if (uni.restoreGlobal) {
           ]),
           vue.createElementVNode("text", { class: "forget" }, "忘记密码？"),
           vue.createElementVNode("view", { class: "ability" }, [
-            vue.createElementVNode("button", { type: "primary" }, "登录"),
+            vue.createElementVNode("button", {
+              type: "primary",
+              onClick: goHome
+            }, "登录"),
             vue.createElementVNode("button", {
               plain: "",
               onClick: goRegister
@@ -116,7 +124,7 @@ if (uni.restoreGlobal) {
       };
     }
   };
-  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/login/login.vue"]]);
+  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/login/login.vue"]]);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -411,7 +419,7 @@ if (uni.restoreGlobal) {
     {
       path: "pages/login/login",
       style: {
-        navigationBarTitleText: "",
+        navigationBarTitleText: "login",
         enablePullDownRefresh: false,
         disableScroll: true
       }
@@ -419,23 +427,89 @@ if (uni.restoreGlobal) {
     {
       path: "pages/register/register",
       style: {
-        navigationBarTitleText: "",
+        navigationBarTitleText: "register",
         enablePullDownRefresh: false,
         disableScroll: true
+      }
+    },
+    {
+      path: "pages/home/home",
+      style: {
+        navigationBarTitleText: "home",
+        enablePullDownRefresh: false,
+        backgroundTextStyle: "dark",
+        onReachBottomDistance: 0,
+        navigationStyle: "default"
+      }
+    },
+    {
+      path: "pages/linkman/linkman",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
+      }
+    },
+    {
+      path: "pages/video/video",
+      style: {
+        enablePullDownRefresh: false,
+        navigationBarTitleText: "心语视频",
+        navigationStyle: "default"
+      }
+    },
+    {
+      path: "pages/star/star",
+      style: {
+        navigationBarTitleText: "",
+        enablePullDownRefresh: false
       }
     }
   ];
   const globalStyle = {
+    navigationStyle: "custom",
     navigationBarTextStyle: "black",
-    navigationBarTitleText: "uni-app",
+    navigationBarTitleText: "思环",
     navigationBarBackgroundColor: "#fff",
     backgroundColor: "#F8F8F8"
   };
   const uniIdRouter = {};
+  const tabBar = {
+    color: "#7A7E83",
+    selectedColor: "#2680EB",
+    borderStyle: "black",
+    backgroundColor: "#ffffff",
+    list: [
+      {
+        pagePath: "pages/home/home",
+        iconPath: "static/images/home.png",
+        selectedIconPath: "static/images/select_home.png",
+        text: "首页"
+      },
+      {
+        pagePath: "pages/linkman/linkman",
+        iconPath: "static/images/linkman.png",
+        selectedIconPath: "static/images/select_linkman.png",
+        text: "好友"
+      },
+      {
+        pagePath: "pages/video/video",
+        iconPath: "static/images/video.png",
+        selectedIconPath: "static/images/select_video.png",
+        text: "视频"
+      },
+      {
+        pagePath: "pages/star/star",
+        iconPath: "static/images/star.png",
+        selectedIconPath: "static/images/select_star.png",
+        text: "我的"
+      }
+    ]
+  };
   const t = {
     pages,
     globalStyle,
-    uniIdRouter
+    uniIdRouter,
+    tabBar
   };
   function n(e) {
     return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
@@ -3223,7 +3297,7 @@ if (uni.restoreGlobal) {
     }
     return filedata;
   };
-  const _sfc_main$4 = {
+  const _sfc_main$8 = {
     name: "uploadImage",
     emits: ["uploadFiles", "choose", "delFile"],
     props: {
@@ -3370,7 +3444,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker__container" }, [
       (vue.openBlock(true), vue.createElementBlock(
         vue.Fragment,
@@ -3463,8 +3537,8 @@ if (uni.restoreGlobal) {
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$2], ["__scopeId", "data-v-bdfc07e0"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
-  const _sfc_main$3 = {
+  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$6], ["__scopeId", "data-v-bdfc07e0"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
+  const _sfc_main$7 = {
     name: "uploadFile",
     emits: ["uploadFiles", "choose", "delFile"],
     props: {
@@ -3600,7 +3674,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker__files" }, [
       !$props.readonly ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -3682,8 +3756,8 @@ if (uni.restoreGlobal) {
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$1], ["__scopeId", "data-v-a54939c6"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
-  const _sfc_main$2 = {
+  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$5], ["__scopeId", "data-v-a54939c6"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
+  const _sfc_main$6 = {
     name: "uniFilePicker",
     components: {
       uploadImage,
@@ -4165,7 +4239,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_upload_image = vue.resolveComponent("upload-image");
     const _component_upload_file = vue.resolveComponent("upload-file");
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker" }, [
@@ -4235,8 +4309,8 @@ if (uni.restoreGlobal) {
       }, 8, ["readonly", "list-styles", "files-list", "showType", "delIcon", "onUploadFiles", "onChoose", "onDelFile"])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render], ["__scopeId", "data-v-6223573f"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
-  function showMsg(title = "获取数据失败", duration = 2e3, icon = "error") {
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$4], ["__scopeId", "data-v-6223573f"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
+  function showMsg(title = "获取数据失败", duration = 1500, icon = "error") {
     uni.showToast({
       title,
       duration,
@@ -5676,28 +5750,6 @@ This will fail in production.`);
     useStore.$id = id;
     return useStore;
   }
-  const BASE_URL = "http://192.168.242.20:3000";
-  const request = (url, method, data) => {
-    return new Promise((resolve, reject) => {
-      uni.request({
-        url: BASE_URL + url,
-        method,
-        data,
-        timeout: 5e3,
-        header: {
-          authorization: uni.getStorageSync("userinfo").Token
-        },
-        success: (res) => {
-          resolve(res);
-        },
-        fail: (err) => {
-          reject(err);
-        },
-        complete: () => {
-        }
-      });
-    });
-  };
   const userStore = defineStore("user", {
     state: () => ({
       username: "",
@@ -5708,29 +5760,14 @@ This will fail in production.`);
     getters: {},
     actions: {
       async addUser(obj) {
-        try {
-          const { data: res } = await request("/user/register", "POST", obj);
-          if (res.code === 500) {
-            return showMsg(res.msg);
-          } else if (res.code === 200) {
-            this.username = obj.username;
-            this.password = obj.password;
-            this.nickname = obj.nickname;
-            this.avatar = obj.avatar;
-            uni.hideToast();
-            showMsg(res.msg);
-            uni.reLaunch({
-              url: "/pages/login/login"
-            });
-          }
-        } catch (e) {
-          formatAppLog("log", "at pinia/userInfo/userInfo.js:33", "添加用户时出错：", e);
-          return showMsg("其他错误");
-        }
+        this.username = obj.username;
+        this.password = obj.password;
+        this.nickname = obj.nickname;
+        this.avatar = obj.avatar;
       }
     }
   });
-  const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
+  const _sfc_main$5 = /* @__PURE__ */ vue.defineComponent({
     __name: "register",
     setup(__props) {
       const userPower = userStore();
@@ -5752,7 +5789,7 @@ This will fail in production.`);
       }
       function addUser() {
         let passwordLimit = /^[a-zA-Z0-9_]{4,15}$/;
-        let usernameLimit = /^1[0-9]{10}$/;
+        let usernameLimit = /^[a-zA-Z0-9_]{4,}$/;
         if (userInfo.avatar == "") {
           return showMsg("你还未选择头像");
         } else if (userInfo.nickname == "") {
@@ -5767,12 +5804,40 @@ This will fail in production.`);
           } else if (!usernameLimit.test(userInfo.username)) {
             return showMsg("账号格式有误");
           } else {
-            uni.showLoading({
-              title: "加载中"
-            });
-            userPower.addUser(userInfo);
+            upload();
           }
         }
+      }
+      function upload() {
+        let param = {
+          nickname: userInfo.nickname,
+          username: userInfo.username,
+          password: userInfo.password
+        };
+        uni.uploadFile({
+          url: "http://192.168.242.20:3000/user/register",
+          //仅为示例，非真实的接口地址
+          filePath: userInfo.avatar,
+          name: "avatar",
+          timeout: 1e3,
+          formData: param,
+          success: (res) => {
+            let result = JSON.parse(res.data);
+            formatAppLog("log", "at pages/register/register.vue:114", result);
+            if (result.code == 200) {
+              userPower.addUser(result.obj);
+              showMsg(result.msg, 1e3, "loading");
+              uni.reLaunch({
+                url: "/pages/login/login"
+              });
+            } else {
+              showMsg(result.msg, 1e3);
+            }
+          },
+          fail: () => {
+            showMsg("没开后台");
+          }
+        });
       }
       return (_ctx, _cache) => {
         const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0);
@@ -5842,7 +5907,7 @@ This will fail in production.`);
               vue.withDirectives(vue.createElementVNode(
                 "input",
                 {
-                  type: "text",
+                  type: "password",
                   name: "",
                   "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => vue.unref(userInfo).password = $event),
                   id: "",
@@ -5883,9 +5948,33 @@ This will fail in production.`);
       };
     }
   });
-  const PagesRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/register/register.vue"]]);
+  const PagesRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/register/register.vue"]]);
+  const _sfc_main$4 = {};
+  function _sfc_render$3(_ctx, _cache) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, " 我是home页面 ");
+  }
+  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/home/home.vue"]]);
+  const _sfc_main$3 = {};
+  function _sfc_render$2(_ctx, _cache) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, " 我是linkman好友页面 ");
+  }
+  const PagesLinkmanLinkman = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/linkman/linkman.vue"]]);
+  const _sfc_main$2 = {};
+  function _sfc_render$1(_ctx, _cache) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, " 我是view视频页 ");
+  }
+  const PagesVideoVideo = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/video/video.vue"]]);
+  const _sfc_main$1 = {};
+  function _sfc_render(_ctx, _cache) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, " 我是star我的页面 ");
+  }
+  const PagesStarStar = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/star/star.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);
   __definePage("pages/register/register", PagesRegisterRegister);
+  __definePage("pages/home/home", PagesHomeHome);
+  __definePage("pages/linkman/linkman", PagesLinkmanLinkman);
+  __definePage("pages/video/video", PagesVideoVideo);
+  __definePage("pages/star/star", PagesStarStar);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");
