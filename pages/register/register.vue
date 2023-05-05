@@ -1,5 +1,7 @@
 <template>
   <view class="container">
+    <view class="back" @click='goBack'>
+    </view>
     <view class="welcome">
       <text>欢迎来到思环!</text>
     </view>
@@ -52,14 +54,12 @@
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
   import { showMsg } from '@/utils/Toast.js';
-  import { userStore } from '@/pinia/userInfo/userInfo.js';
-  const userPower = userStore()
   // 注册用户的数据
   let userInfo = reactive({
     username: '',
     password: '',
     nickname: '',
-    avatar: ''
+    avatar: 'https://aliyun_id_photo_bucket.oss.aliyuncs.com/default_handsome.jpg'
   })
   // 上传选中图片的样式数据
   let imageStyles = ref({
@@ -113,7 +113,6 @@
         let result = JSON.parse(res.data);
         console.log(result);
         if (result.code == 200) {
-          userPower.registeriUser(result.obj)
           showMsg(result.msg, 1000, 'loading')
           uni.reLaunch({
             url: '/pages/login/login'
@@ -126,11 +125,27 @@
       }
     });
   }
+  function goBack(){
+    uni.redirectTo({
+    	url: '/pages/login/login'
+    });
+  }
 </script>
 <style lang="less" scoped>
   .container {
     padding: 15rpx 80rpx 0;
-
+    position: relative;
+.back {
+    position: absolute;
+    top: 120rpx;
+    left: 80rpx;
+    display: block;
+    width: 30rpx;
+    height: 30rpx;
+   border-left: 3rpx solid black;
+   border-bottom: 3rpx solid black;
+   transform: rotate(45deg);
+  }
     .welcome {
       margin-top: 260rpx;
       text-align: center;

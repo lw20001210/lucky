@@ -276,6 +276,18 @@
 
 .container[data-v-bac4a35d] {
   padding: 0.46875rem 2.5rem 0;
+  position: relative;
+}
+.container .back[data-v-bac4a35d] {
+  position: absolute;
+  top: 3.75rem;
+  left: 2.5rem;
+  display: block;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  border-left: 0.09375rem solid black;
+  border-bottom: 0.09375rem solid black;
+  transform: rotate(45deg);
 }
 .container .welcome[data-v-bac4a35d] {
   margin-top: 8.125rem;

@@ -56,12 +56,8 @@ function goHome(){
     return showMsg('请完善登录信息')
   }
   user.loginUser(userInfo)
-  // uni.switchTab({
-  // 	url: '/pages/home/home'
-  // })
 }
 </script>
-
 <style scoped lang="less">
   .container{
   padding: 60rpx 80rpx 0;

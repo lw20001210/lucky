@@ -1,0 +1,76 @@
+.container.data-v-e4e4508d {
+  padding: 60rpx 80rpx 0;
+}
+.container .welcome.data-v-e4e4508d {
+  margin-top: 220rpx;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.container .welcome .w1.data-v-e4e4508d {
+  font-family: FangSong;
+  font-size: 66rpx;
+  font-weight: normal;
+  color: #707070;
+  margin-bottom: 12rpx;
+}
+.container .welcome .w2.data-v-e4e4508d {
+  font-family: FangSong;
+  font-size: 32rpx;
+  font-weight: normal;
+  font-stretch: normal;
+  color: #707070;
+}
+.container .userInfo.data-v-e4e4508d {
+  margin-top: 110rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .userInfo .password.data-v-e4e4508d,
+.container .userInfo .username.data-v-e4e4508d {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 580rpx;
+  height: 90rpx;
+  border-radius: 16rpx;
+  border: solid 2rpx #707070;
+  align-items: center;
+  padding-left: 15rpx;
+}
+.container .userInfo .password input.data-v-e4e4508d,
+.container .userInfo .username input.data-v-e4e4508d {
+  padding-left: 100rpx;
+}
+.container .userInfo .password .mark.data-v-e4e4508d,
+.container .userInfo .username .mark.data-v-e4e4508d {
+  position: absolute;
+  left: 10rpx;
+}
+.container .userInfo .password.data-v-e4e4508d {
+  margin-top: 30rpx;
+}
+.container .forget.data-v-e4e4508d {
+  color: #707070;
+  margin-left: 72%;
+  font-family: FangSong;
+}
+.container .ability.data-v-e4e4508d {
+  margin-top: 65rpx;
+}
+.container .ability button.data-v-e4e4508d {
+  border-radius: 90rpx;
+  margin: 15rpx 0;
+}
+.container .distance.data-v-e4e4508d {
+  margin: 65rpx 0;
+  text-align: center;
+}
+.container .other_login_icon.data-v-e4e4508d {
+  display: flex;
+  justify-content: space-around;
+}
+.container .other_login_icon .iconfont.data-v-e4e4508d {
+  font-size: 90rpx;
+}

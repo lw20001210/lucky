@@ -14,13 +14,6 @@ export const userStore = defineStore('user', {
   }),
   getters: {},
   actions: {
-    // 注册的时候拿到注册信息
-    registeriUser(obj) {
-      this.username = obj.username;
-      this.password = obj.password;
-      this.nickname = obj.nickname;
-      this.avatar = obj.avatar
-    },
     // 登录
     async loginUser(obj) {
       const {
@@ -34,6 +27,9 @@ export const userStore = defineStore('user', {
         this.username = obj.username;
         this.password = obj.password;
         console.log(res);
+        uni.switchTab({
+        	url: '/pages/home/home'
+        })
      }else{
        showMsg(res.msg)
      }

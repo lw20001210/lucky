@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "home",
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 0,
+  "navigationStyle": "default",
+  "usingComponents": {}
+}
