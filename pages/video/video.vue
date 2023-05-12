@@ -1,10 +1,13 @@
 <template>
-    <view class="container">
-我是view视频页
+  <view class="container">
+    <stastuBar></stastuBar>
+    <view class="header">
+      我是视频页
     </view>
+  </view>
 </template>
-
 <script setup>
+  import stastuBar from '@/component/statusBar.vue'
 </script>
 
 <style scoped lang="scss">

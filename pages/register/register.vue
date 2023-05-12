@@ -1,7 +1,8 @@
 <template>
-  <view class="container">
-    <view class="back" @click='goBack'>
-    </view>
+  <view class="container">  
+     <view class="back iconfont" @click='goBack'>
+       &#xe600
+     </view>
     <view class="welcome">
       <text>欢迎来到思环!</text>
     </view>
@@ -54,6 +55,7 @@
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
   import { showMsg } from '@/utils/Toast.js';
+  import {MD5} from "crypto-js";
   // 注册用户的数据
   let userInfo = reactive({
     username: '',
@@ -101,13 +103,14 @@
     let param = {
       nickname: userInfo.nickname,
       username: userInfo.username,
-      password: userInfo.password
+      // 我这里直接在前端进行加密了，因为传给后端的时候
+      password: MD5(userInfo.password).toString()
     }
     uni.uploadFile({
       url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
       filePath: userInfo.avatar,
       name: 'avatar',
-      timeout:1000,
+      timeout: 1000,
       formData: param,
       success: (res) => {
         let result = JSON.parse(res.data);
@@ -121,31 +124,21 @@
           showMsg(result.msg, 1000)
         }
       }, fail: () => {
-        showMsg('没开后台')
+        showMsg('注册失败')
       }
     });
   }
-  function goBack(){
-    uni.redirectTo({
-    	url: '/pages/login/login'
-    });
+  // 返回登录页
+  function goBack() {
+    uni.navigateTo({
+      url: '/pages/login/login',
+    })
   }
 </script>
 <style lang="less" scoped>
   .container {
     padding: 15rpx 80rpx 0;
     position: relative;
-.back {
-    position: absolute;
-    top: 120rpx;
-    left: 80rpx;
-    display: block;
-    width: 30rpx;
-    height: 30rpx;
-   border-left: 3rpx solid black;
-   border-bottom: 3rpx solid black;
-   transform: rotate(45deg);
-  }
     .welcome {
       margin-top: 260rpx;
       text-align: center;
@@ -153,12 +146,14 @@
       font-size: 52rpx;
       font-weight: normal;
     }
+
     .avatar {
       margin-top: 50rpx;
 
       /deep/ .uni-file-picker__container {
         justify-content: center;
       }
+
       .content {
         color: white;
         font-size: 30rpx;
@@ -260,6 +255,12 @@
       .iconfont {
         font-size: 90rpx;
       }
+    }
+    .back {
+      position: absolute;
+      top: 110rpx;
+      left: 80rpx;
+     font-size: 50rpx;
     }
   }
 </style>

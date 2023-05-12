@@ -18,7 +18,6 @@ const request = (url,method,data) => {
 			complete: () => {}
 		});
 	})
-	
 }
 
 export default request

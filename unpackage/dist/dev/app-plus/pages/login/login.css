@@ -1,5 +1,5 @@
 .container[data-v-e4e4508d] {
-  padding: 1.875rem 2.5rem 0;
+  padding: 1.875rem 2.1875rem 0;
 }
 .container .welcome[data-v-e4e4508d] {
   margin-top: 6.875rem;
@@ -37,7 +37,6 @@
   border-radius: 0.5rem;
   border: solid 0.0625rem #707070;
   align-items: center;
-  padding-left: 0.46875rem;
 }
 .container .userInfo .password uni-input[data-v-e4e4508d],
 .container .userInfo .username uni-input[data-v-e4e4508d] {

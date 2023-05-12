@@ -29,7 +29,7 @@
   ```
 
 
-## post请求解析数据问题
+## post请求解析form_data数据问题
 
 * 当我们用uni.uploadFile上传数据时，req.body为空对象，node无法解析数据，需要装个插件
 
@@ -64,9 +64,589 @@ const BASE_URL = 'http://192.168.242.20:3000'
         }, 500)
 ```
 
+## md5密码加密
+
+```js
+// 换md5加密算了，因为bcryptjs是单向加密的，无法解密
+const md5 = require("md5");
+
+// 拿着用户输入的密码,和数据库中存储的密码进行对比
+  // 如果对比的结果等于 false, 则证明用户输入的密码错误
+  function md5Hash(text) {
+    const hash = crypto.createHash("md5");
+    hash.update(text);
+    return hash.digest("hex");
+  }
+  if (md5Hash(userinfo.password) != userRes.password)
+    return res.send({
+      msg: "密码错误",
+    });
+```
+
+## 生成token
+
+* 这是一个配置文件
+
+  ```js
+  // 这是一个全局的配置文件
+
+  module.exports = {
+    // 加密和解密 Token 的秘钥
+    Keys: "lw",
+    // token 的有效期
+    times: "10h",
+    mainUrl: "http://192.168.242.20:3000",
+  };
+  ```
 
 
-## 待处理问题
 
-* 通过手机端上传的图片。无法通过得到是对象直接拿到图片
-* 一个端要不要可以具有同时登录其他账号的功能。
+* ```js
+  const jwt = require("jsonwebtoken");
+  // 生成 Token 字符串
+    // 调用 jwt.sign() 方法生成 JWT 字符串。并通过 token 属性发送给客户端
+    // //参数1：用户信息对象，参数2：加密的密匙，参数3：配置对象，可以配置当前token的有效期
+    const tokenStr = jwt.sign({ username: userinfo.username }, config.Keys, {
+      expiresIn: config.times,
+    });
+  ---------------------------------------------
+       res.send({
+      code: 200,
+      data: userRes.dataValues,
+      msg: "登录成功！",
+      token: "Bearer " + tokenStr, // 要发送给客户端的 token 字符串,因为请求头的那个authorization属性必须家：Bearer，我这里直接给你拼接好了
+    });
+  ```
+
+* ```js
+  main.js
+  const expressJWT = require("express-jwt");
+  // 定义 token 的解析中间件，并排除 以/user开头的相关路由
+  app.use(expressJWT({ secret: config.Keys }).unless({ path: [/^\/user/] }));
+  // 定义错误中间件，全局自动捕获错误
+  app.use((err, req, res, next) => {
+    if (err.name === "UnauthorizedError") return res.send("身份验证失败。");
+    res.send("服务器发生错误。");
+  });
+
+  ```
+
+## sequelize操作数据库
+
+### 基本使用
+
+* 1.安装
+
+  ```js
+  npm i sequelize mysql
+  npm install sequelize mysql2
+  ```
+
+* 2.连接数据库
+
+  ```js
+  const Sequelize = require("sequelize");
+  // 配置sequlize连接数据库
+  // 参数1：数据库名，参数2：用户名，参数3：密码。{参数1：数据库主机地址，参数2：数据库类型，参数3：是否打印日志}
+  const sequelize = new Sequelize("mychatapp", "root", "admin123", {
+    host: "127.0.0.1",
+    dialect: "mysql",
+    logging: false,
+  });
+
+  module.exports = sequelize;
+  ```
+
+* 3.定义数据模型
+
+  ```js
+  const Sequelize = require("sequelize");
+  const sequelize = require("../mysql/sequlize");
+
+  const UsersModel = sequelize.define(
+    "users",
+    {
+      id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      username: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+      },
+      password: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
+      nickname: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      avatar: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+        defaultValue: "D:新的开始Vue3项目\travelssrcassetsimghome", // 这里自行替换为默认图片的路径
+      },
+      sex: {
+        type: Sequelize.TINYINT,
+        defaultValue: 0,
+      },
+      email: {
+        type: Sequelize.STRING(50),
+        defaultValue: "",
+      },
+      phone: {
+        type: Sequelize.STRING(50),
+        defaultValue: "",
+      },
+      birthday: {
+        type: Sequelize.STRING(100),
+        defaultValue: "2021-12-31 23:59:59",
+      },
+      status: {
+        type: Sequelize.TINYINT,
+        defaultValue: 0,
+      },
+      createTime: {
+        type: Sequelize.STRING(100),
+        defaultValue: Date.now(),
+      },
+      signature: {
+        type: Sequelize.STRING(100),
+        defaultValue: "",
+      },
+    },
+    { timestamps: false }
+  );
+
+  module.exports = UsersModel;
+  ```
+
+* 创建表和导入数据表
+
+  ```js
+  const express = require("express");
+  const userRoute = require("./router/users");
+  const bodyParser = require("body-parser");
+  const app = express();
+  const cors = require("cors");
+  const config = require("./config");
+  const joi = require("@hapi/joi");
+  const expressJWT = require("express-jwt");
+
+  // 导入 Sequelize连接数据库 和模型定义
+  const sequelize = require("./mysql/sequlize");
+  const UserModel = require("./models/usersModel.js");
+
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(cors());
+
+  // 静态资源
+  app.use("/static", express.static("static"));
+
+  // 定义 token 的解析中间件，并排除 user 相关路由
+  app.use(expressJWT({ secret: config.Keys }).unless({ path: [/^\/user/] }));
+
+  // 定义错误中间件
+  app.use((err, req, res, next) => {
+    if (err instanceof joi.ValidationError) return res.send(err.message);
+    if (err.name === "UnauthorizedError") return res.send("身份验证失败。");
+    res.send("服务器发生错误。");
+  });
+
+  // 挂载路由
+  app.use("/user", userRoute);
+
+  // 连接数据库并同步数据表
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log("数据库连接成功。");
+      return sequelize.sync();
+    })
+    .then(() => {
+      console.log("数据表同步成功。");
+      app.listen(3000, () => {
+        console.log("应用程序已启动，访问地址: http://192.168.242.20:3000/user");
+      });
+    })
+    .catch((error) => {
+      console.error("数据库连接失败：", error);
+    });
+
+  ```
+
+### 操作数据库
+
+* 删除操作
+
+  ```js
+  //引入定义模型
+  const UserModel = require("./models/UserModel");
+  // 删除单个用户
+  UserModel.destroy({
+    where: { id: 1 },
+  })
+    .then(() => {
+      console.log("删除用户成功");
+    })
+    .catch((error) => {
+      console.error("删除用户失败", error);
+    });
+
+  // 删除多个用户
+  UserModel.destroy({
+    where: { type: "admin" },
+  })
+    .then(() => {
+      console.log("删除用户成功");
+    })
+    .catch((error) => {
+      console.error("删除用户失败", error);
+    });
+  ```
+
+* 查询操作
+
+  ```js
+  const UserModel = require("./models/UserModel");
+  // 查询单个用户
+  UserModel.findOne({ where: { id: 1 } })
+    .then((user) => {
+      console.log(user);
+    })
+    .catch((error) => {
+      console.error("查询用户失败", error);
+    });
+
+  // 查询多个用户
+  UserModel.findAll({ where: { type: "admin" } })
+    .then((users) => {
+      console.log(users);
+    })
+    .catch((error) => {
+      console.error("查询用户失败", error);
+    });
+
+  //查询整个用户表
+  UserModel.findAll()
+    .then(users => {
+      console.log(users);
+    })
+    .catch(error => {
+      console.error('查询用户表失败', error);
+    });
+  ```
+
+* 更新操作
+
+  ```js
+  const UserModel = require("./models/UserModel");
+  // 更新单个用户
+  UserModel.update(
+    { username: "newname", email: "newemail@example.com" },
+    {
+      where: { id: 1 },
+    }
+  )
+    .then(() => {
+      console.log("更新用户成功");
+    })
+    .catch((error) => {
+      console.error("更新用户失败", error);
+    });
+
+  // 更新多个用户
+  UserModel.update(
+    { type: "admin" },
+    {
+      where: { type: "user" },
+    }
+  )
+    .then(() => {
+      console.log("更新用户成功");
+    })
+    .catch((error) => {
+      console.error("更新用户失败", error);
+    });
+  ```
+
+* 插入操作
+
+  ```js
+   let result = await UsersModel.create({
+      nickname,
+      username,
+      sex,
+      phone,
+      email,
+      createTime,
+      birthday,
+      signature,
+      ...newObj,
+    });
+  ```
+
+  ​
+
+## 首页下拉框功能
+
+* template
+
+  ```vue
+     <view class="navBar">
+        <view class="left">
+          <view class="avatar">
+            <image class='img' :src="getLocal('avatar')"></image>
+          </view>
+          <view class="header_title">
+            <text class="header_logo">{{getLocal('nickname')}}</text>
+          </view>
+        </view>
+        <view class="right"><text class="iconfont size" @click="openPopup">&#xe615</text>
+        </view>
+        <!-- 下拉菜单 -->
+        <view class="header_downup" @click="close" :animation="animationData">
+          <view class="wrap">
+            <view class="downup_item" @click="goSearch">
+              <view class="iconfont">&#xe75c</view>
+              <text>添加好友</text>
+            </view>
+            <view class="downup_item">
+              <view class="iconfont">&#xe616</view>
+              <text>创建群聊</text>
+            </view>
+            <view class="downup_item">
+              <view class="iconfont">&#xe605</view>
+              <text>创建小组</text>
+            </view>
+            <view class="downup_item">
+              <view class="iconfont">&#xe8b5</view>
+              <text>扫一扫</text>
+            </view>
+          </view>
+        </view>
+      </view>
+  ```
+
+* js
+
+  ```js
+  let animationData = ref({}) //响应动画数据
+  let animation = ref(null); //创建动画对象
+  let isShow = ref(false); //判断下拉框
+   // 打开菜单
+    function openPopup() {
+      if (!animation.value) {
+        animation.value = uni.createAnimation({
+          duration: 200,
+          transformOrigin: 'top right',
+          timingFunction: 'ease',
+        });
+      }
+      const animationValue = animation.value;
+      if (isShow.value) {
+        animationValue.opacity(0).width(0).height(0).step();
+        isShow.value = false;
+      } else {
+        animationValue.opacity(1).width('300rpx').height('428rpx').step();
+        isShow.value = true;
+      }
+      animationData.value = animationValue.export();
+    }
+    // 关闭菜单
+    function close() {
+      if (!animation.value) return;
+      animation.value.opacity(0).width(0).height(0).step();
+      animationData.value = animation.value.export();
+      isShow.value = false;
+    }
+  ```
+
+* css
+
+  ```less
+   .navBar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+    .header_downup {
+        position: absolute;
+        top: 100rpx;
+        right: 21rpx;
+        z-index: 99;
+        background-color: #fff;
+        text-align: left;
+        padding-left: 40rpx;
+        box-sizing: border-box;
+        background-color: rgba(76, 76, 76);
+        width: 0;
+        height: 0;
+        opacity: 0;
+        // width: 300rpx;
+        // height: 428rpx;
+        // opacity: 1;
+        border-radius: 20rpx;
+        box-shadow: 10rpx 10rpx 40rpx #ccc;
+        overflow: hidden;
+
+        .wrap {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+        }
+
+        .downup_item {
+          display: flex;
+          align-items: center;
+          font-family: '华文楷体';
+          font-size: 32rpx;
+          font-weight: normal;
+          color: #fff;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          view {
+            font-size: 42rpx;
+          }
+
+          text {
+            margin-left: 10rpx;
+          }
+        }
+      }
+  ```
+
+
+## 首页列表展示功能
+
+```vue
+ <scroll-view class="scroll" scroll-y="true" :style="{height: wh+'px'}">  </scroll-view>
+```
+
+```js
+et wh=ref()
+  function getHeight() {
+    const val = uni.getSystemInfoSync()
+    // 要减去tabbar的高度
+    wh.value = val.windowHeight-50
+  }
+  onMounted(()=>{
+    getHeight()
+  })
+```
+
+```css
+全局样式
+/* 这个高度我们得手动去掉，否则纵向滚动做不了，它会撑开盒子高度导致两个滚动条 */
+  :deep(.uni-app--showtabbar uni-page-wrapper::after)
+  {
+    display: none !important;
+    height: 0 !important;
+  }
+  /* 隐藏滚动条 */
+  ::-webkit-scrollbar {
+      display: none;
+      width: 0 !important;
+      height: 0 !important;
+      -webkit-appearance: none;
+      background: transparent;
+      color: transparent;
+    }
+```
+
+## 组件传递字体图标解析失败
+
+* 父组件
+
+  ```js
+    let obj=ref([{
+      textFont:'icon-tianjiahaoyou1',
+      title:'好友申请',
+      bgColor:'rgb(255, 166, 102)'
+      
+    },{textFont:'icon-chuangjianqunliao',
+      title:'创建群聊',
+      bgColor:' rgb(61, 203, 242)'}])
+    这样传类名可以在子组件解析
+  ```
+
+  ```js
+   let obj=ref([{
+      textFont:'&#xe75c',
+      title:'好友申请',
+      bgColor:'rgb(255, 166, 102)'
+      
+    },{textFont:'&#xe75c',
+      title:'创建群聊',
+      bgColor:' rgb(61, 203, 242)'}])
+    这样传类名可以在子组件解析
+  ```
+
+> 上面第2种代码传值解析是无效的。可以直接写在模板上，但是不能传值和通过props传值渲染。
+
+* 子组件
+
+  ```vue
+   <view class="left" >
+        <view class="imgBg" :style="{backgroundColor:objData.bgColor}">
+          <view class="iconfont size" :class="objData.textFont"></view>
+        </view>
+        <text>{{objData.title}}</text>
+      </view>
+      <view class="right">
+        <view class="iconfont">&#xe62d</view>
+      </view>
+    </view>
+  </template>
+  <script setup>
+    const props = defineProps(['objData']);
+    console.log(props.objData);
+  </script>
+  ```
+
+  ```vue
+  <view class="left" >
+        <view class="imgBg" :style="{backgroundColor:objData.bgColor}">
+          <view class="iconfont size">{{objData.textFont}}</view>
+        </view>
+        <text>{{objData.title}}</text>
+      </view>
+      <view class="right">
+        <view class="iconfont">&#xe62d</view>
+      </view>
+    </view>
+  </template>
+  <script setup>
+    const props = defineProps(['objData']);
+    console.log(props.objData);
+  </script>
+  ```
+
+> 子组件的代码对应父组件的2组代码。第2种是解析不了的。
+
+## uniapp生命周期问题
+
+* 在vue3中，需要引入生命周期才能使用，否则报错
+
+  ```js
+  uni.navigateTo({
+    url: `/pages/login/login?username=${userPower.username}`
+   });
+  --------------------------------------------------------------------
+  import { onLoad } from "@dcloudio/uni-app"
+   // 退出登录到登录页或自动填充账号
+  onLoad((option)=>{
+    console.log(option);
+    userInfo.username=option.username
+  })
+  ```
+
+  ​

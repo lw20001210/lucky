@@ -6,6 +6,132 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "1151476",
+      "name": "相机",
+      "font_class": "xiangji1",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "12097774",
+      "name": "右箭头",
+      "font_class": "youjiantou",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "1638283",
+      "name": "右箭头",
+      "font_class": "youjiantou2",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "17816863",
+      "name": "左箭头",
+      "font_class": "zuojiantou",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "35480124",
+      "name": "左箭头-copy",
+      "font_class": "zuojiantou-copy",
+      "unicode": "eb44",
+      "unicode_decimal": 60228
+    },
+    {
+      "icon_id": "7316164",
+      "name": "首页_动态灰",
+      "font_class": "shouye_dongtaihui",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "830930",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "841002",
+      "name": "编辑",
+      "font_class": "icon6",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "3737505",
+      "name": "动态",
+      "font_class": "tubiaozhizuomoban-",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "5387730",
+      "name": "通知中心",
+      "font_class": "tongzhizhongxin",
+      "unicode": "eb43",
+      "unicode_decimal": 60227
+    },
+    {
+      "icon_id": "24810951",
+      "name": "动态",
+      "font_class": "dongtai",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "5202130",
+      "name": "二维码",
+      "font_class": "erweima",
+      "unicode": "e6e5",
+      "unicode_decimal": 59109
+    },
+    {
+      "icon_id": "2593625",
+      "name": "创建群聊",
+      "font_class": "chuangjianqunliao",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "4933412",
+      "name": "添加好友",
+      "font_class": "tianjiahaoyou1",
+      "unicode": "e75c",
+      "unicode_decimal": 59228
+    },
+    {
+      "icon_id": "11372685",
+      "name": "扫一扫",
+      "font_class": "saoyisao",
+      "unicode": "e8b5",
+      "unicode_decimal": 59573
+    },
+    {
+      "icon_id": "17334547",
+      "name": "增加小组",
+      "font_class": "zengjiaxiaozu",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "351760",
+      "name": "加号",
+      "font_class": "jiahao",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "4599467",
+      "name": "加号",
+      "font_class": "jiahao1",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
       "icon_id": "34279452",
       "name": "相机，拍照",
       "font_class": "a-xiangjipaizhao",

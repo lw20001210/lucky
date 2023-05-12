@@ -17,19 +17,25 @@
 					}
 		},
     {
+    	"path":"pages/editUser/editUser",
+    "style": {
+    				"navigationBarTitleText": "editUser",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
     	"path": "pages/home/home",
     	"style": {
-    		"navigationBarTitleText": "home",
     		"enablePullDownRefresh": false,
     		"backgroundTextStyle": "dark",
-    		"onReachBottomDistance": 0,
-        "navigationStyle": "default"
+    		"onReachBottomDistance": 0
     	}
     }, 
     {
 			"path": "pages/linkman/linkman",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "联系人",
 				"enablePullDownRefresh": false
 			}
 
@@ -38,11 +44,16 @@
 			"path": "pages/video/video",
 			"style": {
 				"enablePullDownRefresh": false,
-				"navigationBarTitleText": "心语视频",
-				"navigationStyle": "default"
+				"navigationBarTitleText": "心语视频"
 			}
 		}, {
 			"path": "pages/star/star",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/search/search",
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false

@@ -1,0 +1,197 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.status_bar[data-v-8caa3c28] {
+  height: var(--status-bar-height);
+  width: 100%;
+}
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.menuList[data-v-887da2a3] {
+  display: flex;
+  height: 3.125rem;
+  padding: 0 0.3125rem;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.78125rem 0;
+  background-color: white;
+}
+.menuList .left[data-v-887da2a3] {
+  display: flex;
+  align-items: center;
+  width: 7.8125rem;
+  justify-content: space-between;
+}
+.menuList .left .imgBg[data-v-887da2a3] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: 0.625rem;
+}
+.menuList .left .imgBg .size[data-v-887da2a3] {
+  font-size: 1.5rem;
+}
+.menuList .right .iconfont[data-v-887da2a3] {
+  font-size: 1.75rem;
+}
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.container[data-v-611ff4ad] {
+  padding: 0.46875rem 0.78125rem 0;
+  background-color: #3e6fac;
+  font-family: STKaiti;
+}
+.container .important[data-v-611ff4ad] {
+  background-color: #3e6fac;
+}
+.container .bg[data-v-611ff4ad] {
+  width: 100%;
+  height: 11.1875rem;
+  background: url("../../static/images/bg.png") no-repeat;
+  background-size: cover;
+}
+.container .title[data-v-611ff4ad] {
+  text-align: center;
+  margin: 0.375rem 0 0.6875rem;
+}
+.container .menuList[data-v-611ff4ad] {
+  display: flex;
+  height: 3.5rem;
+  padding: 0 0.3125rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6.25rem;
+}
+.container .menuList .left[data-v-611ff4ad] {
+  display: flex;
+  align-items: center;
+  width: 18.75rem;
+}
+.container .menuList .left .imgBg[data-v-611ff4ad] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #3e6fac;
+  border-radius: 0.46875rem;
+  border: 0;
+}
+.container .menuList .left .imgBg uni-image[data-v-611ff4ad] {
+  width: 100%;
+  height: 100%;
+}
+.container .menuList .left .imgBg .size[data-v-611ff4ad] {
+  font-size: 1.5rem;
+}
+.container .menuList .left .describe[data-v-611ff4ad] {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.9375rem;
+  color: #fff;
+  z-index: 99;
+  width: 9.375rem;
+  justify-content: space-around;
+}
+.container .menuList .left .describe .username[data-v-611ff4ad] {
+  font-size: 0.8125rem;
+  /* 块级元素;  也可以是 inline-block */
+  display: block;
+  /* 设置超出内容隐藏 */
+  overflow: hidden;
+  /* 设置文本超出内容隐藏 */
+  text-overflow: ellipsis;
+  /*  溢出不换行 */
+  white-space: nowrap;
+}
+.container .menuList .right .iconfont[data-v-611ff4ad] {
+  font-size: 1.75rem;
+}
+.content[data-v-611ff4ad] {
+  font-family: STKaiti;
+}
+.content .divide[data-v-611ff4ad] {
+  height: 0.625rem;
+  background-color: #f2f2f2;
+}
+.menuList[data-v-887da2a3][data-v-611ff4ad] {
+  padding: 0 0.9375rem;
+}
+[data-v-611ff4ad] .uni-modal__bd {
+  color: #6C6C6C;
+  font-size: 0.875rem;
+}
+[data-v-611ff4ad] .uni-modal__title {
+  font-size: 1rem;
+  color: #999999;
+}

@@ -6,9 +6,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('static/iconfont/font/iconfont.woff2?t=1682753323656') format('woff2'),
-       url('static/iconfont/font/iconfont.woff?t=1682753323656') format('woff'),
-       url('static/iconfont/font/iconfont.ttf?t=1682753323656') format('truetype');
+       url('static/iconfont/font/iconfont.woff2?t=1683875567901') format('woff2'),
+       url('static/iconfont/font/iconfont.woff?t=1683875567901') format('woff'),
+       url('static/iconfont/font/iconfont.ttf?t=1683875567901') format('truetype');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -16,6 +16,60 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-xiangji1:before {
+  content: "\e634";
+}
+.icon-youjiantou:before {
+  content: "\e68c";
+}
+.icon-youjiantou2:before {
+  content: "\e612";
+}
+.icon-zuojiantou:before {
+  content: "\e600";
+}
+.icon-zuojiantou-copy:before {
+  content: "\eb44";
+}
+.icon-shouye_dongtaihui:before {
+  content: "\e606";
+}
+.icon-tuichu:before {
+  content: "\e636";
+}
+.icon-icon6:before {
+  content: "\e66d";
+}
+.icon-tubiaozhizuomoban-:before {
+  content: "\e60f";
+}
+.icon-tongzhizhongxin:before {
+  content: "\eb43";
+}
+.icon-dongtai:before {
+  content: "\e621";
+}
+.icon-erweima:before {
+  content: "\e6e5";
+}
+.icon-chuangjianqunliao:before {
+  content: "\e616";
+}
+.icon-tianjiahaoyou1:before {
+  content: "\e75c";
+}
+.icon-saoyisao:before {
+  content: "\e8b5";
+}
+.icon-zengjiaxiaozu:before {
+  content: "\e605";
+}
+.icon-jiahao:before {
+  content: "\e615";
+}
+.icon-jiahao1:before {
+  content: "\e62f";
 }
 .icon-a-xiangjipaizhao:before {
   content: "\e61a";
@@ -34,4 +88,21 @@
 }
 * {
     touch-action: pan-y;
+    overflow-x: hidden;
 }
+  /* 这个高度我们得手动去掉，否则纵向滚动做不了，它会撑开盒子高度导致两个滚动条 */
+ .uni-app--showtabbar uni-page-wrapper::after
+  {
+    display: none !important;
+    height: 0 !important;
+}
+  /* 隐藏滚动条 */
+::-webkit-scrollbar {
+      display: none;
+      width: 0 !important;
+      height: 0 !important;
+      -webkit-appearance: none;
+      background: transparent;
+      color: transparent;
+}
+    
