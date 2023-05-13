@@ -649,4 +649,85 @@ et wh=ref()
   })
   ```
 
+
+## 处理自动登录问题
+
+* 需求：登录后会获取一个token，然后我注销账号和退出登录都会删掉这个token。我现在是要在有token的时候我都会自动进入主页home，否则进入登录页
+* bug：电脑上是没问题的。但是手机上在注册页上传头像的时候由于是没有token的，我开始是直接根据是否有token判断要不要自动登录，所以我点击在注册页它又会直接跳回来到登录页。
+
+```js
+onShow: function(options) {
+      /*  // 这里如果这样写。那么在手机上将一选中注册头像就会跳转到登录页;
+        // console.log(options);
+        if (getLocal('token')) {
+          uni.switchTab({
+            url: '/pages/home/home'
+          })
+        } else {
+          uni.redirectTo({
+            url: "/pages/login/login",
+          });
+        }
+```
+
+* 后面我通过页面生命周期判断，onLoad,onHide,onUpload。结果还是没用。原因是我们手机在选择头像时会进入相册和拍摄界面。而我是通过onload的时候存储setLoad。onHide或者onUploadremoveLocal的。所以当外面进入特殊界面的时候相当于reMovelocal移除了判断依据所以还是会直接跳转到login页面导致还没填其他注册信息。
+* 解决方法1：我依旧在onLoad里面存储。但是移除我在点击注册按钮后再移除，这样就避免了进入特殊页面这个问题。
+
+```js
+onLoad(() => {
+    console.log('onload');
+    setLocal('login',true)
+  })
+------------------------------------------   uni.uploadFile({
+          url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
+          filePath: userInfo.avatar,
+          name: 'avatar',
+          timeout: 1000,
+          formData: param,
+          success: (res) => {
+            let result = JSON.parse(res.data);
+            console.log(result);
+            if (result.code == 200) {
+              showMsg(result.msg, 1000, 'loading')
+              uni.reLaunch({
+                url: '/pages/login/login'
+              })
+               removeLocal('login')
+            } else {
+              showMsg(result.msg, 1000)
+            }
+```
+
+* app.vue
+
+  ```js
+     onShow: function(options) {
+           if (getLocal('login')) {
+          console.log('防止手机上选择头像的时候触发下面代码直接进入到登录页');
+        } else if (getLocal('token')) {
+          uni.switchTab({
+           url: '/pages/home/home'
+          })
+        } else {
+          uni.redirectTo({
+            url: "/pages/login/login",
+          });
+        }
+     }
+  ```
+
+
+* 解决方法2==上面的优化==
+
+  ```js
+  直接判断一个就好，方法1太蠢了。 
+  onShow: function(options) {
+        if (getLocal('token')) {
+          uni.switchTab({
+           url: '/pages/home/home'
+          })
+       }
+   }
+  ```
+
   ​

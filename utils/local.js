@@ -13,3 +13,11 @@ export function getLocal(keys) {
       return value
   }
 }
+export function removeLocal(keys) {
+ uni.removeStorage({
+ 	key: keys,
+ 	success: function (res) {
+ 		console.log('success');
+ 	}
+ });
+}

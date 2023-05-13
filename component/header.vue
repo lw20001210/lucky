@@ -21,8 +21,6 @@
     });
   }
   const props = defineProps(['obj'])
-  
-  console.log(props.obj)
 </script>
 
 <style scoped lang="scss">

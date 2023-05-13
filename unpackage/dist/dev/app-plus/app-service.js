@@ -1517,6 +1517,14 @@ This will fail in production.`);
       return value;
     }
   }
+  function removeLocal(keys) {
+    uni.removeStorage({
+      key: keys,
+      success: function(res) {
+        formatAppLog("log", "at utils/local.js:20", "success");
+      }
+    });
+  }
   const BASE_URL = "http://192.168.242.20:3000";
   const request = (url, method, data) => {
     return new Promise((resolve, reject) => {
@@ -1524,14 +1532,15 @@ This will fail in production.`);
         url: BASE_URL + url,
         method,
         data,
-        timeout: 3e3,
+        timeout: 2e3,
         header: {
-          authorization: uni.getStorageSync("userinfo").Token
+          authorization: getLocal("token") ? getLocal("token") : ""
         },
         success: (res) => {
           resolve(res);
         },
         fail: (err) => {
+          showMsg("请求失败");
           reject(err);
         },
         complete: () => {
@@ -1541,13 +1550,22 @@ This will fail in production.`);
   };
   const userStore = defineStore("user", {
     state: () => ({
-      username: "",
+      username: getLocal("username") ? getLocal("username") : "",
       password: "",
       nickname: getLocal("nickname") ? getLocal("nickname") : "",
       avatar: getLocal("avatar") ? getLocal("avatar") : ""
     }),
     getters: {},
     actions: {
+      getData(obj) {
+        this.username = obj.username;
+        setLocal("username", obj.username);
+        this.password = obj.password;
+        setLocal("nickname", obj.nickname);
+        this.nickname = obj.nickname;
+        setLocal("avatar", obj.avatar);
+        this.avatar = obj.avatar;
+      },
       // 登录
       async loginUser(obj) {
         const {
@@ -1558,21 +1576,30 @@ This will fail in production.`);
         } else if (res.code == 200) {
           showMsg(res.msg, 1e3, "loading");
           this.getData(res.data);
-          formatAppLog("log", "at pinia/userInfo/userInfo.js:28", res);
+          formatAppLog("log", "at pinia/userInfo/userInfo.js:42", res);
+          setLocal("token", res.token);
           uni.switchTab({
             url: "/pages/home/home"
           });
-        } else {
-          showMsg(res.msg);
         }
       },
-      getData(obj) {
-        this.username = obj.username;
-        this.password = obj.password;
-        setLocal("nickname", obj.nickname);
-        this.nickname = obj.nickname;
-        setLocal("avatar", obj.avatar);
-        this.avatar = obj.avatar;
+      // 注销用户
+      async removeUser() {
+        let {
+          data: res
+        } = await request("/user/delete", "delete", {
+          username: this.username
+        });
+        formatAppLog("log", "at pinia/userInfo/userInfo.js:57", res);
+        if (res.code == "200") {
+          showMsg(res.msg, 1500, "loading");
+          uni.reLaunch({
+            url: "/pages/login/login"
+          });
+          removeLocal("token");
+        } else {
+          return showMsg("注销账号失败");
+        }
       }
     }
   });
@@ -11732,6 +11759,10 @@ This will fail in production.`);
           "radius": "50%"
         }
       });
+      onLoad(() => {
+        formatAppLog("log", "at pages/register/register.vue:76", "onload");
+        setLocal("login", true);
+      });
       function select(res) {
         userInfo.avatar = res.tempFilePaths[0];
       }
@@ -11772,12 +11803,13 @@ This will fail in production.`);
           formData: param,
           success: (res) => {
             let result = JSON.parse(res.data);
-            formatAppLog("log", "at pages/register/register.vue:117", result);
+            formatAppLog("log", "at pages/register/register.vue:126", result);
             if (result.code == 200) {
               showMsg(result.msg, 1e3, "loading");
               uni.reLaunch({
                 url: "/pages/login/login"
               });
+              removeLocal("login");
             } else {
               showMsg(result.msg, 1e3);
             }
@@ -11917,13 +11949,11 @@ This will fail in production.`);
     __name: "header",
     props: ["obj"],
     setup(__props) {
-      const props = __props;
       function goBack() {
         uni.switchTab({
           url: "/pages/star/star"
         });
       }
-      formatAppLog("log", "at component/header.vue:25", props.obj);
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock(
           vue.Fragment,
@@ -11978,7 +12008,14 @@ This will fail in production.`);
         title: "账号设置"
       });
       function Warn() {
-        showMsg("该功能未开发");
+        showMsg("该功能尚未开发");
+      }
+      const powerStore = userStore();
+      const {
+        nickname
+      } = storeToRefs(powerStore);
+      function removeUser() {
+        powerStore.removeUser();
       }
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock(
@@ -12005,7 +12042,13 @@ This will fail in production.`);
                 vue.createElementVNode("view", { class: "content" }, [
                   vue.createElementVNode("view", { class: "describe" }, " 昵称 "),
                   vue.createElementVNode("view", { class: "detail iconfont" }, [
-                    vue.createElementVNode("view", { class: "default" }),
+                    vue.createElementVNode(
+                      "view",
+                      { class: "default" },
+                      vue.toDisplayString(vue.unref(nickname)),
+                      1
+                      /* TEXT */
+                    ),
                     vue.createElementVNode("text", null, "")
                   ])
                 ]),
@@ -12064,14 +12107,10 @@ This will fail in production.`);
             vue.createElementVNode("view", { class: "divide" }),
             vue.createElementVNode("view", { class: "two" }, [
               vue.createElementVNode("view", { class: "list" }, [
-                vue.createElementVNode("view", { class: "content" }, [
-                  vue.createElementVNode("view", { class: "describe" }, " 退出登录 "),
-                  vue.createElementVNode("view", { class: "detail iconfont" }, [
-                    vue.createElementVNode("view", { class: "default" }),
-                    vue.createElementVNode("text", null, "")
-                  ])
-                ]),
-                vue.createElementVNode("view", { class: "content" }, [
+                vue.createElementVNode("view", {
+                  class: "content",
+                  onClick: removeUser
+                }, [
                   vue.createElementVNode("view", { class: "describe" }, " 注销账号 "),
                   vue.createElementVNode("view", { class: "detail iconfont" }, [
                     vue.createElementVNode("view", { class: "default" }),
@@ -14373,14 +14412,15 @@ This will fail in production.`);
                 if (res.confirm) {
                   showMsg("退出登录中", 1e3, "loading");
                   setTimeout(() => {
-                    uni.navigateTo({
+                    uni.reLaunch({
                       url: `/pages/login/login?username=${userPower.username}`,
                       animationType: "pop-in",
                       animationDuration: 200
                     });
                   }, 500);
+                  removeLocal("token");
                 } else if (res.cancel) {
-                  formatAppLog("log", "at pages/star/star.vue:95", "用户点击取消");
+                  formatAppLog("log", "at pages/star/star.vue:97", "用户点击取消");
                 }
               }
             });
@@ -14435,7 +14475,7 @@ This will fail in production.`);
                     [
                       vue.createVNode(featureItem, {
                         onClick: ($event) => ability(item.title),
-                        class: "Itmes",
+                        class: "itmes",
                         objData: item
                       }, null, 8, ["onClick", "objData"]),
                       i2 % 2 != 1 ? (vue.openBlock(), vue.createElementBlock("view", {
@@ -14495,14 +14535,24 @@ This will fail in production.`);
   __definePage("pages/star/star", PagesStarStar);
   __definePage("pages/search/search", PagesSearchSearch);
   const _sfc_main = {
-    onLaunch: function() {
-      formatAppLog("log", "at App.vue:4", "App Launch");
+    onLaunch: function(options) {
+      formatAppLog("log", "at App.vue:7", "App Launch");
     },
-    onShow: function() {
-      formatAppLog("log", "at App.vue:7", "App Show");
+    onShow: function(options) {
+      if (getLocal("login")) {
+        formatAppLog("log", "at App.vue:36", "防止手机上选择头像的时候触发下面代码直接进入到登录页");
+      } else if (getLocal("token")) {
+        uni.switchTab({
+          url: "/pages/home/home"
+        });
+      } else {
+        uni.redirectTo({
+          url: "/pages/login/login"
+        });
+      }
     },
     onHide: function() {
-      formatAppLog("log", "at App.vue:10", "App Hide");
+      formatAppLog("log", "at App.vue:53", "App Hide");
     }
   };
   const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/luckly/App.vue"]]);

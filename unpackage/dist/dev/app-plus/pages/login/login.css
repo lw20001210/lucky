@@ -29,13 +29,14 @@
 }
 .container .userInfo .password[data-v-e4e4508d],
 .container .userInfo .username[data-v-e4e4508d] {
+  box-sizing: border-box;
   position: relative;
   display: flex;
   flex-direction: row;
-  width: 18.125rem;
+  width: 100%;
   height: 2.8125rem;
   border-radius: 0.5rem;
-  border: solid 0.0625rem #707070;
+  border: 0.0625rem solid #707070;
   align-items: center;
 }
 .container .userInfo .password uni-input[data-v-e4e4508d],

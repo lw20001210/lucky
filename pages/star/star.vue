@@ -32,6 +32,7 @@
 <script setup>
   import stastuBar from '@/component/statusBar.vue'
   import featureItem from '@/component/featureItem.vue'
+  import {removeLocal} from "@/utils/local.js"
   import {
     userStore
   } from '@/pinia/userInfo/userInfo.js';
@@ -85,12 +86,13 @@
             if (res.confirm) {
               showMsg('退出登录中', 1000, 'loading')
               setTimeout(()=>{
-                uni.navigateTo({
+                uni.reLaunch({
                   url: `/pages/login/login?username=${userPower.username}`,
                   animationType: 'pop-in',
                   animationDuration: 200
                 });
               },500)
+               removeLocal('token')
             } else if (res.cancel) {
               console.log('用户点击取消');
             }

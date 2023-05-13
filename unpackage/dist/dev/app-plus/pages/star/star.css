@@ -81,6 +81,83 @@
 .menuList .right .iconfont[data-v-887da2a3] {
   font-size: 1.75rem;
 }
+.container[data-v-e4e4508d] {
+  padding: 1.875rem 2.1875rem 0;
+}
+.container .welcome[data-v-e4e4508d] {
+  margin-top: 6.875rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.container .welcome .w1[data-v-e4e4508d] {
+  font-family: FangSong;
+  font-size: 2.0625rem;
+  font-weight: normal;
+  color: #707070;
+  margin-bottom: 0.375rem;
+}
+.container .welcome .w2[data-v-e4e4508d] {
+  font-family: FangSong;
+  font-size: 1rem;
+  font-weight: normal;
+  font-stretch: normal;
+  color: #707070;
+}
+.container .userInfo[data-v-e4e4508d] {
+  margin-top: 3.4375rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .userInfo .password[data-v-e4e4508d],
+.container .userInfo .username[data-v-e4e4508d] {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 2.8125rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #707070;
+  align-items: center;
+}
+.container .userInfo .password uni-input[data-v-e4e4508d],
+.container .userInfo .username uni-input[data-v-e4e4508d] {
+  padding-left: 3.125rem;
+}
+.container .userInfo .password .mark[data-v-e4e4508d],
+.container .userInfo .username .mark[data-v-e4e4508d] {
+  position: absolute;
+  left: 0.3125rem;
+}
+.container .userInfo .password[data-v-e4e4508d] {
+  margin-top: 0.9375rem;
+}
+.container .forget[data-v-e4e4508d] {
+  color: #707070;
+  margin-left: 72%;
+  font-family: FangSong;
+}
+.container .ability[data-v-e4e4508d] {
+  margin-top: 2.03125rem;
+}
+.container .ability uni-button[data-v-e4e4508d] {
+  border-radius: 2.8125rem;
+  margin: 0.46875rem 0;
+}
+.container .distance[data-v-e4e4508d] {
+  margin: 2.03125rem 0;
+  text-align: center;
+}
+.container .other_login_icon[data-v-e4e4508d] {
+  display: flex;
+  justify-content: space-around;
+}
+.container .other_login_icon .iconfont[data-v-e4e4508d] {
+  font-size: 2.8125rem;
+}
+
 /**
  * 这里是uni-app内置的常用样式变量
  *
@@ -184,8 +261,9 @@
   height: 0.625rem;
   background-color: #f2f2f2;
 }
-.menuList[data-v-887da2a3][data-v-611ff4ad] {
+.itmes[data-v-611ff4ad] {
   padding: 0 0.9375rem;
+  margin-left: 0.15625rem;
 }
 [data-v-611ff4ad] .uni-modal__bd {
   color: #6C6C6C;

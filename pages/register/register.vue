@@ -1,8 +1,8 @@
 <template>
-  <view class="container">  
-     <view class="back iconfont" @click='goBack'>
-       &#xe600
-     </view>
+  <view class="container">
+    <view class="back iconfont" @click='goBack'>
+      &#xe600
+    </view>
     <view class="welcome">
       <text>欢迎来到思环!</text>
     </view>
@@ -51,11 +51,12 @@
     </view>
   </view>
 </template>
-
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
   import { showMsg } from '@/utils/Toast.js';
-  import {MD5} from "crypto-js";
+  import { MD5 } from "crypto-js";
+  import { onLoad, onHide, onUnload } from '@dcloudio/uni-app';
+  import { removeLocal, setLocal } from "@/utils/local.js";
   // 注册用户的数据
   let userInfo = reactive({
     username: '',
@@ -71,6 +72,14 @@
       "radius": "50%"
     }
   })
+  onLoad(() => {
+    console.log('onload');
+    setLocal('login',true)
+  })
+  // onUnload(() => {
+  //   removeLocal('login')
+  //   console.log('onload');
+  // })
   // 拿到所选头像后触发
   function select(res : any) {
     userInfo.avatar = res.tempFilePaths[0]
@@ -106,27 +115,28 @@
       // 我这里直接在前端进行加密了，因为传给后端的时候
       password: MD5(userInfo.password).toString()
     }
-    uni.uploadFile({
-      url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
-      filePath: userInfo.avatar,
-      name: 'avatar',
-      timeout: 1000,
-      formData: param,
-      success: (res) => {
-        let result = JSON.parse(res.data);
-        console.log(result);
-        if (result.code == 200) {
-          showMsg(result.msg, 1000, 'loading')
-          uni.reLaunch({
-            url: '/pages/login/login'
-          })
-        } else {
-          showMsg(result.msg, 1000)
-        }
-      }, fail: () => {
-        showMsg('注册失败')
-      }
-    });
+        uni.uploadFile({
+          url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
+          filePath: userInfo.avatar,
+          name: 'avatar',
+          timeout: 1000,
+          formData: param,
+          success: (res) => {
+            let result = JSON.parse(res.data);
+            console.log(result);
+            if (result.code == 200) {
+              showMsg(result.msg, 1000, 'loading')
+              uni.reLaunch({
+                url: '/pages/login/login'
+              })
+               removeLocal('login')
+            } else {
+              showMsg(result.msg, 1000)
+            }
+          }, fail: () => {
+            showMsg('注册失败')
+          }
+        })
   }
   // 返回登录页
   function goBack() {
@@ -139,6 +149,7 @@
   .container {
     padding: 15rpx 80rpx 0;
     position: relative;
+
     .welcome {
       margin-top: 260rpx;
       text-align: center;
@@ -256,11 +267,12 @@
         font-size: 90rpx;
       }
     }
+
     .back {
       position: absolute;
       top: 110rpx;
       left: 80rpx;
-     font-size: 50rpx;
+      font-size: 50rpx;
     }
   }
 </style>
