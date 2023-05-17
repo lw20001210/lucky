@@ -74,7 +74,7 @@
   })
   onLoad(() => {
     console.log('onload');
-    setLocal('login',true)
+    setLocal('login', true)
   })
   // onUnload(() => {
   //   removeLocal('login')
@@ -115,28 +115,28 @@
       // 我这里直接在前端进行加密了，因为传给后端的时候
       password: MD5(userInfo.password).toString()
     }
-        uni.uploadFile({
-          url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
-          filePath: userInfo.avatar,
-          name: 'avatar',
-          timeout: 1000,
-          formData: param,
-          success: (res) => {
-            let result = JSON.parse(res.data);
-            console.log(result);
-            if (result.code == 200) {
-              showMsg(result.msg, 1000, 'loading')
-              uni.reLaunch({
-                url: '/pages/login/login'
-              })
-               removeLocal('login')
-            } else {
-              showMsg(result.msg, 1000)
-            }
-          }, fail: () => {
-            showMsg('注册失败')
-          }
-        })
+    uni.uploadFile({
+      url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
+      filePath: userInfo.avatar,
+      name: 'avatar',
+      timeout: 1000,
+      formData: param,
+      success: (res) => {
+        let result = JSON.parse(res.data);
+        console.log(result);
+        if (result.code == 200) {
+          showMsg(result.msg, 1000, 'loading')
+          uni.reLaunch({
+            url: '/pages/login/login'
+          })
+          removeLocal('login')//我用来另一种方法
+        } else {
+          showMsg(result.msg, 1000)
+        }
+      }, fail: () => {
+        showMsg('注册失败')
+      }
+    })
   }
   // 返回登录页
   function goBack() {

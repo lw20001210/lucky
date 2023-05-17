@@ -15,19 +15,22 @@ export const userStore = defineStore('user', {
   state: () => ({
     username: getLocal('username') ? getLocal('username') : '',
     password: '',
-    nickname: getLocal('nickname') ? getLocal('nickname') : '',
-    avatar: getLocal('avatar') ? getLocal('avatar') : ''
+    nickname: '',
+    avatar: '',
+    sex: '',
+    phone: '',
+    email: '',
+    createTime: '',
+    birthday: '',
+    signature: '',
+    statu: '',
+    id: ''
   }),
   getters: {},
   actions: {
     getData(obj) {
-      this.username = obj.username;
+      Object.assign(this.$state, obj);
       setLocal('username', obj.username)
-      this.password = obj.password;
-      setLocal('nickname', obj.nickname)
-      this.nickname = obj.nickname;
-      setLocal('avatar', obj.avatar)
-      this.avatar = obj.avatar;
     },
     // 登录
     async loginUser(obj) {
@@ -38,13 +41,24 @@ export const userStore = defineStore('user', {
         showMsg(res.msg)
       } else if (res.code == 200) {
         showMsg(res.msg, 1000, 'loading');
-        this.getData(res.data)
-        console.log(res);
+        this.username = res.data;
+        setLocal('username', res.data)
         setLocal('token', res.token)
         uni.switchTab({
           url: '/pages/home/home'
         })
       }
+    },
+    // 获取用户信息
+   async getUserInfo() {
+      let {
+        data: res
+      } = await request('/user/userInfo', 'get', {
+        username: this.username
+      });
+      this.getData(res.data)
+      console.log(res.data);
+      console.log(this.$state);
     },
     // 注销用户
     async removeUser() {
@@ -54,7 +68,7 @@ export const userStore = defineStore('user', {
       } = await request('/user/delete', 'delete', {
         username: this.username
       });
-      console.log(res);
+      // console.log(res);
       if (res.code == '200') {
         showMsg(res.msg, 1500, 'loading');
         uni.reLaunch({
@@ -64,6 +78,14 @@ export const userStore = defineStore('user', {
       } else {
         return showMsg('注销账号失败')
       }
+    },
+    async updateUser(obj){
+     let {
+       data: res
+     } = await request('/user/update', 'post', obj);
+     this.getData(res.data)
+     console.log(res.data);
     }
+
   }
 })

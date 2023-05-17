@@ -41,8 +41,7 @@
     .left {
       display: flex;
       align-items: center;
-      width: 240rpx;
-      justify-content: space-between;
+      width: 350rpx;
 
       .imgBg {
         display: flex;
@@ -63,6 +62,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        margin-left: 25rpx;
 
         .username {
           font-size: 28rpx;

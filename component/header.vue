@@ -7,30 +7,34 @@
     <view class="center">
     {{obj.title}}
     </view>
-    <view class="right iconfont" :class="obj.rightFont?obj.rightFont:''">
+    <view class="right">
+      {{obj.rightFont}}
     </view>
   </view>
 </template>
 
 <script setup>
   import statusBar from "@/component/statusBar.vue";
+   const props = defineProps(['obj'])
+   console.log(props.obj);
   // 返回上一级
   function goBack() {
     uni.switchTab({
-      url: '/pages/star/star'
+      url: props.obj.path
     });
   }
-  const props = defineProps(['obj'])
+ 
 </script>
 
 <style scoped lang="scss">
   .header {
-     font-family: STKaiti;
+   font-family: STKaiti;
     display: flex;
     justify-content: space-between;
     align-items: center;
     .center {
       width: 200rpx;
+      text-align:center;
     }
 
     .iconfont {

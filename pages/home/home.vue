@@ -80,7 +80,6 @@
         <uni-list-chat title="uni-app" avatar="https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
           note="您收到一条新的消息" time="2020-02-02 20:20" badge-positon="left" badge-text="99"></uni-list-chat>
       </uni-list>
-
     </scroll-view>
   </view>
 </template>
@@ -91,7 +90,9 @@
   } from '@/utils/local.js'
   import {
     ref,
-    onMounted
+    onMounted,
+    watch,
+    watchEffect
   } from 'vue';
   import statusBar from "@/component/statusBar.vue"
   // import searchModel from '@/component/searchModel.vue';
@@ -99,6 +100,10 @@
   import {
     userStore
   } from '@/pinia/userInfo/userInfo.js';
+  import loginVue from '../login/login.vue';
+  import {
+    onLoad
+  } from '@dcloudio/uni-app';
   let animationData = ref({}) //响应动画数据
   let animation = ref(null); //创建动画对象
   let isShow = ref(false); //判断下拉框
@@ -138,13 +143,16 @@
     wh.value = val.windowHeight - 80
   }
   onMounted(() => {
-    getHeight()
+    getHeight();
   })
   const goSearch = () => {
     uni.navigateTo({
       url: '/pages/search/search',
     });
   }
+  onLoad(() => {
+    userPower.getUserInfo()
+  })
 </script>
 <style scoped lang="scss">
   .container {

@@ -2,9 +2,14 @@
   import {
     getLocal
   } from "@/utils/local.js";
+  // import {
+  //   userStore
+  // } from '@/pinia/userInfo/userInfo.js';
   export default {
     onLaunch: function(options) {
+        // const userPower = new userStore();
       console.log('App Launch');
+      // userPower.getUserInfo()
       /*  // 也不能写这里会注册失败
         // console.log(options);
         // if (getLocal('token')) {
@@ -34,20 +39,23 @@
       // 我这里在登录页那个设置了个值做判断，如果是登录页则不会触发下面的判断
       if (getLocal('login')) {
         console.log('防止手机上选择头像的时候触发下面代码直接进入到登录页');
+      } else if (getLocal('edits')) {
+        console.log('防止手机上选择头像的时候触发下面代码直接进入到登录页');
       } else if (getLocal('token')) {
         uni.switchTab({
-         url: '/pages/home/home'
+          url: '/pages/home/home'
         })
       } else {
         uni.redirectTo({
           url: "/pages/login/login",
         });
       }
-      // if (getLocal('token')) {
-      //   uni.switchTab({
-      //    url: '/pages/home/home'
-      //   })
-     // }
+      // 方法2：直接这样判断就好，省去了很多代码。--------这里也不行，在编辑资料页也要选中头像。
+      //  if (getLocal('token')) {
+      //    uni.switchTab({
+      //     url: '/pages/home/home'
+      //    })
+      // }
     },
     onHide: function() {
       console.log('App Hide')

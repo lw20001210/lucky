@@ -25,6 +25,22 @@
     			}
     },
     {
+    	"path":"pages/apply/apply",
+    "style": {
+    				"navigationBarTitleText": "apply",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
+    	"path":"pages/groupChat/groupChat",
+    "style": {
+    				"navigationBarTitleText": "groupChat",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
     	"path": "pages/home/home",
     	"style": {
     		"enablePullDownRefresh": false,

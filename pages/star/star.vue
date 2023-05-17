@@ -9,7 +9,7 @@
           </div>
           <view class="describe">
             <text>{{nickname}}</text>
-            <text class='username'>签名:巅峰留不住</text>
+            <text class='username'>签名:{{signature}}</text>
           </view>
         </view>
         <view class="right">
@@ -45,11 +45,29 @@
   } from 'pinia';
   const {
     avatar,
-    nickname
+    nickname,signature
   } = storeToRefs(userPower);
   import {
-    ref
+    onLoad
+  } from '@dcloudio/uni-app';
+  import {
+    ref, watch,computed
   } from 'vue'
+  // 即使更新视图信息变化
+  watch(avatar, (newX) => {
+    avatar.value=newX
+  })
+  // 动态展示用户信息
+  const onSignature = computed(() => {
+    if (!signature.value) {
+      return  '巅峰留不住'
+    } else {
+      return  signature.value
+    }
+  });
+  onLoad(() => {
+    userPower.getUserInfo()
+  })
   let obj = ref([{
     textFont: 'icon-icon6',
     title: '编辑资料',

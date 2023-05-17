@@ -6,6 +6,13 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "15726999",
+      "name": "纸飞机_发布",
+      "font_class": "zhifeiji_fabu",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
       "icon_id": "1151476",
       "name": "相机",
       "font_class": "xiangji1",

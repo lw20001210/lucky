@@ -22,10 +22,8 @@
 </script>
 
 <style scoped lang="scss">
-  :deep(.uni-searchbar[data-v-f07ef577]){
-    margin: 20rpx;
+  .container{
+    margin-left: 15rpx;
+    margin-right: 15rpx;
   }
-:deep(.uni-searchbar__cancel[data-v-f07ef577]){
- width: 90rpx;
-}
 </style>
