@@ -159,6 +159,12 @@
     margin: 0 30rpx;
     height: 100%;
 
+    image {
+      will-change: transform
+    }
+
+    ;
+
     .navBar {
       margin-top: 15rpx;
       display: flex;

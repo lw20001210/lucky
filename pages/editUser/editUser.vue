@@ -38,13 +38,13 @@
           <text>&#xe612</text>
         </view>
       </view>
-      <view class="content">
+      <view class="content" @click="editInfo('性别')">
         <view class="describe">
           性别
         </view>
         <view class="detail iconfont">
           <view class="default">
-            男
+            {{onSex}}
           </view>
           <text>&#xe612</text>
         </view>
@@ -61,7 +61,9 @@
         </view>
         <view class="detail iconfont">
           <view class="default">
-            未设置
+          <picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange">
+            <view class="uni-input">{{initBirthday}}</view>
+          </picker>
           </view>
           <text>&#xe612</text>
         </view>
@@ -161,7 +163,7 @@
   let headObj = ref({
     leftFont: 'icon-zuojiantou',
     title: '账号设置',
-    path:'/pages/star/star'
+    path: '/pages/star/star'
   })
   // 上传选中图片的样式数据
   let imageStyles = ref({
@@ -198,7 +200,9 @@
     signature,
     email,
     phone,
-    password
+    password,
+    sex,
+    birthday
   } = storeToRefs(powerStore)
   // 注销账号
   function removeUser() {
@@ -226,7 +230,7 @@
       // password: MD5(userInfo.password).toString()
     }
     uni.uploadFile({
-      url: 'http://192.168.242.20:3000/user/update', 
+      url: 'http://192.168.85.20:3000/user/update',
       filePath: userInfo.avatar,
       name: 'avatar',
       timeout: 1500,
@@ -257,9 +261,9 @@
   // 动态展示用户信息
   const onSignature = computed(() => {
     if (!signature.value) {
-      return  '这个人很懒，什么都没有留下666'
+      return '这个人很懒，什么都没有留下666'
     } else {
-      return  signature.value
+      return signature.value
     }
   });
   const onEmail = computed(() => {
@@ -276,72 +280,155 @@
       return phone.value
     }
   });
-  // 编辑框的实例对象
-  let inputDialog = ref();
-  let inputClose = ref()
-  // 小封装
-  function upDateInfo(val) {
-    info.value = val;
-    inputDialog.value.open()
-  }
-  // 点击编辑的每个小点
-  function editInfo(val) {
-    switch (val) {
-      case '个性签名':
-        upDateInfo(val)
-        break;
-      case '昵称':
-        upDateInfo(val)
-        break;
-      case '邮箱':
-        upDateInfo(val)
-        break;
-      case '绑定手机号':
-        upDateInfo(val)
-        break;
-      case '新密码':
-        upDateInfo(val)
-        break;
+  const onSex = computed(() => {
+    if (sex.value == 0) {
+      return '女'
+    } else {
+      return '男'
     }
-  }
-  // 即使更新视图信息变化
-  let itemVal = ref()
-  watch(info, (newX) => {
-    info.value = newX;
-    // 判断点击了哪个该传递给后端的参数
-    if (newX == '个性签名') {
-      itemVal.value = 'signature'
-    } else if (newX == '昵称') {
-      itemVal.value = 'nickname'
-    } else if (newX == '邮箱') {
-      itemVal.value = 'email'
-    } else if (newX == '绑定手机号') {
-      itemVal.value = 'phone'
-    } else if (newX == '新密码') {
-      itemVal.value = 'password'
+  });
+  const initBirthday = computed(() => {
+    if (!birthday.value) {
+      return '未设置'
+    } else {
+      return birthday.value
     }
-  })
-  let infoValue = ref(); //我们输入的信息
-  // 判断点击了哪个该传递给后端的参数
-  function dialogInputConfirm(e) {
-    console.log(e);
-    infoValue.value = e;
-    console.log(infoValue.value);
-    if(itemVal.value=='password'){
-     infoValue.value= MD5(infoValue.value).toString()
-    }
-    powerStore.updateUser({
-      username: username.value,
-      // 直接用响应式的值做对象的键会报错
-      [itemVal.value]: infoValue.value
-    })
-    showMsg('修改中', 800, 'loading')
-    inputDialog.value.close()
-    // 关闭窗口后，恢复默认内容
-    inputDialog.value.close();
-    infoValue.value = ''
-    
-  }
+  });
+  const onbirthday = computed(() => {
+        if (!birthday.value) {
+          return '未设置'
+        } else {
+          birthday.value = getDate({format: true})
+           getDate({format: true})
+            }
+          });
+        const startDate = computed(() => {
+          return getDate('start');
+        });
+        const endDate = computed(() => {
+          return getDate('end');
+        });
+
+        function bindDateChange(e) {
+          birthday.value = e.detail.value
+          console.log(e);
+          return powerStore.updateUser({
+            username: username.value,
+            // 直接用响应式的值做对象的键会报错
+            'birthday': e.detail.value
+          })
+        }
+        function getDate(type) {
+          const date = new Date();
+          let year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let day = date.getDate();
+
+          if (type === 'start') {
+            year = year - 60;
+          } else if (type === 'end') {
+            year = year + 2;
+          }
+          month = month > 9 ? month : '0' + month;
+          day = day > 9 ? day : '0' + day;
+          return `${year}-${month}-${day}`;
+        }
+        // 编辑框的实例对象
+        let inputDialog = ref();
+        let inputClose = ref()
+        // 小封装
+        function upDateInfo(val) {
+          info.value = val;
+          inputDialog.value.open()
+        }
+        // 点击编辑的每个小点
+        function editInfo(val) {
+          switch (val) {
+            case '个性签名':
+              upDateInfo(val)
+              break;
+            case '昵称':
+              upDateInfo(val)
+              break;
+            case '邮箱':
+              upDateInfo(val)
+              break;
+            case '绑定手机号':
+              upDateInfo(val)
+              break;
+            case '新密码':
+              upDateInfo(val)
+              break;
+            case '性别':
+              uni.showActionSheet({
+                itemList: ['男', '女'],
+                success: function(res) {
+                  // console.log(res.tapIndex);
+                  if (res.tapIndex == 1) {
+                    console.log(res.tapIndex);
+                    sex.value = '女';
+                    return powerStore.updateUser({
+                      username: username.value,
+                      // 直接用响应式的值做对象的键会报错
+                      'sex': 0
+                    })
+                  } else if (res.tapIndex == 0) {
+                    console.log(res.tapIndex);
+                    sex.value = '男'
+                    return powerStore.updateUser({
+                      username: username.value,
+                      // 直接用响应式的值做对象的键会报错
+                      'sex': 1
+                    })
+                  }
+                  showMsg('修改中', 800, 'loading')
+                },
+                fail: function(res) {
+                  console.log(res.errMsg);
+                }
+              });
+
+
+          }
+        }
+        // 即使更新视图信息变化
+        let itemVal = ref()
+        watch(info, (newX) => {
+          info.value = newX;
+          // 判断点击了哪个该传递给后端的参数
+          if (newX == '个性签名') {
+            itemVal.value = 'signature'
+          } else if (newX == '昵称') {
+            itemVal.value = 'nickname'
+          } else if (newX == '邮箱') {
+            itemVal.value = 'email'
+          } else if (newX == '绑定手机号') {
+            itemVal.value = 'phone'
+          } else if (newX == '新密码') {
+            itemVal.value = 'password'
+          }
+        })
+        let infoValue = ref(); //我们输入的信息
+        // 判断点击了哪个该传递给后端的参数
+        function dialogInputConfirm(e) {
+          console.log(e);
+          infoValue.value = e;
+          console.log(infoValue.value);
+          if (itemVal.value == 'password') {
+            infoValue.value = MD5(infoValue.value).toString()
+          }
+          powerStore.updateUser({
+            username: username.value,
+            // 直接用响应式的值做对象的键会报错
+            [itemVal.value]: infoValue.value
+          })
+          showMsg('修改中', 800, 'loading')
+          inputDialog.value.close()
+          // 关闭窗口后，恢复默认内容
+          inputDialog.value.close();
+          infoValue.value = ''
+
+        }
 </script>
 
 <style scoped lang="scss">
@@ -371,13 +458,15 @@
       font-size: 50rpx;
       align-items: center;
       color: #000;
-
+:deep(.uni-file-picker__container[data-v-bdfc07e0]) {
+    justify-content: flex-end !important;
+  }
       .photograph {
         width: 100rpx;
         height: 100rpx;
         border: 1px solid rgb(238, 238, 238);
         text-align: center;
-        padding-left: 4rpx;
+        padding-left: 6rpx;
         line-height: 100rpx;
         border-radius: 50%;
       }
@@ -406,9 +495,11 @@
   .two {
     padding: 0 25rpx;
   }
-.fixed{
-  box-sizing: border-box;
-}
+
+  .fixed {
+    box-sizing: border-box;
+  }
+
   // 样式兼容问题，建议直接改源码。
   // :deep(.uni-file-picker__container[data-v-bdfc07e0]) {
   //   display:inline-block;

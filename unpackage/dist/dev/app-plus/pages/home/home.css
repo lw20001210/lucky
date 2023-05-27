@@ -1005,8 +1005,7 @@
 .menuList .left[data-v-dd3f64b3] {
   display: flex;
   align-items: center;
-  width: 7.5rem;
-  justify-content: space-between;
+  width: 10.9375rem;
 }
 .menuList .left .imgBg[data-v-dd3f64b3] {
   display: flex;
@@ -1025,6 +1024,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 0.78125rem;
 }
 .menuList .left .describe .username[data-v-dd3f64b3] {
   font-size: 0.875rem;
@@ -1061,6 +1061,9 @@
 .container[data-v-07e72d3c] {
   margin: 0 0.9375rem;
   height: 100%;
+}
+.container uni-image[data-v-07e72d3c] {
+  will-change: transform;
 }
 .container .navBar[data-v-07e72d3c] {
   margin-top: 0.46875rem;

@@ -28,7 +28,6 @@
   box-sizing: border-box;
   flex-wrap: wrap;
   margin: -5px;
-  justify-content: flex-end;
 }
 .file-picker__box[data-v-bdfc07e0] {
   position: relative;
@@ -483,6 +482,7 @@
 }
 .header .center[data-v-8548c3e5] {
   width: 6.25rem;
+  text-align: center;
 }
 .header .iconfont[data-v-8548c3e5] {
   font-size: 1.5625rem;
@@ -613,12 +613,15 @@
   align-items: center;
   color: #000;
 }
+.content .detail[data-v-24ea2ac3] .uni-file-picker__container[data-v-bdfc07e0] {
+  justify-content: flex-end !important;
+}
 .content .detail .photograph[data-v-24ea2ac3] {
   width: 3.125rem;
   height: 3.125rem;
   border: 1px solid #eeeeee;
   text-align: center;
-  padding-left: 0.125rem;
+  padding-left: 0.1875rem;
   line-height: 3.125rem;
   border-radius: 50%;
 }
@@ -638,4 +641,7 @@
 }
 .two[data-v-24ea2ac3] {
   padding: 0 0.78125rem;
+}
+.fixed[data-v-24ea2ac3] {
+  box-sizing: border-box;
 }

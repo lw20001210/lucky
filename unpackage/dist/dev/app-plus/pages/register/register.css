@@ -28,7 +28,6 @@
   box-sizing: border-box;
   flex-wrap: wrap;
   margin: -5px;
-  justify-content: flex-end;
 }
 .file-picker__box[data-v-bdfc07e0] {
   position: relative;

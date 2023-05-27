@@ -17,6 +17,46 @@
 					}
 		},
     {
+    	"path": "pages/sendDynamic/sendDynamic",
+    "style": {
+    				"navigationBarTitleText": "sendDynamic",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
+    	"path": "pages/sys/sys",
+    "style": {
+    				"navigationBarTitleText": "sys",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
+    	"path": "pages/selfStar/selfStar",
+    "style": {
+    				"navigationBarTitleText": "selfStar",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
+    	"path": "pages/dynamic/dynamic",
+    "style": {
+    				"navigationBarTitleText": "dynamic",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
+    	"path": "pages/qrcode/qrcode",
+    "style": {
+    				"navigationBarTitleText": "qrcode",
+    				"enablePullDownRefresh": false,
+    			"disableScroll": true
+    			}
+    },
+    {
     	"path":"pages/editUser/editUser",
     "style": {
     				"navigationBarTitleText": "editUser",

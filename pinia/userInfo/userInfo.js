@@ -30,7 +30,10 @@ export const userStore = defineStore('user', {
   actions: {
     getData(obj) {
       Object.assign(this.$state, obj);
-      setLocal('username', obj.username)
+      if (obj) {
+        setLocal('username', obj.username)
+      }
+
     },
     // 登录
     async loginUser(obj) {
@@ -44,21 +47,23 @@ export const userStore = defineStore('user', {
         this.username = res.data;
         setLocal('username', res.data)
         setLocal('token', res.token)
+        // setLocal('userInfo', res.data)
+        // console.log(res.token);
         uni.switchTab({
           url: '/pages/home/home'
         })
       }
     },
     // 获取用户信息
-   async getUserInfo() {
+    async getUserInfo() {
       let {
         data: res
       } = await request('/user/userInfo', 'get', {
         username: this.username
       });
       this.getData(res.data)
-      console.log(res.data);
-      console.log(this.$state);
+      // console.log(res.data);
+      // console.log(this.$state);
     },
     // 注销用户
     async removeUser() {
@@ -79,13 +84,13 @@ export const userStore = defineStore('user', {
         return showMsg('注销账号失败')
       }
     },
-    async updateUser(obj){
-     let {
-       data: res
-     } = await request('/user/update', 'post', obj);
-     this.getData(res.data)
-     console.log(res.data);
+    // 更新用户信息
+    async updateUser(obj) {
+      let {
+        data: res
+      } = await request('/user/update', 'post', obj);
+      this.getData(res.data)
+      console.log(res.data);
     }
-
   }
 })

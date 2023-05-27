@@ -187,7 +187,7 @@
 		/* #endif */
 		flex-wrap: wrap;
 		margin: -5px;
-    justify-content: flex-end;
+    // justify-content: flex-end;
 	}
 
 	.file-picker__box {

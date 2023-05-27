@@ -55,7 +55,7 @@
   import { reactive, ref } from 'vue';
   import { showMsg } from '@/utils/Toast.js';
   import { MD5 } from "crypto-js";
-  import { onLoad, onHide, onUnload } from '@dcloudio/uni-app';
+  import { onLoad} from '@dcloudio/uni-app';
   import { removeLocal, setLocal } from "@/utils/local.js";
   // 注册用户的数据
   let userInfo = reactive({
@@ -116,7 +116,7 @@
       password: MD5(userInfo.password).toString()
     }
     uni.uploadFile({
-      url: 'http://192.168.242.20:3000/user/register', //仅为示例，非真实的接口地址
+      url: 'http://192.168.85.20:3000/user/register', 
       filePath: userInfo.avatar,
       name: 'avatar',
       timeout: 1000,

@@ -25,7 +25,7 @@
           label {
             position: absolute;
             left: 40rpx;
-          }​
+          }
   ```
 
 
@@ -727,10 +727,9 @@ onLoad(() => {
            url: '/pages/home/home'
           })
        }
-   }
+   }​
   ```
 
-  ​
 
 ## 头像上传注意事项
 
@@ -744,3 +743,33 @@ onLoad(() => {
 
 * 由于我后端命名是拿注册账号命名的。导致后缀名一样的图片它的图片名是一样的，会有命名冲突，导致图片更新失败
 * 解决办法：不要用那种账号直接命名，可以用随机数之类的，我这里用的是Date.now()毫秒数。
+
+## 手机上获取图片问题
+
+* 直接存标签上给图片手机上是获取不到的。所以我们用js获取
+
+  ```js
+  import img from "@/static/img/bg.jpg" ;
+  let codeImg=ref()
+  codeImg.value=img
+  ```
+
+  ​
+
+## 突然前端接口连不上node问题
+
+* 电脑的局域网ip是隔断时间会变化的
+* 先win+r。然后ipconfig，找到 IPv4 地址。
+
+
+## slot
+
+- 插槽
+
+- > <!--  slot="right"这种用法已经被废弃,改用v-slot -->
+  >      <template #right >
+
+
+## 头像问题
+
+* 目前没用服务器。用的电脑ipv4地址，我的头像是根据ipV4地址+时间命名的，如果id地址变了，那么头像将会获取失败。

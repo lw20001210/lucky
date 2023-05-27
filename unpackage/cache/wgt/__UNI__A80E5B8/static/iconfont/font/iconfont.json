@@ -6,6 +6,20 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "1272521",
+      "name": "定位",
+      "font_class": "address",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "8288891",
+      "name": "眼睛",
+      "font_class": "yanjing",
+      "unicode": "e857",
+      "unicode_decimal": 59479
+    },
+    {
       "icon_id": "15726999",
       "name": "纸飞机_发布",
       "font_class": "zhifeiji_fabu",
@@ -34,6 +48,13 @@
       "unicode_decimal": 58898
     },
     {
+      "icon_id": "35589413",
+      "name": "左箭头-copy",
+      "font_class": "zuojiantou-copy",
+      "unicode": "eb45",
+      "unicode_decimal": 60229
+    },
+    {
       "icon_id": "17816863",
       "name": "左箭头",
       "font_class": "zuojiantou",
@@ -43,9 +64,16 @@
     {
       "icon_id": "35480124",
       "name": "左箭头-copy",
-      "font_class": "zuojiantou-copy",
+      "font_class": "zuojiantou-copy1",
       "unicode": "eb44",
       "unicode_decimal": 60228
+    },
+    {
+      "icon_id": "35664052",
+      "name": "左箭头-copy",
+      "font_class": "zuojiantou-copy2",
+      "unicode": "eb46",
+      "unicode_decimal": 60230
     },
     {
       "icon_id": "7316164",

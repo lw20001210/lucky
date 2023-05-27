@@ -78,6 +78,9 @@ if(val=='好友申请'){
   }
 </script>
 <style scoped lang="scss">
+  image {
+    will-change: transform
+  }
   .container {
     padding: 15rpx 20rpx 0;
     font-family: STKaiti;

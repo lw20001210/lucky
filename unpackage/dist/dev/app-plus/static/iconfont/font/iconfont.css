@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1683875567901') format('woff2'),
-       url('iconfont.woff?t=1683875567901') format('woff'),
-       url('iconfont.ttf?t=1683875567901') format('truetype');
+       url('iconfont.woff2?t=1685070569274') format('woff2'),
+       url('iconfont.woff?t=1685070569274') format('woff'),
+       url('iconfont.ttf?t=1685070569274') format('truetype');
 }
 
 .iconfont {
@@ -13,6 +13,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-address:before {
+  content: "\e637";
+}
+
+.icon-yanjing:before {
+  content: "\e857";
+}
+
+.icon-zhifeiji_fabu:before {
+  content: "\e661";
 }
 
 .icon-xiangji1:before {
@@ -27,12 +39,20 @@
   content: "\e612";
 }
 
+.icon-zuojiantou-copy:before {
+  content: "\eb45";
+}
+
 .icon-zuojiantou:before {
   content: "\e600";
 }
 
-.icon-zuojiantou-copy:before {
+.icon-zuojiantou-copy1:before {
   content: "\eb44";
+}
+
+.icon-zuojiantou-copy2:before {
+  content: "\eb46";
 }
 
 .icon-shouye_dongtaihui:before {

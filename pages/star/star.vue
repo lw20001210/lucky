@@ -4,15 +4,15 @@
     <view class="bg">
       <view class="menuList">
         <view class="left">
-          <div class="imgBg">
+          <view class="imgBg">
             <image :src="avatar"></image>
-          </div>
+          </view>
           <view class="describe">
             <text>{{nickname}}</text>
-            <text class='username'>签名:{{signature}}</text>
+            <text class='username'>签名:{{onSignature}}</text>
           </view>
         </view>
-        <view class="right">
+        <view class="right" @click="goQrcode">
           <view class="iconfont">&#xe6e5</view>
         </view>
       </view>
@@ -27,12 +27,15 @@
       </view>
     </template>
   </view>
+
 </template>
 
 <script setup>
   import stastuBar from '@/component/statusBar.vue'
   import featureItem from '@/component/featureItem.vue'
-  import {removeLocal} from "@/utils/local.js"
+  import {
+    removeLocal
+  } from "@/utils/local.js"
   import {
     userStore
   } from '@/pinia/userInfo/userInfo.js';
@@ -45,24 +48,27 @@
   } from 'pinia';
   const {
     avatar,
-    nickname,signature
+    nickname,
+    signature
   } = storeToRefs(userPower);
   import {
     onLoad
   } from '@dcloudio/uni-app';
   import {
-    ref, watch,computed
+    ref,
+    watch,
+    computed
   } from 'vue'
   // 即使更新视图信息变化
   watch(avatar, (newX) => {
-    avatar.value=newX
+    avatar.value = newX
   })
   // 动态展示用户信息
   const onSignature = computed(() => {
     if (!signature.value) {
-      return  '巅峰留不住'
+      return '巅峰留不住'
     } else {
-      return  signature.value
+      return signature.value
     }
   });
   onLoad(() => {
@@ -103,14 +109,14 @@
           success: function(res) {
             if (res.confirm) {
               showMsg('退出登录中', 1000, 'loading')
-              setTimeout(()=>{
+              setTimeout(() => {
                 uni.reLaunch({
                   url: `/pages/login/login?username=${userPower.username}`,
                   animationType: 'pop-in',
                   animationDuration: 200
                 });
-              },500)
-               removeLocal('token')
+              }, 500)
+              removeLocal('token')
             } else if (res.cancel) {
               console.log('用户点击取消');
             }
@@ -121,15 +127,41 @@
         uni.navigateTo({
           url: '/pages/editUser/editUser'
         });
+        break;
+      case '好友动态':
+        uni.navigateTo({
+          url: '/pages/dynamic/dynamic'
+        });
+        break;
+      case '个人空间':
+        uni.navigateTo({
+          url: '/pages/selfStar/selfStar'
+        });
+      break;
+      case '系统通知':
+      uni.navigateTo({
+          url: '/pages/sys/sys'
+        });
+      break;
     }
+  }
+
+  function goQrcode() {
+    uni.navigateTo({
+      url: '/pages/qrcode/qrcode'
+    });
   }
 </script>
 
 <style scoped lang="scss">
+  image {
+    will-change: transform
+  }
   .container {
     padding: 15rpx 25rpx 0;
     background-color: #3e6fac;
     font-family: STKaiti;
+
     .important {
       background-color: #3e6fac;
     }
@@ -209,9 +241,11 @@
       }
     }
   }
+
   .content {
     // background-color: #f2f2f2;
     font-family: STKaiti;
+
     // padding: 0 30rpx;
     .divide {
       height: 20rpx;
@@ -222,7 +256,7 @@
   // :deep(.menuList .left .imgBg[data-v-887da2a3]){方
   //   border-radius: 50%;
   // }
-  .itmes{
+  .itmes {
     padding: 0 30rpx;
     margin-left: 5rpx;
   }
@@ -231,6 +265,7 @@
     color: #6C6C6C;
     font-size: 28rpx;
   }
+
   :deep(.uni-modal__title) {
     font-size: 32rpx;
     color: #999999;
