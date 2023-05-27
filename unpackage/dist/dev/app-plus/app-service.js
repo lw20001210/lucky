@@ -216,7 +216,7 @@ if (uni.restoreGlobal) {
     }
   }
   /*!
-    * pinia v2.0.32
+    * pinia v2.0.33
     * (c) 2023 Eduardo San Martin Morote
     * @license MIT
     */
@@ -1105,12 +1105,6 @@ Only state can be modified.`);
       }, {}));
     }
     store = createSetupStore(id, setup, options, pinia2, hot, true);
-    store.$reset = function $reset() {
-      const newState = state ? state() : {};
-      this.$patch(($state) => {
-        assign($state, newState);
-      });
-    };
     return store;
   }
   function createSetupStore($id, setup, options = {}, pinia2, hot, isOptionsStore) {
@@ -1180,9 +1174,18 @@ Only state can be modified.`);
       isSyncListening = true;
       triggerSubscriptions(subscriptions, subscriptionMutation, pinia2.state.value[$id]);
     }
-    const $reset = () => {
-      throw new Error(`🍍: Store "${$id}" is built using the setup syntax and does not implement $reset().`);
-    };
+    const $reset = isOptionsStore ? function $reset2() {
+      const { state } = options;
+      const newState = state ? state() : {};
+      this.$patch(($state) => {
+        assign($state, newState);
+      });
+    } : (
+      /* istanbul ignore next */
+      () => {
+        throw new Error(`🍍: Store "${$id}" is built using the setup syntax and does not implement $reset().`);
+      }
+    );
     function $dispose() {
       scope.stop();
       subscriptions = [];
@@ -1498,7 +1501,7 @@ This will fail in production.`);
       return refs;
     }
   }
-  function showMsg(title = "获取数据失败", duration = 1500, icon = "error") {
+  function showMsg(title = "获取数据失败", duration = 2e3, icon = "error") {
     uni.showToast({
       title,
       duration,
@@ -7699,7 +7702,11 @@ This will fail in production.`);
       }
       return LOCALE_ZH_HANS;
     }
-    const lang = startsWith(locale, [LOCALE_EN, LOCALE_FR, LOCALE_ES]);
+    let locales = [LOCALE_EN, LOCALE_FR, LOCALE_ES];
+    if (messages2 && Object.keys(messages2).length > 0) {
+      locales = Object.keys(messages2);
+    }
+    const lang = startsWith(locale, locales);
     if (lang) {
       return lang;
     }
@@ -12083,20 +12090,62 @@ This will fail in production.`);
     }
   };
   const Header = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["__scopeId", "data-v-8548c3e5"], ["__file", "D:/新的开始/uniapp毕设/luckly/component/header.vue"]]);
+  const mySpaceStore = defineStore("mySpace", {
+    state: () => ({
+      id: "",
+      content: {
+        title: "",
+        imgArr: []
+      },
+      statu: "",
+      createTime: ""
+    })
+  });
   const _sfc_main$m = {
     __name: "sendDynamic",
     setup(__props) {
+      const mySpace = mySpaceStore();
+      const { id, content, statu } = storeToRefs(mySpace);
       let headObj = vue.ref({
         path: "/pages/selfStar/selfStar"
       });
       function deleteImage(e) {
-        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:53", e);
+        content.value.imgArr = content.value.imgArr.filter((item) => {
+          return item != e.tempFilePath;
+        });
       }
       function bindTextAreaBlur(e) {
-        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:57", e.detail.value);
+        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:63", e.detail.value);
+        content.value.title = e.detail.value;
       }
       function select(e) {
-        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:61", e);
+        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:68", e);
+        content.value.imgArr = e.tempFilePaths;
+      }
+      const powerRes = vue.computed(() => {
+        if (statu.value == "0") {
+          return "私密";
+        } else if (statu.value == "1") {
+          return "所有人可见";
+        } else {
+          return "权限设置";
+        }
+      });
+      function selectPower() {
+        uni.showActionSheet({
+          itemList: ["私密", "所有人可见"],
+          success: function(res) {
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:85", "选中了第" + res.tapIndex + "个按钮");
+            if (res.tapIndex == "0") {
+              statu.value = res.tapIndex;
+            } else if (res.tapIndex == "1") {
+              statu.value = res.tapIndex;
+            }
+          },
+          fail: function(res) {
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:93", res.errMsg);
+          }
+        });
       }
       return (_ctx, _cache) => {
         const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$3);
@@ -12151,10 +12200,19 @@ This will fail in production.`);
                 vue.createElementVNode("text", { class: "iconfont" }, "")
               ])
             ]),
-            vue.createElementVNode("view", { class: "eyePower" }, [
+            vue.createElementVNode("view", {
+              class: "eyePower",
+              onClick: selectPower
+            }, [
               vue.createElementVNode("text", { class: "iconfont" }, ""),
               vue.createElementVNode("view", { class: "right" }, [
-                vue.createElementVNode("text", null, "权限设置"),
+                vue.createElementVNode(
+                  "text",
+                  null,
+                  vue.toDisplayString(vue.unref(powerRes)),
+                  1
+                  /* TEXT */
+                ),
                 vue.createElementVNode("text", { class: "iconfont" }, "")
               ])
             ])
@@ -13587,7 +13645,7 @@ This will fail in production.`);
         });
       }
       function getDate(type) {
-        const date = new Date();
+        const date = /* @__PURE__ */ new Date();
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
@@ -13698,7 +13756,7 @@ This will fail in production.`);
               vue.createElementVNode("view", { class: "list" }, [
                 vue.createElementVNode("view", { class: "content" }, [
                   vue.createElementVNode("view", { class: "describe" }, " 头像 "),
-                  vue.createElementVNode("view", { class: "detail iconfont" }, [
+                  vue.createElementVNode("view", { class: "iconfont special" }, [
                     vue.createVNode(_component_uni_file_picker, {
                       "del-icon": false,
                       limit: "1",

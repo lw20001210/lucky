@@ -1,5 +1,10 @@
 {
-  "navigationBarTitleText": "",
+  "navigationBarTitleText": "联系人",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-search-bar": "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar",
+    "stastu-bar": "../../component/statusBar",
+    "friend-item": "../../component/friendItem",
+    "feature-item": "../../component/featureItem"
+  }
 }

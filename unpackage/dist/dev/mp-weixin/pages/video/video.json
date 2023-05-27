@@ -1,6 +1,7 @@
 {
   "enablePullDownRefresh": false,
   "navigationBarTitleText": "心语视频",
-  "navigationStyle": "default",
-  "usingComponents": {}
+  "usingComponents": {
+    "stastu-bar": "../../component/statusBar"
+  }
 }

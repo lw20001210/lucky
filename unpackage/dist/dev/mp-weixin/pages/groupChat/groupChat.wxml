@@ -1,0 +1,1 @@
+<view class="container data-v-70ae8d23"><header wx:if="{{a}}" class="data-v-70ae8d23" u-i="70ae8d23-0" bind:__l="__l" u-p="{{a}}"></header><view class="data-v-70ae8d23"><uni-search-bar wx:if="{{b}}" class="uni-mt-10 data-v-70ae8d23" u-i="70ae8d23-1" bind:__l="__l" u-p="{{b}}"/></view></view>

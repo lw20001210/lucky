@@ -1,5 +1,6 @@
 .container.data-v-bac4a35d {
   padding: 15rpx 80rpx 0;
+  position: relative;
 }
 .container .welcome.data-v-bac4a35d {
   margin-top: 260rpx;
@@ -98,4 +99,10 @@
 }
 .container .other_login_icon .iconfont.data-v-bac4a35d {
   font-size: 90rpx;
+}
+.container .back.data-v-bac4a35d {
+  position: absolute;
+  top: 110rpx;
+  left: 80rpx;
+  font-size: 50rpx;
 }

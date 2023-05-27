@@ -223,9 +223,9 @@ uni-image[data-v-611ff4ad] {
   align-items: center;
   width: 3.5rem;
   height: 3.5rem;
+  overflow: hidden;
   background-color: #3e6fac;
   border-radius: 0.46875rem;
-  border: 0;
 }
 .container .menuList .left .imgBg uni-image[data-v-611ff4ad] {
   width: 100%;

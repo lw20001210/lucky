@@ -1,20 +1,23 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
-const BASE_URL = "http://192.168.242.20:3000";
+const utils_local = require("./local.js");
+const utils_Toast = require("./Toast.js");
+const BASE_URL = "http://192.168.85.20:3000";
 const request = (url, method, data) => {
   return new Promise((resolve, reject) => {
     common_vendor.index.request({
       url: BASE_URL + url,
       method,
       data,
-      timeout: 3e3,
+      timeout: 2e3,
       header: {
-        authorization: common_vendor.index.getStorageSync("userinfo").Token
+        authorization: utils_local.getLocal("token") ? utils_local.getLocal("token") : ""
       },
       success: (res) => {
         resolve(res);
       },
       fail: (err) => {
+        utils_Toast.showMsg("请求失败");
         reject(err);
       },
       complete: () => {

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "sendDynamic",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "uni-file-picker": "../../uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker",
+    "header": "../../component/header"
+  }
+}

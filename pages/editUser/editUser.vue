@@ -6,7 +6,7 @@
         <view class="describe">
           头像
         </view>
-        <view class="detail iconfont">
+        <view class="iconfont special">
           <uni-file-picker :del-icon="false" limit="1" :imageStyles="imageStyles" file-mediatype="image"
             @select="select" disable-preview return-type="object">
             <view class="photograph">
@@ -458,9 +458,6 @@
       font-size: 50rpx;
       align-items: center;
       color: #000;
-:deep(.uni-file-picker__container[data-v-bdfc07e0]) {
-    justify-content: flex-end !important;
-  }
       .photograph {
         width: 100rpx;
         height: 100rpx;
@@ -483,7 +480,17 @@
     :deep(.file-picker__progress) {
       display: none !important;
     }
-
+.special{
+ display: flex;
+ justify-content: flex-end;
+ font-size: 50rpx;
+ align-items: center;
+ color: #000;
+width: 150rpx;
+  :deep(.uni-file-picker__container[data-v-bdfc07e0]) {
+      justify-content: flex-end !important;
+    }
+}
 
   }
 

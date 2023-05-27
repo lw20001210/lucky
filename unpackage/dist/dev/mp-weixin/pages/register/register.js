@@ -1,8 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const utils_Toast = require("../../utils/Toast.js");
-const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
-require("../../utils/request.js");
+const utils_local = require("../../utils/local.js");
 if (!Array) {
   const _easycom_uni_file_picker2 = common_vendor.resolveComponent("uni-file-picker");
   _easycom_uni_file_picker2();
@@ -14,7 +13,6 @@ if (!Math) {
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "register",
   setup(__props) {
-    const userPower = pinia_userInfo_userInfo.userStore();
     let userInfo = common_vendor.reactive({
       username: "",
       password: "",
@@ -27,6 +25,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       border: {
         "radius": "50%"
       }
+    });
+    common_vendor.onLoad(() => {
+      console.log("onload");
+      utils_local.setLocal("login", true);
     });
     function select(res) {
       userInfo.avatar = res.tempFilePaths[0];
@@ -56,11 +58,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       let param = {
         nickname: userInfo.nickname,
         username: userInfo.username,
-        password: userInfo.password
+        // 我这里直接在前端进行加密了，因为传给后端的时候
+        password: common_vendor.cryptoJsExports.MD5(userInfo.password).toString()
       };
       common_vendor.index.uploadFile({
-        url: "http://192.168.242.20:3000/user/register",
-        //仅为示例，非真实的接口地址
+        url: "http://192.168.85.20:3000/user/register",
         filePath: userInfo.avatar,
         name: "avatar",
         timeout: 1e3,
@@ -69,24 +71,30 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           let result = JSON.parse(res.data);
           console.log(result);
           if (result.code == 200) {
-            userPower.registeriUser(result.obj);
             utils_Toast.showMsg(result.msg, 1e3, "loading");
             common_vendor.index.reLaunch({
               url: "/pages/login/login"
             });
+            utils_local.removeLocal("login");
           } else {
             utils_Toast.showMsg(result.msg, 1e3);
           }
         },
         fail: () => {
-          utils_Toast.showMsg("没开后台");
+          utils_Toast.showMsg("注册失败");
         }
+      });
+    }
+    function goBack() {
+      common_vendor.index.navigateTo({
+        url: "/pages/login/login"
       });
     }
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.o(select),
-        b: common_vendor.p({
+        a: common_vendor.o(goBack),
+        b: common_vendor.o(select),
+        c: common_vendor.p({
           ["del-icon"]: false,
           limit: "1",
           imageStyles: common_vendor.unref(imageStyles),
@@ -94,13 +102,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           ["disable-preview"]: true,
           ["return-type"]: "object"
         }),
-        c: common_vendor.unref(userInfo).nickname,
-        d: common_vendor.o(($event) => common_vendor.unref(userInfo).nickname = $event.detail.value),
-        e: common_vendor.unref(userInfo).username,
-        f: common_vendor.o(($event) => common_vendor.unref(userInfo).username = $event.detail.value),
-        g: common_vendor.unref(userInfo).password,
-        h: common_vendor.o(($event) => common_vendor.unref(userInfo).password = $event.detail.value),
-        i: common_vendor.o(addUser)
+        d: common_vendor.unref(userInfo).nickname,
+        e: common_vendor.o(($event) => common_vendor.unref(userInfo).nickname = $event.detail.value),
+        f: common_vendor.unref(userInfo).username,
+        g: common_vendor.o(($event) => common_vendor.unref(userInfo).username = $event.detail.value),
+        h: common_vendor.unref(userInfo).password,
+        i: common_vendor.o(($event) => common_vendor.unref(userInfo).password = $event.detail.value),
+        j: common_vendor.o(addUser)
       };
     };
   }

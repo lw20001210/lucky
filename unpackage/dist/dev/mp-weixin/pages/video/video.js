@@ -1,8 +1,16 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const _sfc_main = {};
-function _sfc_render(_ctx, _cache) {
-  return {};
+if (!Math) {
+  stastuBar();
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/video/video.vue"]]);
+const stastuBar = () => "../../component/statusBar.js";
+const _sfc_main = {
+  __name: "video",
+  setup(__props) {
+    return (_ctx, _cache) => {
+      return {};
+    };
+  }
+};
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/luckly/pages/video/video.vue"]]);
 wx.createPage(MiniProgramPage);

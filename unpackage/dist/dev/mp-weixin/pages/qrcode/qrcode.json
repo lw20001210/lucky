@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "qrcode",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "header": "../../component/header"
+  }
+}

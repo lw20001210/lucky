@@ -1,0 +1,1 @@
+<view class="container data-v-c10c040c"><status-bar class="data-v-c10c040c" u-i="c10c040c-0" bind:__l="__l"></status-bar><uni-search-bar wx:if="{{d}}" class="data-v-c10c040c" bindinput="{{a}}" bindcancel="{{b}}" u-i="c10c040c-1" bind:__l="__l" bindupdateModelValue="{{c}}" u-p="{{d}}"></uni-search-bar></view>

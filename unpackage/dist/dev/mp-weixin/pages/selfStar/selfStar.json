@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "selfStar",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "header": "../../component/header",
+    "stastu-bar": "../../component/statusBar"
+  }
+}

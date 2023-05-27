@@ -165,7 +165,6 @@
     .important {
       background-color: #3e6fac;
     }
-
     .bg {
       width: 100%;
       height: 358rpx;
@@ -197,10 +196,9 @@
           align-items: center;
           width: 112rpx;
           height: 112rpx;
+          overflow: hidden;
           background-color: #3e6fac;
           border-radius: 15rpx;
-          border: 0;
-
           image {
             width: 100%;
             height: 100%;

@@ -2,10 +2,19 @@
   "pages": [
     "pages/login/login",
     "pages/register/register",
+    "pages/sendDynamic/sendDynamic",
+    "pages/sys/sys",
+    "pages/selfStar/selfStar",
+    "pages/dynamic/dynamic",
+    "pages/qrcode/qrcode",
+    "pages/editUser/editUser",
+    "pages/apply/apply",
+    "pages/groupChat/groupChat",
     "pages/home/home",
     "pages/linkman/linkman",
     "pages/video/video",
-    "pages/star/star"
+    "pages/star/star",
+    "pages/search/search"
   ],
   "window": {
     "navigationStyle": "custom",
