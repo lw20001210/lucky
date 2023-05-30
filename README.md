@@ -169,13 +169,13 @@ const md5 = require("md5");
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
+        primaryKey: true, //主键
+        autoIncrement: true, //自动递增
       },
       username: {
         type: Sequelize.STRING(50),
         allowNull: false,
-        unique: true,
+        unique: true, //唯一性
       },
       password: {
         type: Sequelize.STRING(100),
@@ -204,11 +204,11 @@ const md5 = require("md5");
       },
       birthday: {
         type: Sequelize.STRING(100),
-        defaultValue: "2021-12-31 23:59:59",
+        defaultValue: "",
       },
-      status: {
+      statu: {
         type: Sequelize.TINYINT,
-        defaultValue: 0,
+        defaultValue: 0, //默认0为女，1为男
       },
       createTime: {
         type: Sequelize.STRING(100),
@@ -219,10 +219,11 @@ const md5 = require("md5");
         defaultValue: "",
       },
     },
-    { timestamps: false }
+    { timestamps: false } //这个它会自动生成两个时间字段，我不需要·，所以弄掉了
   );
 
   module.exports = UsersModel;
+
   ```
 
 * 创建表和导入数据表
@@ -232,29 +233,35 @@ const md5 = require("md5");
   const userRoute = require("./router/users");
   const bodyParser = require("body-parser");
   const app = express();
-  const cors = require("cors");
+  const cors = require("cors"); //跨域
   const config = require("./config");
-  const joi = require("@hapi/joi");
-  const expressJWT = require("express-jwt");
-
+  const expressJWT = require("express-jwt"); //一定要在路由之前配置
+  const { mainUrl } = require("./config");
+  app.use(cors());
   // 导入 Sequelize连接数据库 和模型定义
   const sequelize = require("./mysql/sequlize");
   const UserModel = require("./models/usersModel.js");
-
+  const mySpace = require("./models/mySpace");
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(cors());
 
-  // 静态资源
+  // 静态资源,方便我们前端以往网络图片形式访问
   app.use("/static", express.static("static"));
 
-  // 定义 token 的解析中间件，并排除 user 相关路由
-  app.use(expressJWT({ secret: config.Keys }).unless({ path: [/^\/user/] }));
+  // 定义 token 的解析中间件，并排除 user/register和user/login 相关路由
+  app.use(
+    expressJWT({ secret: config.Keys }).unless({
+      path: [/^\/user\/register/, /^\/user\/login/],
+    })
+  );
 
   // 定义错误中间件
   app.use((err, req, res, next) => {
-    if (err instanceof joi.ValidationError) return res.send(err.message);
-    if (err.name === "UnauthorizedError") return res.send("身份验证失败。");
+    if (err.name === "UnauthorizedError")
+      return res.send({
+        code: 401,
+        msg: "token已失效",
+      });
     res.send("服务器发生错误。");
   });
 
@@ -271,7 +278,7 @@ const md5 = require("md5");
     .then(() => {
       console.log("数据表同步成功。");
       app.listen(3000, () => {
-        console.log("应用程序已启动，访问地址: http://192.168.242.20:3000/user");
+        console.log(`应用程序已启动，访问地址: ${mainUrl}/user`);
       });
     })
     .catch((error) => {
@@ -388,10 +395,9 @@ const md5 = require("md5");
       birthday,
       signature,
       ...newObj,
-    });
+    });​
   ```
 
-  ​
 
 ## 首页下拉框功能
 

@@ -76,7 +76,7 @@ const _sfc_main = {
         // password: MD5(userInfo.password).toString()
       };
       common_vendor.index.uploadFile({
-        url: "http://192.168.85.20:3000/user/update",
+        url: "http://192.168.39.20:3000/user/update",
         filePath: userInfo.avatar,
         name: "avatar",
         timeout: 1500,

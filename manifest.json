@@ -19,7 +19,9 @@
         /* 模块配置 */
         "modules" : {
             "Camera" : {},
-            "Barcode" : {}
+            "Barcode" : {},
+            "Geolocation" : {},
+            "Maps" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -28,16 +30,27 @@
                 "permissions" : [
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CAMERA\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_VOICEMAIL\"/>",
+                    "<uses-permission android:name=\"android.permission.BLUETOOTH\"/>",
+                    "<uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\"/>"
                 ]
             },
             /* ios打包配置 */
@@ -60,6 +73,19 @@
                         "appkey" : "",
                         "redirect_uri" : "",
                         "UniversalLinks" : ""
+                    }
+                },
+                "geolocation" : {
+                    "amap" : {
+                        "__platform__" : [ "android" ],
+                        "appkey_ios" : "",
+                        "appkey_android" : "e61612c29d31f13b39d47c24e274671c"
+                    }
+                },
+                "maps" : {
+                    "amap" : {
+                        "appkey_ios" : "",
+                        "appkey_android" : "e61612c29d31f13b39d47c24e274671c"
                     }
                 }
             },
@@ -122,5 +148,21 @@
     "vueVersion" : "3",
     "quickapp-webview" : {
         "icon" : ""
+    },
+    "h5" : {
+        "sdkConfigs" : {
+            "maps" : {
+                "amap" : {
+                    // 高德地图秘钥（HBuilderX 3.6.0+）https://console.amap.com/dev/key/app
+                    "key" : "da49e4f20ddca2582bc37d403fb0912c",
+                    // 高德地图安全密钥（HBuilderX 3.6.0+）https://console.amap.com/dev/key/app
+                    "securityJsCode" : "a51a29eedb8370e0f047d65e13f07e39",
+                    // 高德地图安全密钥代理服务器地址（HBuilderX 3.6.0+）https://lbs.amap.com/api/jsapi-v2/guide/abc/prepare
+                    "serviceHost" : "http://192.168.85.20:3000/_AMapService/v4/maps'"
+                }
+            }
+        }
     }
 }
+/* ios打包配置 *//* SDK配置 */
+

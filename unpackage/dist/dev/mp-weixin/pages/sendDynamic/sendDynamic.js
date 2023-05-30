@@ -56,6 +56,16 @@ const _sfc_main = {
         }
       });
     }
+    function getLocation() {
+      common_vendor.index.chooseLocation({
+        success: function(res) {
+          console.log(res);
+        },
+        fail: function(res) {
+          console.log(res);
+        }
+      });
+    }
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
@@ -69,8 +79,9 @@ const _sfc_main = {
           fileMediatype: "image",
           mode: "grid"
         }),
-        f: common_vendor.t(common_vendor.unref(powerRes)),
-        g: common_vendor.o(selectPower)
+        f: common_vendor.o(getLocation),
+        g: common_vendor.t(common_vendor.unref(powerRes)),
+        h: common_vendor.o(selectPower)
       };
     };
   }

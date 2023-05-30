@@ -2,7 +2,7 @@
 const common_vendor = require("../common/vendor.js");
 const utils_local = require("./local.js");
 const utils_Toast = require("./Toast.js");
-const BASE_URL = "http://192.168.85.20:3000";
+const BASE_URL = "http://192.168.39.20:3000";
 const request = (url, method, data) => {
   return new Promise((resolve, reject) => {
     common_vendor.index.request({

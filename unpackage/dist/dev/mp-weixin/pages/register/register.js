@@ -62,7 +62,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         password: common_vendor.cryptoJsExports.MD5(userInfo.password).toString()
       };
       common_vendor.index.uploadFile({
-        url: "http://192.168.85.20:3000/user/register",
+        url: "http://192.168.39.20:3000/user/register",
         filePath: userInfo.avatar,
         name: "avatar",
         timeout: 1e3,

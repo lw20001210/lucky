@@ -19,6 +19,10 @@
   "permissions": {
     "Camera": {},
     "Barcode": {},
+    "Geolocation": {},
+    "Maps": {
+      "coordType": "gcj02"
+    },
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -79,16 +83,27 @@
         "permissions": [
           "<uses-feature android:name=\"android.hardware.camera\"/>",
           "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
           "<uses-permission android:name=\"android.permission.CAMERA\"/>",
           "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+          "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
           "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
           "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+          "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+          "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
           "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
           "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
           "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
           "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
           "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-          "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+          "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+          "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+          "<uses-permission android:name=\"android.permission.WRITE_VOICEMAIL\"/>",
+          "<uses-permission android:name=\"android.permission.BLUETOOTH\"/>",
+          "<uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\"/>"
         ]
       },
       "apple": {
@@ -109,6 +124,21 @@
             "appkey": "",
             "redirect_uri": "",
             "UniversalLinks": ""
+          }
+        },
+        "geolocation": {
+          "amap": {
+            "__platform__": [
+              "android"
+            ],
+            "appkey_ios": "",
+            "appkey_android": "e61612c29d31f13b39d47c24e274671c"
+          }
+        },
+        "maps": {
+          "amap": {
+            "appkey_ios": "",
+            "appkey_android": "e61612c29d31f13b39d47c24e274671c"
           }
         },
         "audio": {

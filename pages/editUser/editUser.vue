@@ -230,7 +230,7 @@
       // password: MD5(userInfo.password).toString()
     }
     uni.uploadFile({
-      url: 'http://192.168.85.20:3000/user/update',
+      url: 'http://192.168.212.20:3000/user/update',
       filePath: userInfo.avatar,
       name: 'avatar',
       timeout: 1500,

@@ -1530,7 +1530,7 @@ This will fail in production.`);
       }
     });
   }
-  const BASE_URL = "http://192.168.85.20:3000";
+  const BASE_URL = "http://192.168.212.20:3000";
   const request = (url, method, data) => {
     return new Promise((resolve, reject) => {
       uni.request({
@@ -11881,7 +11881,7 @@ This will fail in production.`);
           password: cryptoJsExports.MD5(userInfo.password).toString()
         };
         uni.uploadFile({
-          url: "http://192.168.85.20:3000/user/register",
+          url: "http://192.168.212.20:3000/user/register",
           filePath: userInfo.avatar,
           name: "avatar",
           timeout: 1e3,
@@ -12093,10 +12093,12 @@ This will fail in production.`);
   const mySpaceStore = defineStore("mySpace", {
     state: () => ({
       id: "",
+      uid: "",
       content: {
         title: "",
         imgArr: []
       },
+      position: "",
       statu: "",
       createTime: ""
     })
@@ -12105,7 +12107,7 @@ This will fail in production.`);
     __name: "sendDynamic",
     setup(__props) {
       const mySpace = mySpaceStore();
-      const { id, content, statu } = storeToRefs(mySpace);
+      const { id, content, statu, position } = storeToRefs(mySpace);
       let headObj = vue.ref({
         path: "/pages/selfStar/selfStar"
       });
@@ -12147,6 +12149,28 @@ This will fail in production.`);
           }
         });
       }
+      function getLocation() {
+        uni.chooseLocation({
+          success: function(res) {
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:101", res);
+            position.value = res.name;
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:103", "位置名称：" + res.name);
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:104", "详细地址：" + res.address);
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:105", "纬度：" + res.latitude);
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:106", "经度：" + res.longitude);
+          },
+          fail: function(res) {
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:109", res);
+          }
+        });
+      }
+      const positionRes = vue.computed(() => {
+        if (position.value == "") {
+          return "所在位置";
+        } else {
+          return position.value;
+        }
+      });
       return (_ctx, _cache) => {
         const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$3);
         return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
@@ -12193,10 +12217,19 @@ This will fail in production.`);
                 /* STABLE */
               })
             ]),
-            vue.createElementVNode("view", { class: "position" }, [
+            vue.createElementVNode("view", {
+              class: "position",
+              onClick: getLocation
+            }, [
               vue.createElementVNode("text", { class: "iconfont" }, ""),
               vue.createElementVNode("view", { class: "right" }, [
-                vue.createElementVNode("text", null, "所在位置"),
+                vue.createElementVNode(
+                  "text",
+                  null,
+                  vue.toDisplayString(vue.unref(positionRes)),
+                  1
+                  /* TEXT */
+                ),
                 vue.createElementVNode("text", { class: "iconfont" }, "")
               ])
             ]),
@@ -13560,7 +13593,7 @@ This will fail in production.`);
           // password: MD5(userInfo.password).toString()
         };
         uni.uploadFile({
-          url: "http://192.168.85.20:3000/user/update",
+          url: "http://192.168.212.20:3000/user/update",
           filePath: userInfo.avatar,
           name: "avatar",
           timeout: 1500,
@@ -16255,7 +16288,13 @@ This will fail in production.`);
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
           vue.createVNode(statusBar),
-          vue.createElementVNode("view", { class: "header" }, " 我是视频页 ")
+          vue.createElementVNode("view", { class: "header" }, " 我是视频页 "),
+          vue.createElementVNode("map", {
+            style: { "width": "100%", "height": "300px" },
+            latitude: 59,
+            longitude: 111,
+            "covers:": "[{\n				latitude: 39.909,\n				longitude: 116.39742,\n				iconPath: '../../../static/location.png'\n			}, {\n				latitude: 39.90,\n				longitude: 116.39,\n				iconPath: '../../../static/location.png'\n			}]"
+          })
         ]);
       };
     }

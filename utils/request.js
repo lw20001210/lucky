@@ -1,4 +1,4 @@
-const BASE_URL = 'http://192.168.85.20:3000';
+const BASE_URL = 'http://192.168.212.20:3000';
 import {getLocal} from "@/utils/local.js";
 import {
   showMsg

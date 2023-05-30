@@ -21,10 +21,10 @@
           </view>
         </uni-file-picker>
       </view>
-      <view class="position">
+      <view class="position" @click="getLocation">
         <text class="iconfont">&#xe637</text>
         <view class="right">
-          <text>所在位置</text>
+          <text>{{positionRes}}</text>
           <text class="iconfont">&#xe68c</text>
         </view>
       </view>
@@ -45,9 +45,9 @@
     ref,computed
   } from 'vue';
   import {mySpaceStore} from "@/pinia/userInfo/mySpace.js";
-  const mySpace=mySpaceStore()
-  import { storeToRefs } from 'pinia'
-  const {id,content,statu}= storeToRefs(mySpace)
+  const mySpace=mySpaceStore();
+  import { storeToRefs } from 'pinia';
+  const {id,content,statu,position}= storeToRefs(mySpace)
   // 传递给header组件的数据
   let headObj = ref({
     path: '/pages/selfStar/selfStar'
@@ -94,6 +94,29 @@
    	}
    });
   }
+  // 选择所在位置
+  function getLocation(){
+    uni.chooseLocation({
+    	success: function (res) {
+        console.log(res);
+        position.value=res.name
+    		console.log('位置名称：' + res.name);
+    		console.log('详细地址：' + res.address);
+    		console.log('纬度：' + res.latitude);
+    		console.log('经度：' + res.longitude);
+    	},
+      fail:function(res){
+        console.log(res);
+      }
+    });
+  }
+  const positionRes = computed(() => {
+   if(position.value==''){
+     return '所在位置'
+   }else{
+     return position.value
+   }
+  })
 </script>
 
 <style scoped lang="scss">
