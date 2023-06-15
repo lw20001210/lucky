@@ -7,10 +7,8 @@ App.mpType = 'app'
 const app = new Vue({
   ...App
 })
-
 app.$mount()
 // #endif
-
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
 import pinia from "@/pinia/index.js"

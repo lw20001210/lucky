@@ -62,7 +62,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         password: common_vendor.cryptoJsExports.MD5(userInfo.password).toString()
       };
       common_vendor.index.uploadFile({
-        url: "http://192.168.39.20:3000/user/register",
+        url: "http://192.168.1.20:3000/user/register",
         filePath: userInfo.avatar,
         name: "avatar",
         timeout: 1e3,
@@ -99,8 +99,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           limit: "1",
           imageStyles: common_vendor.unref(imageStyles),
           ["file-mediatype"]: "image",
-          ["disable-preview"]: true,
-          ["return-type"]: "object"
+          ["disable-preview"]: true
         }),
         d: common_vendor.unref(userInfo).nickname,
         e: common_vendor.o(($event) => common_vendor.unref(userInfo).nickname = $event.detail.value),
@@ -113,5 +112,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/register/register.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/register/register.vue"]]);
 wx.createPage(MiniProgramPage);

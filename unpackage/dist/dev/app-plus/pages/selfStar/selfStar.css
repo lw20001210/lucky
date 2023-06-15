@@ -173,6 +173,7 @@
   width: 100%;
   background: url("../../static/images/bgg.jpg") no-repeat;
   background-size: cover;
+  overflow: visible;
 }
 .container .content[data-v-1cb7f60c] {
   position: absolute;
@@ -181,15 +182,15 @@
   right: 0;
   bottom: 0;
   padding: 0.46875rem 0.9375rem 0;
+  overflow: visible;
 }
 .container .content .avatar[data-v-1cb7f60c] {
-  z-index: 99;
   display: flex;
-  position: fixed;
+  position: absolute;
   top: 11.875rem;
   right: 0.9375rem;
 }
-.container .content .avatar uni-text[data-v-1cb7f60c] {
+.container .content .avatar .rootName[data-v-1cb7f60c] {
   margin-right: 0.3125rem;
   margin-top: 0.625rem;
   color: white;
@@ -199,33 +200,38 @@
   width: 3.59375rem;
   height: 3.59375rem;
   position: relative;
-  overflow: hidden;
   border-radius: 0.46875rem;
 }
 .container .content .avatar .imgBg uni-image[data-v-1cb7f60c] {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
 }
-.container .none[data-v-1cb7f60c], .container .detail[data-v-1cb7f60c] {
+.container .none[data-v-1cb7f60c],
+.container .detail[data-v-1cb7f60c] {
   font-family: "华文楷体";
-  margin: 0.9375rem;
+  margin: 2.1875rem 0.9375rem 0;
 }
-.container .none .default[data-v-1cb7f60c], .container .detail .default[data-v-1cb7f60c] {
+.container .none .default[data-v-1cb7f60c],
+.container .detail .default[data-v-1cb7f60c] {
   height: 3.125rem;
   display: flex;
 }
-.container .none .default .left uni-text[data-v-1cb7f60c], .container .detail .default .left uni-text[data-v-1cb7f60c] {
+.container .none .default .left uni-text[data-v-1cb7f60c],
+.container .detail .default .left uni-text[data-v-1cb7f60c] {
   font-size: 1.5625rem;
-  font-weight: normal;
   font-family: "华文楷体";
 }
-.container .none .default .right[data-v-1cb7f60c], .container .detail .default .right[data-v-1cb7f60c] {
+.container .none .default .right[data-v-1cb7f60c],
+.container .detail .default .right[data-v-1cb7f60c] {
   margin-left: 1.5625rem;
   display: flex;
 }
-.container .none .default .right .rImg[data-v-1cb7f60c], .container .detail .default .right .rImg[data-v-1cb7f60c] {
+.container .none .default .right .rImg[data-v-1cb7f60c],
+.container .detail .default .right .rImg[data-v-1cb7f60c] {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,11 +241,107 @@
   background-color: #2680eb;
   flex-shrink: 0;
 }
-.container .none .default .right .rImg uni-text[data-v-1cb7f60c], .container .detail .default .right .rImg uni-text[data-v-1cb7f60c] {
+.container .none .default .right .rImg uni-text[data-v-1cb7f60c],
+.container .detail .default .right .rImg uni-text[data-v-1cb7f60c] {
   font-size: 1.875rem;
 }
-.container .none .default .right .vir[data-v-1cb7f60c], .container .detail .default .right .vir[data-v-1cb7f60c] {
+.container .none .default .right .vir[data-v-1cb7f60c],
+.container .detail .default .right .vir[data-v-1cb7f60c] {
   color: #666666;
   font-size: 0.9375rem;
   margin: 0.15625rem 0 0 0.46875rem;
+}
+.container .none[data-v-1cb7f60c] {
+  margin-bottom: 0.625rem;
+}
+.container .detail[data-v-1cb7f60c] {
+  margin-top: 0;
+}
+.container .detail .spaceItem[data-v-1cb7f60c] {
+  box-sizing: border-box;
+  margin: 1.25rem 0.3125rem;
+  margin-left: 0;
+  height: 9.375rem;
+  display: flex;
+  justify-content: space-between;
+}
+.container .detail .spaceItem .scrollLeft[data-v-1cb7f60c] {
+  height: 100%;
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+.container .detail .spaceItem .scrollLeft .lt[data-v-1cb7f60c] {
+  width: 3.75rem;
+  font-size: 1.25rem;
+  font-family: STKaiti;
+}
+.container .detail .spaceItem .scrollLeft .rt[data-v-1cb7f60c] {
+  width: 100%;
+  height: 100%;
+}
+.container .detail .spaceItem .scrollLeft .rt uni-image[data-v-1cb7f60c] {
+  vertical-align: middle;
+  margin-left: 0.0625rem;
+  margin-top: 0.0625rem;
+}
+.container .detail .spaceItem .scrollRight[data-v-1cb7f60c] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 0.3125rem;
+  font-size: 0.875rem;
+  height: 9.375rem;
+}
+.container .detail .spaceItem .scrollRight uni-text[data-v-1cb7f60c] {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  font-family: STKaiti;
+  /* 设置文本超出内容省略号显示 */
+  text-overflow: ellipsis;
+  /* 可以换行 */
+  word-wrap: break-word;
+  /* 超出不换行 */
+  white-space: pre-wrap;
+}
+.container .detail .spaceItem .scrollRight .editBox[data-v-1cb7f60c] {
+  height: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+}
+.container .detail .spaceItem .scrollRight .editBox .boxRt[data-v-1cb7f60c] {
+  position: absolute;
+  right: 0;
+  font-size: 1.25rem;
+  background-color: #f7f7f7;
+  padding: 0.03125rem 0.15625rem;
+  display: flex;
+  justify-content: center;
+  height: 1.5625rem;
+  align-items: center;
+  margin-top: 0.15625rem;
+}
+.container .detail .spaceItem .scrollRight .editBox .boxLt[data-v-1cb7f60c] {
+  display: none;
+}
+.container .detail .spaceItem .scrollRight .editBox .imp[data-v-1cb7f60c] {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 1.5625rem;
+  color: #fff;
+  background-color: #4c4c4c;
+  border-radius: 0.3125rem;
+  font-size: 0.625rem;
+  overflow: hidden;
+}
+.container .detail .spaceItem .scrollRight .editBox .imp .l[data-v-1cb7f60c], .container .detail .spaceItem .scrollRight .editBox .imp .c[data-v-1cb7f60c], .container .detail .spaceItem .scrollRight .editBox .imp .r[data-v-1cb7f60c] {
+  float: left;
+  width: 33.3%;
+  text-align: center;
 }

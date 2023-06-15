@@ -163,8 +163,6 @@
       will-change: transform
     }
 
-    ;
-
     .navBar {
       margin-top: 15rpx;
       display: flex;

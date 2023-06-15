@@ -86,8 +86,7 @@
 <style>
   /*每个页面公共css */
   @import '@/static/iconfont/font/iconfont.css';
- @import '@/static/css/touch.css';
-
+@import '@/static/css/touch.css';
   /* 这个高度我们得手动去掉，否则纵向滚动做不了，它会撑开盒子高度导致两个滚动条 */
   :deep(.uni-app--showtabbar uni-page-wrapper::after) {
     display: none !important;

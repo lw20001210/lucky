@@ -130,18 +130,15 @@ onLoad((option)=>{
           left: 10rpx;
         }
       }
-
       .password {
         margin-top: 30rpx;
       }
     }
-
     .forget {
       color: #707070;
       margin-left: 72%;
       font-family: FangSong;
     }
-
     .ability {
       margin-top: 65rpx;
 
@@ -150,7 +147,6 @@ onLoad((option)=>{
         margin: 15rpx 0;
       }
     }
-
     .distance {
       margin: 65rpx 0;
       text-align: center;

@@ -12,5 +12,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/luckly/pages/video/video.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/lucky/pages/video/video.vue"]]);
 wx.createPage(MiniProgramPage);

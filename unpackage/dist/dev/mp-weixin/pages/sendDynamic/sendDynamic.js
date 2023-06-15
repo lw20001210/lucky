@@ -14,7 +14,7 @@ const _sfc_main = {
   __name: "sendDynamic",
   setup(__props) {
     const mySpace = pinia_userInfo_mySpace.mySpaceStore();
-    const { id, content, statu } = common_vendor.storeToRefs(mySpace);
+    const { id, content, statu, position } = common_vendor.storeToRefs(mySpace);
     let headObj = common_vendor.ref({
       path: "/pages/selfStar/selfStar"
     });
@@ -60,12 +60,24 @@ const _sfc_main = {
       common_vendor.index.chooseLocation({
         success: function(res) {
           console.log(res);
+          position.value = res.name;
+          console.log("位置名称：" + res.name);
+          console.log("详细地址：" + res.address);
+          console.log("纬度：" + res.latitude);
+          console.log("经度：" + res.longitude);
         },
         fail: function(res) {
           console.log(res);
         }
       });
     }
+    const positionRes = common_vendor.computed(() => {
+      if (position.value == "") {
+        return "所在位置";
+      } else {
+        return position.value;
+      }
+    });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
@@ -79,12 +91,13 @@ const _sfc_main = {
           fileMediatype: "image",
           mode: "grid"
         }),
-        f: common_vendor.o(getLocation),
-        g: common_vendor.t(common_vendor.unref(powerRes)),
-        h: common_vendor.o(selectPower)
+        f: common_vendor.t(common_vendor.unref(positionRes)),
+        g: common_vendor.o(getLocation),
+        h: common_vendor.t(common_vendor.unref(powerRes)),
+        i: common_vendor.o(selectPower)
       };
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/sendDynamic/sendDynamic.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/sendDynamic/sendDynamic.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -33,5 +33,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-70ae8d23"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/groupChat/groupChat.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-70ae8d23"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/groupChat/groupChat.vue"]]);
 wx.createPage(MiniProgramPage);

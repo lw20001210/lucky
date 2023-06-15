@@ -89,7 +89,6 @@ const md5 = require("md5");
 
   ```js
   // 这是一个全局的配置文件
-
   module.exports = {
     // 加密和解密 Token 的秘钥
     Keys: "lw",
@@ -230,7 +229,9 @@ const md5 = require("md5");
 
   ```js
   const express = require("express");
+  // 引入 cookie-parser 中间件
   const userRoute = require("./router/users");
+  const mySpaceRoute = require("./router/mySpace");
   const bodyParser = require("body-parser");
   const app = express();
   const cors = require("cors"); //跨域
@@ -246,8 +247,7 @@ const md5 = require("md5");
   app.use(bodyParser.urlencoded({ extended: true }));
 
   // 静态资源,方便我们前端以往网络图片形式访问
-  app.use("/static", express.static("static"));
-
+  app.use("/static/avatar", express.static("static/avatar"));
   // 定义 token 的解析中间件，并排除 user/register和user/login 相关路由
   app.use(
     expressJWT({ secret: config.Keys }).unless({
@@ -264,10 +264,14 @@ const md5 = require("md5");
       });
     res.send("服务器发生错误。");
   });
-
+  // 设置 SameSite 属性
+  // app.use((req, res, next) => {
+  //   res.set("SameSite", "Lax");
+  //   next();
+  // });
   // 挂载路由
   app.use("/user", userRoute);
-
+  app.use("/user", mySpaceRoute);
   // 连接数据库并同步数据表
   sequelize
     .authenticate()
@@ -278,7 +282,7 @@ const md5 = require("md5");
     .then(() => {
       console.log("数据表同步成功。");
       app.listen(3000, () => {
-        console.log(`应用程序已启动，访问地址: ${mainUrl}/user`);
+        console.log(`应用程序已启动，访问地址: ${mainUrl}`);
       });
     })
     .catch((error) => {
@@ -395,8 +399,53 @@ const md5 = require("md5");
       birthday,
       signature,
       ...newObj,
-    });​
+    });
   ```
+
+
+> 另一种写法
+
+```js
+查询
+let userRes = await UsersModel.findOne({
+    where: {
+      username: username,
+    },
+  });
+  let nickRes = await UsersModel.findOne({
+    where: {
+      nickname: nickname,
+    },
+  });
+  if (userRes)
+    return res.send({
+      msg: "用户已存在",
+      code: 304,
+    });
+----------------------------------------
+   添加
+     let result = await UsersModel.create({
+    nickname,
+    username,
+    sex,
+    phone,
+    email,
+    statu,
+    createTime,
+    birthday,
+    signature,
+    ...newObj,
+  });
+  if (result) {
+    res.send({
+      msg: "注册成功",
+      code: 200,
+      data: userRes,
+    });
+  } else {
+ -----------------------------------
+```
+
 
 
 ## 首页下拉框功能
@@ -779,3 +828,69 @@ onLoad(() => {
 ## 头像问题
 
 * 目前没用服务器。用的电脑ipv4地址，我的头像是根据ipV4地址+时间命名的，如果id地址变了，那么头像将会获取失败。
+
+## uni.chooseLocation地图失效问题:star:
+
+* 我是用的高德地图。在高德开放平台申请key，并填入到manifest.json的模块配置高德定位中
+
+* 需要填写SHA1。申请指南：https://ask.dcloud.net.cn/article/35777
+
+* 我们打包的时候要注意包名一致问题，申请key时的包名要与我们打包时候的包名一致。
+
+* 最好自定义打包。云打包会有问题。java环境我已经配置好，自定义打包证书根据软件提示申请来。
+
+* 注意h5和app端要单独配置
+
+  * app还有配置
+
+    ```js
+       "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+       "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+    ```
+
+  * app申请的是安卓端的key。h5申请的是web端的key
+
+    ```js
+     "h5" : {
+            "sdkConfigs" : {
+                "maps" : {
+                    "amap" : {
+                        // 高德地图秘钥（HBuilderX 3.6.0+）https://console.amap.com/dev/key/app
+                        "key" : "da49e4f20ddca2582bc37d403fb0912c",
+                        // 高德地图安全密钥（HBuilderX 3.6.0+）https://console.amap.com/dev/key/app
+                        "securityJsCode" : "a51a29eedb8370e0f047d65e13f07e39",
+                        // 高德地图安全密钥代理服务器地址（HBuilderX 3.6.0+）https://lbs.amap.com/api/jsapi-v2/guide/abc/prepare
+                        "serviceHost" : "http://192.168.85.20:3000/_AMapService/v4/maps'"
+                    }
+                }
+            }
+        }
+    ```
+
+* 一定要把map也配置上，否则app端地图不生效
+
+
+> 在谷歌地图不生效问题。是因为 Google Chrome浏览器默认禁止第三方 Cookie，在跨站点的 HTTP 请求不包含 SameSite 属性时，不会发送 Cookie。
+
+* 需要在后台配置
+
+  ```js
+  main.js
+  // 设置 SameSite 属性,否则地图出不来
+  app.use((req, res, next) => {
+    res.set("SameSite", "Lax");
+    next();
+  });
+  ```
+
+  ​
+
+## 个人空间模块，图片高度100%依旧滚动问题
+
+* ==问题==：图片底侧会有一个空白缝隙，原因是行内块元素会和文子的基线对齐
+
+  > 解决方法有两种：
+  >
+  > 1.给图片添加vertical-align:middle/top/bottom；
+  >
+  > 2.将图片转为块级元素 display:block；

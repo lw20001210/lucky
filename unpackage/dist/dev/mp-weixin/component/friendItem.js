@@ -20,5 +20,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-dd3f64b3"], ["__file", "D:/新的开始/uniapp毕设/luckly/component/friendItem.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-dd3f64b3"], ["__file", "D:/新的开始/uniapp毕设/lucky/component/friendItem.vue"]]);
 wx.createComponent(Component);

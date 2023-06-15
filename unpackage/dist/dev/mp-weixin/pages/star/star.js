@@ -126,5 +126,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/star/star.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/star/star.vue"]]);
 wx.createPage(MiniProgramPage);

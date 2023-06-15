@@ -143,6 +143,7 @@
     watch
   } from 'vue';
   import Header from "@/component/header.vue";
+  import {mainUrl} from "@/utils/config.js"
   import {
     getLocal
   } from "@/utils/local.js";
@@ -229,8 +230,9 @@
       // 我这里直接在前端进行加密了，因为传给后端的时候
       // password: MD5(userInfo.password).toString()
     }
+    console.log(userInfo.avatar);
     uni.uploadFile({
-      url: 'http://192.168.212.20:3000/user/update',
+      url: `${mainUrl}/user/update`,
       filePath: userInfo.avatar,
       name: 'avatar',
       timeout: 1500,

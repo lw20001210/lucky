@@ -24,7 +24,7 @@ export const userStore = defineStore('user', {
     birthday: '',
     signature: '',
     statu: '',
-    id: ''
+    id: getLocal('id') ? getLocal('id') : ''
   }),
   getters: {},
   actions: {
@@ -32,6 +32,7 @@ export const userStore = defineStore('user', {
       Object.assign(this.$state, obj);
       if (obj) {
         setLocal('username', obj.username)
+         setLocal('id', obj.id)
       }
 
     },
@@ -52,7 +53,7 @@ export const userStore = defineStore('user', {
         uni.switchTab({
           url: '/pages/home/home'
         })
-      }
+    }
     },
     // 获取用户信息
     async getUserInfo() {

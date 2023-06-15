@@ -76,7 +76,7 @@ const _sfc_main = {
         // password: MD5(userInfo.password).toString()
       };
       common_vendor.index.uploadFile({
-        url: "http://192.168.39.20:3000/user/update",
+        url: "http://192.168.1.20:3000/user/update",
         filePath: userInfo.avatar,
         name: "avatar",
         timeout: 1500,
@@ -311,5 +311,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/editUser/editUser.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/editUser/editUser.vue"]]);
 wx.createPage(MiniProgramPage);

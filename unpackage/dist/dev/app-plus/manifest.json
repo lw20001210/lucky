@@ -129,6 +129,7 @@
         "geolocation": {
           "amap": {
             "__platform__": [
+              "ios",
               "android"
             ],
             "appkey_ios": "",
@@ -166,7 +167,7 @@
     "uni-app": {
       "control": "uni-v3",
       "vueVersion": "3",
-      "compilerVersion": "3.8.3",
+      "compilerVersion": "3.8.4",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
       "nvue": {

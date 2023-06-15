@@ -8,7 +8,7 @@
     </view>
     <view class="avatar">
       <uni-file-picker :del-icon="false" limit="1" :imageStyles="imageStyles" file-mediatype="image" @select="select"
-        disable-preview return-type="object">
+        disable-preview>
         <view class="content">
           <text class="iconfont">&#xe614</text>
           <text>选择头像</text>
@@ -57,12 +57,13 @@
   import { MD5 } from "crypto-js";
   import { onLoad} from '@dcloudio/uni-app';
   import { removeLocal, setLocal } from "@/utils/local.js";
+  import {mainUrl} from "@/utils/config.js";
   // 注册用户的数据
   let userInfo = reactive({
     username: '',
     password: '',
     nickname: '',
-    avatar: 'https://aliyun_id_photo_bucket.oss.aliyuncs.com/default_handsome.jpg'
+    avatar: ''
   })
   // 上传选中图片的样式数据
   let imageStyles = ref({
@@ -116,7 +117,7 @@
       password: MD5(userInfo.password).toString()
     }
     uni.uploadFile({
-      url: 'http://192.168.212.20:3000/user/register', 
+      url: `${mainUrl}/user/register`, 
       filePath: userInfo.avatar,
       name: 'avatar',
       timeout: 1000,

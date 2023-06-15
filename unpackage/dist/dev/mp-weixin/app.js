@@ -58,7 +58,7 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/luckly/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/lucky/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(pinia_index.pinia);

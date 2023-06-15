@@ -31,6 +31,7 @@ if (uni.restoreGlobal) {
 }
 (function(vue, shared) {
   "use strict";
+  const ON_SHOW = "onShow";
   const ON_LOAD = "onLoad";
   const ON_UNLOAD = "onUnload";
   function requireNativePlugin(name) {
@@ -49,6 +50,7 @@ if (uni.restoreGlobal) {
   const createHook = (lifecycle) => (hook, target = vue.getCurrentInstance()) => {
     !vue.isInSSRComponentSetup && vue.injectHook(lifecycle, hook, target);
   };
+  const onShow = /* @__PURE__ */ createHook(ON_SHOW);
   const onLoad = /* @__PURE__ */ createHook(ON_LOAD);
   const onUnload = /* @__PURE__ */ createHook(ON_UNLOAD);
   var isVue2 = false;
@@ -1530,11 +1532,11 @@ This will fail in production.`);
       }
     });
   }
-  const BASE_URL = "http://192.168.212.20:3000";
+  const mainUrl = "http://192.168.172.20:3000";
   const request = (url, method, data) => {
     return new Promise((resolve, reject) => {
       uni.request({
-        url: BASE_URL + url,
+        url: mainUrl + url,
         method,
         data,
         timeout: 2e3,
@@ -1566,7 +1568,7 @@ This will fail in production.`);
       birthday: "",
       signature: "",
       statu: "",
-      id: ""
+      id: getLocal("id") ? getLocal("id") : ""
     }),
     getters: {},
     actions: {
@@ -1574,6 +1576,7 @@ This will fail in production.`);
         Object.assign(this.$state, obj);
         if (obj) {
           setLocal("username", obj.username);
+          setLocal("id", obj.id);
         }
       },
       // 登录
@@ -1625,7 +1628,7 @@ This will fail in production.`);
           data: res
         } = await request("/user/update", "post", obj);
         this.getData(res.data);
-        formatAppLog("log", "at pinia/userInfo/userInfo.js:93", res.data);
+        formatAppLog("log", "at pinia/userInfo/userInfo.js:94", res.data);
       }
     }
   });
@@ -7581,7 +7584,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/login/login.vue"]]);
+  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/login/login.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -11056,7 +11059,7 @@ This will fail in production.`);
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$a], ["__scopeId", "data-v-bdfc07e0"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
+  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$a], ["__scopeId", "data-v-bdfc07e0"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
   const _sfc_main$r = {
     name: "uploadFile",
     emits: ["uploadFiles", "choose", "delFile"],
@@ -11275,7 +11278,7 @@ This will fail in production.`);
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$9], ["__scopeId", "data-v-a54939c6"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
+  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$9], ["__scopeId", "data-v-a54939c6"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
   const _sfc_main$q = {
     name: "uniFilePicker",
     components: {
@@ -11828,7 +11831,7 @@ This will fail in production.`);
       }, 8, ["readonly", "list-styles", "files-list", "showType", "delIcon", "onUploadFiles", "onChoose", "onDelFile"])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$8], ["__scopeId", "data-v-6223573f"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$8], ["__scopeId", "data-v-6223573f"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
   const _sfc_main$p = /* @__PURE__ */ vue.defineComponent({
     __name: "register",
     setup(__props) {
@@ -11836,7 +11839,7 @@ This will fail in production.`);
         username: "",
         password: "",
         nickname: "",
-        avatar: "https://aliyun_id_photo_bucket.oss.aliyuncs.com/default_handsome.jpg"
+        avatar: ""
       });
       let imageStyles = vue.ref({
         width: 98,
@@ -11846,7 +11849,7 @@ This will fail in production.`);
         }
       });
       onLoad(() => {
-        formatAppLog("log", "at pages/register/register.vue:76", "onload");
+        formatAppLog("log", "at pages/register/register.vue:77", "onload");
         setLocal("login", true);
       });
       function select(res) {
@@ -11881,14 +11884,14 @@ This will fail in production.`);
           password: cryptoJsExports.MD5(userInfo.password).toString()
         };
         uni.uploadFile({
-          url: "http://192.168.212.20:3000/user/register",
+          url: `${mainUrl}/user/register`,
           filePath: userInfo.avatar,
           name: "avatar",
           timeout: 1e3,
           formData: param,
           success: (res) => {
             let result = JSON.parse(res.data);
-            formatAppLog("log", "at pages/register/register.vue:126", result);
+            formatAppLog("log", "at pages/register/register.vue:127", result);
             if (result.code == 200) {
               showMsg(result.msg, 1e3, "loading");
               uni.reLaunch({
@@ -11926,8 +11929,7 @@ This will fail in production.`);
               imageStyles: vue.unref(imageStyles),
               "file-mediatype": "image",
               onSelect: select,
-              "disable-preview": "",
-              "return-type": "object"
+              "disable-preview": ""
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("view", { class: "content" }, [
@@ -12022,14 +12024,14 @@ This will fail in production.`);
       };
     }
   });
-  const PagesRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/register/register.vue"]]);
+  const PagesRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/register/register.vue"]]);
   const _sfc_main$o = {};
   function _sfc_render$7(_ctx, _cache) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "status_bar" }, [
       vue.createCommentVNode(" 这是状态栏。防止顶到手机信息栏 ")
     ]);
   }
-  const statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$7], ["__scopeId", "data-v-8caa3c28"], ["__file", "D:/新的开始/uniapp毕设/luckly/component/statusBar.vue"]]);
+  const statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$7], ["__scopeId", "data-v-8caa3c28"], ["__file", "D:/新的开始/uniapp毕设/lucky/component/statusBar.vue"]]);
   const _sfc_main$n = {
     __name: "header",
     props: ["obj"],
@@ -12089,7 +12091,7 @@ This will fail in production.`);
       };
     }
   };
-  const Header = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["__scopeId", "data-v-8548c3e5"], ["__file", "D:/新的开始/uniapp毕设/luckly/component/header.vue"]]);
+  const Header = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["__scopeId", "data-v-8548c3e5"], ["__file", "D:/新的开始/uniapp毕设/lucky/component/header.vue"]]);
   const mySpaceStore = defineStore("mySpace", {
     state: () => ({
       id: "",
@@ -12100,14 +12102,57 @@ This will fail in production.`);
       },
       position: "",
       statu: "",
-      createTime: ""
-    })
+      createTime: "",
+      flag: "a",
+      totalList: []
+    }),
+    actions: {
+      getData(obj) {
+        this.totalList = [...obj].reverse();
+      },
+      //获取用户动态信息
+      async getmySpaceInfo(uid) {
+        let {
+          data: res
+        } = await request("/user/getMySpaceInfo", "get", {
+          keyId: uid
+        });
+        formatAppLog("log", "at pinia/userInfo/mySpace.js:33", res);
+        if (res.code == 404) {
+          showMsg(res.msg);
+        } else if (res.code == 200) {
+          this.getData(res.data);
+        } else {
+          showMsg("数据获取失败");
+        }
+        flag = "a";
+      },
+      async removeSpace(id, uid) {
+        let {
+          data: res
+        } = await request("/user/deleteSpace", "delete", {
+          id
+        });
+        if (res.code == "200") {
+          showMsg(res.msg, 1500, "loading");
+          this.getmySpaceInfo(uid);
+        } else {
+          return showMsg("删除动态失败");
+        }
+      }
+    }
   });
   const _sfc_main$m = {
     __name: "sendDynamic",
     setup(__props) {
       const mySpace = mySpaceStore();
-      const { id, content, statu, position } = storeToRefs(mySpace);
+      const userRef = userStore();
+      const {
+        id,
+        content,
+        statu,
+        position
+      } = storeToRefs(mySpace);
       let headObj = vue.ref({
         path: "/pages/selfStar/selfStar"
       });
@@ -12117,12 +12162,8 @@ This will fail in production.`);
         });
       }
       function bindTextAreaBlur(e) {
-        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:63", e.detail.value);
+        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:88", e.detail.value);
         content.value.title = e.detail.value;
-      }
-      function select(e) {
-        formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:68", e);
-        content.value.imgArr = e.tempFilePaths;
       }
       const powerRes = vue.computed(() => {
         if (statu.value == "0") {
@@ -12137,30 +12178,26 @@ This will fail in production.`);
         uni.showActionSheet({
           itemList: ["私密", "所有人可见"],
           success: function(res) {
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:85", "选中了第" + res.tapIndex + "个按钮");
             if (res.tapIndex == "0") {
               statu.value = res.tapIndex;
             } else if (res.tapIndex == "1") {
               statu.value = res.tapIndex;
+            } else {
+              statu.value = 2;
             }
           },
           fail: function(res) {
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:93", res.errMsg);
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:116", res.errMsg);
           }
         });
       }
       function getLocation() {
         uni.chooseLocation({
           success: function(res) {
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:101", res);
             position.value = res.name;
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:103", "位置名称：" + res.name);
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:104", "详细地址：" + res.address);
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:105", "纬度：" + res.latitude);
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:106", "经度：" + res.longitude);
           },
           fail: function(res) {
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:109", res);
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:128", res);
           }
         });
       }
@@ -12170,6 +12207,59 @@ This will fail in production.`);
         } else {
           return position.value;
         }
+      });
+      function select(e) {
+        if (e.tempFilePaths) {
+          content.value.imgArr = e.tempFilePaths;
+        } else {
+          content.value.imgArr = [];
+        }
+      }
+      function distribute() {
+        let obj = {
+          uid: userRef.id,
+          content: content.value.title,
+          statu: statu.value,
+          position: position.value
+        };
+        if (content.value.title == "")
+          return showMsg("未填写发布内容");
+        if (statu.value != 0 && statu.value != 1)
+          return showMsg("未选择权限");
+        const fileList = content.value.imgArr.map((item, index) => {
+          return {
+            name: index,
+            uri: item
+          };
+        });
+        uni.uploadFile({
+          url: `${mainUrl}/user/sedSpace`,
+          files: fileList,
+          formData: obj,
+          timeout: 8e3,
+          header: {
+            authorization: getLocal("token") ? getLocal("token") : ""
+          },
+          success: (res) => {
+            let result = JSON.parse(res.data);
+            if (result.code == 200) {
+              showMsg(result.msg, 1e3, "loading");
+            }
+            uni.redirectTo({
+              url: "/pages/selfStar/selfStar"
+            });
+          },
+          fail: (err) => {
+            return showMsg("发布失败", 1e3, "loading");
+          }
+        });
+      }
+      onShow(() => {
+        statu.value = "2";
+      });
+      onUnload(() => {
+        position.value = "";
+        statu.value = "2";
       });
       return (_ctx, _cache) => {
         const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$3);
@@ -12182,7 +12272,7 @@ This will fail in production.`);
               vue.createElementVNode("text", null, "发表说说")
             ]),
             right: vue.withCtx(() => [
-              vue.createElementVNode("text", null, "发表")
+              vue.createElementVNode("text", { onClick: distribute }, "发表")
             ]),
             _: 1
             /* STABLE */
@@ -12254,7 +12344,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesSendDynamicSendDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/sendDynamic/sendDynamic.vue"]]);
+  const PagesSendDynamicSendDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/sendDynamic/sendDynamic.vue"]]);
   const img$1 = "/static/images/sys.png";
   const _sfc_main$l = {
     __name: "sys",
@@ -12298,29 +12388,351 @@ This will fail in production.`);
       };
     }
   };
-  const PagesSysSys = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["__scopeId", "data-v-e8c9a334"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/sys/sys.vue"]]);
+  const PagesSysSys = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["__scopeId", "data-v-e8c9a334"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/sys/sys.vue"]]);
+  var dayjs_minExports = {};
+  var dayjs_min = {
+    get exports() {
+      return dayjs_minExports;
+    },
+    set exports(v2) {
+      dayjs_minExports = v2;
+    }
+  };
+  (function(module, exports) {
+    !function(t2, e) {
+      module.exports = e();
+    }(commonjsGlobal, function() {
+      var t2 = 1e3, e = 6e4, n2 = 36e5, r2 = "millisecond", i2 = "second", s2 = "minute", u2 = "hour", a2 = "day", o2 = "week", f2 = "month", h2 = "quarter", c2 = "year", d2 = "date", l2 = "Invalid Date", $2 = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y2 = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M2 = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t3) {
+        var e2 = ["th", "st", "nd", "rd"], n3 = t3 % 100;
+        return "[" + t3 + (e2[(n3 - 20) % 10] || e2[n3] || e2[0]) + "]";
+      } }, m2 = function(t3, e2, n3) {
+        var r3 = String(t3);
+        return !r3 || r3.length >= e2 ? t3 : "" + Array(e2 + 1 - r3.length).join(n3) + t3;
+      }, v2 = { s: m2, z: function(t3) {
+        var e2 = -t3.utcOffset(), n3 = Math.abs(e2), r3 = Math.floor(n3 / 60), i3 = n3 % 60;
+        return (e2 <= 0 ? "+" : "-") + m2(r3, 2, "0") + ":" + m2(i3, 2, "0");
+      }, m: function t3(e2, n3) {
+        if (e2.date() < n3.date())
+          return -t3(n3, e2);
+        var r3 = 12 * (n3.year() - e2.year()) + (n3.month() - e2.month()), i3 = e2.clone().add(r3, f2), s3 = n3 - i3 < 0, u3 = e2.clone().add(r3 + (s3 ? -1 : 1), f2);
+        return +(-(r3 + (n3 - i3) / (s3 ? i3 - u3 : u3 - i3)) || 0);
+      }, a: function(t3) {
+        return t3 < 0 ? Math.ceil(t3) || 0 : Math.floor(t3);
+      }, p: function(t3) {
+        return { M: f2, y: c2, w: o2, d: a2, D: d2, h: u2, m: s2, s: i2, ms: r2, Q: h2 }[t3] || String(t3 || "").toLowerCase().replace(/s$/, "");
+      }, u: function(t3) {
+        return void 0 === t3;
+      } }, g2 = "en", D2 = {};
+      D2[g2] = M2;
+      var p2 = function(t3) {
+        return t3 instanceof _2;
+      }, S2 = function t3(e2, n3, r3) {
+        var i3;
+        if (!e2)
+          return g2;
+        if ("string" == typeof e2) {
+          var s3 = e2.toLowerCase();
+          D2[s3] && (i3 = s3), n3 && (D2[s3] = n3, i3 = s3);
+          var u3 = e2.split("-");
+          if (!i3 && u3.length > 1)
+            return t3(u3[0]);
+        } else {
+          var a3 = e2.name;
+          D2[a3] = e2, i3 = a3;
+        }
+        return !r3 && i3 && (g2 = i3), i3 || !r3 && g2;
+      }, w2 = function(t3, e2) {
+        if (p2(t3))
+          return t3.clone();
+        var n3 = "object" == typeof e2 ? e2 : {};
+        return n3.date = t3, n3.args = arguments, new _2(n3);
+      }, O = v2;
+      O.l = S2, O.i = p2, O.w = function(t3, e2) {
+        return w2(t3, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
+      };
+      var _2 = function() {
+        function M3(t3) {
+          this.$L = S2(t3.locale, null, true), this.parse(t3);
+        }
+        var m3 = M3.prototype;
+        return m3.parse = function(t3) {
+          this.$d = function(t4) {
+            var e2 = t4.date, n3 = t4.utc;
+            if (null === e2)
+              return /* @__PURE__ */ new Date(NaN);
+            if (O.u(e2))
+              return /* @__PURE__ */ new Date();
+            if (e2 instanceof Date)
+              return new Date(e2);
+            if ("string" == typeof e2 && !/Z$/i.test(e2)) {
+              var r3 = e2.match($2);
+              if (r3) {
+                var i3 = r3[2] - 1 || 0, s3 = (r3[7] || "0").substring(0, 3);
+                return n3 ? new Date(Date.UTC(r3[1], i3, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s3)) : new Date(r3[1], i3, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s3);
+              }
+            }
+            return new Date(e2);
+          }(t3), this.$x = t3.x || {}, this.init();
+        }, m3.init = function() {
+          var t3 = this.$d;
+          this.$y = t3.getFullYear(), this.$M = t3.getMonth(), this.$D = t3.getDate(), this.$W = t3.getDay(), this.$H = t3.getHours(), this.$m = t3.getMinutes(), this.$s = t3.getSeconds(), this.$ms = t3.getMilliseconds();
+        }, m3.$utils = function() {
+          return O;
+        }, m3.isValid = function() {
+          return !(this.$d.toString() === l2);
+        }, m3.isSame = function(t3, e2) {
+          var n3 = w2(t3);
+          return this.startOf(e2) <= n3 && n3 <= this.endOf(e2);
+        }, m3.isAfter = function(t3, e2) {
+          return w2(t3) < this.startOf(e2);
+        }, m3.isBefore = function(t3, e2) {
+          return this.endOf(e2) < w2(t3);
+        }, m3.$g = function(t3, e2, n3) {
+          return O.u(t3) ? this[e2] : this.set(n3, t3);
+        }, m3.unix = function() {
+          return Math.floor(this.valueOf() / 1e3);
+        }, m3.valueOf = function() {
+          return this.$d.getTime();
+        }, m3.startOf = function(t3, e2) {
+          var n3 = this, r3 = !!O.u(e2) || e2, h3 = O.p(t3), l3 = function(t4, e3) {
+            var i3 = O.w(n3.$u ? Date.UTC(n3.$y, e3, t4) : new Date(n3.$y, e3, t4), n3);
+            return r3 ? i3 : i3.endOf(a2);
+          }, $3 = function(t4, e3) {
+            return O.w(n3.toDate()[t4].apply(n3.toDate("s"), (r3 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n3);
+          }, y3 = this.$W, M4 = this.$M, m4 = this.$D, v3 = "set" + (this.$u ? "UTC" : "");
+          switch (h3) {
+            case c2:
+              return r3 ? l3(1, 0) : l3(31, 11);
+            case f2:
+              return r3 ? l3(1, M4) : l3(0, M4 + 1);
+            case o2:
+              var g3 = this.$locale().weekStart || 0, D3 = (y3 < g3 ? y3 + 7 : y3) - g3;
+              return l3(r3 ? m4 - D3 : m4 + (6 - D3), M4);
+            case a2:
+            case d2:
+              return $3(v3 + "Hours", 0);
+            case u2:
+              return $3(v3 + "Minutes", 1);
+            case s2:
+              return $3(v3 + "Seconds", 2);
+            case i2:
+              return $3(v3 + "Milliseconds", 3);
+            default:
+              return this.clone();
+          }
+        }, m3.endOf = function(t3) {
+          return this.startOf(t3, false);
+        }, m3.$set = function(t3, e2) {
+          var n3, o3 = O.p(t3), h3 = "set" + (this.$u ? "UTC" : ""), l3 = (n3 = {}, n3[a2] = h3 + "Date", n3[d2] = h3 + "Date", n3[f2] = h3 + "Month", n3[c2] = h3 + "FullYear", n3[u2] = h3 + "Hours", n3[s2] = h3 + "Minutes", n3[i2] = h3 + "Seconds", n3[r2] = h3 + "Milliseconds", n3)[o3], $3 = o3 === a2 ? this.$D + (e2 - this.$W) : e2;
+          if (o3 === f2 || o3 === c2) {
+            var y3 = this.clone().set(d2, 1);
+            y3.$d[l3]($3), y3.init(), this.$d = y3.set(d2, Math.min(this.$D, y3.daysInMonth())).$d;
+          } else
+            l3 && this.$d[l3]($3);
+          return this.init(), this;
+        }, m3.set = function(t3, e2) {
+          return this.clone().$set(t3, e2);
+        }, m3.get = function(t3) {
+          return this[O.p(t3)]();
+        }, m3.add = function(r3, h3) {
+          var d3, l3 = this;
+          r3 = Number(r3);
+          var $3 = O.p(h3), y3 = function(t3) {
+            var e2 = w2(l3);
+            return O.w(e2.date(e2.date() + Math.round(t3 * r3)), l3);
+          };
+          if ($3 === f2)
+            return this.set(f2, this.$M + r3);
+          if ($3 === c2)
+            return this.set(c2, this.$y + r3);
+          if ($3 === a2)
+            return y3(1);
+          if ($3 === o2)
+            return y3(7);
+          var M4 = (d3 = {}, d3[s2] = e, d3[u2] = n2, d3[i2] = t2, d3)[$3] || 1, m4 = this.$d.getTime() + r3 * M4;
+          return O.w(m4, this);
+        }, m3.subtract = function(t3, e2) {
+          return this.add(-1 * t3, e2);
+        }, m3.format = function(t3) {
+          var e2 = this, n3 = this.$locale();
+          if (!this.isValid())
+            return n3.invalidDate || l2;
+          var r3 = t3 || "YYYY-MM-DDTHH:mm:ssZ", i3 = O.z(this), s3 = this.$H, u3 = this.$m, a3 = this.$M, o3 = n3.weekdays, f3 = n3.months, h3 = function(t4, n4, i4, s4) {
+            return t4 && (t4[n4] || t4(e2, r3)) || i4[n4].slice(0, s4);
+          }, c3 = function(t4) {
+            return O.s(s3 % 12 || 12, t4, "0");
+          }, d3 = n3.meridiem || function(t4, e3, n4) {
+            var r4 = t4 < 12 ? "AM" : "PM";
+            return n4 ? r4.toLowerCase() : r4;
+          }, $3 = { YY: String(this.$y).slice(-2), YYYY: O.s(this.$y, 4, "0"), M: a3 + 1, MM: O.s(a3 + 1, 2, "0"), MMM: h3(n3.monthsShort, a3, f3, 3), MMMM: h3(f3, a3), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h3(n3.weekdaysMin, this.$W, o3, 2), ddd: h3(n3.weekdaysShort, this.$W, o3, 3), dddd: o3[this.$W], H: String(s3), HH: O.s(s3, 2, "0"), h: c3(1), hh: c3(2), a: d3(s3, u3, true), A: d3(s3, u3, false), m: String(u3), mm: O.s(u3, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i3 };
+          return r3.replace(y2, function(t4, e3) {
+            return e3 || $3[t4] || i3.replace(":", "");
+          });
+        }, m3.utcOffset = function() {
+          return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
+        }, m3.diff = function(r3, d3, l3) {
+          var $3, y3 = O.p(d3), M4 = w2(r3), m4 = (M4.utcOffset() - this.utcOffset()) * e, v3 = this - M4, g3 = O.m(this, M4);
+          return g3 = ($3 = {}, $3[c2] = g3 / 12, $3[f2] = g3, $3[h2] = g3 / 3, $3[o2] = (v3 - m4) / 6048e5, $3[a2] = (v3 - m4) / 864e5, $3[u2] = v3 / n2, $3[s2] = v3 / e, $3[i2] = v3 / t2, $3)[y3] || v3, l3 ? g3 : O.a(g3);
+        }, m3.daysInMonth = function() {
+          return this.endOf(f2).$D;
+        }, m3.$locale = function() {
+          return D2[this.$L];
+        }, m3.locale = function(t3, e2) {
+          if (!t3)
+            return this.$L;
+          var n3 = this.clone(), r3 = S2(t3, e2, true);
+          return r3 && (n3.$L = r3), n3;
+        }, m3.clone = function() {
+          return O.w(this.$d, this);
+        }, m3.toDate = function() {
+          return new Date(this.valueOf());
+        }, m3.toJSON = function() {
+          return this.isValid() ? this.toISOString() : null;
+        }, m3.toISOString = function() {
+          return this.$d.toISOString();
+        }, m3.toString = function() {
+          return this.$d.toUTCString();
+        }, M3;
+      }(), T2 = _2.prototype;
+      return w2.prototype = T2, [["$ms", r2], ["$s", i2], ["$m", s2], ["$H", u2], ["$W", a2], ["$M", f2], ["$y", c2], ["$D", d2]].forEach(function(t3) {
+        T2[t3[1]] = function(e2) {
+          return this.$g(e2, t3[0], t3[1]);
+        };
+      }), w2.extend = function(t3, e2) {
+        return t3.$i || (t3(e2, _2, w2), t3.$i = true), w2;
+      }, w2.locale = S2, w2.isDayjs = p2, w2.unix = function(t3) {
+        return w2(1e3 * t3);
+      }, w2.en = D2[g2], w2.Ls = D2, w2.p = {}, w2;
+    });
+  })(dayjs_min);
+  const dayjs = dayjs_minExports;
+  var relativeTimeExports = {};
+  var relativeTime$1 = {
+    get exports() {
+      return relativeTimeExports;
+    },
+    set exports(v2) {
+      relativeTimeExports = v2;
+    }
+  };
+  (function(module, exports) {
+    !function(r2, e) {
+      module.exports = e();
+    }(commonjsGlobal, function() {
+      return function(r2, e, t2) {
+        r2 = r2 || {};
+        var n2 = e.prototype, o2 = { future: "in %s", past: "%s ago", s: "a few seconds", m: "a minute", mm: "%d minutes", h: "an hour", hh: "%d hours", d: "a day", dd: "%d days", M: "a month", MM: "%d months", y: "a year", yy: "%d years" };
+        function i2(r3, e2, t3, o3) {
+          return n2.fromToBase(r3, e2, t3, o3);
+        }
+        t2.en.relativeTime = o2, n2.fromToBase = function(e2, n3, i3, d3, u2) {
+          for (var f2, a2, s2, l2 = i3.$locale().relativeTime || o2, h2 = r2.thresholds || [{ l: "s", r: 44, d: "second" }, { l: "m", r: 89 }, { l: "mm", r: 44, d: "minute" }, { l: "h", r: 89 }, { l: "hh", r: 21, d: "hour" }, { l: "d", r: 35 }, { l: "dd", r: 25, d: "day" }, { l: "M", r: 45 }, { l: "MM", r: 10, d: "month" }, { l: "y", r: 17 }, { l: "yy", d: "year" }], m2 = h2.length, c2 = 0; c2 < m2; c2 += 1) {
+            var y2 = h2[c2];
+            y2.d && (f2 = d3 ? t2(e2).diff(i3, y2.d, true) : i3.diff(e2, y2.d, true));
+            var p2 = (r2.rounding || Math.round)(Math.abs(f2));
+            if (s2 = f2 > 0, p2 <= y2.r || !y2.r) {
+              p2 <= 1 && c2 > 0 && (y2 = h2[c2 - 1]);
+              var v2 = l2[y2.l];
+              u2 && (p2 = u2("" + p2)), a2 = "string" == typeof v2 ? v2.replace("%d", p2) : v2(p2, n3, y2.l, s2);
+              break;
+            }
+          }
+          if (n3)
+            return a2;
+          var M2 = s2 ? l2.future : l2.past;
+          return "function" == typeof M2 ? M2(a2) : M2.replace("%s", a2);
+        }, n2.to = function(r3, e2) {
+          return i2(r3, e2, this, true);
+        }, n2.from = function(r3, e2) {
+          return i2(r3, e2, this);
+        };
+        var d2 = function(r3) {
+          return r3.$u ? t2.utc() : t2();
+        };
+        n2.toNow = function(r3) {
+          return this.to(d2(this), r3);
+        }, n2.fromNow = function(r3) {
+          return this.from(d2(this), r3);
+        };
+      };
+    });
+  })(relativeTime$1);
+  const relativeTime = relativeTimeExports;
+  var zhCnExports = {};
+  var zhCn = {
+    get exports() {
+      return zhCnExports;
+    },
+    set exports(v2) {
+      zhCnExports = v2;
+    }
+  };
+  (function(module, exports) {
+    !function(e, _2) {
+      module.exports = _2(dayjs_minExports);
+    }(commonjsGlobal, function(e) {
+      function _2(e2) {
+        return e2 && "object" == typeof e2 && "default" in e2 ? e2 : { default: e2 };
+      }
+      var t2 = _2(e), d2 = { name: "zh-cn", weekdays: "星期日_星期一_星期二_星期三_星期四_星期五_星期六".split("_"), weekdaysShort: "周日_周一_周二_周三_周四_周五_周六".split("_"), weekdaysMin: "日_一_二_三_四_五_六".split("_"), months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_"), monthsShort: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"), ordinal: function(e2, _3) {
+        return "W" === _3 ? e2 + "周" : e2 + "日";
+      }, weekStart: 1, yearStart: 4, formats: { LT: "HH:mm", LTS: "HH:mm:ss", L: "YYYY/MM/DD", LL: "YYYY年M月D日", LLL: "YYYY年M月D日Ah点mm分", LLLL: "YYYY年M月D日ddddAh点mm分", l: "YYYY/M/D", ll: "YYYY年M月D日", lll: "YYYY年M月D日 HH:mm", llll: "YYYY年M月D日dddd HH:mm" }, relativeTime: { future: "%s内", past: "%s前", s: "几秒", m: "1 分钟", mm: "%d 分钟", h: "1 小时", hh: "%d 小时", d: "1 天", dd: "%d 天", M: "1 个月", MM: "%d 个月", y: "1 年", yy: "%d 年" }, meridiem: function(e2, _3) {
+        var t3 = 100 * e2 + _3;
+        return t3 < 600 ? "凌晨" : t3 < 900 ? "早上" : t3 < 1100 ? "上午" : t3 < 1300 ? "中午" : t3 < 1800 ? "下午" : "晚上";
+      } };
+      return t2.default.locale(d2, null, true), d2;
+    });
+  })(zhCn);
+  dayjs.locale("zh-cn");
+  dayjs.extend(relativeTime);
+  function dayFormat(val) {
+    const targetTime = dayjs.unix(val / 1e3);
+    return dayjs().to(dayjs(targetTime));
+  }
   const _sfc_main$k = {
     __name: "selfStar",
     setup(__props) {
-      let List = vue.ref([]);
+      const mySpacePower = new mySpaceStore();
+      const userPower = new userStore();
+      const {
+        avatar,
+        nickname,
+        id
+      } = storeToRefs(userPower);
+      const {
+        totalList,
+        flag: flag2
+      } = storeToRefs(mySpacePower);
       let headObj = vue.ref({
         leftFont: "icon-zuojiantou-copy",
         title: "",
         rightFont: "",
         path: "/pages/star/star"
       });
-      const userPower = new userStore();
-      onLoad(() => {
-        userPower.getUserInfo();
-      });
-      const {
-        avatar,
-        nickname
-      } = storeToRefs(userPower);
       function goSendDynamic() {
         uni.navigateTo({
           url: "/pages/sendDynamic/sendDynamic"
         });
+      }
+      let wh = vue.ref();
+      function getHeight() {
+        const val = uni.getSystemInfoSync();
+        wh.value = val.windowHeight - 340;
+        formatAppLog("log", "at pages/selfStar/selfStar.vue:132", val.windowHeight);
+      }
+      vue.onMounted(() => {
+        getHeight();
+      });
+      onLoad(() => {
+        userPower.getUserInfo();
+        mySpacePower.getmySpaceInfo(id.value);
+      });
+      function editContent(index) {
+        flag2.value = index;
+      }
+      function removeItem(id2, uid) {
+        formatAppLog("log", "at pages/selfStar/selfStar.vue:147", id2, uid);
+        mySpacePower.removeSpace(id2, uid);
       }
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
@@ -12328,6 +12740,9 @@ This will fail in production.`);
             vue.createVNode(statusBar, { class: "important" }),
             vue.createElementVNode("view", { class: "content" }, [
               vue.createVNode(Header, { obj: vue.unref(headObj) }, {
+                center: vue.withCtx(() => [
+                  vue.createElementVNode("text", { style: { "font-size": "30rpx", "color": "#fff" } }, "个人空间")
+                ]),
                 right: vue.withCtx(() => [
                   vue.createElementVNode("text", {
                     onClick: goSendDynamic,
@@ -12341,7 +12756,7 @@ This will fail in production.`);
               vue.createElementVNode("view", { class: "avatar" }, [
                 vue.createElementVNode(
                   "text",
-                  null,
+                  { class: "rootName" },
                   vue.toDisplayString(vue.unref(nickname)),
                   1
                   /* TEXT */
@@ -12352,10 +12767,7 @@ This will fail in production.`);
               ])
             ])
           ]),
-          vue.unref(List) ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 0,
-            class: "none"
-          }, [
+          vue.createElementVNode("view", { class: "none" }, [
             vue.createElementVNode("view", { class: "default" }, [
               vue.createElementVNode("view", { class: "left" }, [
                 vue.createElementVNode("text", null, "今天")
@@ -12370,15 +12782,111 @@ This will fail in production.`);
                 vue.createElementVNode("text", { class: "vir" }, "今天写点什么呢...")
               ])
             ])
-          ])) : (vue.openBlock(), vue.createElementBlock("view", {
-            key: 1,
+          ]),
+          vue.unref(totalList) != [] ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
             class: "detail"
-          }, " 有 "))
+          }, [
+            vue.createElementVNode(
+              "scroll-view",
+              {
+                "scroll-y": "true",
+                style: vue.normalizeStyle({ height: vue.unref(wh) + "px" })
+              },
+              [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList(vue.unref(totalList), (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      key: index,
+                      class: "spaceItem"
+                    }, [
+                      vue.createElementVNode("view", { class: "scrollLeft" }, [
+                        vue.createElementVNode(
+                          "view",
+                          { class: "lt" },
+                          vue.toDisplayString(vue.unref(dayFormat)(item.createTime)),
+                          1
+                          /* TEXT */
+                        ),
+                        item.content.imgArr != [] ? (vue.openBlock(), vue.createElementBlock("view", {
+                          key: 0,
+                          class: "rt"
+                        }, [
+                          (vue.openBlock(true), vue.createElementBlock(
+                            vue.Fragment,
+                            null,
+                            vue.renderList(item.content.imgArr, (img2, inde) => {
+                              return vue.openBlock(), vue.createElementBlock("image", {
+                                key: index,
+                                src: img2,
+                                style: vue.normalizeStyle({
+                                  width: item.content.imgArr.length == 1 ? "98%" : item.content.imgArr.length == 2 ? "48%" : "31%",
+                                  height: item.content.imgArr.length <= 3 ? "98%" : item.content.imgArr.length <= 6 ? "48%" : "31%"
+                                })
+                              }, null, 12, ["src"]);
+                            }),
+                            128
+                            /* KEYED_FRAGMENT */
+                          ))
+                        ])) : vue.createCommentVNode("v-if", true)
+                      ]),
+                      vue.createElementVNode("view", { class: "scrollRight" }, [
+                        vue.createElementVNode(
+                          "text",
+                          null,
+                          vue.toDisplayString(item.content.title),
+                          1
+                          /* TEXT */
+                        ),
+                        vue.createElementVNode("view", { class: "editBox" }, [
+                          vue.createElementVNode(
+                            "view",
+                            {
+                              class: vue.normalizeClass(["boxLt", { imp: index == vue.unref(flag2) }])
+                            },
+                            [
+                              vue.createElementVNode("view", { class: "l" }, [
+                                vue.createTextVNode(" 赞"),
+                                vue.createElementVNode("text", { class: "iconfont" }, "")
+                              ]),
+                              vue.createElementVNode("view", { class: "c" }, [
+                                vue.createTextVNode(" 评论"),
+                                vue.createElementVNode("text", { class: "iconfont" }, "")
+                              ]),
+                              vue.createElementVNode("view", {
+                                class: "r",
+                                onClick: ($event) => removeItem(item.id, item.uid)
+                              }, [
+                                vue.createTextVNode(" 删除"),
+                                vue.createElementVNode("text", { class: "iconfont" }, "")
+                              ], 8, ["onClick"])
+                            ],
+                            2
+                            /* CLASS */
+                          ),
+                          vue.createElementVNode("view", {
+                            class: "boxRt iconfont",
+                            onClick: ($event) => editContent(index)
+                          }, "  ", 8, ["onClick"])
+                        ])
+                      ])
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ],
+              4
+              /* STYLE */
+            )
+          ])) : vue.createCommentVNode("v-if", true)
         ]);
       };
     }
   };
-  const PagesSelfStarSelfStar = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["__scopeId", "data-v-1cb7f60c"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/selfStar/selfStar.vue"]]);
+  const PagesSelfStarSelfStar = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["__scopeId", "data-v-1cb7f60c"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/selfStar/selfStar.vue"]]);
   const _sfc_main$j = {
     __name: "dynamic",
     setup(__props) {
@@ -12437,7 +12945,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesDynamicDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e73567d5"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/dynamic/dynamic.vue"]]);
+  const PagesDynamicDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e73567d5"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/dynamic/dynamic.vue"]]);
   const img = "/static/img/bg.jpg";
   const _sfc_main$i = {
     __name: "qrcode",
@@ -12526,7 +13034,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesQrcodeQrcode = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-a7a2e00e"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/qrcode/qrcode.vue"]]);
+  const PagesQrcodeQrcode = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-a7a2e00e"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/qrcode/qrcode.vue"]]);
   const popup = {
     data() {
       return {};
@@ -12768,7 +13276,7 @@ This will fail in production.`);
       ])
     ]);
   }
-  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$6], ["__scopeId", "data-v-d78c88b7"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog.vue"]]);
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$6], ["__scopeId", "data-v-d78c88b7"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog.vue"]]);
   class MPAnimation {
     constructor(options, _this) {
       this.options = options;
@@ -13145,7 +13653,7 @@ This will fail in production.`);
       [vue.vShow, $data.isShow]
     ]);
   }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$5], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$5], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
   const _sfc_main$f = {
     name: "uniPopup",
     components: {},
@@ -13533,7 +14041,7 @@ This will fail in production.`);
       /* CLASS */
     )) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$4], ["__scopeId", "data-v-4dd3c44b"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$4], ["__scopeId", "data-v-4dd3c44b"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
   const _sfc_main$e = {
     __name: "editUser",
     setup(__props) {
@@ -13579,7 +14087,7 @@ This will fail in production.`);
         upload();
       }
       onLoad(() => {
-        formatAppLog("log", "at pages/editUser/editUser.vue:218", "onload");
+        formatAppLog("log", "at pages/editUser/editUser.vue:219", "onload");
         setLocal("edits", true);
       });
       onUnload(() => {
@@ -13592,8 +14100,9 @@ This will fail in production.`);
           // 我这里直接在前端进行加密了，因为传给后端的时候
           // password: MD5(userInfo.password).toString()
         };
+        formatAppLog("log", "at pages/editUser/editUser.vue:233", userInfo.avatar);
         uni.uploadFile({
-          url: "http://192.168.212.20:3000/user/update",
+          url: `${mainUrl}/user/update`,
           filePath: userInfo.avatar,
           name: "avatar",
           timeout: 1500,
@@ -13603,7 +14112,7 @@ This will fail in production.`);
           formData: param,
           success: (res) => {
             let result = JSON.parse(res.data);
-            formatAppLog("log", "at pages/editUser/editUser.vue:243", result);
+            formatAppLog("log", "at pages/editUser/editUser.vue:245", result);
             if (result.code == 200) {
               avatar.value = result.data.avatar;
               showMsg("更新成功", 1e3, "loading");
@@ -13670,7 +14179,7 @@ This will fail in production.`);
       });
       function bindDateChange(e) {
         birthday.value = e.detail.value;
-        formatAppLog("log", "at pages/editUser/editUser.vue:314", e);
+        formatAppLog("log", "at pages/editUser/editUser.vue:316", e);
         return powerStore.updateUser({
           username: username.value,
           // 直接用响应式的值做对象的键会报错
@@ -13719,7 +14228,7 @@ This will fail in production.`);
               itemList: ["男", "女"],
               success: function(res) {
                 if (res.tapIndex == 1) {
-                  formatAppLog("log", "at pages/editUser/editUser.vue:368", res.tapIndex);
+                  formatAppLog("log", "at pages/editUser/editUser.vue:370", res.tapIndex);
                   sex.value = "女";
                   return powerStore.updateUser({
                     username: username.value,
@@ -13727,7 +14236,7 @@ This will fail in production.`);
                     "sex": 0
                   });
                 } else if (res.tapIndex == 0) {
-                  formatAppLog("log", "at pages/editUser/editUser.vue:376", res.tapIndex);
+                  formatAppLog("log", "at pages/editUser/editUser.vue:378", res.tapIndex);
                   sex.value = "男";
                   return powerStore.updateUser({
                     username: username.value,
@@ -13738,7 +14247,7 @@ This will fail in production.`);
                 showMsg("修改中", 800, "loading");
               },
               fail: function(res) {
-                formatAppLog("log", "at pages/editUser/editUser.vue:387", res.errMsg);
+                formatAppLog("log", "at pages/editUser/editUser.vue:389", res.errMsg);
               }
             });
         }
@@ -13760,9 +14269,9 @@ This will fail in production.`);
       });
       let infoValue = vue.ref();
       function dialogInputConfirm(e) {
-        formatAppLog("log", "at pages/editUser/editUser.vue:414", e);
+        formatAppLog("log", "at pages/editUser/editUser.vue:416", e);
         infoValue.value = e;
-        formatAppLog("log", "at pages/editUser/editUser.vue:416", infoValue.value);
+        formatAppLog("log", "at pages/editUser/editUser.vue:418", infoValue.value);
         if (itemVal.value == "password") {
           infoValue.value = cryptoJsExports.MD5(infoValue.value).toString();
         }
@@ -13986,7 +14495,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesEditUserEditUser = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/editUser/editUser.vue"]]);
+  const PagesEditUserEditUser = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/editUser/editUser.vue"]]);
   const _sfc_main$d = {
     __name: "apply",
     setup(__props) {
@@ -14007,7 +14516,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesApplyApply = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-426a9ebe"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/apply/apply.vue"]]);
+  const PagesApplyApply = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-426a9ebe"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/apply/apply.vue"]]);
   const icons = {
     "id": "2852637",
     "name": "uniui图标库",
@@ -15240,7 +15749,7 @@ This will fail in production.`);
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$3], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$3], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const en = {
     "uni-search-bar.cancel": "cancel",
     "uni-search-bar.placeholder": "Search enter content"
@@ -15474,7 +15983,7 @@ This will fail in production.`);
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$2], ["__scopeId", "data-v-f07ef577"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$2], ["__scopeId", "data-v-f07ef577"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
   const _sfc_main$a = {
     __name: "groupChat",
     setup(__props) {
@@ -15501,7 +16010,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesGroupChatGroupChat = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-70ae8d23"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/groupChat/groupChat.vue"]]);
+  const PagesGroupChatGroupChat = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-70ae8d23"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/groupChat/groupChat.vue"]]);
   const avatarWidth = 45;
   const _sfc_main$9 = {
     name: "UniListChat",
@@ -15831,7 +16340,7 @@ This will fail in production.`);
       ])
     ], 8, ["hover-class"]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$1], ["__scopeId", "data-v-20df4ef0"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-list/components/uni-list-chat/uni-list-chat.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$1], ["__scopeId", "data-v-20df4ef0"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list-chat/uni-list-chat.vue"]]);
   const _sfc_main$8 = {
     name: "uniList",
     "mp-weixin": {
@@ -15891,7 +16400,7 @@ This will fail in production.`);
       })) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render], ["__scopeId", "data-v-c2f1266a"], ["__file", "D:/新的开始/uniapp毕设/luckly/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render], ["__scopeId", "data-v-c2f1266a"], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
   const _sfc_main$7 = {
     __name: "friendItem",
     setup(__props) {
@@ -15927,7 +16436,7 @@ This will fail in production.`);
       };
     }
   };
-  const friendItem = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-dd3f64b3"], ["__file", "D:/新的开始/uniapp毕设/luckly/component/friendItem.vue"]]);
+  const friendItem = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-dd3f64b3"], ["__file", "D:/新的开始/uniapp毕设/lucky/component/friendItem.vue"]]);
   const _sfc_main$6 = {
     __name: "home",
     setup(__props) {
@@ -16167,7 +16676,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-07e72d3c"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/home/home.vue"]]);
+  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-07e72d3c"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/home/home.vue"]]);
   const _sfc_main$5 = {
     __name: "featureItem",
     props: ["objData"],
@@ -16210,7 +16719,7 @@ This will fail in production.`);
       };
     }
   };
-  const featureItem = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-887da2a3"], ["__file", "D:/新的开始/uniapp毕设/luckly/component/featureItem.vue"]]);
+  const featureItem = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-887da2a3"], ["__file", "D:/新的开始/uniapp毕设/lucky/component/featureItem.vue"]]);
   const _sfc_main$4 = {
     __name: "linkman",
     setup(__props) {
@@ -16281,25 +16790,19 @@ This will fail in production.`);
       };
     }
   };
-  const PagesLinkmanLinkman = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-dd0bc604"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/linkman/linkman.vue"]]);
+  const PagesLinkmanLinkman = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-dd0bc604"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/linkman/linkman.vue"]]);
   const _sfc_main$3 = {
     __name: "video",
     setup(__props) {
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
           vue.createVNode(statusBar),
-          vue.createElementVNode("view", { class: "header" }, " 我是视频页 "),
-          vue.createElementVNode("map", {
-            style: { "width": "100%", "height": "300px" },
-            latitude: 59,
-            longitude: 111,
-            "covers:": "[{\n				latitude: 39.909,\n				longitude: 116.39742,\n				iconPath: '../../../static/location.png'\n			}, {\n				latitude: 39.90,\n				longitude: 116.39,\n				iconPath: '../../../static/location.png'\n			}]"
-          })
+          vue.createElementVNode("view", { class: "header" }, " 我是视频页 ")
         ]);
       };
     }
   };
-  const PagesVideoVideo = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__file", "D:/新的开始/uniapp毕设/luckly/pages/video/video.vue"]]);
+  const PagesVideoVideo = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__file", "D:/新的开始/uniapp毕设/lucky/pages/video/video.vue"]]);
   const _sfc_main$2 = {
     __name: "star",
     setup(__props) {
@@ -16471,7 +16974,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesStarStar = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/star/star.vue"]]);
+  const PagesStarStar = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/star/star.vue"]]);
   const _sfc_main$1 = {
     __name: "search",
     setup(__props) {
@@ -16498,7 +17001,7 @@ This will fail in production.`);
       };
     }
   };
-  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-c10c040c"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/search/search.vue"]]);
+  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-c10c040c"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/search/search.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);
   __definePage("pages/register/register", PagesRegisterRegister);
   __definePage("pages/sendDynamic/sendDynamic", PagesSendDynamicSendDynamic);
@@ -16549,7 +17052,7 @@ This will fail in production.`);
       formatAppLog("log", "at App.vue:82", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/luckly/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/lucky/App.vue"]]);
   const pinia = createPinia();
   function createApp() {
     const app = vue.createVueApp(App);

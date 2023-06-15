@@ -8,7 +8,7 @@
         <text>发表说说</text>
       </template>
       <template #right>
-        <text>发表</text>
+        <text @click="distribute">发表</text>
       </template>
     </Header>
     <view class="main">
@@ -38,84 +38,160 @@
     </view>
   </view>
 </template>
-
 <script setup>
   import Header from "@/component/header.vue";
   import {
-    ref,computed
+    getLocal
+  } from "@/utils/local.js";
+  import {
+    ref,
+    computed
   } from 'vue';
-  import {mySpaceStore} from "@/pinia/userInfo/mySpace.js";
-  const mySpace=mySpaceStore();
-  import { storeToRefs } from 'pinia';
-  const {id,content,statu,position}= storeToRefs(mySpace)
+  import {
+    mySpaceStore
+  } from "@/pinia/userInfo/mySpace.js";
+  import {
+    userStore
+  } from "@/pinia/userInfo/userInfo.js"
+  import {
+    showMsg
+  } from "@/utils/Toast.js"
+  import {
+    onUnload,onShow
+  } from "@dcloudio/uni-app"
+  import {
+    mainUrl
+  } from "@/utils/config.js"
+  const mySpace = mySpaceStore();
+  const userRef = userStore()
+  import {
+    storeToRefs
+  } from 'pinia';
+  const {
+    id,
+    content,
+    statu,
+    position
+  } = storeToRefs(mySpace)
   // 传递给header组件的数据
   let headObj = ref({
     path: '/pages/selfStar/selfStar'
   });
-// 九宫格图片的删除功能
+  // 九宫格图片的删除功能
   function deleteImage(e) {
-  content.value.imgArr=content.value.imgArr.filter(item=>{
-    return item!=e.tempFilePath
-  })
+    content.value.imgArr = content.value.imgArr.filter(item => {
+      return item != e.tempFilePath
+    })
   }
-// textare的内容
+  // textare的内容
   function bindTextAreaBlur(e) {
     console.log(e.detail.value)
-    content.value.title=e.detail.value;
+    content.value.title = e.detail.value;
   }
-// 九宫格选中的图片
-  function select(e) {
-    console.log(e);
-    content.value.imgArr=e.tempFilePaths
-  }
+
   const powerRes = computed(() => {
-    if(statu.value=='0'){
+    if (statu.value == '0') {
       return '私密'
-    }else if(statu.value=='1'){
+    } else if (statu.value == '1') {
       return '所有人可见'
-    }else{
+    } else {
       return '权限设置'
     }
   })
   // 权限选择
-  function selectPower(){
-   uni.showActionSheet({
-   	itemList: ['私密', '所有人可见'],
-   	success: function (res) {
-   		console.log('选中了第' + res.tapIndex  + '个按钮');
-      if(res.tapIndex=='0'){
-        statu.value=res.tapIndex
-      }else if(res.tapIndex=='1'){
-        statu.value=res.tapIndex
+  function selectPower() {
+    uni.showActionSheet({
+      itemList: ['私密', '所有人可见'],
+      success: function(res) {
+        // console.log('选中了第' + res.tapIndex  + '个按钮');
+        if (res.tapIndex == '0') {
+          statu.value = res.tapIndex
+        } else if (res.tapIndex == '1') {
+          statu.value = res.tapIndex
+        }else{
+          statu.value=2
+        }
+      },
+      fail: function(res) {
+        console.log(res.errMsg);
       }
-   	},
-   	fail: function (res) {
-   		console.log(res.errMsg);
-   	}
-   });
+    });
   }
   // 选择所在位置
-  function getLocation(){
+  function getLocation() {
     uni.chooseLocation({
-    	success: function (res) {
-        console.log(res);
-        position.value=res.name
-    		console.log('位置名称：' + res.name);
-    		console.log('详细地址：' + res.address);
-    		console.log('纬度：' + res.latitude);
-    		console.log('经度：' + res.longitude);
-    	},
-      fail:function(res){
+      success: function(res) {
+        // console.log(res);
+        position.value = res.name
+      },
+      fail: function(res) {
         console.log(res);
       }
     });
   }
   const positionRes = computed(() => {
-   if(position.value==''){
-     return '所在位置'
-   }else{
-     return position.value
-   }
+    if (position.value == '') {
+      return '所在位置'
+    } else {
+      return position.value
+    }
+  })
+  // 九宫格选中的图片
+  function select(e) {
+    if(e.tempFilePaths){
+      content.value.imgArr=e.tempFilePaths
+    }
+    else{
+      content.value.imgArr=[]
+    }
+  }
+  // 发布内容
+  function distribute() {
+    //console.log(userRef.id);
+    let obj = {
+      uid: userRef.id,
+      content: content.value.title,
+      statu: statu.value,
+      position: position.value
+    }
+    // console.log(obj);
+    if (content.value.title == '') return showMsg('未填写发布内容')
+    // 这里我在onShow处理了一下，因为值为空字符串也是0
+    if ((statu.value != 0) && (statu.value != 1)) return showMsg('未选择权限')
+    const fileList = content.value.imgArr.map((item, index) => {
+      return {
+        name: index,
+        uri: item
+      }
+    })
+    uni.uploadFile({
+      url: `${mainUrl}/user/sedSpace`,
+      files: fileList,
+      formData: obj,
+      timeout: 8000,
+      header: {
+        authorization: getLocal('token') ? getLocal('token') : ""
+      },
+      success: (res) => {
+        let result = JSON.parse(res.data);
+        if (result.code == 200) {
+          showMsg(result.msg, 1000, 'loading')
+        }
+        uni.redirectTo({
+        	url: '/pages/selfStar/selfStar'
+        });
+      },
+      fail: (err) => {
+        return showMsg('发布失败', 1000, 'loading')
+      }
+    })
+  }
+  onShow(() => {
+    statu.value = '2'
+  })
+  onUnload(() => {
+    position.value = '';
+    statu.value = '2'
   })
 </script>
 

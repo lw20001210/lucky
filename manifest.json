@@ -77,7 +77,7 @@
                 },
                 "geolocation" : {
                     "amap" : {
-                        "__platform__" : [ "android" ],
+                        "__platform__" : [ "ios", "android" ],
                         "appkey_ios" : "",
                         "appkey_android" : "e61612c29d31f13b39d47c24e274671c"
                     }
@@ -158,7 +158,7 @@
                     // 高德地图安全密钥（HBuilderX 3.6.0+）https://console.amap.com/dev/key/app
                     "securityJsCode" : "a51a29eedb8370e0f047d65e13f07e39",
                     // 高德地图安全密钥代理服务器地址（HBuilderX 3.6.0+）https://lbs.amap.com/api/jsapi-v2/guide/abc/prepare
-                    "serviceHost" : "http://192.168.85.20:3000/_AMapService/v4/maps'"
+                    "serviceHost" : "http://192.168.167.20:3000/_AMapService/v4/maps"
                 }
             }
         }

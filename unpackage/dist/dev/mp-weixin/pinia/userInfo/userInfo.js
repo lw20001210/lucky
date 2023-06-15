@@ -44,7 +44,7 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/新的开始/uniapp毕设/luckly/pages/login/login.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/login/login.vue"]]);
 const userStore = common_vendor.defineStore("user", {
   state: () => ({
     username: utils_local.getLocal("username") ? utils_local.getLocal("username") : "",
