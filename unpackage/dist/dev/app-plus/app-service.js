@@ -1532,7 +1532,7 @@ This will fail in production.`);
       }
     });
   }
-  const mainUrl = "http://192.168.172.20:3000";
+  const mainUrl = "http://192.168.163.20:3000";
   const request = (url, method, data) => {
     return new Promise((resolve, reject) => {
       uni.request({
@@ -1567,7 +1567,7 @@ This will fail in production.`);
       createTime: "",
       birthday: "",
       signature: "",
-      statu: "",
+      status: "",
       id: getLocal("id") ? getLocal("id") : ""
     }),
     getters: {},
@@ -12096,15 +12096,23 @@ This will fail in production.`);
     state: () => ({
       id: "",
       uid: "",
+      //账号id
       content: {
         title: "",
         imgArr: []
       },
       position: "",
-      statu: "",
+      status: "",
       createTime: "",
       flag: "a",
-      totalList: []
+      //是否显示编辑栏
+      totalList: [],
+      //空间列表数据
+      isLike: 0,
+      likeList: [],
+      //点赞列表
+      commentList: []
+      //评论列表数据
     }),
     actions: {
       getData(obj) {
@@ -12117,7 +12125,7 @@ This will fail in production.`);
         } = await request("/user/getMySpaceInfo", "get", {
           keyId: uid
         });
-        formatAppLog("log", "at pinia/userInfo/mySpace.js:33", res);
+        formatAppLog("log", "at pinia/userInfo/mySpace.js:36", res);
         if (res.code == 404) {
           showMsg(res.msg);
         } else if (res.code == 200) {
@@ -12125,8 +12133,9 @@ This will fail in production.`);
         } else {
           showMsg("数据获取失败");
         }
-        flag = "a";
+        this.flag = "a";
       },
+      // 删除动态
       async removeSpace(id, uid) {
         let {
           data: res
@@ -12139,6 +12148,29 @@ This will fail in production.`);
         } else {
           return showMsg("删除动态失败");
         }
+      },
+      // 更新点赞状态
+      async updateLike(id, uid, status) {
+        formatAppLog("log", "at pinia/userInfo/mySpace.js:62", id, uid, status);
+        let {
+          data: res
+        } = await request("/user/updateLike", "post", {
+          id,
+          uid,
+          isLike: status
+        });
+        formatAppLog("log", "at pinia/userInfo/mySpace.js:70", res);
+        this.getSpaceDetail();
+      },
+      // 获取用户点赞和评论状态
+      async getSpaceDetail() {
+        const {
+          data: res
+        } = await request("/user/getDetailInfo", "get");
+        formatAppLog("log", "at pinia/userInfo/mySpace.js:78", res);
+        if (!res)
+          return false;
+        this.likeList = res.data;
       }
     }
   });
@@ -12150,7 +12182,7 @@ This will fail in production.`);
       const {
         id,
         content,
-        statu,
+        status,
         position
       } = storeToRefs(mySpace);
       let headObj = vue.ref({
@@ -12166,9 +12198,9 @@ This will fail in production.`);
         content.value.title = e.detail.value;
       }
       const powerRes = vue.computed(() => {
-        if (statu.value == "0") {
+        if (status.value == "0") {
           return "私密";
-        } else if (statu.value == "1") {
+        } else if (status.value == "1") {
           return "所有人可见";
         } else {
           return "权限设置";
@@ -12179,11 +12211,11 @@ This will fail in production.`);
           itemList: ["私密", "所有人可见"],
           success: function(res) {
             if (res.tapIndex == "0") {
-              statu.value = res.tapIndex;
+              status.value = res.tapIndex;
             } else if (res.tapIndex == "1") {
-              statu.value = res.tapIndex;
+              status.value = res.tapIndex;
             } else {
-              statu.value = 2;
+              status.value = 2;
             }
           },
           fail: function(res) {
@@ -12219,12 +12251,12 @@ This will fail in production.`);
         let obj = {
           uid: userRef.id,
           content: content.value.title,
-          statu: statu.value,
+          status: status.value,
           position: position.value
         };
         if (content.value.title == "")
           return showMsg("未填写发布内容");
-        if (statu.value != 0 && statu.value != 1)
+        if (status.value != 0 && status.value != 1)
           return showMsg("未选择权限");
         const fileList = content.value.imgArr.map((item, index) => {
           return {
@@ -12255,11 +12287,11 @@ This will fail in production.`);
         });
       }
       onShow(() => {
-        statu.value = "2";
+        status.value = "2";
       });
       onUnload(() => {
         position.value = "";
-        statu.value = "2";
+        status.value = "2";
       });
       return (_ctx, _cache) => {
         const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$3);
@@ -12701,7 +12733,9 @@ This will fail in production.`);
       } = storeToRefs(userPower);
       const {
         totalList,
-        flag: flag2
+        flag,
+        isLike,
+        likeList
       } = storeToRefs(mySpacePower);
       let headObj = vue.ref({
         leftFont: "icon-zuojiantou-copy",
@@ -12718,7 +12752,6 @@ This will fail in production.`);
       function getHeight() {
         const val = uni.getSystemInfoSync();
         wh.value = val.windowHeight - 340;
-        formatAppLog("log", "at pages/selfStar/selfStar.vue:132", val.windowHeight);
       }
       vue.onMounted(() => {
         getHeight();
@@ -12726,14 +12759,57 @@ This will fail in production.`);
       onLoad(() => {
         userPower.getUserInfo();
         mySpacePower.getmySpaceInfo(id.value);
+        mySpacePower.getSpaceDetail();
       });
       function editContent(index) {
-        flag2.value = index;
+        if (flag.value == index) {
+          flag.value = "a";
+        } else {
+          flag.value = index;
+        }
+      }
+      vue.computed(() => {
+        return isLike.value == "0" ? "icon-aixin" : "icon-aixin1";
+      });
+      function changeLike(id2, uid, likeArr) {
+        if (likeArr.length == 0)
+          return mySpacePower.updateLike(id2, uid, 1);
+        if (likeArr[0].status == "0") {
+          likeArr[0].status = 1;
+        } else {
+          likeArr[0].status = 0;
+        }
+        mySpacePower.updateLike(id2, uid, likeArr[0].status);
       }
       function removeItem(id2, uid) {
-        formatAppLog("log", "at pages/selfStar/selfStar.vue:147", id2, uid);
         mySpacePower.removeSpace(id2, uid);
       }
+      function preView(index, imgArr) {
+        uni.previewImage({
+          current: index,
+          urls: imgArr,
+          loop: true,
+          indicator: "default"
+        });
+      }
+      let getSpaceDate = vue.computed(() => {
+        return totalList.value.map((dynamic) => {
+          dynamic.likes = [];
+          likeList.value.forEach((like) => {
+            if (like.likeId === dynamic.id) {
+              const likeInfo = {
+                id: like.id,
+                uid: like.uid,
+                status: like.status,
+                createTime: like.createTime
+              };
+              dynamic.likes.push(likeInfo);
+            }
+          });
+          return dynamic;
+        });
+      });
+      formatAppLog("log", "at pages/selfStar/selfStar.vue:209", getSpaceDate.value);
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
           vue.createElementVNode("view", { class: "bg" }, [
@@ -12797,82 +12873,113 @@ This will fail in production.`);
                 (vue.openBlock(true), vue.createElementBlock(
                   vue.Fragment,
                   null,
-                  vue.renderList(vue.unref(totalList), (item, index) => {
-                    return vue.openBlock(), vue.createElementBlock("view", {
-                      key: index,
-                      class: "spaceItem"
-                    }, [
-                      vue.createElementVNode("view", { class: "scrollLeft" }, [
-                        vue.createElementVNode(
-                          "view",
-                          { class: "lt" },
-                          vue.toDisplayString(vue.unref(dayFormat)(item.createTime)),
-                          1
-                          /* TEXT */
-                        ),
-                        item.content.imgArr != [] ? (vue.openBlock(), vue.createElementBlock("view", {
-                          key: 0,
-                          class: "rt"
-                        }, [
-                          (vue.openBlock(true), vue.createElementBlock(
-                            vue.Fragment,
-                            null,
-                            vue.renderList(item.content.imgArr, (img2, inde) => {
-                              return vue.openBlock(), vue.createElementBlock("image", {
-                                key: index,
-                                src: img2,
-                                style: vue.normalizeStyle({
-                                  width: item.content.imgArr.length == 1 ? "98%" : item.content.imgArr.length == 2 ? "48%" : "31%",
-                                  height: item.content.imgArr.length <= 3 ? "98%" : item.content.imgArr.length <= 6 ? "48%" : "31%"
-                                })
-                              }, null, 12, ["src"]);
-                            }),
-                            128
-                            /* KEYED_FRAGMENT */
-                          ))
-                        ])) : vue.createCommentVNode("v-if", true)
-                      ]),
-                      vue.createElementVNode("view", { class: "scrollRight" }, [
-                        vue.createElementVNode(
-                          "text",
-                          null,
-                          vue.toDisplayString(item.content.title),
-                          1
-                          /* TEXT */
-                        ),
-                        vue.createElementVNode("view", { class: "editBox" }, [
-                          vue.createElementVNode(
-                            "view",
-                            {
-                              class: vue.normalizeClass(["boxLt", { imp: index == vue.unref(flag2) }])
-                            },
-                            [
-                              vue.createElementVNode("view", { class: "l" }, [
-                                vue.createTextVNode(" 赞"),
-                                vue.createElementVNode("text", { class: "iconfont" }, "")
-                              ]),
-                              vue.createElementVNode("view", { class: "c" }, [
-                                vue.createTextVNode(" 评论"),
-                                vue.createElementVNode("text", { class: "iconfont" }, "")
-                              ]),
+                  vue.renderList(vue.unref(getSpaceDate), (item, index) => {
+                    var _a, _b, _c;
+                    return vue.openBlock(), vue.createElementBlock(
+                      vue.Fragment,
+                      { key: index },
+                      [
+                        vue.createElementVNode("view", { class: "spaceItem" }, [
+                          vue.createElementVNode("view", { class: "scrollLeft" }, [
+                            vue.createElementVNode(
+                              "view",
+                              { class: "lt" },
+                              vue.toDisplayString(vue.unref(dayFormat)(item.createTime)),
+                              1
+                              /* TEXT */
+                            ),
+                            item.content.imgArr != [] ? (vue.openBlock(), vue.createElementBlock("view", {
+                              key: 0,
+                              class: "rt"
+                            }, [
+                              (vue.openBlock(true), vue.createElementBlock(
+                                vue.Fragment,
+                                null,
+                                vue.renderList(item.content.imgArr, (img2, inde) => {
+                                  return vue.openBlock(), vue.createElementBlock("image", {
+                                    key: index,
+                                    onClick: ($event) => preView(inde, item.content.imgArr),
+                                    src: img2,
+                                    style: vue.normalizeStyle({
+                                      width: item.content.imgArr.length == 1 ? "98%" : item.content.imgArr.length == 2 ? "48%" : "32%",
+                                      height: item.content.imgArr.length <= 3 ? "98%" : item.content.imgArr.length <= 6 ? "48%" : "32%"
+                                    })
+                                  }, null, 12, ["onClick", "src"]);
+                                }),
+                                128
+                                /* KEYED_FRAGMENT */
+                              ))
+                            ])) : vue.createCommentVNode("v-if", true)
+                          ]),
+                          vue.createElementVNode("view", { class: "scrollRight" }, [
+                            vue.createElementVNode(
+                              "text",
+                              null,
+                              vue.toDisplayString(item.content.title),
+                              1
+                              /* TEXT */
+                            ),
+                            vue.createElementVNode("view", { class: "editBox" }, [
+                              vue.createElementVNode(
+                                "view",
+                                {
+                                  class: vue.normalizeClass(["boxLt", { imp: index == vue.unref(flag) }])
+                                },
+                                [
+                                  vue.createElementVNode("view", {
+                                    class: "l",
+                                    onClick: ($event) => changeLike(item.id, item.uid, item.likes)
+                                  }, [
+                                    vue.createTextVNode(" 赞"),
+                                    vue.createElementVNode(
+                                      "text",
+                                      {
+                                        class: vue.normalizeClass([{ "icon-aixin": ((_a = item.likes) == null ? void 0 : _a.length) == 0 || item.likes && ((_b = item.likes[0]) == null ? void 0 : _b.status) == "0", "icon-aixin1": item.likes && ((_c = item.likes[0]) == null ? void 0 : _c.status) == "1" }, "iconfont"])
+                                      },
+                                      null,
+                                      2
+                                      /* CLASS */
+                                    )
+                                  ], 8, ["onClick"]),
+                                  vue.createElementVNode("view", { class: "c" }, [
+                                    vue.createTextVNode(" 评论"),
+                                    vue.createElementVNode("text", { class: "iconfont" }, "")
+                                  ]),
+                                  vue.createElementVNode("view", {
+                                    class: "r",
+                                    onClick: ($event) => removeItem(item.id, item.uid)
+                                  }, [
+                                    vue.createTextVNode(" 删除"),
+                                    vue.createElementVNode("text", { class: "iconfont" }, "")
+                                  ], 8, ["onClick"])
+                                ],
+                                2
+                                /* CLASS */
+                              ),
                               vue.createElementVNode("view", {
-                                class: "r",
-                                onClick: ($event) => removeItem(item.id, item.uid)
-                              }, [
-                                vue.createTextVNode(" 删除"),
-                                vue.createElementVNode("text", { class: "iconfont" }, "")
-                              ], 8, ["onClick"])
-                            ],
-                            2
-                            /* CLASS */
-                          ),
-                          vue.createElementVNode("view", {
-                            class: "boxRt iconfont",
-                            onClick: ($event) => editContent(index)
-                          }, "  ", 8, ["onClick"])
-                        ])
-                      ])
-                    ]);
+                                class: "boxRt iconfont",
+                                onClick: ($event) => editContent(index)
+                              }, "  ", 8, ["onClick"])
+                            ])
+                          ])
+                        ]),
+                        (item.likes.length != 0 ? item.likes[0].status == 1 : false) ? (vue.openBlock(), vue.createElementBlock("view", {
+                          key: 0,
+                          class: "showInfo iconfont"
+                        }, [
+                          vue.createTextVNode(" "),
+                          vue.createElementVNode(
+                            "text",
+                            null,
+                            vue.toDisplayString(vue.unref(nickname)),
+                            1
+                            /* TEXT */
+                          )
+                        ])) : vue.createCommentVNode("v-if", true)
+                      ],
+                      64
+                      /* STABLE_FRAGMENT */
+                    );
                   }),
                   128
                   /* KEYED_FRAGMENT */

@@ -23,7 +23,7 @@ export const userStore = defineStore('user', {
     createTime: '',
     birthday: '',
     signature: '',
-    statu: '',
+    status: '',
     id: getLocal('id') ? getLocal('id') : ''
   }),
   getters: {},

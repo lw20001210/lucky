@@ -83,9 +83,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('static/iconfont/font/iconfont.woff2?t=1686822483571') format('woff2'),
-       url('static/iconfont/font/iconfont.woff?t=1686822483571') format('woff'),
-       url('static/iconfont/font/iconfont.ttf?t=1686822483571') format('truetype');
+       url('static/iconfont/font/iconfont.woff2?t=1687965774814') format('woff2'),
+       url('static/iconfont/font/iconfont.woff?t=1687965774814') format('woff'),
+       url('static/iconfont/font/iconfont.ttf?t=1687965774814') format('truetype');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -93,6 +93,12 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-aixin1:before {
+  content: "\e85c";
+}
+.icon-aixin-copy:before {
+  content: "\eb47";
 }
 .icon-pinglun1:before {
   content: "\e66c";

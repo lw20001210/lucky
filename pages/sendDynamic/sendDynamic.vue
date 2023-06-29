@@ -70,7 +70,7 @@
   const {
     id,
     content,
-    statu,
+    status,
     position
   } = storeToRefs(mySpace)
   // 传递给header组件的数据
@@ -90,9 +90,9 @@
   }
 
   const powerRes = computed(() => {
-    if (statu.value == '0') {
+    if (status.value == '0') {
       return '私密'
-    } else if (statu.value == '1') {
+    } else if (status.value == '1') {
       return '所有人可见'
     } else {
       return '权限设置'
@@ -105,11 +105,11 @@
       success: function(res) {
         // console.log('选中了第' + res.tapIndex  + '个按钮');
         if (res.tapIndex == '0') {
-          statu.value = res.tapIndex
+          status.value = res.tapIndex
         } else if (res.tapIndex == '1') {
-          statu.value = res.tapIndex
+          status.value = res.tapIndex
         }else{
-          statu.value=2
+          status.value=2
         }
       },
       fail: function(res) {
@@ -151,13 +151,13 @@
     let obj = {
       uid: userRef.id,
       content: content.value.title,
-      statu: statu.value,
+      status: status.value,
       position: position.value
     }
     // console.log(obj);
     if (content.value.title == '') return showMsg('未填写发布内容')
     // 这里我在onShow处理了一下，因为值为空字符串也是0
-    if ((statu.value != 0) && (statu.value != 1)) return showMsg('未选择权限')
+    if ((status.value != 0) && (status.value != 1)) return showMsg('未选择权限')
     const fileList = content.value.imgArr.map((item, index) => {
       return {
         name: index,
@@ -187,11 +187,11 @@
     })
   }
   onShow(() => {
-    statu.value = '2'
+    status.value = '2'
   })
   onUnload(() => {
     position.value = '';
-    statu.value = '2'
+    status.value = '2'
   })
 </script>
 

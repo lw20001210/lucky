@@ -342,6 +342,13 @@ const md5 = require("md5");
     .catch((error) => {
       console.error("查询用户失败", error);
     });
+  //查询多个字段
+  const userRes = await likeFormModel.findOne({
+    where: {
+      UserID: '用户ID',
+      DynamicID: '动态ID',
+    },
+  });
 
   //查询整个用户表
   UserModel.findAll()
@@ -617,7 +624,7 @@ et wh=ref()
     }
 ```
 
-## 组件传递字体图标解析失败
+## 组件传递字体图标解析失败:athletic_shoe:
 
 * 父组件
 

@@ -264,6 +264,7 @@
   height: 9.375rem;
   display: flex;
   justify-content: space-between;
+  transform: all 1s;
 }
 .container .detail .spaceItem .scrollLeft[data-v-1cb7f60c] {
   height: 100%;
@@ -282,8 +283,8 @@
 }
 .container .detail .spaceItem .scrollLeft .rt uni-image[data-v-1cb7f60c] {
   vertical-align: middle;
-  margin-left: 0.0625rem;
-  margin-top: 0.0625rem;
+  margin-left: 0.125rem;
+  margin-top: 0.125rem;
 }
 .container .detail .spaceItem .scrollRight[data-v-1cb7f60c] {
   flex: 1;
@@ -340,8 +341,21 @@
   font-size: 0.625rem;
   overflow: hidden;
 }
-.container .detail .spaceItem .scrollRight .editBox .imp .l[data-v-1cb7f60c], .container .detail .spaceItem .scrollRight .editBox .imp .c[data-v-1cb7f60c], .container .detail .spaceItem .scrollRight .editBox .imp .r[data-v-1cb7f60c] {
+.container .detail .spaceItem .scrollRight .editBox .imp .l[data-v-1cb7f60c],
+.container .detail .spaceItem .scrollRight .editBox .imp .c[data-v-1cb7f60c],
+.container .detail .spaceItem .scrollRight .editBox .imp .r[data-v-1cb7f60c] {
   float: left;
   width: 33.3%;
   text-align: center;
+}
+.container .detail .showInfo[data-v-1cb7f60c] {
+  background-color: #f7f7f7;
+  padding: 0.375rem 0.46875rem;
+  width: 100%;
+  font-weight: bold;
+  font-size: 0.875rem;
+  color: #746ba7;
+}
+.container .detail .showInfo uni-text[data-v-1cb7f60c] {
+  padding-left: 0.15625rem;
 }
