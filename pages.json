@@ -2,101 +2,100 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/login/login",
-		"style": {
-						"navigationBarTitleText": "login",
-						"enablePullDownRefresh": false,
-						"disableScroll": true
-					}
+			"style": {
+				"navigationBarTitleText": "login",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
 		},
-    {
+		{
 			"path": "pages/register/register",
-		"style": {
-						"navigationBarTitleText": "register",
-						"enablePullDownRefresh": false,
-					"disableScroll": true
-					}
+			"style": {
+				"navigationBarTitleText": "register",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
 		},
-    {
-    	"path": "pages/sendDynamic/sendDynamic",
-    "style": {
-    				"navigationBarTitleText": "sendDynamic",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path": "pages/sys/sys",
-    "style": {
-    				"navigationBarTitleText": "sys",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path": "pages/selfStar/selfStar",
-    "style": {
-    				"navigationBarTitleText": "selfStar",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path": "pages/dynamic/dynamic",
-    "style": {
-    				"navigationBarTitleText": "dynamic",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path": "pages/qrcode/qrcode",
-    "style": {
-    				"navigationBarTitleText": "qrcode",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path":"pages/editUser/editUser",
-    "style": {
-    				"navigationBarTitleText": "editUser",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path":"pages/apply/apply",
-    "style": {
-    				"navigationBarTitleText": "apply",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path":"pages/groupChat/groupChat",
-    "style": {
-    				"navigationBarTitleText": "groupChat",
-    				"enablePullDownRefresh": false,
-    			"disableScroll": true
-    			}
-    },
-    {
-    	"path": "pages/home/home",
-    	"style": {
-    		"enablePullDownRefresh": false,
-    		"backgroundTextStyle": "dark",
-    		"onReachBottomDistance": 0
-    	}
-    }, 
-    {
+		{
+			"path": "pages/sendDynamic/sendDynamic",
+			"style": {
+				"navigationBarTitleText": "sendDynamic",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/sys/sys",
+			"style": {
+				"navigationBarTitleText": "sys",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/selfStar/selfStar",
+			"style": {
+				"navigationBarTitleText": "selfStar",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/dynamic/dynamic",
+			"style": {
+				"navigationBarTitleText": "dynamic",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/qrcode/qrcode",
+			"style": {
+				"navigationBarTitleText": "qrcode",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/editUser/editUser",
+			"style": {
+				"navigationBarTitleText": "editUser",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/apply/apply",
+			"style": {
+				"navigationBarTitleText": "apply",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/groupChat/groupChat",
+			"style": {
+				"navigationBarTitleText": "groupChat",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/home/home",
+			"style": {
+				"enablePullDownRefresh": false,
+				"backgroundTextStyle": "dark",
+				"onReachBottomDistance": 0
+			}
+		},
+		{
 			"path": "pages/linkman/linkman",
 			"style": {
 				"navigationBarTitleText": "联系人",
 				"enablePullDownRefresh": false
 			}
 
-		}
-    , {
+		}, {
 			"path": "pages/video/video",
 			"style": {
 				"enablePullDownRefresh": false,
@@ -115,42 +114,58 @@
 				"enablePullDownRefresh": false
 			}
 
+		},
+		{
+			"path": "pages/homePaeg/homePage",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		
+		},
+		{
+			"path": "pages/addFriend/addFriend",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		
 		}
 	],
 	"globalStyle": {
-     "navigationStyle":"custom",
+		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "思环",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {},
-  "tabBar": {
-  		"color": "#7A7E83",
-  		"selectedColor": "#2680EB",
-  		"borderStyle": "black",
-  		"backgroundColor": "#ffffff",
-  		"list": [{
-  			"pagePath": "pages/home/home",
-  			"iconPath": "static/images/home.png",
-  			"selectedIconPath": "static/images/select_home.png",
-  			"text": "首页"
-  		}, {
-  			"pagePath": "pages/linkman/linkman",
-  			"iconPath": "static/images/linkman.png",
-  			"selectedIconPath": "static/images/select_linkman.png",
-  			"text": "好友"
-  		}, {
-  			"pagePath": "pages/video/video",
-  			"iconPath": "static/images/video.png",
-  			"selectedIconPath": "static/images/select_video.png",
-  			"text": "视频"
-  		}, {
-  			"pagePath": "pages/star/star",
-  			"iconPath": "static/images/star.png",
-  			"selectedIconPath": "static/images/select_star.png",
-  			"text": "我的"
-  		}]
-  	}
-  }
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#2680EB",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/home/home",
+			"iconPath": "static/images/home.png",
+			"selectedIconPath": "static/images/select_home.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/linkman/linkman",
+			"iconPath": "static/images/linkman.png",
+			"selectedIconPath": "static/images/select_linkman.png",
+			"text": "好友"
+		}, {
+			"pagePath": "pages/video/video",
+			"iconPath": "static/images/video.png",
+			"selectedIconPath": "static/images/select_video.png",
+			"text": "视频"
+		}, {
+			"pagePath": "pages/star/star",
+			"iconPath": "static/images/star.png",
+			"selectedIconPath": "static/images/select_star.png",
+			"text": "我的"
+		}]
+	}
+}
 }

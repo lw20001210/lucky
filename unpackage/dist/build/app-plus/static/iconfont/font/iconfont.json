@@ -6,6 +6,20 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "8288959",
+      "name": "爱心",
+      "font_class": "aixin1",
+      "unicode": "e85c",
+      "unicode_decimal": 59484
+    },
+    {
+      "icon_id": "36199684",
+      "name": "爱心-copy",
+      "font_class": "aixin-copy",
+      "unicode": "eb47",
+      "unicode_decimal": 60231
+    },
+    {
       "icon_id": "1071050",
       "name": "评论1",
       "font_class": "pinglun1",

@@ -48,14 +48,12 @@ export const userStore = defineStore('user', {
         this.username = res.data;
         setLocal('username', res.data)
         setLocal('token', res.token)
-        // setLocal('userInfo', res.data)
-        // console.log(res.token);
         uni.switchTab({
           url: '/pages/home/home'
         })
     }
     },
-    // 获取用户信息
+    // 获取当前用户信息
     async getUserInfo() {
       let {
         data: res
@@ -63,8 +61,6 @@ export const userStore = defineStore('user', {
         username: this.username
       });
       this.getData(res.data)
-      // console.log(res.data);
-      // console.log(this.$state);
     },
     // 注销用户
     async removeUser() {

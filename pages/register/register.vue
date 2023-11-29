@@ -158,14 +158,12 @@
       font-size: 52rpx;
       font-weight: normal;
     }
-
     .avatar {
       margin-top: 50rpx;
 
       /deep/ .uni-file-picker__container {
         justify-content: center;
       }
-
       .content {
         color: white;
         font-size: 30rpx;
@@ -180,7 +178,6 @@
           font-size: 50rpx;
         }
       }
-
       .avatar_content {
         width: 196rpx;
         height: 192rpx;

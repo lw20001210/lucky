@@ -127,7 +127,7 @@ const md5 = require("md5");
     if (err.name === "UnauthorizedError") return res.send("身份验证失败。");
     res.send("服务器发生错误。");
   });
-
+  
   ```
 
 ## sequelize操作数据库
@@ -245,7 +245,7 @@ const md5 = require("md5");
   const mySpace = require("./models/mySpace");
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-
+  
   // 静态资源,方便我们前端以往网络图片形式访问
   app.use("/static/avatar", express.static("static/avatar"));
   // 定义 token 的解析中间件，并排除 user/register和user/login 相关路由
@@ -254,7 +254,7 @@ const md5 = require("md5");
       path: [/^\/user\/register/, /^\/user\/login/],
     })
   );
-
+  
   // 定义错误中间件
   app.use((err, req, res, next) => {
     if (err.name === "UnauthorizedError")
@@ -288,7 +288,7 @@ const md5 = require("md5");
     .catch((error) => {
       console.error("数据库连接失败：", error);
     });
-
+  
   ```
 
 ### 操作数据库
@@ -557,14 +557,14 @@ let userRes = await UsersModel.findOne({
         border-radius: 20rpx;
         box-shadow: 10rpx 10rpx 40rpx #ccc;
         overflow: hidden;
-
+  
         .wrap {
           height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
         }
-
+  
         .downup_item {
           display: flex;
           align-items: center;
@@ -574,11 +574,11 @@ let userRes = await UsersModel.findOne({
           color: #fff;
           text-overflow: ellipsis;
           white-space: nowrap;
-
+  
           view {
             font-size: 42rpx;
           }
-
+  
           text {
             margin-left: 10rpx;
           }
@@ -816,7 +816,7 @@ onLoad(() => {
   codeImg.value=img
   ```
 
-  ​
+  
 
 ## 突然前端接口连不上node问题
 
@@ -829,7 +829,8 @@ onLoad(() => {
 - 插槽
 
 - > <!--  slot="right"这种用法已经被废弃,改用v-slot -->
-  >      <template #right >
+  >
+  >   <template #right >
 
 
 ## 头像问题
@@ -890,7 +891,7 @@ onLoad(() => {
   });
   ```
 
-  ​
+  
 
 ## 个人空间模块，图片高度100%依旧滚动问题
 

@@ -66,7 +66,7 @@ import {
     let {
       data: res
     } = await request('/user/createQrcode', 'post', {
-      id: id.value
+      username: username.value
     })
     // console.log(res);
     qrcode.value = res.data
@@ -79,7 +79,6 @@ import {
 </script>
 
 <style scoped lang="scss">
-  
   page {
    .body{
      width:100vw;
