@@ -68,7 +68,7 @@ export const userStore = defineStore('user', {
       let {
         data: res
       } = await request('/user/delete', 'delete', {
-        username: this.username
+        id: this.id
       });
       // console.log(res);
       if (res.code == '200') {

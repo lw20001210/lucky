@@ -14,7 +14,7 @@
 				<view class="itemContent" v-for="item in moreContent">
 					<view class="left">
 						<view class="avatar">
-							<image class='img' :src="item.avatar"></image>
+							<image mode="aspectFill" :src="item.avatar"></image>
 						</view>
 						<view class="descript">
 							<text>{{item.nickname}}</text>
@@ -141,10 +141,9 @@
 						border-radius: 50%;
 						overflow: hidden;
 
-						.img {
+						image{
 							width: 100%;
 							height: 100%;
-							background-color: red;
 						}
 					}
 

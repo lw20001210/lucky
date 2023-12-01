@@ -4,7 +4,7 @@
 		<view class="itemContent">
 			<view class="left">
 				<view class="avatar">
-					<image class='img' :src="userInfo.avatar"></image>
+					<image :src="userInfo.avatar"></image>
 				</view>
 				<view class="descript">
 					<text>{{userInfo.nickname}}</text>
@@ -124,10 +124,9 @@
 					border-radius: 50%;
 					overflow: hidden;
 
-					.img {
+					image {
 						width: 100%;
 						height: 100%;
-						background-color: red;
 					}
 				}
 

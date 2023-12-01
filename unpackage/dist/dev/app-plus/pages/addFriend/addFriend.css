@@ -163,10 +163,9 @@
   border-radius: 50%;
   overflow: hidden;
 }
-.container .itemContent .left .avatar .img[data-v-51ba3ded] {
+.container .itemContent .left .avatar uni-image[data-v-51ba3ded] {
   width: 100%;
   height: 100%;
-  background-color: red;
 }
 .container .itemContent .left .descript[data-v-51ba3ded] {
   margin-left: 0.9375rem;

@@ -69,7 +69,7 @@
 			"style": {
 				"navigationBarTitleText": "apply",
 				"enablePullDownRefresh": false,
-				"disableScroll": true
+				"disableScroll": false
 			}
 		},
 		{

@@ -9,8 +9,8 @@ dayjs.locale('zh-cn')
 dayjs.extend(relativeTime)
 
 export function dayFormat(val) {
-  //转化为日期对象。
-  const targetTime = dayjs.unix(val / 1000)
-  // 返回相对时间的字符串描述; dayjs().from() 方法需要传入一个日期对象（比如 dayjs('2023-06-14')），而不是一个时间戳。
-return dayjs().to(dayjs(targetTime))
+	//转化为日期对象。
+	const targetTime = dayjs.unix(val / 1000)
+	// 返回相对时间的字符串描述; dayjs().from() 方法需要传入一个日期对象（比如 dayjs('2023-06-14')），而不是一个时间戳。
+	return dayjs().to(dayjs(targetTime))
 }
