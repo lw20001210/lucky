@@ -694,6 +694,8 @@ et wh=ref()
 
 > 子组件的代码对应父组件的2组代码。第2种是解析不了的。
 
+> 建议直接用线上的  <view class="iconfont icon-weibo1"></view>
+
 ## uniapp生命周期问题
 
 * 在vue3中，需要引入生命周期才能使用，否则报错

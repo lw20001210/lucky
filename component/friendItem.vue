@@ -1,29 +1,21 @@
 <template>
 	<view class="menuList">
 		<view class="imgBg">
-			<image :src="avatar" mode=""></image>
+			<image :src="obj.avatar" mode=""></image>
 		</view>
 		<view class="describe">
-			<text style="font-size: 28rpx;">{{nickname}}</text>
+			<text style="font-size: 28rpx;">{{obj.remarked}}</text>
 			<text class='username'>在线<text class="autograph">
-					<slot>别让自己在该奋斗的年纪选择安逸</slot>
+					{{obj.signature}}
 				</text></text>
 		</view>
 	</view>
 </template>
 
 <script setup>
-	import {
-		userStore
-	} from '@/pinia/userInfo/userInfo.js';
-	const userPower = new userStore();
-	import {
-		storeToRefs
-	} from 'pinia';
-	const {
-		avatar,
-		nickname
-	} = storeToRefs(userPower)
+	import { defineProps} from 'vue';
+	const props = defineProps(['obj'])
+	// console.log(props.obj.id);
 </script>
 <style scoped lang="scss">
 	.menuList {
@@ -34,6 +26,7 @@
 		justify-content: flex-start !important;
 		margin: 25rpx 0;
 		font-family: STKaiti;
+		// background-color: #4867bf;
 
 		.imgBg {
 			display: flex;

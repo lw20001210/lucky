@@ -739,15 +739,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.625rem 0;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
 }
 .container .content .itemContent .left[data-v-c10c040c] {
   display: flex;
   align-items: center;
 }
 .container .content .itemContent .left .avatar[data-v-c10c040c] {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.8125rem;
+  height: 2.8125rem;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -764,6 +764,9 @@
   color: red;
 }
 .container .content .itemContent .right[data-v-c10c040c] {
-  padding: 0.1875rem 0.5rem;
-  border: 1px solid #e3e3e3;
+  margin-right: 0.15625rem;
+  padding: 0.21875rem 0.5625rem;
+  background-color: #1492E6;
+  border-radius: 0.3125rem;
+  color: #fff;
 }

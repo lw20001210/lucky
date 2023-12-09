@@ -90,11 +90,11 @@
 		if (res.code != 200) return showMsg("发送失败")
 		
 		// 添加备注表
-		request("/user/addRemark","post",{
-			myId:user.id,
-			friendId:userInfo.value.id,
-			nickName:applyInfo.value.nickname
-		})
+		// request("/user/addRemark","post",{
+		// 	myId:user.id,
+		// 	friendId:userInfo.value.id,
+		// 	nickName:applyInfo.value.nickname
+		// })
 		showMsg(res.msg, 500, 'loading')
 		uni.switchTab({
 			url: '/pages/home/home'

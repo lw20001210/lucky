@@ -485,7 +485,7 @@
   text-align: center;
 }
 .header .iconfont[data-v-8548c3e5] {
-  font-size: 1.5625rem;
+  font-size: 1.875rem;
 }
 .container[data-v-e4e4508d] {
   padding: 1.875rem 2.1875rem 0;
@@ -591,6 +591,7 @@
 /* 文章场景相关 */
 .container[data-v-24ea2ac3] {
   padding: 0.625rem 0.78125rem 0;
+  font-family: STKaiti;
 }
 .list[data-v-24ea2ac3] {
   margin: 0.3125rem 5px 0;
@@ -606,7 +607,7 @@
   width: 7.8125rem;
 }
 .content .detail[data-v-24ea2ac3] {
-  flex: 1;
+  width: 12.5rem;
   display: flex;
   justify-content: flex-end;
   font-size: 1.5625rem;

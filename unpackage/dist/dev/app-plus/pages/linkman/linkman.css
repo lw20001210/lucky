@@ -629,6 +629,102 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.uni-badge--x[data-v-c97cb896] {
+  display: inline-block;
+  position: relative;
+}
+.uni-badge--absolute[data-v-c97cb896] {
+  position: absolute;
+}
+.uni-badge--small[data-v-c97cb896] {
+  transform: scale(0.8);
+  transform-origin: center center;
+}
+.uni-badge[data-v-c97cb896] {
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-feature-settings: "tnum";
+  min-width: 20px;
+  justify-content: center;
+  flex-direction: row;
+  height: 20px;
+  padding: 0 4px;
+  line-height: 18px;
+  color: #fff;
+  border-radius: 100px;
+  background-color: #909399;
+  background-color: transparent;
+  border: 1px solid #fff;
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+}
+.uni-badge--info[data-v-c97cb896] {
+  color: #fff;
+  background-color: #909399;
+}
+.uni-badge--primary[data-v-c97cb896] {
+  background-color: #2979ff;
+}
+.uni-badge--success[data-v-c97cb896] {
+  background-color: #4cd964;
+}
+.uni-badge--warning[data-v-c97cb896] {
+  background-color: #f0ad4e;
+}
+.uni-badge--error[data-v-c97cb896] {
+  background-color: #dd524d;
+}
+.uni-badge--inverted[data-v-c97cb896] {
+  padding: 0 5px 0 0;
+  color: #909399;
+}
+.uni-badge--info-inverted[data-v-c97cb896] {
+  color: #909399;
+  background-color: transparent;
+}
+.uni-badge--primary-inverted[data-v-c97cb896] {
+  color: #2979ff;
+  background-color: transparent;
+}
+.uni-badge--success-inverted[data-v-c97cb896] {
+  color: #4cd964;
+  background-color: transparent;
+}
+.uni-badge--warning-inverted[data-v-c97cb896] {
+  color: #f0ad4e;
+  background-color: transparent;
+}
+.uni-badge--error-inverted[data-v-c97cb896] {
+  color: #dd524d;
+  background-color: transparent;
+}
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
 .uni-collapse-item[data-v-3d2dde9f] {
   box-sizing: border-box;
 }
@@ -788,83 +884,6 @@
   height: var(--status-bar-height);
   width: 100%;
 }
-.container[data-v-e4e4508d] {
-  padding: 1.875rem 2.1875rem 0;
-}
-.container .welcome[data-v-e4e4508d] {
-  margin-top: 6.875rem;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-.container .welcome .w1[data-v-e4e4508d] {
-  font-family: FangSong;
-  font-size: 2.0625rem;
-  font-weight: normal;
-  color: #707070;
-  margin-bottom: 0.375rem;
-}
-.container .welcome .w2[data-v-e4e4508d] {
-  font-family: FangSong;
-  font-size: 1rem;
-  font-weight: normal;
-  font-stretch: normal;
-  color: #707070;
-}
-.container .userInfo[data-v-e4e4508d] {
-  margin-top: 3.4375rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.container .userInfo .password[data-v-e4e4508d],
-.container .userInfo .username[data-v-e4e4508d] {
-  box-sizing: border-box;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 2.8125rem;
-  border-radius: 0.5rem;
-  border: 0.0625rem solid #707070;
-  align-items: center;
-}
-.container .userInfo .password uni-input[data-v-e4e4508d],
-.container .userInfo .username uni-input[data-v-e4e4508d] {
-  padding-left: 3.125rem;
-}
-.container .userInfo .password .mark[data-v-e4e4508d],
-.container .userInfo .username .mark[data-v-e4e4508d] {
-  position: absolute;
-  left: 0.3125rem;
-}
-.container .userInfo .password[data-v-e4e4508d] {
-  margin-top: 0.9375rem;
-}
-.container .forget[data-v-e4e4508d] {
-  color: #707070;
-  margin-left: 72%;
-  font-family: FangSong;
-}
-.container .ability[data-v-e4e4508d] {
-  margin-top: 2.03125rem;
-}
-.container .ability uni-button[data-v-e4e4508d] {
-  border-radius: 2.8125rem;
-  margin: 0.46875rem 0;
-}
-.container .distance[data-v-e4e4508d] {
-  margin: 2.03125rem 0;
-  text-align: center;
-}
-.container .other_login_icon[data-v-e4e4508d] {
-  display: flex;
-  justify-content: space-around;
-}
-.container .other_login_icon .iconfont[data-v-e4e4508d] {
-  font-size: 2.8125rem;
-}
-
 /**
  * 这里是uni-app内置的常用样式变量
  *
@@ -975,13 +994,92 @@
   width: 3.125rem;
   height: 3.125rem;
   border-radius: 0.625rem;
+  color: #fff !important;
 }
 .menuList .left .imgBg .size[data-v-887da2a3] {
   font-size: 1.5rem;
 }
 .menuList .right .iconfont[data-v-887da2a3] {
   font-size: 1.75rem;
+  color: #5a5a5a;
 }
+.container[data-v-e4e4508d] {
+  padding: 1.875rem 2.1875rem 0;
+}
+.container .welcome[data-v-e4e4508d] {
+  margin-top: 6.875rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.container .welcome .w1[data-v-e4e4508d] {
+  font-family: FangSong;
+  font-size: 2.0625rem;
+  font-weight: normal;
+  color: #707070;
+  margin-bottom: 0.375rem;
+}
+.container .welcome .w2[data-v-e4e4508d] {
+  font-family: FangSong;
+  font-size: 1rem;
+  font-weight: normal;
+  font-stretch: normal;
+  color: #707070;
+}
+.container .userInfo[data-v-e4e4508d] {
+  margin-top: 3.4375rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .userInfo .password[data-v-e4e4508d],
+.container .userInfo .username[data-v-e4e4508d] {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 2.8125rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #707070;
+  align-items: center;
+}
+.container .userInfo .password uni-input[data-v-e4e4508d],
+.container .userInfo .username uni-input[data-v-e4e4508d] {
+  padding-left: 3.125rem;
+}
+.container .userInfo .password .mark[data-v-e4e4508d],
+.container .userInfo .username .mark[data-v-e4e4508d] {
+  position: absolute;
+  left: 0.3125rem;
+}
+.container .userInfo .password[data-v-e4e4508d] {
+  margin-top: 0.9375rem;
+}
+.container .forget[data-v-e4e4508d] {
+  color: #707070;
+  margin-left: 72%;
+  font-family: FangSong;
+}
+.container .ability[data-v-e4e4508d] {
+  margin-top: 2.03125rem;
+}
+.container .ability uni-button[data-v-e4e4508d] {
+  border-radius: 2.8125rem;
+  margin: 0.46875rem 0;
+}
+.container .distance[data-v-e4e4508d] {
+  margin: 2.03125rem 0;
+  text-align: center;
+}
+.container .other_login_icon[data-v-e4e4508d] {
+  display: flex;
+  justify-content: space-around;
+}
+.container .other_login_icon .iconfont[data-v-e4e4508d] {
+  font-size: 2.8125rem;
+}
+
 /**
  * 这里是uni-app内置的常用样式变量
  *
@@ -1048,8 +1146,15 @@ uni-image[data-v-dd0bc604] {
   font-size: 1.75rem;
 }
 .container .divide[data-v-dd0bc604] {
+  position: relative;
   box-sizing: border-box;
   height: 0.625rem;
   margin: 0 -20px;
   background-color: #f8f8f8;
+}
+.container .divide .fixed[data-v-dd0bc604] {
+  z-index: 999;
+  position: absolute;
+  top: -8.125rem;
+  left: 4.0625rem;
 }

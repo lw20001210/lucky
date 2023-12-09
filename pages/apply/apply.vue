@@ -1,46 +1,4 @@
 <template>
-	<!-- <view class="container">
-		<Header :obj="headObj"></Header>
-		<view class="none" v-if="applyList.length==0">
-			<view class="plane icon-zhifeiji_fabu iconfont">
-			</view>
-			暂无好友申请
-		</view>
-		<view class="detail" v-else>
-			<uni-swipe-action>
-				<uni-swipe-action-item :right-options="options2" :show="isOpened" :auto-close="false" @change="change"
-					@click="bindClick">
-					<view class="content-box">
-						<text class="content-text">使用变量控制SwipeAction的开启状态</text>
-					</view>
-				</uni-swipe-action-item>
-			</uni-swipe-action>
-			<view class="itemContent" v-for="item in applyList">
-				<view class="left">
-					<view class="avatar">
-						<image class='img' :src="item.avatar"></image>
-					</view>
-					<view class="descript">
-						<text class="chat">{{item.content}}</text>
-						<text>{{item.username}}&nbsp;&nbsp;<text
-								style="color: #939393;font-size: 25rpx;">{{dayFormat(item.createTime)}}</text> </text>
-					</view>
-				</view>
-				<view class="right" v-if="item.status==0">
-					<text @click="reject(item)">拒绝</text>
-					<text @click="validate(item)">同意</text>
-					{{formatStatus(item)}}
-				</view>
-				<view class="right" v-else>
-					{{formatStatus(item)}}
-				</view>
-			</view>
-		</view>
-		<uni-popup ref="inputDialog" type="dialog">
-			<uni-popup-dialog mode="input" title="同意该好友申请" :value="nickname" placeholder="请输入备注"
-				@confirm="dialogInputConfirm"></uni-popup-dialog>
-		</uni-popup>
-	</view> -->
 	<view class="container">
 		<Header :obj="headObj"></Header>
 		<view class="none" v-if="applyList.length==0">
@@ -115,7 +73,7 @@
 	}])
 	let headObj = ref({
 		leftFont: 'icon-zuojiantou',
-		title: '好友申请列表',
+		title: '新朋友',
 		path: '/pages/linkman/linkman'
 	})
 	const user = userStore();
@@ -134,7 +92,6 @@
 		res.data.forEach(item => {
 			item.isOpened = "none"
 		})
-		// console.log(res.data);
 		applyList.value = res.data
 	}
 
@@ -142,7 +99,7 @@
 		if (e.content.text == "删除") {
 			let {
 				data: res
-			} =await request("/user/deleteApplyRecord", "delete", {
+			} = await request("/user/deleteApplyRecord", "delete", {
 				sendId: info.sendId,
 				acceptId: info.acceptId
 			})
@@ -152,7 +109,7 @@
 				getApplyList()
 			}
 		}
-		
+
 	}
 
 	function formatStatus(item) {
@@ -186,16 +143,12 @@
 	async function dialogInputConfirm(val) {
 		//如果点击了确定
 		if (val) {
-			request("/user/addRemark", "post", {
-				myId: user.id,
-				friendId: seletedDate.value.sendId,
-				nickName: val
-			})
 			let {
 				data: res
 			} = await request("/user/createShip", "post", {
 				myId: user.id,
-				friendId: seletedDate.value.sendId
+				friendId: seletedDate.value.sendId,
+				friendName: val
 			})
 			if (res.code == 200) {
 				showMsg("添加好友成功", 1000, "loading");

@@ -55,6 +55,8 @@
 	/*每个页面公共css */
 	@import '@/static/iconfont/font/iconfont.css';
 	@import '@/static/css/touch.css';
+	/* 引入iconfont */
+	@import url('@/static/iconfont/iconfont.css');
 
 	/* 这个高度我们得手动去掉，否则纵向滚动做不了，它会撑开盒子高度导致两个滚动条 */
 	:deep(.uni-app--showtabbar uni-page-wrapper::after) {

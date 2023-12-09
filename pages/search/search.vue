@@ -22,7 +22,7 @@
 						</view>
 					</view>
 					<view class="right" @click="apply(item)">
-						添加
+						{{formatContent(item)}}
 					</view>
 				</view>
 			</view>
@@ -51,7 +51,29 @@
 	} = storeToRefs(userPower);
 	let searchValue = ref()
 	let userList = ref([])
-	let flag = ref(false)
+	let flag = ref(false);
+	import {
+		onLoad
+	} from "@dcloudio/uni-app";
+	onLoad((option) => {
+		// 获取好友申请列表信息
+		getApplyList();
+	})
+	let idList = ref([]); //判断是否是添加还少发信息
+	// 获取申请列表数据
+	async function getApplyList() {
+	let {
+		data: res
+	} = await request("/user/getFriendList", "get", {
+		id:id.value
+	})
+		if (res.code != 200 || res.code == 404) return false;
+		idList.value = res.data.map(item => {
+			return item.id
+		})
+		// console.log(idList.value);
+		// console.log(res.data);
+	}
 	const moreContent = computed(() => {
 		return flag.value ? userList.value : userList.value.filter((item, i) => {
 			return i < 3
@@ -68,10 +90,9 @@
 			userList.value = res.data.filter(item => {
 				return item.username.includes(inputUser) && id.value != item.id
 			})
-			console.log(userList.value);
-			if(userList.value.length==0){
+			if (userList.value.length == 0) {
 				showMsg("暂无更多搜索结果", 2000, 'loading')
-			}else{
+			} else {
 				showMsg('加载中...', 500, 'loading')
 			}
 		}
@@ -81,6 +102,15 @@
 		uni.switchTab({
 			url: '/pages/home/home'
 		});
+	}
+
+	function formatContent(item) {
+		if (Object.values(idList.value).includes(item.id)) {
+			return "发信息"
+		} else {
+			return "加好友"
+
+		}
 	}
 	// 是否展示更多
 	function showMore() {
@@ -129,19 +159,19 @@
 				align-items: center;
 				justify-content: space-between;
 				padding: 20rpx 0;
-				font-size: 22rpx;
+				font-size: 24rpx;
 
 				.left {
 					display: flex;
 					align-items: center;
 
 					.avatar {
-						width: 80rpx;
-						height: 80rpx;
+						width: 90rpx;
+						height: 90rpx;
 						border-radius: 50%;
 						overflow: hidden;
 
-						image{
+						image {
 							width: 100%;
 							height: 100%;
 						}
@@ -159,8 +189,11 @@
 				}
 
 				.right {
-					padding: 6rpx 16rpx;
-					border: 1px solid #e3e3e3;
+					margin-right: 5rpx;
+					padding: 7rpx 18rpx;
+					background-color: #1492E6;
+					border-radius: 10rpx;
+					color: #fff;
 				}
 
 			}

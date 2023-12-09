@@ -42,7 +42,7 @@ import {
   } from 'vue';
   // 传递给header组件的数据
   let headObj = ref({
-    leftFont: 'icon-zuojiantou',
+    leftFont: 'icon-zuojiantou-copy2',
     title: '我的二维码',
     rightFont: '分享',
     path: '/pages/star/star'

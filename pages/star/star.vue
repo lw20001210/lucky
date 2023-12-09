@@ -4,7 +4,7 @@
 		<view class="bg">
 			<view class="menuList">
 				<view class="left">
-					<view class="imgBg">
+					<view class="imgBg" @click="goInfo">
 						<image :src="avatar"></image>
 					</view>
 					<view class="describe">
@@ -144,7 +144,17 @@
 
 	function goQrcode() {
 		uni.navigateTo({
-			url: '/pages/qrcode/qrcode'
+			url: '/pages/qrcode/qrcode',
+			animationType: 'pop-in',
+			animationDuration: 200
+		});
+	}
+
+	function goInfo() {
+		uni.navigateTo({
+			url: '/pages/editUser/editUser',
+			animationType: 'pop-in',
+			animationDuration: 200
 		});
 	}
 </script>
@@ -153,11 +163,12 @@
 	image {
 		will-change: transform;
 	}
+
 	.container {
 		padding: 15rpx 25rpx 0;
 		background-color: #3e6fac;
 		font-family: STKaiti;
-		
+
 
 		.important {
 			background-color: #3e6fac;
@@ -167,7 +178,7 @@
 			width: 100%;
 			height: 358rpx;
 			background: url('@/static/images/bg.png') no-repeat;
-			background-size: cover;
+			background-size: contain;
 		}
 
 		.title {
@@ -233,7 +244,8 @@
 
 			.right {
 				.iconfont {
-					font-size: 56rpx
+					font-size: 56rpx;
+					color: #fff;
 				}
 			}
 		}

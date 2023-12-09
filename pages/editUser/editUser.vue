@@ -230,7 +230,7 @@
       // 我这里直接在前端进行加密了，因为传给后端的时候
       // password: MD5(userInfo.password).toString()
     }
-    console.log(userInfo.avatar);
+   // console.log(userInfo.avatar);
     uni.uploadFile({
       url: `${mainUrl}/user/update`,
       filePath: userInfo.avatar,
@@ -436,6 +436,7 @@
 <style scoped lang="scss">
   .container {
     padding: 20rpx 25rpx 0;
+	font-family: STKaiti;
   }
 
   .list {
@@ -454,7 +455,7 @@
     }
 
     .detail {
-      flex: 1;
+      width: 400rpx;
       display: flex;
       justify-content: flex-end;
       font-size: 50rpx;

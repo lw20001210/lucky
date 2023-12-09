@@ -6,6 +6,41 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "38439619",
+      "name": "左箭头",
+      "font_class": "zuojiantou-copy",
+      "unicode": "eb4e",
+      "unicode_decimal": 60238
+    },
+    {
+      "icon_id": "9725401",
+      "name": "左箭头",
+      "font_class": "zuojiantou",
+      "unicode": "e792",
+      "unicode_decimal": 59282
+    },
+    {
+      "icon_id": "38402681",
+      "name": "message-copy",
+      "font_class": "xinxi1-copy",
+      "unicode": "eb4c",
+      "unicode_decimal": 60236
+    },
+    {
+      "icon_id": "38403252",
+      "name": "视频-copy-copy",
+      "font_class": "post_video-copy-copy",
+      "unicode": "eb4d",
+      "unicode_decimal": 60237
+    },
+    {
+      "icon_id": "38402668",
+      "name": "209电话-copy",
+      "font_class": "dianhua-copy",
+      "unicode": "eb49",
+      "unicode_decimal": 60233
+    },
+    {
       "icon_id": "8288959",
       "name": "爱心",
       "font_class": "aixin1",
@@ -48,6 +83,13 @@
       "unicode_decimal": 59101
     },
     {
+      "icon_id": "38402233",
+      "name": "更多-copy",
+      "font_class": "androidmorehorizontal-copy",
+      "unicode": "eb48",
+      "unicode_decimal": 60232
+    },
+    {
       "icon_id": "1272521",
       "name": "定位",
       "font_class": "address",
@@ -76,46 +118,11 @@
       "unicode_decimal": 58932
     },
     {
-      "icon_id": "12097774",
-      "name": "右箭头",
-      "font_class": "youjiantou",
-      "unicode": "e68c",
-      "unicode_decimal": 59020
-    },
-    {
       "icon_id": "1638283",
       "name": "右箭头",
       "font_class": "youjiantou2",
       "unicode": "e612",
       "unicode_decimal": 58898
-    },
-    {
-      "icon_id": "35589413",
-      "name": "左箭头-copy",
-      "font_class": "zuojiantou-copy",
-      "unicode": "eb45",
-      "unicode_decimal": 60229
-    },
-    {
-      "icon_id": "17816863",
-      "name": "左箭头",
-      "font_class": "zuojiantou",
-      "unicode": "e600",
-      "unicode_decimal": 58880
-    },
-    {
-      "icon_id": "35480124",
-      "name": "左箭头-copy",
-      "font_class": "zuojiantou-copy1",
-      "unicode": "eb44",
-      "unicode_decimal": 60228
-    },
-    {
-      "icon_id": "35664052",
-      "name": "左箭头-copy",
-      "font_class": "zuojiantou-copy2",
-      "unicode": "eb46",
-      "unicode_decimal": 60230
     },
     {
       "icon_id": "7316164",
@@ -200,13 +207,6 @@
       "font_class": "jiahao",
       "unicode": "e615",
       "unicode_decimal": 58901
-    },
-    {
-      "icon_id": "4599467",
-      "name": "加号",
-      "font_class": "jiahao1",
-      "unicode": "e62f",
-      "unicode_decimal": 58927
     },
     {
       "icon_id": "34279452",

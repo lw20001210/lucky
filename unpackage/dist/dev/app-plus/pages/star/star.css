@@ -74,12 +74,14 @@
   width: 3.125rem;
   height: 3.125rem;
   border-radius: 0.625rem;
+  color: #fff !important;
 }
 .menuList .left .imgBg .size[data-v-887da2a3] {
   font-size: 1.5rem;
 }
 .menuList .right .iconfont[data-v-887da2a3] {
   font-size: 1.75rem;
+  color: #5a5a5a;
 }
 .container[data-v-e4e4508d] {
   padding: 1.875rem 2.1875rem 0;
@@ -198,7 +200,7 @@ uni-image[data-v-611ff4ad] {
   width: 100%;
   height: 11.1875rem;
   background: url("../../static/images/bg.png") no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 .container .title[data-v-611ff4ad] {
   text-align: center;
@@ -256,6 +258,7 @@ uni-image[data-v-611ff4ad] {
 }
 .container .menuList .right .iconfont[data-v-611ff4ad] {
   font-size: 1.75rem;
+  color: #fff;
 }
 .content[data-v-611ff4ad] {
   font-family: STKaiti;

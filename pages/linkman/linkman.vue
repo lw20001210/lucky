@@ -12,17 +12,14 @@
 			<featureItem :objData="item" @click="goDetail(item.title)"></featureItem>
 		</template>
 		<view class="divide">
+			<uni-badge v-if="friendNum!=0" class="uni-badge-left-margin fixed" :text="friendNum" />
 		</view>
 		<view class="friendList">
-			<!--   <friendItem></friendItem> -->
 			<!-- <scroll-view class="scroll" scroll-y="true">	</scroll-view> -->
-			<uni-collapse ref="collapse" v-model="flag" @change="change">
-				<uni-collapse-item title="我的好友" open>
+			<uni-collapse ref="collapse" v-model="value" @change="change">
+				<uni-collapse-item title="我的好友">
 					<view class="content">
-						<friendItem></friendItem>
-						<friendItem v-for="item in friendList">
-
-						</friendItem>
+						<friendItem v-for="item in friendList" :key="item.id" :obj="item"></friendItem>
 					</view>
 				</uni-collapse-item>
 			</uni-collapse>
@@ -38,7 +35,8 @@
 	} from "@/pinia/userInfo/userInfo.js";
 	import request from "../../utils/request.js"
 	import {
-		onLoad
+		onLoad,
+		onShow
 	} from "@dcloudio/uni-app"
 	import {
 		ref
@@ -47,7 +45,7 @@
 		showMsg
 	} from '../../utils/Toast.js';
 	const userInfo = userStore();
-	let friendList = ref([])
+	let friendList = ref(['0'])
 	const goSearch = () => {
 		uni.navigateTo({
 			url: '/pages/search/search',
@@ -76,13 +74,11 @@
 		}
 	}
 	// 控制折叠面板的开闭
-	let flag = ref("关闭");
-	// 监听折叠面板的变化
-	function change(e) {
-		console.log(e);
-	}
+	let value = ref(['0']);
+
+	let friendNum = ref(0); //角标人数
 	// 获取好友列表数据
-	onLoad(async (option) => {
+	async function getData() {
 		let {
 			data: res
 		} = await request("/user/getFriendList", "get", {
@@ -95,8 +91,26 @@
 				item["remarked"] = item.nickname
 			}
 		})
-		console.log(friendList.value);
+		let {
+			data: result
+		} = await request("/user/getFriendNum", "get", {
+			id: userInfo.id
+		})
+		if (result.code != 200) return showMsg("获取数据失败")
+		return friendNum.value = result.data.length
+		// 获取申请表暂未处理人数
+	}
+	onLoad((option) => {
+		getData()
 	})
+	onShow((option) => {
+		getData()
+	})
+	// 监听折叠面板的变化
+	function change(e) {
+		// console.log(e);
+		getData()
+	}
 </script>
 <style scoped lang="scss">
 	image {
@@ -149,10 +163,18 @@
 		}
 
 		.divide {
+			position: relative;
 			box-sizing: border-box;
 			height: 20rpx;
 			margin: 0 -20px;
-			background-color: rgb(248, 248, 248)
+			background-color: rgb(248, 248, 248);
+
+			.fixed {
+				z-index: 999;
+				position: absolute;
+				top: -260rpx;
+				left: 130rpx;
+			}
 		}
 	}
 </style>

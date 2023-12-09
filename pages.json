@@ -121,7 +121,7 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-		
+
 		},
 		{
 			"path": "pages/addFriend/addFriend",
@@ -129,7 +129,23 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-		
+
+		},
+		{
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/friendInfo/friendInfo",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {

@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1687965774814') format('woff2'),
-       url('iconfont.woff?t=1687965774814') format('woff'),
-       url('iconfont.ttf?t=1687965774814') format('truetype');
+       url('iconfont.woff2?t=1701784882126') format('woff2'),
+       url('iconfont.woff?t=1701784882126') format('woff'),
+       url('iconfont.ttf?t=1701784882126') format('truetype');
 }
 
 .iconfont {
@@ -13,6 +13,26 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zuojiantou-copy:before {
+  content: "\eb4e";
+}
+
+.icon-zuojiantou:before {
+  content: "\e792";
+}
+
+.icon-xinxi1-copy:before {
+  content: "\eb4c";
+}
+
+.icon-post_video-copy-copy:before {
+  content: "\eb4d";
+}
+
+.icon-dianhua-copy:before {
+  content: "\eb49";
 }
 
 .icon-aixin1:before {
@@ -39,6 +59,10 @@
   content: "\e6dd";
 }
 
+.icon-androidmorehorizontal-copy:before {
+  content: "\eb48";
+}
+
 .icon-address:before {
   content: "\e637";
 }
@@ -55,28 +79,8 @@
   content: "\e634";
 }
 
-.icon-youjiantou:before {
-  content: "\e68c";
-}
-
 .icon-youjiantou2:before {
   content: "\e612";
-}
-
-.icon-zuojiantou-copy:before {
-  content: "\eb45";
-}
-
-.icon-zuojiantou:before {
-  content: "\e600";
-}
-
-.icon-zuojiantou-copy1:before {
-  content: "\eb44";
-}
-
-.icon-zuojiantou-copy2:before {
-  content: "\eb46";
 }
 
 .icon-shouye_dongtaihui:before {
@@ -125,10 +129,6 @@
 
 .icon-jiahao:before {
   content: "\e615";
-}
-
-.icon-jiahao1:before {
-  content: "\e62f";
 }
 
 .icon-a-xiangjipaizhao:before {

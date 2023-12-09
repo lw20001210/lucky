@@ -24,13 +24,13 @@
     </view>
     <view class="other_login_icon">
       <view class="wx ">
-        <view class="iconfont">&#xe607</view>
+        <view class="iconfont icon-weixin"></view>
       </view>
       <view class="qq">
-        <view class="iconfont">&#xe66a</view>
+        <view class="iconfont icon-qq"></view>
       </view>
       <view class="wb">
-        <view class="iconfont">&#xe619</view>
+        <view class="iconfont icon-weibo1"></view>
       </view>
     </view>
   </view>
