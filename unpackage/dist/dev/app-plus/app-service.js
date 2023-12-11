@@ -11945,20 +11945,8 @@ ${i3}
     __name: "header",
     props: ["obj"],
     setup(__props) {
-      const props = __props;
       function goBack() {
-        let pages2 = getCurrentPages();
-        let page = pages2[pages2.length - 2];
-        if ((page == null ? void 0 : page.$page.path) == "/pages/detail/detail") {
-          let paths = page.$page.fullPath;
-          uni.reLaunch({
-            url: paths
-          });
-        } else {
-          uni.reLaunch({
-            url: props.obj.path
-          });
-        }
+        uni.navigateBack();
       }
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
@@ -12057,10 +12045,11 @@ ${i3}
       function getLocation() {
         uni.chooseLocation({
           success: function(res) {
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:123", res, 222);
             resultData.value.position = res.name;
           },
           fail: function(res) {
-            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:126", res);
+            formatAppLog("log", "at pages/sendDynamic/sendDynamic.vue:127", res);
           }
         });
       }
@@ -12616,6 +12605,7 @@ ${i3}
         } = await request("/user/getMySpaceInfo", "get", {
           id: userPower.id
         });
+        formatAppLog("log", "at pages/selfStar/selfStar.vue:195", res.data, 11111);
         totalList.value = res.data.reverse();
       }
       function editContent(index) {
@@ -12645,7 +12635,8 @@ ${i3}
         });
         if (res.code == "200") {
           showMsg$1(res.msg, 1500, "loading");
-          this.getmySpaceInfo(spaceUid);
+          getmySpaceInfo();
+          flag.value = "a";
         } else {
           return showMsg$1("删除动态失败");
         }
@@ -12660,7 +12651,6 @@ ${i3}
       }
       let temporary = vue.ref({});
       function validate(info) {
-        formatAppLog("log", "at pages/selfStar/selfStar.vue:241", info, 66666);
         temporary.value = info;
         foucsFlag.value = true;
         flag.value = "a";
@@ -12668,32 +12658,81 @@ ${i3}
       let keyboardHeight = vue.ref(0);
       function getInputHeight(e2) {
         if (e2.detail.height != 0) {
-          keyboardHeight.value = parseInt(e2.detail.height) * 2 - 20;
-          formatAppLog("log", "at pages/selfStar/selfStar.vue:251", keyboardHeight.value);
+          keyboardHeight.value = parseInt(e2.detail.height) * 2 - 25;
         }
       }
       function closeKeyBorder(e2) {
-        formatAppLog("log", "at pages/selfStar/selfStar.vue:256", e2.detail);
-        flag.value = "a";
         if (e2.detail.height == 0) {
-          foucsFlag.value = false;
+          flag.value = "a";
           keyboardHeight.value = 10;
+          setTimeout(() => {
+            foucsFlag.value = false;
+          }, 100);
         }
       }
       const debouncedInputChange = debounce(function inputChange(val) {
-        formatAppLog("log", "at pages/selfStar/selfStar.vue:265", val);
         comment.value = val;
-      }, 1e3);
+      }, 100);
       const handleInput = (e2) => {
         debouncedInputChange(e2.detail.value);
       };
-      vue.ref([]);
-      function acheveComment() {
-        if (comment.value == "") {
-          formatAppLog("log", "at pages/selfStar/selfStar.vue:275", 1);
+      let judgeComment = vue.ref(false);
+      function replyComments(commentInfo) {
+        formatAppLog("log", "at pages/selfStar/selfStar.vue:285", commentInfo, 123);
+        if (userPower.id == commentInfo.commentId) {
+          return false;
         } else {
-          formatAppLog("log", "at pages/selfStar/selfStar.vue:277", 2);
+          judgeComment.value = true;
+          temporary.value = commentInfo;
+          foucsFlag.value = true;
+          flag.value = "a";
         }
+      }
+      async function acheveComment() {
+        if (comment.value == "") {
+          showMsg$1("评论不能为空");
+        } else {
+          if (judgeComment.value) {
+            formatAppLog("log", "at pages/selfStar/selfStar.vue:303", "我是点击了回复");
+            let replyobj = {
+              spaceId: temporary.value.spaceId,
+              replyComment: comment.value,
+              commentUid: temporary.value.commentId,
+              replyId: userPower.id,
+              commentId: temporary.value.id
+            };
+            let {
+              data: res
+            } = await request("/user/replyComment", "post", replyobj);
+            if (res.code == 200) {
+              comment.value = "";
+              temporary.value = {};
+              judgeComment.value = false;
+              getmySpaceInfo();
+              formatAppLog("log", "at pages/selfStar/selfStar.vue:319", res.data, 33333);
+            }
+          } else {
+            let obj = {
+              // uid: temporary.value.uid,
+              commentId: temporary.value.uid,
+              spaceId: temporary.value.id,
+              comment: comment.value
+            };
+            let {
+              data: res
+            } = await request("/user/comment", "post", obj);
+            if (res.code == 200) {
+              comment.value = "";
+              temporary.value = {};
+              getmySpaceInfo();
+            }
+          }
+        }
+      }
+      function goDetail(info) {
+        uni.navigateTo({
+          url: `/pages/detail/detail?id=${info.commentId}`
+        });
       }
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock(
@@ -12771,12 +12810,15 @@ ${i3}
                           class: "spaces",
                           key: item.id
                         }, [
-                          vue.createElementVNode("view", { class: "left" }, [
+                          vue.createElementVNode("view", {
+                            class: "left",
+                            onClick: ($event) => goDetail(item)
+                          }, [
                             vue.createElementVNode("image", {
                               src: vue.unref(avatar),
                               mode: ""
                             }, null, 8, ["src"])
-                          ]),
+                          ], 8, ["onClick"]),
                           vue.createElementVNode("view", { class: "right" }, [
                             vue.createElementVNode(
                               "text",
@@ -12816,20 +12858,23 @@ ${i3}
                             ])) : vue.createCommentVNode("v-if", true),
                             vue.createElementVNode("view", { class: "options" }, [
                               vue.createElementVNode("view", { class: "desc" }, [
+                                item.position ? (vue.openBlock(), vue.createElementBlock(
+                                  "text",
+                                  {
+                                    key: 0,
+                                    class: "position"
+                                  },
+                                  vue.toDisplayString(item.position),
+                                  1
+                                  /* TEXT */
+                                )) : vue.createCommentVNode("v-if", true),
                                 vue.createElementVNode(
                                   "text",
                                   null,
                                   vue.toDisplayString(vue.unref(dayFormat)(item.createTime)),
                                   1
                                   /* TEXT */
-                                ),
-                                item.position ? (vue.openBlock(), vue.createElementBlock(
-                                  "text",
-                                  { key: 0 },
-                                  vue.toDisplayString(item.position),
-                                  1
-                                  /* TEXT */
-                                )) : vue.createCommentVNode("v-if", true)
+                                )
                               ]),
                               vue.createElementVNode("view", { class: "editBox" }, [
                                 vue.createElementVNode(
@@ -12879,30 +12924,84 @@ ${i3}
                                 }, "  ", 8, ["onClick"])
                               ])
                             ]),
-                            item.likes.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                            item.likes.length != 0 || item.comments.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
                               key: 1,
                               class: "showInfo"
                             }, [
-                              vue.createElementVNode("text", { class: "iconfont pad" }, ""),
+                              item.likes.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                                key: 0,
+                                class: "likesList"
+                              }, [
+                                vue.createElementVNode("text", { class: "iconfont pad" }, ""),
+                                (vue.openBlock(true), vue.createElementBlock(
+                                  vue.Fragment,
+                                  null,
+                                  vue.renderList(item.likes, (val, index2) => {
+                                    return vue.openBlock(), vue.createElementBlock("text", {
+                                      onClick: ($event) => goDetail(val),
+                                      key: val.id
+                                    }, vue.toDisplayString(index2 > 0 ? "," : "") + " " + vue.toDisplayString(val.remarked), 9, ["onClick"]);
+                                  }),
+                                  128
+                                  /* KEYED_FRAGMENT */
+                                ))
+                              ])) : vue.createCommentVNode("v-if", true),
                               (vue.openBlock(true), vue.createElementBlock(
                                 vue.Fragment,
                                 null,
-                                vue.renderList(item.likes, (val, index2) => {
-                                  return vue.openBlock(), vue.createElementBlock(
-                                    "text",
-                                    {
-                                      key: val.id
-                                    },
-                                    vue.toDisplayString(index2 > 0 ? "," : "") + " " + vue.toDisplayString(val.remarked),
-                                    1
-                                    /* TEXT */
-                                  );
+                                vue.renderList(item.comments, (com, ind) => {
+                                  return vue.openBlock(), vue.createElementBlock("view", { class: "comments" }, [
+                                    vue.createElementVNode("text", null, [
+                                      vue.createElementVNode("text", {
+                                        class: "remarked",
+                                        onClick: ($event) => goDetail(com)
+                                      }, vue.toDisplayString(com.remarked), 9, ["onClick"]),
+                                      vue.createTextVNode(" : "),
+                                      vue.createElementVNode("text", {
+                                        class: "commentContent",
+                                        onClick: ($event) => replyComments(com)
+                                      }, vue.toDisplayString(com.comment), 9, ["onClick"])
+                                    ]),
+                                    com.replyList.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+                                      (vue.openBlock(true), vue.createElementBlock(
+                                        vue.Fragment,
+                                        null,
+                                        vue.renderList(com.replyList, (reply) => {
+                                          return vue.openBlock(), vue.createElementBlock("view", { class: "replyInfo" }, [
+                                            vue.createElementVNode("text", null, [
+                                              vue.createElementVNode(
+                                                "text",
+                                                { class: "remarked" },
+                                                vue.toDisplayString(reply.replyName),
+                                                1
+                                                /* TEXT */
+                                              ),
+                                              vue.createTextVNode(" 回复 "),
+                                              vue.createElementVNode(
+                                                "text",
+                                                { class: "remarked" },
+                                                vue.toDisplayString(com.remarked) + ":",
+                                                1
+                                                /* TEXT */
+                                              ),
+                                              vue.createTextVNode(
+                                                " " + vue.toDisplayString(reply.replyComment),
+                                                1
+                                                /* TEXT */
+                                              )
+                                            ])
+                                          ]);
+                                        }),
+                                        256
+                                        /* UNKEYED_FRAGMENT */
+                                      ))
+                                    ])) : vue.createCommentVNode("v-if", true)
+                                  ]);
                                 }),
-                                128
-                                /* KEYED_FRAGMENT */
+                                256
+                                /* UNKEYED_FRAGMENT */
                               ))
-                            ])) : vue.createCommentVNode("v-if", true),
-                            vue.createCommentVNode(' 	<view class="showInfo" v-if="commentList.length!=0">\r\n							<view class="comments" v-for="(item,i) in commentList">\r\n							<text v-for="(val,key) in item">{{key}} : {{val}}</text>\r\n							</view>\r\n						</view> ')
+                            ])) : vue.createCommentVNode("v-if", true)
                           ])
                         ]);
                       }),
@@ -12999,6 +13098,7 @@ ${i3}
             List.value = res.data.reverse();
           }
         }
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:171", List.value, 55);
       }
       let wh = vue.ref();
       function getHeight() {
@@ -13020,6 +13120,7 @@ ${i3}
           uid: id.value
         });
         if (res.code == 200) {
+          flag.value = "a";
           getList();
         }
       }
@@ -13035,205 +13136,387 @@ ${i3}
           return true;
         }
       }
+      let temporary = vue.ref({});
+      let foucsFlag = vue.ref(false);
+      let comment = vue.ref("");
+      function validate(info) {
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:221", info, 66666);
+        temporary.value = info;
+        foucsFlag.value = true;
+        flag.value = "a";
+      }
+      let keyboardHeight = vue.ref(0);
+      function getInputHeight(e2) {
+        if (e2.detail.height != 0) {
+          keyboardHeight.value = parseInt(e2.detail.height) * 2 - 25;
+          formatAppLog("log", "at pages/dynamic/dynamic.vue:231", keyboardHeight.value);
+        }
+      }
+      function closeKeyBorder(e2) {
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:236", e2);
+        if (e2.detail.height == 0) {
+          flag.value = "a";
+          keyboardHeight.value = 10;
+          setTimeout(() => {
+            foucsFlag.value = false;
+          }, 100);
+        }
+      }
+      const debouncedInputChange = debounce(function inputChange(val) {
+        comment.value = val;
+      }, 800);
+      const handleInput = (e2) => {
+        debouncedInputChange(e2.detail.value);
+      };
+      let judgeComment = vue.ref(false);
+      function replyComments(commentInfo) {
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:256", commentInfo, 123);
+        if (userPower.id == commentInfo.commentId) {
+          return false;
+        } else {
+          judgeComment.value = true;
+          temporary.value = commentInfo;
+          foucsFlag.value = true;
+          flag.value = "a";
+        }
+      }
+      async function acheveComment() {
+        if (comment.value == "") {
+          showMsg$1("评论不能为空");
+        } else {
+          if (judgeComment.value) {
+            formatAppLog("log", "at pages/dynamic/dynamic.vue:274", "我是点击了回复");
+            let replyobj = {
+              spaceId: temporary.value.spaceId,
+              replyComment: comment.value,
+              commentUid: temporary.value.commentId,
+              replyId: userPower.id,
+              commentId: temporary.value.id
+            };
+            let {
+              data: res
+            } = await request("/user/replyComment", "post", replyobj);
+            if (res.code == 200) {
+              comment.value = "";
+              temporary.value = {};
+              judgeComment.value = false;
+              getList();
+              formatAppLog("log", "at pages/dynamic/dynamic.vue:290", res.data, 33333);
+            }
+          } else {
+            let obj = {
+              // uid: temporary.value.uid,
+              commentId: temporary.value.uid,
+              spaceId: temporary.value.id,
+              comment: comment.value
+            };
+            let {
+              data: res
+            } = await request("/user/comment", "post", obj);
+            if (res.code == 200) {
+              comment.value = "";
+              temporary.value = {};
+              getList();
+            }
+          }
+        }
+      }
+      function goDetail(info) {
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:313", info, 777);
+        uni.navigateTo({
+          url: `/pages/detail/detail?id=${info.commentId}`
+        });
+      }
       return (_ctx, _cache) => {
-        return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
-          vue.createElementVNode("view", { class: "bg" }, [
-            vue.createVNode(statusBar, { class: "important" }),
-            vue.createElementVNode("view", { class: "content" }, [
-              vue.createVNode(Header, { obj: vue.unref(headObj) }, {
-                left: vue.withCtx(() => [
-                  vue.createElementVNode("text", { class: "iconfont size" }, "")
-                ]),
-                right: vue.withCtx(() => [
-                  vue.createElementVNode("text", {
-                    class: "iconfont icon-xiangji",
-                    style: { "font-size": "50rpx" }
-                  })
-                ]),
-                _: 1
-                /* STABLE */
-              }, 8, ["obj"]),
-              vue.createElementVNode("view", { class: "avatar" }, [
-                vue.createElementVNode(
-                  "text",
-                  null,
-                  vue.toDisplayString(vue.unref(nickname)),
-                  1
-                  /* TEXT */
-                ),
-                vue.createElementVNode("view", { class: "imgBg" }, [
-                  vue.createElementVNode("image", { src: vue.unref(avatar) }, null, 8, ["src"])
+        return vue.openBlock(), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          [
+            vue.createElementVNode("view", { class: "container" }, [
+              vue.createElementVNode("view", { class: "bg" }, [
+                vue.createVNode(statusBar, { class: "important" }),
+                vue.createElementVNode("view", { class: "content" }, [
+                  vue.createVNode(Header, { obj: vue.unref(headObj) }, {
+                    left: vue.withCtx(() => [
+                      vue.createElementVNode("text", { class: "iconfont size" }, "")
+                    ]),
+                    right: vue.withCtx(() => [
+                      vue.createElementVNode("text", {
+                        class: "iconfont icon-xiangji",
+                        style: { "font-size": "50rpx" }
+                      })
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  }, 8, ["obj"]),
+                  vue.createElementVNode("view", { class: "avatar" }, [
+                    vue.createElementVNode(
+                      "text",
+                      null,
+                      vue.toDisplayString(vue.unref(nickname)),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode("view", { class: "imgBg" }, [
+                      vue.createElementVNode("image", { src: vue.unref(avatar) }, null, 8, ["src"])
+                    ])
+                  ])
                 ])
-              ])
-            ])
-          ]),
-          vue.unref(List).length == 0 ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 0,
-            class: "none"
-          }, [
-            vue.createElementVNode("view", { class: "plane icon-zhifeiji_fabu iconfont" }),
-            vue.createTextVNode(" 暂无动态发布 ")
-          ])) : (vue.openBlock(), vue.createElementBlock("view", {
-            key: 1,
-            class: "detail"
-          }, [
-            vue.createElementVNode(
-              "scroll-view",
-              {
-                "scroll-y": "true",
-                style: vue.normalizeStyle({ height: vue.unref(wh) + "px" })
-              },
-              [
-                (vue.openBlock(true), vue.createElementBlock(
-                  vue.Fragment,
-                  null,
-                  vue.renderList(vue.unref(List), (item, index) => {
-                    var _a;
-                    return vue.openBlock(), vue.createElementBlock("view", {
-                      class: "spaces",
-                      key: item.id
-                    }, [
-                      vue.createElementVNode("view", {
-                        class: "left",
-                        onClick: ($event) => goInfo(item.uid)
-                      }, [
-                        vue.createElementVNode("image", {
-                          src: item.avatar,
-                          mode: ""
-                        }, null, 8, ["src"])
-                      ], 8, ["onClick"]),
-                      vue.createElementVNode("view", { class: "right" }, [
-                        vue.createElementVNode(
-                          "text",
-                          { class: "remarked" },
-                          vue.toDisplayString(item.remarked),
-                          1
-                          /* TEXT */
-                        ),
-                        vue.createElementVNode(
-                          "text",
-                          null,
-                          vue.toDisplayString(item.content.title),
-                          1
-                          /* TEXT */
-                        ),
-                        item.content.imgArr.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
-                          key: 0,
-                          class: "imgs"
+              ]),
+              vue.unref(List).length == 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "none"
+              }, [
+                vue.createElementVNode("view", { class: "plane icon-zhifeiji_fabu iconfont" }),
+                vue.createTextVNode(" 暂无动态发布 ")
+              ])) : (vue.openBlock(), vue.createElementBlock("view", {
+                key: 1,
+                class: "detail"
+              }, [
+                vue.createElementVNode(
+                  "scroll-view",
+                  {
+                    "scroll-y": "true",
+                    style: vue.normalizeStyle({ height: vue.unref(wh) + "px" })
+                  },
+                  [
+                    (vue.openBlock(true), vue.createElementBlock(
+                      vue.Fragment,
+                      null,
+                      vue.renderList(vue.unref(List), (item, index) => {
+                        var _a;
+                        return vue.openBlock(), vue.createElementBlock("view", {
+                          class: "spaces",
+                          key: item.id
                         }, [
-                          (vue.openBlock(true), vue.createElementBlock(
-                            vue.Fragment,
-                            null,
-                            vue.renderList((_a = item == null ? void 0 : item.content) == null ? void 0 : _a.imgArr, (img2, inde) => {
-                              return vue.openBlock(), vue.createElementBlock("image", {
-                                key: inde,
-                                onClick: ($event) => preView(inde, item == null ? void 0 : item.content.imgArr),
-                                src: img2,
-                                style: vue.normalizeStyle({
-                                  width: (item == null ? void 0 : item.content.imgArr.length) == 1 ? "90%" : (item == null ? void 0 : item.content.imgArr.length) == 2 ? "38%" : "32%",
-                                  height: (item == null ? void 0 : item.content.imgArr.length) <= 3 ? "100%" : (item == null ? void 0 : item.content.imgArr.length) <= 6 ? "48%" : "32%"
-                                })
-                              }, null, 12, ["onClick", "src"]);
-                            }),
-                            128
-                            /* KEYED_FRAGMENT */
-                          ))
-                        ])) : vue.createCommentVNode("v-if", true),
-                        vue.createElementVNode("view", { class: "options" }, [
-                          vue.createElementVNode("view", { class: "desc" }, [
+                          vue.createElementVNode("view", {
+                            class: "left",
+                            onClick: ($event) => goInfo(item.uid)
+                          }, [
+                            vue.createElementVNode("image", {
+                              src: item.avatar,
+                              mode: ""
+                            }, null, 8, ["src"])
+                          ], 8, ["onClick"]),
+                          vue.createElementVNode("view", { class: "right" }, [
+                            vue.createElementVNode(
+                              "text",
+                              { class: "remarked" },
+                              vue.toDisplayString(item.remarked),
+                              1
+                              /* TEXT */
+                            ),
                             vue.createElementVNode(
                               "text",
                               null,
-                              vue.toDisplayString(vue.unref(dayFormat)(item.createTime)),
+                              vue.toDisplayString(item.content.title),
                               1
                               /* TEXT */
                             ),
-                            item.position ? (vue.openBlock(), vue.createElementBlock(
-                              "text",
-                              { key: 0 },
-                              vue.toDisplayString(item.position),
-                              1
-                              /* TEXT */
-                            )) : vue.createCommentVNode("v-if", true)
-                          ]),
-                          vue.createElementVNode("view", { class: "editBox" }, [
-                            vue.createElementVNode(
-                              "view",
-                              {
-                                class: vue.normalizeClass(["boxLt", { imp: index == vue.unref(flag) }])
-                              },
-                              [
-                                vue.createElementVNode("view", { class: "optionContent" }, [
-                                  vue.createElementVNode("view", {
-                                    class: "l",
-                                    onClick: ($event) => changeLike(item.id)
-                                  }, [
-                                    vue.createTextVNode(" 赞"),
-                                    vue.createElementVNode(
-                                      "text",
-                                      {
-                                        class: vue.normalizeClass(["iconfont", [prepare(item.likes) ? "icon-aixin1" : "icon-aixin"]])
-                                      },
+                            item.content.imgArr.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                              key: 0,
+                              class: "imgs"
+                            }, [
+                              (vue.openBlock(true), vue.createElementBlock(
+                                vue.Fragment,
+                                null,
+                                vue.renderList((_a = item == null ? void 0 : item.content) == null ? void 0 : _a.imgArr, (img2, inde) => {
+                                  return vue.openBlock(), vue.createElementBlock("image", {
+                                    key: inde,
+                                    onClick: ($event) => preView(inde, item == null ? void 0 : item.content.imgArr),
+                                    src: img2,
+                                    style: vue.normalizeStyle({
+                                      width: (item == null ? void 0 : item.content.imgArr.length) == 1 ? "90%" : (item == null ? void 0 : item.content.imgArr.length) == 2 ? "38%" : "32%",
+                                      height: (item == null ? void 0 : item.content.imgArr.length) <= 3 ? "100%" : (item == null ? void 0 : item.content.imgArr.length) <= 6 ? "48%" : "32%"
+                                    })
+                                  }, null, 12, ["onClick", "src"]);
+                                }),
+                                128
+                                /* KEYED_FRAGMENT */
+                              ))
+                            ])) : vue.createCommentVNode("v-if", true),
+                            vue.createElementVNode("view", { class: "options" }, [
+                              vue.createElementVNode("view", { class: "desc" }, [
+                                item.position ? (vue.openBlock(), vue.createElementBlock(
+                                  "text",
+                                  {
+                                    key: 0,
+                                    class: "position"
+                                  },
+                                  vue.toDisplayString(item.position),
+                                  1
+                                  /* TEXT */
+                                )) : vue.createCommentVNode("v-if", true),
+                                vue.createElementVNode(
+                                  "text",
+                                  null,
+                                  vue.toDisplayString(vue.unref(dayFormat)(item.createTime)),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              vue.createElementVNode("view", { class: "editBox" }, [
+                                vue.createElementVNode(
+                                  "view",
+                                  {
+                                    class: vue.normalizeClass(["boxLt", { imp: index == vue.unref(flag) }])
+                                  },
+                                  [
+                                    vue.createElementVNode("view", { class: "optionContent" }, [
+                                      vue.createElementVNode("view", {
+                                        class: "l",
+                                        onClick: ($event) => changeLike(item.id)
+                                      }, [
+                                        vue.createTextVNode(" 赞"),
+                                        vue.createElementVNode(
+                                          "text",
+                                          {
+                                            class: vue.normalizeClass(["iconfont", [prepare(item.likes) ? "icon-aixin1" : "icon-aixin"]])
+                                          },
+                                          null,
+                                          2
+                                          /* CLASS */
+                                        )
+                                      ], 8, ["onClick"]),
+                                      vue.createElementVNode("view", {
+                                        class: "c",
+                                        onClick: ($event) => validate(item)
+                                      }, [
+                                        vue.createTextVNode(" 评论"),
+                                        vue.createElementVNode("text", { class: "iconfont" }, "")
+                                      ], 8, ["onClick"])
+                                    ])
+                                  ],
+                                  2
+                                  /* CLASS */
+                                ),
+                                vue.createElementVNode("view", {
+                                  class: "boxRt iconfont",
+                                  onClick: ($event) => editContent(index)
+                                }, "  ", 8, ["onClick"])
+                              ])
+                            ]),
+                            item.likes.length != 0 || item.comments.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                              key: 1,
+                              class: "showInfo"
+                            }, [
+                              item.likes.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                                key: 0,
+                                class: "likesList"
+                              }, [
+                                vue.createElementVNode("text", { class: "iconfont pad" }, ""),
+                                (vue.openBlock(true), vue.createElementBlock(
+                                  vue.Fragment,
+                                  null,
+                                  vue.renderList(item.likes, (val, index2) => {
+                                    return vue.openBlock(), vue.createElementBlock("text", {
+                                      onClick: ($event) => goDetail(val),
+                                      key: val.id
+                                    }, vue.toDisplayString(index2 > 0 ? "," : "") + " " + vue.toDisplayString(val.remarked), 9, ["onClick"]);
+                                  }),
+                                  128
+                                  /* KEYED_FRAGMENT */
+                                ))
+                              ])) : vue.createCommentVNode("v-if", true),
+                              (vue.openBlock(true), vue.createElementBlock(
+                                vue.Fragment,
+                                null,
+                                vue.renderList(item.comments, (com, ind) => {
+                                  return vue.openBlock(), vue.createElementBlock("view", { class: "comments" }, [
+                                    vue.createElementVNode("text", null, [
+                                      vue.createElementVNode("text", {
+                                        class: "remarked",
+                                        onClick: ($event) => goDetail(com)
+                                      }, vue.toDisplayString(com.remarked), 9, ["onClick"]),
+                                      vue.createTextVNode(" : "),
+                                      vue.createElementVNode("text", {
+                                        class: "commentContent",
+                                        onClick: ($event) => replyComments(com)
+                                      }, vue.toDisplayString(com.comment), 9, ["onClick"])
+                                    ]),
+                                    (vue.openBlock(true), vue.createElementBlock(
+                                      vue.Fragment,
                                       null,
-                                      2
-                                      /* CLASS */
-                                    )
-                                  ], 8, ["onClick"]),
-                                  vue.createElementVNode("view", {
-                                    class: "c",
-                                    onClick: ($event) => _ctx.validate(item)
-                                  }, [
-                                    vue.createTextVNode(" 评论"),
-                                    vue.createElementVNode("text", { class: "iconfont" }, "")
-                                  ], 8, ["onClick"])
-                                ])
-                              ],
-                              2
-                              /* CLASS */
-                            ),
-                            vue.createElementVNode("view", {
-                              class: "boxRt iconfont",
-                              onClick: ($event) => editContent(index)
-                            }, "  ", 8, ["onClick"])
+                                      vue.renderList(com.replyList, (reply) => {
+                                        return vue.openBlock(), vue.createElementBlock("view", { class: "replyInfo" }, [
+                                          vue.createElementVNode("text", null, [
+                                            vue.createElementVNode(
+                                              "text",
+                                              { class: "remarked" },
+                                              vue.toDisplayString(reply.replyName),
+                                              1
+                                              /* TEXT */
+                                            ),
+                                            vue.createTextVNode(" 回复 "),
+                                            vue.createElementVNode(
+                                              "text",
+                                              { class: "remarked" },
+                                              vue.toDisplayString(com.remarked) + ":",
+                                              1
+                                              /* TEXT */
+                                            ),
+                                            vue.createTextVNode(
+                                              " " + vue.toDisplayString(reply.replyComment),
+                                              1
+                                              /* TEXT */
+                                            )
+                                          ])
+                                        ]);
+                                      }),
+                                      256
+                                      /* UNKEYED_FRAGMENT */
+                                    ))
+                                  ]);
+                                }),
+                                256
+                                /* UNKEYED_FRAGMENT */
+                              ))
+                            ])) : vue.createCommentVNode("v-if", true)
                           ])
-                        ]),
-                        item.likes.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
-                          key: 1,
-                          class: "showInfo"
-                        }, [
-                          vue.createElementVNode("text", { class: "iconfont pad" }, ""),
-                          vue.createTextVNode(),
-                          (vue.openBlock(true), vue.createElementBlock(
-                            vue.Fragment,
-                            null,
-                            vue.renderList(item.likes, (val, index2) => {
-                              return vue.openBlock(), vue.createElementBlock(
-                                "text",
-                                {
-                                  key: val.id
-                                },
-                                vue.toDisplayString(index2 > 0 ? "," : "") + " " + vue.toDisplayString(val.remarked),
-                                1
-                                /* TEXT */
-                              );
-                            }),
-                            128
-                            /* KEYED_FRAGMENT */
-                          ))
-                        ])) : vue.createCommentVNode("v-if", true),
-                        vue.createCommentVNode(' 	<view class="showInfo" v-if="commentList.length!=0">\r\n							<view class="comments" v-for="(item,i) in commentList">\r\n							<text v-for="(val,key) in item">{{key}} : {{val}}</text>\r\n							</view>\r\n						</view> ')
-                      ])
-                    ]);
-                  }),
-                  128
-                  /* KEYED_FRAGMENT */
-                ))
+                        ]);
+                      }),
+                      128
+                      /* KEYED_FRAGMENT */
+                    ))
+                  ],
+                  4
+                  /* STYLE */
+                )
+              ]))
+            ]),
+            vue.createCommentVNode(" 评论功能弹窗 "),
+            vue.unref(foucsFlag) ? (vue.openBlock(), vue.createElementBlock(
+              "view",
+              {
+                key: 0,
+                class: "popul",
+                style: vue.normalizeStyle({ bottom: vue.unref(keyboardHeight) + "rpx" })
+              },
+              [
+                vue.createElementVNode("input", {
+                  onInput: handleInput,
+                  maxlength: "500",
+                  placeholder: "评论",
+                  class: "input",
+                  onKeyboardheightchange: closeKeyBorder,
+                  type: "text",
+                  onFocus: getInputHeight,
+                  "adjust-position": false,
+                  focus: vue.unref(foucsFlag),
+                  value: vue.unref(comment)
+                }, null, 40, ["focus", "value"]),
+                vue.createElementVNode("view", {
+                  class: "btn",
+                  onClick: acheveComment
+                }, " 发送 ")
               ],
               4
               /* STYLE */
-            )
-          ]))
-        ]);
+            )) : vue.createCommentVNode("v-if", true)
+          ],
+          64
+          /* STABLE_FRAGMENT */
+        );
       };
     }
   };
@@ -17455,9 +17738,17 @@ ${i3}
     __name: "friendItem",
     props: ["obj"],
     setup(__props) {
+      function goDetail(obj) {
+        uni.navigateTo({
+          url: `/pages/detail/detail?id=${obj.id}`
+        });
+      }
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("view", { class: "menuList" }, [
-          vue.createElementVNode("view", { class: "imgBg" }, [
+          vue.createElementVNode("view", {
+            class: "imgBg",
+            onClick: _cache[0] || (_cache[0] = ($event) => goDetail(__props.obj))
+          }, [
             vue.createElementVNode("image", {
               src: __props.obj.avatar,
               mode: ""
@@ -18860,9 +19151,9 @@ ${i3}
           } else {
             flag.value = true;
             spaceInfo.value = res.data;
-            formatAppLog("log", "at pages/detail/detail.vue:119", spaceInfo.value, 666);
           }
         } catch (e2) {
+          formatAppLog("log", "at pages/detail/detail.vue:122", e2);
         }
       });
       function preView(index, imgArr) {

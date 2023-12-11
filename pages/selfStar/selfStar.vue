@@ -4,7 +4,7 @@
 			<stastuBar class="important"></stastuBar>
 			<view class="content">
 				<Header :obj="headObj">
-					<template #left>
+					<template #left @>
 						<text class="iconfont size">&#xeb4e;</text>
 					</template>
 					<template #center>
@@ -39,7 +39,7 @@
 		<view class="detail" v-if="totalList!=[]">
 			<scroll-view scroll-y="true" :style="{height: wh+'px'}">
 				<view class="spaces" v-for="(item,index) in totalList" :key="item.id">
-					<view class="left">
+					<view class="left" @click="goDetail(item)">
 						<image :src="avatar" mode=""></image>
 					</view>
 					<view class="right">
@@ -56,8 +56,9 @@
 						</view>
 						<view class="options">
 							<view class="desc">
+								<text v-if="item.position" class="position">{{item.position}}</text>
 								<text>{{dayFormat(item.createTime)}}</text>
-								<text v-if="item.position">{{item.position}}</text>
+
 							</view>
 							<view class="editBox">
 								<view class="boxLt" :class="{imp:index==flag}">
@@ -79,16 +80,21 @@
 								</view>
 							</view>
 						</view>
-						<view class="showInfo" v-if="item.likes.length!=0">
-							<text class="iconfont pad">&#xeb47;</text>
-							<text v-for="(val, index) in item.likes" :key="val.id">{{ index > 0 ? ',' : '' }}
-								{{ val.remarked }}</text>
-						</view>
-						<!-- 	<view class="showInfo" v-if="commentList.length!=0">
-							<view class="comments" v-for="(item,i) in commentList">
-							<text v-for="(val,key) in item">{{key}} : {{val}}</text>
+						<view class="showInfo" v-if="(item.likes.length!=0)|| item.comments.length!=0">
+							<view class="likesList" v-if="item.likes.length!=0">
+								<text class="iconfont pad">&#xeb47;</text>
+								<text @click="goDetail(val)" v-for="(val, index) in item.likes" :key="val.id">{{ index > 0 ? ',' : '' }}
+									{{ val.remarked }}</text>
 							</view>
-						</view> -->
+							<view class="comments" v-for="(com,ind) in item.comments">
+								<text><text class="remarked" @click="goDetail(com)">{{com.remarked}}</text> : <text class="commentContent" @click="replyComments(com)">{{com.comment}}</text> </text>
+							<view v-if="com.replyList.length!=0">
+							<view class="replyInfo" v-for="reply in com.replyList">
+								<text> <text class="remarked">{{reply.replyName}}</text> 回复 <text class="remarked">{{com.remarked}}:</text> {{reply.replyComment}}</text> 
+							</view>
+							</view>
+							</view>
+						</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -96,9 +102,8 @@
 	</view>
 	<!-- 评论功能弹窗 -->
 	<view class="popul" v-if="foucsFlag" :style="{bottom: keyboardHeight+'rpx' }">
-		<input @input="handleInput" maxlength="500" placeholder="评论" class="input"
-			@keyboardheightchange="closeKeyBorder" type="text" @focus="getInputHeight" :adjust-position="false"
-			:focus="foucsFlag" :value="comment" />
+		<input @input="handleInput" maxlength="500" placeholder="评论" class="input" @keyboardheightchange="closeKeyBorder" type="text"
+			@focus="getInputHeight" :adjust-position="false" :focus="foucsFlag" :value="comment" />
 		<view class="btn" @click="acheveComment">
 			发送
 		</view>
@@ -163,7 +168,7 @@
 		const val = uni.getSystemInfoSync()
 		wh.value = val.windowHeight - 360
 	}
-
+	// 处理点赞状态
 	function prepare(status) {
 		if (status.length == 0) return false;
 		let result = status.find(item => {
@@ -187,6 +192,7 @@
 		} = await request('/user/getMySpaceInfo', 'get', {
 			id: userPower.id
 		})
+		console.log(res.data, 11111);
 		totalList.value = res.data.reverse()
 		// console.log(totalList.value, 888);
 	}
@@ -221,7 +227,8 @@
 		});
 		if (res.code == '200') {
 			showMsg(res.msg, 1500, 'loading');
-			this.getmySpaceInfo(spaceUid)
+			getmySpaceInfo(spaceUid);
+			flag.value = 'a'
 		} else {
 			return showMsg('删除动态失败')
 		}
@@ -235,54 +242,109 @@
 			indicator: "default"
 		})
 	}
-	let temporary = ref({})
+	let temporary = ref({}) //暂时存储当前点击的动态信息
 	//点击了评论 让键盘聚焦显示
 	function validate(info) {
-		console.log(info, 66666);
-		temporary.value=info;
+		// console.log(info, 66666);
+		temporary.value = info;
 		foucsFlag.value = true;
 		flag.value = 'a'
 	}
+
 	let keyboardHeight = ref(0)
 	// 获取键盘高度
 	function getInputHeight(e) {
 		if (e.detail.height != 0) {
-			keyboardHeight.value = parseInt(e.detail.height) * 2 - 20;
-			console.log(keyboardHeight.value);
+			keyboardHeight.value = parseInt(e.detail.height) * 2 - 25;
+			// console.log(keyboardHeight.value);
 		}
 	}
 	// 判断键盘的关闭
 	function closeKeyBorder(e) {
-		console.log(e.detail);
-		flag.value = 'a'
-		if (e.detail.height == 0) {
-			foucsFlag.value = false;
+		// console.log(e);
+		if(e.detail.height==0){
+			flag.value = 'a'
 			keyboardHeight.value = 10;
+			// 必须弄个定时器，不然发送按钮的点击事件会被覆盖掉
+			setTimeout(() => {
+				foucsFlag.value = false;
+			}, 100)
 		}
 	}
 
 	const debouncedInputChange = debounce(function inputChange(val) {
-		console.log(val);
-		comment.value=val
-	}, 1000); // 使用防抖函数包装inputChange
+		// console.log(val);
+		comment.value = val
+	}, 100); // 使用防抖函数包装inputChange
 	const handleInput = (e) => {
 		debouncedInputChange(e.detail.value); // 调用防抖函数处理@input事件
 	};
-	let commentList = ref([]);
- function acheveComment() {
-		//如果点击了确定
-		if (comment.value=="") {
-			showMsg("评论不能为空")
+	let judgeComment=ref(false)
+	// 点击评论内容回复评论
+	function replyComments(commentInfo){
+		console.log(commentInfo,123);
+		if(userPower.id==commentInfo.commentId){
+			return false
 		}else{
-			let obj={
-				uid:temporary.value.uid,
-				commentId:temporary.value.uid,
-				spaced:temporary.id
-			}
-			console.log(2);
-		}
+			judgeComment.value=true;
+			temporary.value = commentInfo;
+			foucsFlag.value = true;
+			flag.value = 'a'
 			
+		}
 	}
+	// 发送
+	async function acheveComment() {
+		//如果点击了发送
+		if (comment.value == "") {
+			showMsg("评论不能为空")
+		} else {
+		if(judgeComment.value){
+			console.log("我是点击了回复");
+			let replyobj={
+				spaceId: temporary.value.spaceId,
+				replyComment: comment.value,
+				commentUid: temporary.value.commentId,
+				replyId:userPower.id,
+				commentId:temporary.value.id
+			}
+			let {
+				data: res
+			} = await request("/user/replyComment", "post",replyobj);
+			if (res.code == 200) {
+				comment.value = '';
+				temporary.value = {};
+				judgeComment.value=false;
+				getmySpaceInfo();
+				console.log(res.data,33333);
+			}
+		}else{
+			// 我是点击了评论
+			let obj = {
+				// uid: temporary.value.uid,
+				commentId: temporary.value.uid,
+				spaceId: temporary.value.id,
+				comment: comment.value
+			}
+			let {
+				data: res
+			} = await request("/user/comment", "post", obj);
+			if (res.code == 200) {
+				comment.value = '';
+				temporary.value = {};
+				getmySpaceInfo();
+			}
+		}
+		}
+	}
+	// 点击昵称跳转页面
+	function goDetail(info){
+		// console.log(info,77);
+		uni.navigateTo({
+			url: `/pages/detail/detail?id=${info.commentId}`
+		})
+	}
+
 </script>
 
 <style scoped lang="scss">
@@ -416,7 +478,7 @@
 					flex-direction: column;
 
 					text {
-						font-size: 30rpx;
+						font-size: 28rpx;
 					}
 
 					.remarked {
@@ -429,12 +491,12 @@
 						height: 500rpx;
 
 						image {
-							margin: 2rpx 5rpx -6rpx 0;
+							margin: 2rpx 5rpx -8rpx 0;
 						}
 					}
 
 					.options {
-						margin-top: 25rpx;
+						margin-top: 15rpx;
 						display: flex;
 						justify-content: space-between;
 						align-items: center;
@@ -444,12 +506,16 @@
 							flex-direction: column;
 
 							text {
-								color: #797979;
-								font-size: 28rpx;
+								color: #746ba7;
+								font-size: 25rpx;
 								width: 300rpx;
 								overflow: hidden;
 								white-space: nowrap;
 								text-overflow: ellipsis;
+							}
+							.position{
+								color: #797979;
+								font-size: 23rpx;
 							}
 						}
 
@@ -497,8 +563,6 @@
 										flex-direction: column;
 										justify-content: center;
 										align-items: center;
-										// width: 50%;
-										// text-align: center;
 									}
 								}
 
@@ -510,16 +574,31 @@
 					.showInfo {
 						overflow: hidden;
 						background-color: #f7f7f7;
-						padding: 12rpx 15rpx;
+						padding:12rpx 15rpx;
 						box-sizing: border-box;
 						width: 100%;
 						font-weight: bold;
-						font-size: 28rpx;
+						font-size: 26rpx;
 						color: #746ba7;
 						margin-top: 10rpx;
-						border-radius: 10rpx 10rpx 0 0;
-
+						border-radius: 10rpx;
+					
+						.comments,.likesList,.replyInfo{
+							margin: 10rpx 0;
+						}
+						.likesList{
+							margin-bottom: 15rpx;
+						}
+						.commentContent {
+							color: #000;
+							font-weight: normal;
+						}
+						.replyInfo{
+							color: #000;
+							font-weight: normal;
+						}
 					}
+
 				}
 			}
 		}
@@ -552,6 +631,7 @@
 			background-color: #1aa5fc;
 			border-radius: 15rpx;
 			color: #fff;
+			z-index: 99;
 		}
 	}
 </style>

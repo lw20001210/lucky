@@ -177,7 +177,7 @@
   position: relative;
   height: 14.0625rem;
   width: 100%;
-  background: url("../../static/images/spaceBg.jpg") no-repeat;
+  background: url("../../static/images/bgg.jpg") no-repeat;
   background-size: cover;
   overflow: visible;
 }
@@ -282,7 +282,7 @@
   flex-direction: column;
 }
 .container .detail .spaces .right uni-text[data-v-1cb7f60c] {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
 }
 .container .detail .spaces .right .remarked[data-v-1cb7f60c] {
   font-size: 0.9375rem;
@@ -293,10 +293,10 @@
   height: 15.625rem;
 }
 .container .detail .spaces .right .imgs uni-image[data-v-1cb7f60c] {
-  margin: 0.0625rem 0.15625rem -0.1875rem 0;
+  margin: 0.0625rem 0.15625rem -0.25rem 0;
 }
 .container .detail .spaces .right .options[data-v-1cb7f60c] {
-  margin-top: 0.78125rem;
+  margin-top: 0.46875rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -306,12 +306,16 @@
   flex-direction: column;
 }
 .container .detail .spaces .right .options .desc uni-text[data-v-1cb7f60c] {
-  color: #797979;
-  font-size: 0.875rem;
+  color: #746ba7;
+  font-size: 0.78125rem;
   width: 9.375rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.container .detail .spaces .right .options .desc .position[data-v-1cb7f60c] {
+  color: #797979;
+  font-size: 0.71875rem;
 }
 .container .detail .spaces .right .options .editBox[data-v-1cb7f60c] {
   display: flex;
@@ -363,10 +367,24 @@
   box-sizing: border-box;
   width: 100%;
   font-weight: bold;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: #746ba7;
   margin-top: 0.3125rem;
-  border-radius: 0.3125rem 0.3125rem 0 0;
+  border-radius: 0.3125rem;
+}
+.container .detail .spaces .right .showInfo .comments[data-v-1cb7f60c], .container .detail .spaces .right .showInfo .likesList[data-v-1cb7f60c], .container .detail .spaces .right .showInfo .replyInfo[data-v-1cb7f60c] {
+  margin: 0.3125rem 0;
+}
+.container .detail .spaces .right .showInfo .likesList[data-v-1cb7f60c] {
+  margin-bottom: 0.46875rem;
+}
+.container .detail .spaces .right .showInfo .commentContent[data-v-1cb7f60c] {
+  color: #000;
+  font-weight: normal;
+}
+.container .detail .spaces .right .showInfo .replyInfo[data-v-1cb7f60c] {
+  color: #000;
+  font-weight: normal;
 }
 .popul[data-v-1cb7f60c] {
   position: fixed;
@@ -393,4 +411,5 @@
   background-color: #1aa5fc;
   border-radius: 0.46875rem;
   color: #fff;
+  z-index: 99;
 }

@@ -44,8 +44,8 @@
 						</view>
 						<view class="options">
 							<view class="desc">
+								<text class="position" v-if="item.position">{{item.position}}</text>
 								<text>{{dayFormat(item.createTime)}}</text>
-								<text v-if="item.position">{{item.position}}</text>
 							</view>
 							<view class="editBox">
 								<view class="boxLt" :class="{imp:index==flag}">
@@ -64,20 +64,35 @@
 								</view>
 							</view>
 						</view>
-						<view class="showInfo" v-if="item.likes.length!=0">
-							<text class="iconfont pad">&#xeb47;</text> <text v-for="(val, index) in item.likes"
-								:key="val.id">
-								{{ index > 0 ? ',' : '' }} {{ val.remarked }}
-							</text>
-						</view>
-						<!-- 	<view class="showInfo" v-if="commentList.length!=0">
-							<view class="comments" v-for="(item,i) in commentList">
-							<text v-for="(val,key) in item">{{key}} : {{val}}</text>
+						<view class="showInfo" v-if="(item.likes.length!=0)|| item.comments.length!=0">
+							<view class="likesList" v-if="item.likes.length!=0">
+								<text class="iconfont pad">&#xeb47;</text>
+								<text @click="goDetail(val)" v-for="(val, index) in item.likes"
+									:key="val.id">{{ index > 0 ? ',' : '' }}
+									{{ val.remarked }}</text>
 							</view>
-						</view> -->
+							<view class="comments" v-for="(com,ind) in item.comments">
+								<text><text class="remarked" @click="goDetail(com)">{{com.remarked}}</text> : <text
+										class="commentContent" @click="replyComments(com)">{{com.comment}}</text>
+								</text>
+								<view class="replyInfo" v-for="reply in com.replyList">
+									<text> <text class="remarked">{{reply.replyName}}</text> 回复 <text
+											class="remarked">{{com.remarked}}:</text> {{reply.replyComment}}</text>
+								</view>
+							</view>
+						</view>
 					</view>
 				</view>
 			</scroll-view>
+		</view>
+	</view>
+	<!-- 评论功能弹窗 -->
+	<view class="popul" v-if="foucsFlag" :style="{bottom: keyboardHeight+'rpx' }">
+		<input @input="handleInput" maxlength="500" placeholder="评论" class="input"
+			@keyboardheightchange="closeKeyBorder" type="text" @focus="getInputHeight" :adjust-position="false"
+			:focus="foucsFlag" :value="comment" />
+		<view class="btn" @click="acheveComment">
+			发送
 		</view>
 	</view>
 </template>
@@ -101,6 +116,9 @@
 	import {
 		showMsg
 	} from "../../utils/Toast";
+	import {
+		debounce
+	} from "@/utils/ablilty.js"
 	let List = ref([])
 	// 传递给header组件的数据
 	let headObj = ref({
@@ -150,7 +168,7 @@
 				List.value = res.data.reverse()
 			}
 		}
-		//console.log(List.value, 55);
+		console.log(List.value, 55);
 	}
 	// 滚动栏的高度
 	let wh = ref()
@@ -178,10 +196,11 @@
 		})
 		// console.log(res);
 		if (res.code == 200) {
+			flag.value = 'a'
 			getList()
 		}
 	}
-
+	// 处理点赞状态
 	function prepare(status) {
 		//console.log(status,19);
 		if (status.length == 0) return false;
@@ -193,6 +212,108 @@
 		} else {
 			return true
 		}
+	}
+	let temporary = ref({}) //暂时存储当前点击的动态信息
+	let foucsFlag = ref(false); //判断是否聚焦
+	let comment = ref(''); //评论内容
+	//点击了评论 让键盘聚焦显示
+	function validate(info) {
+		console.log(info, 66666);
+		temporary.value = info;
+		foucsFlag.value = true;
+		flag.value = 'a'
+	}
+	let keyboardHeight = ref(0)
+	// 获取键盘高度
+	function getInputHeight(e) {
+		if (e.detail.height != 0) {
+			keyboardHeight.value = parseInt(e.detail.height) * 2 - 25;
+			console.log(keyboardHeight.value);
+		}
+	}
+	// 判断键盘的关闭
+	function closeKeyBorder(e) {
+		console.log(e);
+		if (e.detail.height == 0) {
+			flag.value = 'a'
+			keyboardHeight.value = 10;
+			// 必须弄个定时器，不然发送按钮的点击事件会被覆盖掉
+			setTimeout(() => {
+				foucsFlag.value = false;
+			}, 100)
+		}
+	}
+
+	const debouncedInputChange = debounce(function inputChange(val) {
+		comment.value = val
+	}, 800); // 使用防抖函数包装inputChange
+	const handleInput = (e) => {
+		debouncedInputChange(e.detail.value); // 调用防抖函数处理@input事件
+	};
+	let judgeComment = ref(false)
+	// 点击评论内容回复评论
+	function replyComments(commentInfo) {
+		console.log(commentInfo, 123);
+		if (userPower.id == commentInfo.commentId) {
+			return false
+		} else {
+			judgeComment.value = true;
+			temporary.value = commentInfo;
+			foucsFlag.value = true;
+			flag.value = 'a'
+
+		}
+	}
+	// 发送
+	async function acheveComment() {
+		//如果点击了发送
+		if (comment.value == "") {
+			showMsg("评论不能为空")
+		} else {
+			if (judgeComment.value) {
+				console.log("我是点击了回复");
+				let replyobj = {
+					spaceId: temporary.value.spaceId,
+					replyComment: comment.value,
+					commentUid: temporary.value.commentId,
+					replyId: userPower.id,
+					commentId: temporary.value.id
+				}
+				let {
+					data: res
+				} = await request("/user/replyComment", "post", replyobj);
+				if (res.code == 200) {
+					comment.value = '';
+					temporary.value = {};
+					judgeComment.value = false;
+					getList();
+					console.log(res.data, 33333);
+				}
+			} else {
+				// 我是点击了评论
+				let obj = {
+					// uid: temporary.value.uid,
+					commentId: temporary.value.uid,
+					spaceId: temporary.value.id,
+					comment: comment.value
+				}
+				let {
+					data: res
+				} = await request("/user/comment", "post", obj);
+				if (res.code == 200) {
+					comment.value = '';
+					temporary.value = {};
+					getList()
+				}
+			}
+		}
+	}
+	// 点击昵称跳转页面
+	function goDetail(info) {
+		console.log(info, 777);
+		uni.navigateTo({
+			url: `/pages/detail/detail?id=${info.commentId}`
+		})
 	}
 </script>
 
@@ -291,7 +412,7 @@
 					flex-direction: column;
 
 					text {
-						font-size: 30rpx;
+						font-size: 28rpx;
 					}
 
 					.remarked {
@@ -304,12 +425,12 @@
 						height: 500rpx;
 
 						image {
-							margin: 2rpx 5rpx -6rpx 0;
+							margin: 2rpx 5rpx -8rpx 0;
 						}
 					}
 
 					.options {
-						margin-top: 25rpx;
+						margin-top: 20rpx;
 						display: flex;
 						justify-content: space-between;
 						align-items: center;
@@ -319,12 +440,17 @@
 							flex-direction: column;
 
 							text {
-								color: #797979;
-								font-size: 28rpx;
+								color: #746ba7;
+								font-size: 25rpx;
 								width: 350rpx;
 								overflow: hidden;
 								white-space: nowrap;
 								text-overflow: ellipsis;
+							}
+
+							.position {
+								color: #797979;
+								font-size: 23rpx;
 							}
 						}
 
@@ -352,7 +478,7 @@
 							.imp {
 								transform: translateX(0);
 								transition: all .5s;
-								width: 200rpx;
+								width: 190rpx;
 								height: 70rpx;
 								color: #fff;
 								background-color: rgba(76, 76, 76);
@@ -372,8 +498,6 @@
 									flex-direction: column;
 									justify-content: center;
 									align-items: center;
-									// width: 50%;
-									// text-align: center;
 								}
 							}
 
@@ -383,19 +507,70 @@
 				}
 
 				.showInfo {
+					overflow: hidden;
 					background-color: #f7f7f7;
 					padding: 12rpx 15rpx;
+					box-sizing: border-box;
 					width: 100%;
 					font-weight: bold;
-					font-size: 28rpx;
+					font-size: 26rpx;
 					color: #746ba7;
+					margin-top: 10rpx;
+					border-radius: 10rpx;
 
-					pad {
-						padding-left: 0 5rpx;
+					.comments,
+					.likesList,
+					.replyInfo {
+						margin: 10rpx 0;
+					}
+
+					.likesList {
+						margin-bottom: 15rpx;
+					}
+
+					.commentContent {
+						color: #000;
+						font-weight: normal;
+					}
+
+					.replyInfo {
+						color: #000;
+						font-weight: normal;
 					}
 				}
 			}
 		}
 	}
+	}
+
+	.popul {
+		position: fixed;
+		left: 0;
+		right: 0;
+		// bottom: 500rpx;
+		font-family: STKaiti;
+		padding: 10rpx 30rpx;
+		display: flex;
+		align-items: center;
+		background-color: #f2f2f2;
+
+		.input {
+			padding: 15rpx;
+			background-color: #fff;
+			border-radius: 10rpx;
+			width: 600rpx;
+		}
+
+		.btn {
+			width: 120rpx;
+			height: 70rpx;
+			line-height: 70rpx;
+			margin-left: 10rpx;
+			text-align: center;
+			background-color: #1aa5fc;
+			border-radius: 15rpx;
+			color: #fff;
+			z-index: 99;
+		}
 	}
 </style>

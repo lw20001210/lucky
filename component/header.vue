@@ -26,27 +26,29 @@
 	const props = defineProps(['obj'])
 	// console.log(props.obj);
 	// 返回上一级
-	
-	// console.log(page.$page.path);
-	// console.log(page.$page.fullPath);
-//  || (page.$page.path=="/pagesfriendInfo/friendInfo")
-	function goBack() {
-		let pages = getCurrentPages();
-		let page = pages[pages.length - 2];
-		// console.log(pages);
-		if (page?.$page.path == "/pages/detail/detail") {
-		//	console.log(1);
-			let paths=page.$page.fullPath
-			uni.reLaunch({
-				url: paths
-			});
-		} else {
-			//console.log(2);
-			uni.reLaunch({
-				url: props.obj.path
-			});
-		}
 
+	//  || (page.$page.path=="/pagesfriendInfo/friendInfo")
+	function goBack() {
+		// let pages = getCurrentPages();
+		// let currentPage = pages[pages.length - 1];//当前跳过来的路由
+		// let prePage = pages[pages.length - 2];//上一个页面跳过来的路由
+		// // console.log(currentPage);
+		// // console.log(prePage);
+		// console.log(currentPage.$page.fullPath, 1);
+		// console.log(prePage.$page.fullPath, 2);
+		// // console.log(prePage.$page.fullPath, 2);
+		// if (prePage?.$page.path == "/pages/detail/detail") {
+		// 	//	console.log(1);
+		// 	let paths = prePage.$page.fullPath
+		// 	uni.reLaunch({
+		// 		url: paths
+		// 	});
+		// } else {
+		// 	uni.reLaunch({
+		// 		url: props.obj.path
+		// 	});
+		// }
+		uni.navigateBack();
 	}
 </script>
 

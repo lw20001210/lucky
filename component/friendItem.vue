@@ -1,6 +1,6 @@
 <template>
 	<view class="menuList">
-		<view class="imgBg">
+		<view class="imgBg" @click="goDetail(obj)">
 			<image :src="obj.avatar" mode=""></image>
 		</view>
 		<view class="describe">
@@ -16,6 +16,12 @@
 	import { defineProps} from 'vue';
 	const props = defineProps(['obj'])
 	// console.log(props.obj.id);
+	function goDetail(obj){
+		//console.log(obj);
+		uni.navigateTo({
+			url: `/pages/detail/detail?id=${obj.id}`
+		})
+	}
 </script>
 <style scoped lang="scss">
 	.menuList {

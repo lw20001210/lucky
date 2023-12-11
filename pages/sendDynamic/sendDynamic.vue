@@ -120,6 +120,7 @@
 	function getLocation() {
 		uni.chooseLocation({
 			success: function(res) {
+				console.log(res,222);
 				resultData.value.position = res.name
 			},
 			fail: function(res) {

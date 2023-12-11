@@ -116,9 +116,10 @@
 			} else {
 				flag.value = true;
 				spaceInfo.value = res.data;
-				console.log(spaceInfo.value,666);
+				//console.log(spaceInfo.value,666);
 			}
 		} catch (e) {
+			console.log(e);
 			//TODO handle the exception
 		}
 	})
