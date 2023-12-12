@@ -373,10 +373,7 @@
   border-radius: 0.3125rem;
 }
 .container .detail .spaces .right .showInfo .comments[data-v-1cb7f60c], .container .detail .spaces .right .showInfo .likesList[data-v-1cb7f60c], .container .detail .spaces .right .showInfo .replyInfo[data-v-1cb7f60c] {
-  margin: 0.3125rem 0;
-}
-.container .detail .spaces .right .showInfo .likesList[data-v-1cb7f60c] {
-  margin-bottom: 0.46875rem;
+  margin: 0.25rem 0;
 }
 .container .detail .spaces .right .showInfo .commentContent[data-v-1cb7f60c] {
   color: #000;

@@ -275,7 +275,7 @@
 	const debouncedInputChange = debounce(function inputChange(val) {
 		// console.log(val);
 		comment.value = val
-	}, 100); // 使用防抖函数包装inputChange
+	}, 80); // 使用防抖函数包装inputChange
 	const handleInput = (e) => {
 		debouncedInputChange(e.detail.value); // 调用防抖函数处理@input事件
 	};
@@ -584,11 +584,11 @@
 						border-radius: 10rpx;
 					
 						.comments,.likesList,.replyInfo{
-							margin: 10rpx 0;
+							margin: 8rpx 0;
 						}
-						.likesList{
-							margin-bottom: 15rpx;
-						}
+						// .likesList{
+						// 	margin-bottom: 15rpx;
+						// }
 						.commentContent {
 							color: #000;
 							font-weight: normal;

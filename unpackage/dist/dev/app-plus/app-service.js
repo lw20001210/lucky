@@ -12672,7 +12672,7 @@ ${i3}
       }
       const debouncedInputChange = debounce(function inputChange(val) {
         comment.value = val;
-      }, 100);
+      }, 80);
       const handleInput = (e2) => {
         debouncedInputChange(e2.detail.value);
       };
@@ -13204,9 +13204,10 @@ ${i3}
               formatAppLog("log", "at pages/dynamic/dynamic.vue:290", res.data, 33333);
             }
           } else {
+            formatAppLog("log", "at pages/dynamic/dynamic.vue:293", temporary.value, 111);
             let obj = {
-              // uid: temporary.value.uid,
-              commentId: temporary.value.uid,
+              // commentId: temporary.value.id,
+              commentId: userPower.id,
               spaceId: temporary.value.id,
               comment: comment.value
             };
@@ -13222,7 +13223,7 @@ ${i3}
         }
       }
       function goDetail(info) {
-        formatAppLog("log", "at pages/dynamic/dynamic.vue:313", info, 777);
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:314", info, 777);
         uni.navigateTo({
           url: `/pages/detail/detail?id=${info.commentId}`
         });

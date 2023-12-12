@@ -290,10 +290,11 @@
 					console.log(res.data, 33333);
 				}
 			} else {
+				console.log(temporary.value,111);
 				// 我是点击了评论
 				let obj = {
-					// uid: temporary.value.uid,
-					commentId: temporary.value.uid,
+					// commentId: temporary.value.id,
+					commentId: userPower.id,
 					spaceId: temporary.value.id,
 					comment: comment.value
 				}
