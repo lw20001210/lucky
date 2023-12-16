@@ -86,7 +86,7 @@ const _sfc_main = {
     avatar: {
       handler(avatar) {
         if (avatar.substr(0, 8) == "cloud://") {
-          common_vendor.Ds.getTempFileURL({
+          common_vendor.Bs.getTempFileURL({
             fileList: [avatar]
           }).then((res) => {
             let fileList = res.fileList || res.result.fileList;
@@ -226,5 +226,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     z: common_vendor.o((...args) => $options.onClick && $options.onClick(...args))
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list-chat/uni-list-chat.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list-chat/uni-list-chat.vue"]]);
 wx.createComponent(Component);

@@ -146,6 +146,15 @@
 				"enablePullDownRefresh": false
 			}
 
+		},
+		{
+			"path": "pages/chat/chat",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"backgroundColorBottom":"f5f5f5"
+			}
+		
 		}
 	],
 	"globalStyle": {

@@ -1,0 +1,67 @@
+.box.data-v-0a633310 {
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 15rpx 30rpx 0;
+  background-color: #f5f5f5;
+  font-family: STKaiti;
+}
+.box .container .iconfont.data-v-0a633310 {
+  font-size: 50rpx;
+}
+.box .scroll.data-v-0a633310 {
+  background: pink;
+}
+.box .popul.data-v-0a633310 {
+  position: fixed;
+  left: 0;
+  right: 0;
+  border-top: 1rpx solid #eeeeee;
+  font-family: STKaiti;
+  padding: 15rpx 30rpx;
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+}
+.box .popul .size.data-v-0a633310 {
+  font-size: 50rpx;
+}
+.box .popul .input.data-v-0a633310 {
+  padding: 15rpx;
+  margin: 0 5rpx 0 7rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  width: 530rpx;
+}
+.box .popul .second.data-v-0a633310 {
+  margin: 0 8rpx 0 7rpx;
+}
+.box .popul .btn.data-v-0a633310 {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-left: 10rpx;
+  text-align: center;
+  background-color: #1aa5fc;
+  border-radius: 15rpx;
+  color: #fff;
+  z-index: 99;
+  font-size: 25rpx;
+}
+.box .list.data-v-0a633310 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-top: 1rpx solid #d3d3d3;
+  padding: 15rpx 20rpx;
+  overflow-x: scroll;
+  background-color: #f1f1f1;
+}
+.box .list .item.data-v-0a633310 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12.5%;
+  height: 80rpx;
+  font-size: 50rpx;
+}

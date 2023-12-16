@@ -1,1 +1,1 @@
-<view class="container"><stastu-bar u-i="00d10c76-0" bind:__l="__l"></stastu-bar><view class="header"> 我是视频页 </view></view>
+<view class="container"><stastu-bar u-i="5885dafb-0" bind:__l="__l"></stastu-bar><view class="header"> 我是视频页 </view></view>

@@ -23,6 +23,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+*.data-v-426a9ebe {
+  overflow-x: scroll !important;
+}
 .container.data-v-426a9ebe {
   padding: 15rpx 20rpx 0;
   font-family: STKaiti;
@@ -35,4 +38,63 @@
 .container .none .plane.data-v-426a9ebe {
   font-size: 220rpx;
   color: gray;
+}
+.container .detail.data-v-426a9ebe {
+  padding: 0 10rpx;
+}
+.container .detail .uni-swipe.data-v-426a9ebe {
+  display: block;
+  height: 100% !important;
+}
+.container .detail .itemContent.data-v-426a9ebe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+}
+.container .detail .itemContent .left.data-v-426a9ebe {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+}
+.container .detail .itemContent .left .avatar.data-v-426a9ebe {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.container .detail .itemContent .left .avatar .img.data-v-426a9ebe {
+  width: 100%;
+  height: 100%;
+}
+.container .detail .itemContent .left .descript.data-v-426a9ebe {
+  height: 100%;
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.container .detail .itemContent .left .descript .chat.data-v-426a9ebe {
+  width: 300rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.container .detail .itemContent .right.data-v-426a9ebe {
+  display: flex;
+  color: #939393;
+}
+.container .detail .itemContent .right text.data-v-426a9ebe {
+  display: block;
+  padding: 8rpx 20rpx;
+  border-radius: 10rpx;
+  color: #fff;
+}
+.container .detail .itemContent .right text.data-v-426a9ebe:first-child {
+  background-color: #E93535;
+}
+.container .detail .itemContent .right text.data-v-426a9ebe:last-child {
+  background-color: #3E6FAC;
+  margin-left: 20rpx;
 }

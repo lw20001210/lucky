@@ -149,9 +149,9 @@ const _sfc_main = {
     }
   },
   created() {
-    if (!(common_vendor.Ds.config && common_vendor.Ds.config.provider)) {
+    if (!(common_vendor.Bs.config && common_vendor.Bs.config.provider)) {
       this.noSpace = true;
-      common_vendor.Ds.chooseAndUploadFile = uni_modules_uniFilePicker_components_uniFilePicker_chooseAndUploadFile.chooseAndUploadFile;
+      common_vendor.Bs.chooseAndUploadFile = uni_modules_uniFilePicker_components_uniFilePicker_chooseAndUploadFile.chooseAndUploadFile;
     }
     this.form = this.getForm("uniForms");
     this.formItem = this.getForm("uniFormsItem");
@@ -251,7 +251,7 @@ const _sfc_main = {
      */
     chooseFiles() {
       const _extname = uni_modules_uniFilePicker_components_uniFilePicker_utils.get_extname(this.fileExtname);
-      common_vendor.Ds.chooseAndUploadFile({
+      common_vendor.Bs.chooseAndUploadFile({
         type: this.fileMediatype,
         compressed: false,
         sizeType: this.sizeType,
@@ -467,7 +467,7 @@ const _sfc_main = {
       fileList = {
         fileList: [].concat(fileList)
       };
-      const urls = await common_vendor.Ds.getTempFileURL(fileList);
+      const urls = await common_vendor.Bs.getTempFileURL(fileList);
       return urls.fileList[0].tempFileURL || "";
     },
     /**
@@ -527,5 +527,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/新的开始/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
 wx.createComponent(Component);

@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const utils_config = require("../../utils/config.js");
 const utils_local = require("../../utils/local.js");
 const utils_Toast = require("../../utils/Toast.js");
 const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
@@ -76,7 +77,7 @@ const _sfc_main = {
         // password: MD5(userInfo.password).toString()
       };
       common_vendor.index.uploadFile({
-        url: "http://192.168.1.20:3000/user/update",
+        url: `${utils_config.mainUrl}/user/update`,
         filePath: userInfo.avatar,
         name: "avatar",
         timeout: 1500,
@@ -311,5 +312,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/editUser/editUser.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/uniapp毕设/lucky/pages/editUser/editUser.vue"]]);
 wx.createPage(MiniProgramPage);

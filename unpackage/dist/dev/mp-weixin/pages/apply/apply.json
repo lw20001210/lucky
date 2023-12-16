@@ -1,6 +1,12 @@
 {
   "navigationBarTitleText": "apply",
   "enablePullDownRefresh": false,
-  "disableScroll": true,
-  "usingComponents": {}
+  "disableScroll": false,
+  "usingComponents": {
+    "uni-swipe-action-item": "../../uni_modules/uni-swipe-action/components/uni-swipe-action-item/uni-swipe-action-item",
+    "uni-swipe-action": "../../uni_modules/uni-swipe-action/components/uni-swipe-action/uni-swipe-action",
+    "uni-popup-dialog": "../../uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog",
+    "uni-popup": "../../uni_modules/uni-popup/components/uni-popup/uni-popup",
+    "header": "../../component/header"
+  }
 }

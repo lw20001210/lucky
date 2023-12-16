@@ -83,9 +83,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('static/iconfont/font/iconfont.woff2?t=1701784882126') format('woff2'),
-       url('static/iconfont/font/iconfont.woff?t=1701784882126') format('woff'),
-       url('static/iconfont/font/iconfont.ttf?t=1701784882126') format('truetype');
+       url('static/iconfont/font/iconfont.woff2?t=1702470855006') format('woff2'),
+       url('static/iconfont/font/iconfont.woff?t=1702470855006') format('woff'),
+       url('static/iconfont/font/iconfont.ttf?t=1702470855006') format('truetype');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -93,6 +93,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-jianpan:before {
+  content: "\e652";
+}
+.icon-jiahao1:before {
+  content: "\e726";
+}
+.icon-xiaolian:before {
+  content: "\e688";
+}
+.icon-yuyin:before {
+  content: "\e6e0";
 }
 .icon-zuojiantou-copy:before {
   content: "\eb4e";

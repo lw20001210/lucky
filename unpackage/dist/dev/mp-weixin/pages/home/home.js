@@ -1,9 +1,10 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const utils_request = require("../../utils/request.js");
 const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
-require("../../utils/Toast.js");
+require("../../utils/config.js");
 require("../../utils/local.js");
-require("../../utils/request.js");
+require("../../utils/Toast.js");
 if (!Array) {
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
   const _easycom_uni_list_chat2 = common_vendor.resolveComponent("uni-list-chat");
@@ -52,129 +53,94 @@ const _sfc_main = {
     let wh = common_vendor.ref();
     function getHeight() {
       const val = common_vendor.index.getSystemInfoSync();
-      wh.value = val.windowHeight - 80;
+      wh.value = val.windowHeight - 82;
     }
     common_vendor.onMounted(() => {
       getHeight();
     });
+    function goInfo() {
+      common_vendor.index.navigateTo({
+        url: `/pages/detail/detail?id=${userPower.id}`
+      });
+    }
     const goSearch = () => {
       common_vendor.index.navigateTo({
         url: "/pages/search/search"
       });
     };
-    common_vendor.onLoad(() => {
+    function goChat(item) {
+      common_vendor.index.navigateTo({
+        url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
+      });
+    }
+    function scanCode() {
+      console.log(1);
+      common_vendor.index.scanCode({
+        success: function(res) {
+          console.log("条码内容：" + res.result);
+          common_vendor.index.navigateTo({
+            url: `/pages/addFriend/addFriend?username=${res.result}`
+          });
+        }
+      });
+    }
+    let friendList = common_vendor.ref(["0"]);
+    async function getData() {
+      let {
+        data: res
+      } = await utils_request.request("/user/getFriendList", "get", {
+        id: userPower.id
+      });
+      if (res.code != 200)
+        return showMsg("获取数据失败");
+      friendList.value = res.data;
+      friendList.value.forEach((item) => {
+        if (item.id == userPower.id) {
+          item["remarked"] = item.nickname;
+        }
+      });
+    }
+    common_vendor.onShow(() => {
       userPower.getUserInfo();
+      getData();
     });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.unref(userPower).avatar,
-        b: common_vendor.t(common_vendor.unref(userPower).nickname),
-        c: common_vendor.o(openPopup),
-        d: common_vendor.o(goSearch),
-        e: common_vendor.o(close),
-        f: common_vendor.unref(animationData),
-        g: common_vendor.p({
+        b: common_vendor.o(goInfo),
+        c: common_vendor.t(common_vendor.unref(userPower).nickname),
+        d: common_vendor.o(openPopup),
+        e: common_vendor.o(goSearch),
+        f: common_vendor.o(scanCode),
+        g: common_vendor.o(close),
+        h: common_vendor.unref(animationData),
+        i: common_vendor.p({
           placeholder: "搜索",
           readonly: true
         }),
-        h: common_vendor.o(goSearch),
-        i: common_vendor.p({
-          ["avatar-circle"]: true,
-          title: common_vendor.unref(userPower).nickname,
-          avatar: common_vendor.unref(userPower).avatar,
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20"
-        }),
-        j: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-text"]: "12"
-        }),
-        k: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-positon"]: "left",
-          ["badge-text"]: "dot"
+        j: common_vendor.o(goSearch),
+        k: common_vendor.f(common_vendor.unref(friendList), (item, k0, i0) => {
+          return {
+            a: item.id,
+            b: common_vendor.o(($event) => goChat(item), item.id),
+            c: "07e72d3c-3-" + i0 + ",07e72d3c-2",
+            d: common_vendor.p({
+              clickable: true,
+              ["avatar-circle"]: true,
+              title: item.remarked,
+              avatar: item.avatar,
+              note: "您收到一条新的消息",
+              time: item.createTime
+            })
+          };
         }),
         l: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-positon"]: "left",
-          ["badge-text"]: "99"
-        }),
-        m: common_vendor.p({
-          ["avatar-circle"]: true,
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20"
-        }),
-        n: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-text"]: "12"
-        }),
-        o: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-positon"]: "left",
-          ["badge-text"]: "dot"
-        }),
-        p: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-positon"]: "left",
-          ["badge-text"]: "99"
-        }),
-        q: common_vendor.p({
-          ["avatar-circle"]: true,
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20"
-        }),
-        r: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-text"]: "12"
-        }),
-        s: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-positon"]: "left",
-          ["badge-text"]: "dot"
-        }),
-        t: common_vendor.p({
-          title: "uni-app",
-          avatar: "https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png",
-          note: "您收到一条新的消息",
-          time: "2020-02-02 20:20",
-          ["badge-positon"]: "left",
-          ["badge-text"]: "99"
-        }),
-        v: common_vendor.p({
           border: false
         }),
-        w: common_vendor.unref(wh) + "px"
+        m: common_vendor.unref(wh) + "px"
       };
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-07e72d3c"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/home/home.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-07e72d3c"], ["__file", "D:/uniapp毕设/lucky/pages/home/home.vue"]]);
 wx.createPage(MiniProgramPage);

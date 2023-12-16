@@ -45,10 +45,12 @@
   width: 100rpx;
   height: 100rpx;
   border-radius: 20rpx;
+  color: #fff !important;
 }
 .menuList .left .imgBg .size.data-v-887da2a3 {
   font-size: 48rpx;
 }
 .menuList .right .iconfont.data-v-887da2a3 {
   font-size: 56rpx;
+  color: #5a5a5a;
 }

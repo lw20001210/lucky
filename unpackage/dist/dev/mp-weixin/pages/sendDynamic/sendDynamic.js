@@ -1,6 +1,10 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const pinia_userInfo_mySpace = require("../../pinia/userInfo/mySpace.js");
+const utils_local = require("../../utils/local.js");
+const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
+const utils_Toast = require("../../utils/Toast.js");
+const utils_config = require("../../utils/config.js");
+require("../../utils/request.js");
 if (!Array) {
   const _easycom_uni_file_picker2 = common_vendor.resolveComponent("uni-file-picker");
   _easycom_uni_file_picker2();
@@ -13,28 +17,31 @@ const Header = () => "../../component/header.js";
 const _sfc_main = {
   __name: "sendDynamic",
   setup(__props) {
-    const mySpace = pinia_userInfo_mySpace.mySpaceStore();
-    const { id, content, statu, position } = common_vendor.storeToRefs(mySpace);
+    const userRef = pinia_userInfo_userInfo.userStore();
+    let resultData = common_vendor.ref({
+      id: "",
+      status: "2",
+      content: {
+        title: "",
+        imgArr: []
+      },
+      position: ""
+    });
     let headObj = common_vendor.ref({
       path: "/pages/selfStar/selfStar"
     });
     function deleteImage(e) {
-      content.value.imgArr = content.value.imgArr.filter((item) => {
+      resultData.value.content.imgArr = resultData.value.content.imgArr.filter((item) => {
         return item != e.tempFilePath;
       });
     }
     function bindTextAreaBlur(e) {
-      console.log(e.detail.value);
-      content.value.title = e.detail.value;
-    }
-    function select(e) {
-      console.log(e);
-      content.value.imgArr = e.tempFilePaths;
+      resultData.value.content.title = e.detail.value;
     }
     const powerRes = common_vendor.computed(() => {
-      if (statu.value == "0") {
+      if (resultData.value.status == "0") {
         return "私密";
-      } else if (statu.value == "1") {
+      } else if (resultData.value.status == "1") {
         return "所有人可见";
       } else {
         return "权限设置";
@@ -44,11 +51,12 @@ const _sfc_main = {
       common_vendor.index.showActionSheet({
         itemList: ["私密", "所有人可见"],
         success: function(res) {
-          console.log("选中了第" + res.tapIndex + "个按钮");
           if (res.tapIndex == "0") {
-            statu.value = res.tapIndex;
+            resultData.value.status = res.tapIndex;
           } else if (res.tapIndex == "1") {
-            statu.value = res.tapIndex;
+            resultData.value.status = res.tapIndex;
+          } else {
+            resultData.value.status = 2;
           }
         },
         fail: function(res) {
@@ -59,12 +67,8 @@ const _sfc_main = {
     function getLocation() {
       common_vendor.index.chooseLocation({
         success: function(res) {
-          console.log(res);
-          position.value = res.name;
-          console.log("位置名称：" + res.name);
-          console.log("详细地址：" + res.address);
-          console.log("纬度：" + res.latitude);
-          console.log("经度：" + res.longitude);
+          console.log(res, 222);
+          resultData.value.position = res.name;
         },
         fail: function(res) {
           console.log(res);
@@ -72,32 +76,86 @@ const _sfc_main = {
       });
     }
     const positionRes = common_vendor.computed(() => {
-      if (position.value == "") {
+      if (resultData.value.position == "") {
         return "所在位置";
       } else {
-        return position.value;
+        return resultData.value.position;
       }
+    });
+    function select(e) {
+      if (e.tempFilePaths) {
+        resultData.value.content.imgArr = e.tempFilePaths;
+      } else {
+        resultData.value.content.imgArr = [];
+      }
+    }
+    function distribute() {
+      let obj = {
+        uid: userRef.id,
+        content: resultData.value.content.title,
+        status: resultData.value.status,
+        position: resultData.value.position
+      };
+      if (resultData.value.content.title == "")
+        return utils_Toast.showMsg("未填写发布内容");
+      if (resultData.value.status != 0 && resultData.value.status != 1)
+        return utils_Toast.showMsg("未选择权限");
+      const fileList = resultData.value.content.imgArr.map((item, index) => {
+        return {
+          name: index,
+          uri: item
+        };
+      });
+      common_vendor.index.uploadFile({
+        url: `${utils_config.mainUrl}/user/sedSpace`,
+        files: fileList,
+        formData: obj,
+        timeout: 8e3,
+        header: {
+          authorization: utils_local.getLocal("token") ? utils_local.getLocal("token") : ""
+        },
+        success: (res) => {
+          let result = JSON.parse(res.data);
+          if (result.code == 200) {
+            utils_Toast.showMsg(result.msg, 1e3, "loading");
+          }
+          common_vendor.index.redirectTo({
+            url: "/pages/selfStar/selfStar"
+          });
+        },
+        fail: (err) => {
+          return utils_Toast.showMsg("发布失败", 1e3, "loading");
+        }
+      });
+    }
+    common_vendor.onShow(() => {
+      resultData.value.status = "2";
+    });
+    common_vendor.onUnload(() => {
+      resultData.value.position = "";
+      resultData.value.status = "2";
     });
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.p({
+        a: common_vendor.o(distribute),
+        b: common_vendor.p({
           obj: common_vendor.unref(headObj)
         }),
-        b: common_vendor.o(bindTextAreaBlur),
-        c: common_vendor.o(select),
-        d: common_vendor.o(deleteImage),
-        e: common_vendor.p({
+        c: common_vendor.o(bindTextAreaBlur),
+        d: common_vendor.o(select),
+        e: common_vendor.o(deleteImage),
+        f: common_vendor.p({
           limit: "9",
           fileMediatype: "image",
           mode: "grid"
         }),
-        f: common_vendor.t(common_vendor.unref(positionRes)),
-        g: common_vendor.o(getLocation),
-        h: common_vendor.t(common_vendor.unref(powerRes)),
-        i: common_vendor.o(selectPower)
+        g: common_vendor.t(common_vendor.unref(positionRes)),
+        h: common_vendor.o(getLocation),
+        i: common_vendor.t(common_vendor.unref(powerRes)),
+        j: common_vendor.o(selectPower)
       };
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/sendDynamic/sendDynamic.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/uniapp毕设/lucky/pages/sendDynamic/sendDynamic.vue"]]);
 wx.createPage(MiniProgramPage);

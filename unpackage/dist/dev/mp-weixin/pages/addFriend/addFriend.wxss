@@ -1,0 +1,53 @@
+.container.data-v-51ba3ded {
+  padding: 15rpx 20rpx 0;
+  font-family: STKaiti;
+}
+.container .itemContent.data-v-51ba3ded {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  font-size: 26rpx;
+}
+.container .itemContent .left.data-v-51ba3ded {
+  display: flex;
+  align-items: center;
+}
+.container .itemContent .left .avatar.data-v-51ba3ded {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.container .itemContent .left .avatar image.data-v-51ba3ded {
+  width: 100%;
+  height: 100%;
+}
+.container .itemContent .left .descript.data-v-51ba3ded {
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+.container .itemContent .left .descript text.data-v-51ba3ded:first-child {
+  color: red;
+}
+.container .descript text.data-v-51ba3ded {
+  font-size: 27rpx;
+  color: #939393;
+}
+.container .descript .area.data-v-51ba3ded {
+  background-color: #f6f6f9;
+  padding: 5rpx;
+  width: 100%;
+  height: 200rpx;
+  border-radius: 10rpx;
+}
+.container .descript .second.data-v-51ba3ded {
+  height: 100rpx;
+}
+.container .btn.data-v-51ba3ded {
+  position: fixed;
+  left: 15rpx;
+  right: 15rpx;
+  bottom: 40rpx;
+}

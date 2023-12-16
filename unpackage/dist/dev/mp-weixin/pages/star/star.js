@@ -4,6 +4,7 @@ const utils_local = require("../../utils/local.js");
 const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
 const utils_Toast = require("../../utils/Toast.js");
 require("../../utils/request.js");
+require("../../utils/config.js");
 if (!Math) {
   (stastuBar + featureItem)();
 }
@@ -22,11 +23,7 @@ const _sfc_main = {
       avatar.value = newX;
     });
     const onSignature = common_vendor.computed(() => {
-      if (!signature.value) {
-        return "巅峰留不住";
-      } else {
-        return signature.value;
-      }
+      return signature.value;
     });
     common_vendor.onLoad(() => {
       userPower.getUserInfo();
@@ -101,16 +98,26 @@ const _sfc_main = {
     }
     function goQrcode() {
       common_vendor.index.navigateTo({
-        url: "/pages/qrcode/qrcode"
+        url: "/pages/qrcode/qrcode",
+        animationType: "pop-in",
+        animationDuration: 200
+      });
+    }
+    function goInfo() {
+      common_vendor.index.navigateTo({
+        url: "/pages/editUser/editUser",
+        animationType: "pop-in",
+        animationDuration: 200
       });
     }
     return (_ctx, _cache) => {
       return {
         a: common_vendor.unref(avatar),
-        b: common_vendor.t(common_vendor.unref(nickname)),
-        c: common_vendor.t(common_vendor.unref(onSignature)),
-        d: common_vendor.o(goQrcode),
-        e: common_vendor.f(common_vendor.unref(obj), (item, i, i0) => {
+        b: common_vendor.o(goInfo),
+        c: common_vendor.t(common_vendor.unref(nickname)),
+        d: common_vendor.t(common_vendor.unref(onSignature)),
+        e: common_vendor.o(goQrcode),
+        f: common_vendor.f(common_vendor.unref(obj), (item, i, i0) => {
           return common_vendor.e({
             a: common_vendor.o(($event) => ability(item.title), item.title),
             b: "611ff4ad-1-" + i0,
@@ -126,5 +133,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/star/star.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/uniapp毕设/lucky/pages/star/star.vue"]]);
 wx.createPage(MiniProgramPage);

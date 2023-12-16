@@ -88,9 +88,8 @@
 	</view>
 	<!-- 评论功能弹窗 -->
 	<view class="popul" v-if="foucsFlag" :style="{bottom: keyboardHeight+'rpx' }">
-		<input @input="handleInput" maxlength="500" placeholder="评论" class="input"
-			@keyboardheightchange="closeKeyBorder" type="text" @focus="getInputHeight" :adjust-position="false"
-			:focus="foucsFlag" :value="comment" />
+		<textarea @input="handleInput" placeholder="评论" class="input" @keyboardheightchange="closeKeyBorder"
+			@focus="getInputHeight" :adjust-position="false" :focus="foucsFlag" :value="comment" auto-height />
 		<view class="btn" @click="acheveComment">
 			发送
 		</view>
@@ -241,6 +240,8 @@
 			setTimeout(() => {
 				foucsFlag.value = false;
 			}, 100)
+		} else {
+			keyboardHeight.value = parseInt(e.detail.height) * 2 - 25;
 		}
 	}
 
@@ -250,7 +251,7 @@
 	const handleInput = (e) => {
 		debouncedInputChange(e.detail.value); // 调用防抖函数处理@input事件
 	};
-	let judgeComment = ref(false)
+	let judgeComment = ref(false); //判断是评论还是回复
 	// 点击评论内容回复评论
 	function replyComments(commentInfo) {
 		console.log(commentInfo, 123);
@@ -290,10 +291,9 @@
 					console.log(res.data, 33333);
 				}
 			} else {
-				console.log(temporary.value,111);
+				console.log(temporary.value, 111);
 				// 我是点击了评论
 				let obj = {
-					// commentId: temporary.value.id,
 					commentId: userPower.id,
 					spaceId: temporary.value.id,
 					comment: comment.value

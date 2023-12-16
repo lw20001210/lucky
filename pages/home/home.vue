@@ -42,8 +42,8 @@
 			</view>
 			<uni-list :border="false">
 				<!-- 显示圆形头像 -->
-				<uni-list-chat v-for="item in friendList" :key="item.id" :avatar-circle="true" :title="item.remarked"
-					:avatar="item.avatar" note="您收到一条新的消息" :time="item.createTime"></uni-list-chat>
+				<uni-list-chat :clickable="true"  v-for="item in friendList" :key="item.id" :avatar-circle="true" :title="item.remarked"
+					:avatar="item.avatar" @click="goChat(item)" note="您收到一条新的消息" :time="item.createTime"></uni-list-chat>
 			</uni-list>
 		</scroll-view>
 	</view>
@@ -105,7 +105,7 @@
 	function getHeight() {
 		const val = uni.getSystemInfoSync()
 		// 要减去tabbar的高度和搜索栏的高度
-		wh.value = val.windowHeight - 80
+		wh.value = val.windowHeight - 82
 	}
 	onMounted(() => {
 		getHeight();
@@ -121,7 +121,12 @@
 			url: '/pages/search/search',
 		});
 	}
-
+	function goChat(item){
+		//console.log(item,33);
+		uni.navigateTo({
+			url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
+		})
+	}
 	// 扫码加好友功能
 	function scanCode() {
 		console.log(1);
@@ -150,13 +155,15 @@
 			}
 		})
 	}
-	onLoad(() => {
+	// onLoad(() => {
+	// 	userPower.getUserInfo();
+	// 	getData();
+	// })
+	onShow(() => {
 		userPower.getUserInfo();
 		getData();
 	})
-	onShow(() => {
-		getData();
-	})
+
 </script>
 <style scoped lang="scss">
 	.container {

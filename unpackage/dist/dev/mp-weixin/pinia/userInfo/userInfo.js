@@ -44,7 +44,7 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/login/login.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/uniapp毕设/lucky/pages/login/login.vue"]]);
 const userStore = common_vendor.defineStore("user", {
   state: () => ({
     username: utils_local.getLocal("username") ? utils_local.getLocal("username") : "",
@@ -57,8 +57,7 @@ const userStore = common_vendor.defineStore("user", {
     createTime: "",
     birthday: "",
     signature: "",
-    statu: "",
-    id: ""
+    id: utils_local.getLocal("id") ? utils_local.getLocal("id") : ""
   }),
   getters: {},
   actions: {
@@ -66,6 +65,7 @@ const userStore = common_vendor.defineStore("user", {
       Object.assign(this.$state, obj);
       if (obj) {
         utils_local.setLocal("username", obj.username);
+        utils_local.setLocal("id", obj.id);
       }
     },
     // 登录
@@ -85,7 +85,7 @@ const userStore = common_vendor.defineStore("user", {
         });
       }
     },
-    // 获取用户信息
+    // 获取当前用户信息
     async getUserInfo() {
       let {
         data: res
@@ -99,7 +99,7 @@ const userStore = common_vendor.defineStore("user", {
       let {
         data: res
       } = await utils_request.request("/user/delete", "delete", {
-        username: this.username
+        id: this.id
       });
       if (res.code == "200") {
         utils_Toast.showMsg(res.msg, 1500, "loading");

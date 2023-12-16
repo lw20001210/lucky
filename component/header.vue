@@ -65,7 +65,7 @@
 		}
 
 		.iconfont {
-			font-size: 60rpx;
+			font-size: 50rpx;
 		}
 	}
 </style>

@@ -1,6 +1,5 @@
 <template>
-	<view class="">
-
+	<view class="Box">
 		<view class="container">
 			<Header :obj="objDate">
 				<template #left>

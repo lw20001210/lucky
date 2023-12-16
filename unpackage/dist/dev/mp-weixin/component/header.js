@@ -8,11 +8,8 @@ const _sfc_main = {
   __name: "header",
   props: ["obj"],
   setup(__props) {
-    const props = __props;
     function goBack() {
-      common_vendor.index.reLaunch({
-        url: props.obj.path
-      });
+      common_vendor.index.navigateBack();
     }
     return (_ctx, _cache) => {
       return {
@@ -24,5 +21,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-8548c3e5"], ["__file", "D:/新的开始/uniapp毕设/lucky/component/header.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-8548c3e5"], ["__file", "D:/uniapp毕设/lucky/component/header.vue"]]);
 wx.createComponent(Component);

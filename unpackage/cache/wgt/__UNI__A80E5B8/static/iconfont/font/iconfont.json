@@ -6,6 +6,34 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "16372258",
+      "name": "键盘",
+      "font_class": "jianpan",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "577312",
+      "name": "加号",
+      "font_class": "jiahao1",
+      "unicode": "e726",
+      "unicode_decimal": 59174
+    },
+    {
+      "icon_id": "12184892",
+      "name": "笑脸",
+      "font_class": "xiaolian",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "15686654",
+      "name": "语音",
+      "font_class": "yuyin",
+      "unicode": "e6e0",
+      "unicode_decimal": 59104
+    },
+    {
       "icon_id": "38439619",
       "name": "左箭头",
       "font_class": "zuojiantou-copy",

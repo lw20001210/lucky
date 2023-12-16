@@ -2,6 +2,7 @@
 const common_vendor = require("../../common/vendor.js");
 const utils_Toast = require("../../utils/Toast.js");
 const utils_local = require("../../utils/local.js");
+const utils_config = require("../../utils/config.js");
 if (!Array) {
   const _easycom_uni_file_picker2 = common_vendor.resolveComponent("uni-file-picker");
   _easycom_uni_file_picker2();
@@ -17,7 +18,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       username: "",
       password: "",
       nickname: "",
-      avatar: "https://aliyun_id_photo_bucket.oss.aliyuncs.com/default_handsome.jpg"
+      avatar: ""
     });
     let imageStyles = common_vendor.ref({
       width: 98,
@@ -62,7 +63,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         password: common_vendor.cryptoJsExports.MD5(userInfo.password).toString()
       };
       common_vendor.index.uploadFile({
-        url: "http://192.168.1.20:3000/user/register",
+        url: `${utils_config.mainUrl}/user/register`,
         filePath: userInfo.avatar,
         name: "avatar",
         timeout: 1e3,
@@ -112,5 +113,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/register/register.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/uniapp毕设/lucky/pages/register/register.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -28,5 +28,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-e8c9a334"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/sys/sys.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-e8c9a334"], ["__file", "D:/uniapp毕设/lucky/pages/sys/sys.vue"]]);
 wx.createPage(MiniProgramPage);

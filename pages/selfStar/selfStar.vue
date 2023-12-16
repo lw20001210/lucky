@@ -83,16 +83,20 @@
 						<view class="showInfo" v-if="(item.likes.length!=0)|| item.comments.length!=0">
 							<view class="likesList" v-if="item.likes.length!=0">
 								<text class="iconfont pad">&#xeb47;</text>
-								<text @click="goDetail(val)" v-for="(val, index) in item.likes" :key="val.id">{{ index > 0 ? ',' : '' }}
+								<text @click="goDetail(val)" v-for="(val, index) in item.likes"
+									:key="val.id">{{ index > 0 ? ',' : '' }}
 									{{ val.remarked }}</text>
 							</view>
 							<view class="comments" v-for="(com,ind) in item.comments">
-								<text><text class="remarked" @click="goDetail(com)">{{com.remarked}}</text> : <text class="commentContent" @click="replyComments(com)">{{com.comment}}</text> </text>
-							<view v-if="com.replyList.length!=0">
-							<view class="replyInfo" v-for="reply in com.replyList">
-								<text> <text class="remarked">{{reply.replyName}}</text> 回复 <text class="remarked">{{com.remarked}}:</text> {{reply.replyComment}}</text> 
-							</view>
-							</view>
+								<text><text class="remarked" @click="goDetail(com)">{{com.remarked}}</text> : <text
+										class="commentContent" @click="replyComments(com)">{{com.comment}}</text>
+								</text>
+								<view v-if="com.replyList.length!=0">
+									<view class="replyInfo" v-for="reply in com.replyList">
+										<text> <text class="remarked">{{reply.replyName}}</text> 回复 <text
+												class="remarked">{{com.remarked}}:</text> {{reply.replyComment}}</text>
+									</view>
+								</view>
 							</view>
 						</view>
 					</view>
@@ -102,8 +106,10 @@
 	</view>
 	<!-- 评论功能弹窗 -->
 	<view class="popul" v-if="foucsFlag" :style="{bottom: keyboardHeight+'rpx' }">
-		<input @input="handleInput" maxlength="500" placeholder="评论" class="input" @keyboardheightchange="closeKeyBorder" type="text"
-			@focus="getInputHeight" :adjust-position="false" :focus="foucsFlag" :value="comment" />
+		<textarea @input="handleInput"  placeholder="评论" class="input"
+		auto-height
+			@keyboardheightchange="closeKeyBorder"  @focus="getInputHeight" :adjust-position="false"
+			:focus="foucsFlag" :value="comment" />
 		<view class="btn" @click="acheveComment">
 			发送
 		</view>
@@ -262,13 +268,15 @@
 	// 判断键盘的关闭
 	function closeKeyBorder(e) {
 		// console.log(e);
-		if(e.detail.height==0){
+		if (e.detail.height == 0) {
 			flag.value = 'a'
 			keyboardHeight.value = 10;
 			// 必须弄个定时器，不然发送按钮的点击事件会被覆盖掉
 			setTimeout(() => {
 				foucsFlag.value = false;
 			}, 100)
+		}else{
+			keyboardHeight.value = parseInt(e.detail.height) * 2 - 25;
 		}
 	}
 
@@ -279,18 +287,18 @@
 	const handleInput = (e) => {
 		debouncedInputChange(e.detail.value); // 调用防抖函数处理@input事件
 	};
-	let judgeComment=ref(false)
+	let judgeComment = ref(false)
 	// 点击评论内容回复评论
-	function replyComments(commentInfo){
-		console.log(commentInfo,123);
-		if(userPower.id==commentInfo.commentId){
+	function replyComments(commentInfo) {
+	//	console.log(commentInfo, 123);
+		if (userPower.id == commentInfo.commentId) {
 			return false
-		}else{
-			judgeComment.value=true;
+		} else {
+			judgeComment.value = true;
 			temporary.value = commentInfo;
 			foucsFlag.value = true;
 			flag.value = 'a'
-			
+
 		}
 	}
 	// 发送
@@ -299,52 +307,51 @@
 		if (comment.value == "") {
 			showMsg("评论不能为空")
 		} else {
-		if(judgeComment.value){
-			console.log("我是点击了回复");
-			let replyobj={
-				spaceId: temporary.value.spaceId,
-				replyComment: comment.value,
-				commentUid: temporary.value.commentId,
-				replyId:userPower.id,
-				commentId:temporary.value.id
+			if (judgeComment.value) {
+				console.log("我是点击了回复");
+				let replyobj = {
+					spaceId: temporary.value.spaceId,
+					replyComment: comment.value,
+					commentUid: temporary.value.commentId,
+					replyId: userPower.id,
+					commentId: temporary.value.id
+				}
+				let {
+					data: res
+				} = await request("/user/replyComment", "post", replyobj);
+				if (res.code == 200) {
+					comment.value = '';
+					temporary.value = {};
+					judgeComment.value = false;
+					getmySpaceInfo();
+					console.log(res.data, 33333);
+				}
+			} else {
+				// 我是点击了评论
+				let obj = {
+					// uid: temporary.value.uid,
+					commentId: temporary.value.uid,
+					spaceId: temporary.value.id,
+					comment: comment.value
+				}
+				let {
+					data: res
+				} = await request("/user/comment", "post", obj);
+				if (res.code == 200) {
+					comment.value = '';
+					temporary.value = {};
+					getmySpaceInfo();
+				}
 			}
-			let {
-				data: res
-			} = await request("/user/replyComment", "post",replyobj);
-			if (res.code == 200) {
-				comment.value = '';
-				temporary.value = {};
-				judgeComment.value=false;
-				getmySpaceInfo();
-				console.log(res.data,33333);
-			}
-		}else{
-			// 我是点击了评论
-			let obj = {
-				// uid: temporary.value.uid,
-				commentId: temporary.value.uid,
-				spaceId: temporary.value.id,
-				comment: comment.value
-			}
-			let {
-				data: res
-			} = await request("/user/comment", "post", obj);
-			if (res.code == 200) {
-				comment.value = '';
-				temporary.value = {};
-				getmySpaceInfo();
-			}
-		}
 		}
 	}
 	// 点击昵称跳转页面
-	function goDetail(info){
+	function goDetail(info) {
 		// console.log(info,77);
 		uni.navigateTo({
 			url: `/pages/detail/detail?id=${info.commentId}`
 		})
 	}
-
 </script>
 
 <style scoped lang="scss">
@@ -513,7 +520,8 @@
 								white-space: nowrap;
 								text-overflow: ellipsis;
 							}
-							.position{
+
+							.position {
 								color: #797979;
 								font-size: 23rpx;
 							}
@@ -574,7 +582,7 @@
 					.showInfo {
 						overflow: hidden;
 						background-color: #f7f7f7;
-						padding:12rpx 15rpx;
+						padding: 12rpx 15rpx;
 						box-sizing: border-box;
 						width: 100%;
 						font-weight: bold;
@@ -582,10 +590,13 @@
 						color: #746ba7;
 						margin-top: 10rpx;
 						border-radius: 10rpx;
-					
-						.comments,.likesList,.replyInfo{
+
+						.comments,
+						.likesList,
+						.replyInfo {
 							margin: 8rpx 0;
 						}
+
 						// .likesList{
 						// 	margin-bottom: 15rpx;
 						// }
@@ -593,7 +604,8 @@
 							color: #000;
 							font-weight: normal;
 						}
-						.replyInfo{
+
+						.replyInfo {
 							color: #000;
 							font-weight: normal;
 						}
@@ -608,7 +620,6 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		// bottom: 500rpx;
 		font-family: STKaiti;
 		padding: 10rpx 30rpx;
 		display: flex;
@@ -616,10 +627,16 @@
 		background-color: #f2f2f2;
 
 		.input {
+			display: block;
 			padding: 15rpx;
+			height: 100%;
 			background-color: #fff;
 			border-radius: 10rpx;
 			width: 600rpx;
+			// word-wrap: break-word;
+			// /* 设置内容超出宽度时自动换行 */
+			// overflow-wrap: break-word;
+			// /* 设置内容超出宽度时自动换行 */
 		}
 
 		.btn {

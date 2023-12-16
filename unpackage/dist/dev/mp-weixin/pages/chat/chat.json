@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "backgroundColorBottom": "f5f5f5",
+  "usingComponents": {
+    "uv-popup": "../../uni_modules/uv-popup/components/uv-popup/uv-popup",
+    "header": "../../component/header"
+  }
+}

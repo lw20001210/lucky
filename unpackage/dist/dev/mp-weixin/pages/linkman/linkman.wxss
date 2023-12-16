@@ -27,6 +27,7 @@ image.data-v-dd0bc604 {
   will-change: transform;
 }
 .container.data-v-dd0bc604 {
+  overflow-x: hidden;
   padding: 15rpx 20rpx 0;
   font-family: STKaiti;
 }
@@ -63,8 +64,15 @@ image.data-v-dd0bc604 {
   font-size: 56rpx;
 }
 .container .divide.data-v-dd0bc604 {
+  position: relative;
   box-sizing: border-box;
   height: 20rpx;
   margin: 0 -20px;
   background-color: #f8f8f8;
+}
+.container .divide .fixed.data-v-dd0bc604 {
+  z-index: 999;
+  position: absolute;
+  top: -260rpx;
+  left: 130rpx;
 }

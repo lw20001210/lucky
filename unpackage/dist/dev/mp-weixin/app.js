@@ -6,6 +6,7 @@ const pinia_userInfo_userInfo = require("./pinia/userInfo/userInfo.js");
 const utils_Toast = require("./utils/Toast.js");
 const utils_request = require("./utils/request.js");
 const pinia_index = require("./pinia/index.js");
+require("./utils/config.js");
 if (!Math) {
   "./pages/login/login.js";
   "./pages/register/register.js";
@@ -22,18 +23,20 @@ if (!Math) {
   "./pages/video/video.js";
   "./pages/star/star.js";
   "./pages/search/search.js";
+  "./pages/homePaeg/homePage.js";
+  "./pages/addFriend/addFriend.js";
+  "./pages/detail/detail.js";
+  "./pages/friendInfo/friendInfo.js";
+  "./pages/chat/chat.js";
 }
 const _sfc_main = {
   onLaunch: function(options) {
-    if (utils_local.getLocal("login")) {
-      console.log("防止手机上选择头像的时候触发下面代码直接进入到登录页");
-    } else if (utils_local.getLocal("edits")) {
-      console.log("防止更换手机头像的时候触发下面代码直接进入到登录页");
-    } else if (utils_local.getLocal("token")) {
+    if (utils_local.getLocal("token")) {
       const userPower = new pinia_userInfo_userInfo.userStore();
-      utils_request.request("/user/userInfo", "get", { username: userPower.username }).then((response) => {
+      utils_request.request("/user/userInfo", "get", {
+        username: userPower.username
+      }).then((response) => {
         const res = response.data;
-        console.log(res);
         if (res.code == "401") {
           return utils_Toast.showMsg(res.msg);
         } else {
@@ -58,7 +61,7 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/新的开始/uniapp毕设/lucky/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/uniapp毕设/lucky/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(pinia_index.pinia);

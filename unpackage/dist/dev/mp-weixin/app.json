@@ -14,7 +14,12 @@
     "pages/linkman/linkman",
     "pages/video/video",
     "pages/star/star",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/homePaeg/homePage",
+    "pages/addFriend/addFriend",
+    "pages/detail/detail",
+    "pages/friendInfo/friendInfo",
+    "pages/chat/chat"
   ],
   "window": {
     "navigationStyle": "custom",

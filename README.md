@@ -904,3 +904,13 @@ onLoad(() => {
   > 1.给图片添加vertical-align:middle/top/bottom；
   >
   > 2.将图片转为块级元素 display:block；
+
+## 使用了uvui
+
+> 目前Uview暂不支持vue3。所以我们先用它的姐妹版
+>
+> https://www.uvui.cn/components/install.html
+
+## socket.io
+
+> [服务器初始化 | Socket.IO](https://socket.io/zh-CN/docs/v4/server-initialization/)

@@ -4,6 +4,7 @@ const utils_request = require("../../utils/request.js");
 const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
 const utils_Toast = require("../../utils/Toast.js");
 const common_assets = require("../../common/assets.js");
+require("../../utils/config.js");
 require("../../utils/local.js");
 if (!Math) {
   Header();
@@ -13,7 +14,7 @@ const _sfc_main = {
   __name: "qrcode",
   setup(__props) {
     let headObj = common_vendor.ref({
-      leftFont: "icon-zuojiantou",
+      leftFont: "icon-zuojiantou-copy2",
       title: "我的二维码",
       rightFont: "分享",
       path: "/pages/star/star"
@@ -33,7 +34,7 @@ const _sfc_main = {
       let {
         data: res
       } = await utils_request.request("/user/createQrcode", "post", {
-        id: id.value
+        username: username.value
       });
       qrcode.value = res.data;
     });
@@ -54,5 +55,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-a7a2e00e"], ["__file", "D:/新的开始/uniapp毕设/lucky/pages/qrcode/qrcode.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-a7a2e00e"], ["__file", "D:/uniapp毕设/lucky/pages/qrcode/qrcode.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -25,6 +25,7 @@
 /* 文章场景相关 */
 .container.data-v-24ea2ac3 {
   padding: 20rpx 25rpx 0;
+  font-family: STKaiti;
 }
 .list.data-v-24ea2ac3 {
   margin: 10rpx 5px 0;
@@ -40,7 +41,7 @@
   width: 250rpx;
 }
 .content .detail.data-v-24ea2ac3 {
-  flex: 1;
+  width: 400rpx;
   display: flex;
   justify-content: flex-end;
   font-size: 50rpx;

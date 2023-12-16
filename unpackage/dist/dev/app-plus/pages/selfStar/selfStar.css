@@ -63,7 +63,7 @@
   text-align: center;
 }
 .header .iconfont[data-v-8548c3e5] {
-  font-size: 1.875rem;
+  font-size: 1.5625rem;
 }
 .container[data-v-e4e4508d] {
   padding: 1.875rem 2.1875rem 0;
@@ -372,7 +372,9 @@
   margin-top: 0.3125rem;
   border-radius: 0.3125rem;
 }
-.container .detail .spaces .right .showInfo .comments[data-v-1cb7f60c], .container .detail .spaces .right .showInfo .likesList[data-v-1cb7f60c], .container .detail .spaces .right .showInfo .replyInfo[data-v-1cb7f60c] {
+.container .detail .spaces .right .showInfo .comments[data-v-1cb7f60c],
+.container .detail .spaces .right .showInfo .likesList[data-v-1cb7f60c],
+.container .detail .spaces .right .showInfo .replyInfo[data-v-1cb7f60c] {
   margin: 0.25rem 0;
 }
 .container .detail .spaces .right .showInfo .commentContent[data-v-1cb7f60c] {
@@ -394,7 +396,9 @@
   background-color: #f2f2f2;
 }
 .popul .input[data-v-1cb7f60c] {
+  display: block;
   padding: 0.46875rem;
+  height: 100%;
   background-color: #fff;
   border-radius: 0.3125rem;
   width: 18.75rem;
