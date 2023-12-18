@@ -22371,13 +22371,13 @@ ${i3}
     "🍒",
     "🍓"
   ];
-  var weapp_socket_ioExports = {};
-  var weapp_socket_io = {
+  var uniSocket_ioExports = {};
+  var uniSocket_io = {
     get exports() {
-      return weapp_socket_ioExports;
+      return uniSocket_ioExports;
     },
     set exports(v2) {
-      weapp_socket_ioExports = v2;
+      uniSocket_ioExports = v2;
     }
   };
   (function(module, exports) {
@@ -22386,135 +22386,176 @@ ${i3}
     }(window, function() {
       return function(t2) {
         var e2 = {};
-        function r2(n2) {
-          if (e2[n2])
-            return e2[n2].exports;
-          var o2 = e2[n2] = { i: n2, l: false, exports: {} };
-          return t2[n2].call(o2.exports, o2, o2.exports, r2), o2.l = true, o2.exports;
+        function n2(r2) {
+          if (e2[r2])
+            return e2[r2].exports;
+          var o2 = e2[r2] = { i: r2, l: false, exports: {} };
+          return t2[r2].call(o2.exports, o2, o2.exports, n2), o2.l = true, o2.exports;
         }
-        return r2.m = t2, r2.c = e2, r2.d = function(t3, e3, n2) {
-          r2.o(t3, e3) || Object.defineProperty(t3, e3, { enumerable: true, get: n2 });
-        }, r2.r = function(t3) {
+        return n2.m = t2, n2.c = e2, n2.d = function(t3, e3, r2) {
+          n2.o(t3, e3) || Object.defineProperty(t3, e3, { enumerable: true, get: r2 });
+        }, n2.r = function(t3) {
           "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(t3, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(t3, "__esModule", { value: true });
-        }, r2.t = function(t3, e3) {
-          if (1 & e3 && (t3 = r2(t3)), 8 & e3)
+        }, n2.t = function(t3, e3) {
+          if (1 & e3 && (t3 = n2(t3)), 8 & e3)
             return t3;
           if (4 & e3 && "object" == typeof t3 && t3 && t3.__esModule)
             return t3;
-          var n2 = /* @__PURE__ */ Object.create(null);
-          if (r2.r(n2), Object.defineProperty(n2, "default", { enumerable: true, value: t3 }), 2 & e3 && "string" != typeof t3)
+          var r2 = /* @__PURE__ */ Object.create(null);
+          if (n2.r(r2), Object.defineProperty(r2, "default", { enumerable: true, value: t3 }), 2 & e3 && "string" != typeof t3)
             for (var o2 in t3)
-              r2.d(n2, o2, function(e4) {
+              n2.d(r2, o2, function(e4) {
                 return t3[e4];
               }.bind(null, o2));
-          return n2;
-        }, r2.n = function(t3) {
+          return r2;
+        }, n2.n = function(t3) {
           var e3 = t3 && t3.__esModule ? function() {
             return t3.default;
           } : function() {
             return t3;
           };
-          return r2.d(e3, "a", e3), e3;
-        }, r2.o = function(t3, e3) {
+          return n2.d(e3, "a", e3), e3;
+        }, n2.o = function(t3, e3) {
           return Object.prototype.hasOwnProperty.call(t3, e3);
-        }, r2.p = "", r2(r2.s = 16);
+        }, n2.p = "", n2(n2.s = 18);
       }([function(t2, e2) {
         t2.exports = function() {
           return function() {
           };
         };
-      }, function(t2, e2, r2) {
-        const n2 = r2(27), o2 = r2(28), i2 = String.fromCharCode(30);
-        t2.exports = { protocol: 4, encodePacket: n2, encodePayload: (t3, e3) => {
-          const r3 = t3.length, o3 = new Array(r3);
-          let s2 = 0;
-          t3.forEach((t4, a2) => {
-            n2(t4, false, (t5) => {
-              o3[a2] = t5, ++s2 === r3 && e3(o3.join(i2));
-            });
-          });
-        }, decodePacket: o2, decodePayload: (t3, e3) => {
-          const r3 = t3.split(i2), n3 = [];
-          for (let t4 = 0; t4 < r3.length; t4++) {
-            const i3 = o2(r3[t4], e3);
-            if (n3.push(i3), "error" === i3.type)
-              break;
-          }
-          return n3;
-        } };
-      }, function(t2, e2, r2) {
-        function n2(t3) {
+      }, function(t2, e2, n2) {
+        function r2(t3) {
           if (t3)
             return function(t4) {
-              for (var e3 in n2.prototype)
-                t4[e3] = n2.prototype[e3];
+              for (var e3 in r2.prototype)
+                t4[e3] = r2.prototype[e3];
               return t4;
             }(t3);
         }
-        t2.exports = n2, n2.prototype.on = n2.prototype.addEventListener = function(t3, e3) {
+        t2.exports = r2, r2.prototype.on = r2.prototype.addEventListener = function(t3, e3) {
           return this._callbacks = this._callbacks || {}, (this._callbacks["$" + t3] = this._callbacks["$" + t3] || []).push(e3), this;
-        }, n2.prototype.once = function(t3, e3) {
-          function r3() {
-            this.off(t3, r3), e3.apply(this, arguments);
+        }, r2.prototype.once = function(t3, e3) {
+          function n3() {
+            this.off(t3, n3), e3.apply(this, arguments);
           }
-          return r3.fn = e3, this.on(t3, r3), this;
-        }, n2.prototype.off = n2.prototype.removeListener = n2.prototype.removeAllListeners = n2.prototype.removeEventListener = function(t3, e3) {
+          return n3.fn = e3, this.on(t3, n3), this;
+        }, r2.prototype.off = r2.prototype.removeListener = r2.prototype.removeAllListeners = r2.prototype.removeEventListener = function(t3, e3) {
           if (this._callbacks = this._callbacks || {}, 0 == arguments.length)
             return this._callbacks = {}, this;
-          var r3, n3 = this._callbacks["$" + t3];
-          if (!n3)
+          var n3, r3 = this._callbacks["$" + t3];
+          if (!r3)
             return this;
           if (1 == arguments.length)
             return delete this._callbacks["$" + t3], this;
-          for (var o2 = 0; o2 < n3.length; o2++)
-            if ((r3 = n3[o2]) === e3 || r3.fn === e3) {
-              n3.splice(o2, 1);
+          for (var o2 = 0; o2 < r3.length; o2++)
+            if ((n3 = r3[o2]) === e3 || n3.fn === e3) {
+              r3.splice(o2, 1);
               break;
             }
-          return 0 === n3.length && delete this._callbacks["$" + t3], this;
-        }, n2.prototype.emit = function(t3) {
+          return 0 === r3.length && delete this._callbacks["$" + t3], this;
+        }, r2.prototype.emit = function(t3) {
           this._callbacks = this._callbacks || {};
-          for (var e3 = new Array(arguments.length - 1), r3 = this._callbacks["$" + t3], n3 = 1; n3 < arguments.length; n3++)
-            e3[n3 - 1] = arguments[n3];
-          if (r3) {
-            n3 = 0;
-            for (var o2 = (r3 = r3.slice(0)).length; n3 < o2; ++n3)
-              r3[n3].apply(this, e3);
+          for (var e3 = new Array(arguments.length - 1), n3 = this._callbacks["$" + t3], r3 = 1; r3 < arguments.length; r3++)
+            e3[r3 - 1] = arguments[r3];
+          if (n3) {
+            r3 = 0;
+            for (var o2 = (n3 = n3.slice(0)).length; r3 < o2; ++r3)
+              n3[r3].apply(this, e3);
           }
           return this;
-        }, n2.prototype.listeners = function(t3) {
+        }, r2.prototype.listeners = function(t3) {
           return this._callbacks = this._callbacks || {}, this._callbacks["$" + t3] || [];
-        }, n2.prototype.hasListeners = function(t3) {
+        }, r2.prototype.hasListeners = function(t3) {
           return !!this.listeners(t3).length;
         };
-      }, function(t2, e2, r2) {
-        const n2 = r2(10);
-        t2.exports.pick = (t3, ...e3) => e3.reduce((e4, r3) => (t3.hasOwnProperty(r3) && (e4[r3] = t3[r3]), e4), {});
-        const o2 = setTimeout, i2 = clearTimeout;
-        t2.exports.installTimerFunctions = (t3, e3) => {
-          e3.useNativeTimers ? (t3.setTimeoutFn = o2.bind(n2), t3.clearTimeoutFn = i2.bind(n2)) : (t3.setTimeoutFn = setTimeout.bind(n2), t3.clearTimeoutFn = clearTimeout.bind(n2));
+      }, function(t2, e2, n2) {
+        const r2 = n2(25), o2 = n2(26), s2 = String.fromCharCode(30);
+        t2.exports = { protocol: 4, encodePacket: r2, encodePayload: (t3, e3) => {
+          const n3 = t3.length, o3 = new Array(n3);
+          let i2 = 0;
+          t3.forEach((t4, a2) => {
+            r2(t4, false, (t5) => {
+              o3[a2] = t5, ++i2 === n3 && e3(o3.join(s2));
+            });
+          });
+        }, decodePacket: o2, decodePayload: (t3, e3) => {
+          const n3 = t3.split(s2), r3 = [];
+          for (let t4 = 0; t4 < n3.length; t4++) {
+            const s3 = o2(n3[t4], e3);
+            if (r3.push(s3), "error" === s3.type)
+              break;
+          }
+          return r3;
+        } };
+      }, function(t2, e2) {
+        t2.exports = "undefined" != typeof self ? self : "undefined" != typeof window ? window : Function("return this")();
+      }, function(t2, e2, n2) {
+        const r2 = n2(2), o2 = n2(1), s2 = n2(0)("engine.io-client:transport");
+        t2.exports = class extends o2 {
+          constructor(t3) {
+            super(), this.opts = t3, this.query = t3.query, this.readyState = "", this.socket = t3.socket;
+          }
+          onError(t3, e3) {
+            const n3 = new Error(t3);
+            return n3.type = "TransportError", n3.description = e3, this.emit("error", n3), this;
+          }
+          open() {
+            return "closed" !== this.readyState && "" !== this.readyState || (this.readyState = "opening", this.doOpen()), this;
+          }
+          close() {
+            return "opening" !== this.readyState && "open" !== this.readyState || (this.doClose(), this.onClose()), this;
+          }
+          send(t3) {
+            "open" === this.readyState ? this.write(t3) : s2("transport is not open, discarding packets");
+          }
+          onOpen() {
+            this.readyState = "open", this.writable = true, this.emit("open");
+          }
+          onData(t3) {
+            const e3 = r2.decodePacket(t3, this.socket.binaryType);
+            this.onPacket(e3);
+          }
+          onPacket(t3) {
+            this.emit("packet", t3);
+          }
+          onClose() {
+            this.readyState = "closed", this.emit("close");
+          }
         };
-      }, function(t2, e2, r2) {
+      }, function(t2, e2) {
+        e2.encode = function(t3) {
+          var e3 = "";
+          for (var n2 in t3)
+            t3.hasOwnProperty(n2) && (e3.length && (e3 += "&"), e3 += encodeURIComponent(n2) + "=" + encodeURIComponent(t3[n2]));
+          return e3;
+        }, e2.decode = function(t3) {
+          for (var e3 = {}, n2 = t3.split("&"), r2 = 0, o2 = n2.length; r2 < o2; r2++) {
+            var s2 = n2[r2].split("=");
+            e3[decodeURIComponent(s2[0])] = decodeURIComponent(s2[1]);
+          }
+          return e3;
+        };
+      }, function(t2, e2, n2) {
         Object.defineProperty(e2, "__esModule", { value: true }), e2.Decoder = e2.Encoder = e2.PacketType = e2.protocol = void 0;
-        const n2 = r2(2), o2 = r2(32), i2 = r2(13), s2 = r2(0)("socket.io-parser");
+        const r2 = n2(1), o2 = n2(38), s2 = n2(16), i2 = n2(0)("socket.io-parser");
         var a2;
         e2.protocol = 5, function(t3) {
           t3[t3.CONNECT = 0] = "CONNECT", t3[t3.DISCONNECT = 1] = "DISCONNECT", t3[t3.EVENT = 2] = "EVENT", t3[t3.ACK = 3] = "ACK", t3[t3.CONNECT_ERROR = 4] = "CONNECT_ERROR", t3[t3.BINARY_EVENT = 5] = "BINARY_EVENT", t3[t3.BINARY_ACK = 6] = "BINARY_ACK";
         }(a2 = e2.PacketType || (e2.PacketType = {}));
         e2.Encoder = class {
           encode(t3) {
-            return s2("encoding packet %j", t3), t3.type !== a2.EVENT && t3.type !== a2.ACK || !i2.hasBinary(t3) ? [this.encodeAsString(t3)] : (t3.type = t3.type === a2.EVENT ? a2.BINARY_EVENT : a2.BINARY_ACK, this.encodeAsBinary(t3));
+            return i2("encoding packet %j", t3), t3.type !== a2.EVENT && t3.type !== a2.ACK || !s2.hasBinary(t3) ? [this.encodeAsString(t3)] : (t3.type = t3.type === a2.EVENT ? a2.BINARY_EVENT : a2.BINARY_ACK, this.encodeAsBinary(t3));
           }
           encodeAsString(t3) {
             let e3 = "" + t3.type;
-            return t3.type !== a2.BINARY_EVENT && t3.type !== a2.BINARY_ACK || (e3 += t3.attachments + "-"), t3.nsp && "/" !== t3.nsp && (e3 += t3.nsp + ","), null != t3.id && (e3 += t3.id), null != t3.data && (e3 += JSON.stringify(t3.data)), s2("encoded %j as %s", t3, e3), e3;
+            return t3.type !== a2.BINARY_EVENT && t3.type !== a2.BINARY_ACK || (e3 += t3.attachments + "-"), t3.nsp && "/" !== t3.nsp && (e3 += t3.nsp + ","), null != t3.id && (e3 += t3.id), null != t3.data && (e3 += JSON.stringify(t3.data)), i2("encoded %j as %s", t3, e3), e3;
           }
           encodeAsBinary(t3) {
-            const e3 = o2.deconstructPacket(t3), r3 = this.encodeAsString(e3.packet), n3 = e3.buffers;
-            return n3.unshift(r3), n3;
+            const e3 = o2.deconstructPacket(t3), n3 = this.encodeAsString(e3.packet), r3 = e3.buffers;
+            return r3.unshift(n3), r3;
           }
         };
-        class c2 extends n2 {
+        class c2 extends r2 {
           constructor() {
             super();
           }
@@ -22523,7 +22564,7 @@ ${i3}
             if ("string" == typeof t3)
               e3 = this.decodeString(t3), e3.type === a2.BINARY_EVENT || e3.type === a2.BINARY_ACK ? (this.reconstructor = new h2(e3), 0 === e3.attachments && super.emit("decoded", e3)) : super.emit("decoded", e3);
             else {
-              if (!i2.isBinary(t3) && !t3.base64)
+              if (!s2.isBinary(t3) && !t3.base64)
                 throw new Error("Unknown type: " + t3);
               if (!this.reconstructor)
                 throw new Error("got binary data when not reconstructing a packet");
@@ -22532,56 +22573,56 @@ ${i3}
           }
           decodeString(t3) {
             let e3 = 0;
-            const r3 = { type: Number(t3.charAt(0)) };
-            if (void 0 === a2[r3.type])
-              throw new Error("unknown packet type " + r3.type);
-            if (r3.type === a2.BINARY_EVENT || r3.type === a2.BINARY_ACK) {
-              const n4 = e3 + 1;
+            const n3 = { type: Number(t3.charAt(0)) };
+            if (void 0 === a2[n3.type])
+              throw new Error("unknown packet type " + n3.type);
+            if (n3.type === a2.BINARY_EVENT || n3.type === a2.BINARY_ACK) {
+              const r4 = e3 + 1;
               for (; "-" !== t3.charAt(++e3) && e3 != t3.length; )
                 ;
-              const o3 = t3.substring(n4, e3);
+              const o3 = t3.substring(r4, e3);
               if (o3 != Number(o3) || "-" !== t3.charAt(e3))
                 throw new Error("Illegal attachments");
-              r3.attachments = Number(o3);
+              n3.attachments = Number(o3);
             }
             if ("/" === t3.charAt(e3 + 1)) {
-              const n4 = e3 + 1;
+              const r4 = e3 + 1;
               for (; ++e3; ) {
                 if ("," === t3.charAt(e3))
                   break;
                 if (e3 === t3.length)
                   break;
               }
-              r3.nsp = t3.substring(n4, e3);
+              n3.nsp = t3.substring(r4, e3);
             } else
-              r3.nsp = "/";
-            const n3 = t3.charAt(e3 + 1);
-            if ("" !== n3 && Number(n3) == n3) {
-              const n4 = e3 + 1;
+              n3.nsp = "/";
+            const r3 = t3.charAt(e3 + 1);
+            if ("" !== r3 && Number(r3) == r3) {
+              const r4 = e3 + 1;
               for (; ++e3; ) {
-                const r4 = t3.charAt(e3);
-                if (null == r4 || Number(r4) != r4) {
+                const n4 = t3.charAt(e3);
+                if (null == n4 || Number(n4) != n4) {
                   --e3;
                   break;
                 }
                 if (e3 === t3.length)
                   break;
               }
-              r3.id = Number(t3.substring(n4, e3 + 1));
+              n3.id = Number(t3.substring(r4, e3 + 1));
             }
             if (t3.charAt(++e3)) {
-              const n4 = function(t4) {
+              const r4 = function(t4) {
                 try {
                   return JSON.parse(t4);
                 } catch (t5) {
                   return false;
                 }
               }(t3.substr(e3));
-              if (!c2.isPayloadValid(r3.type, n4))
+              if (!c2.isPayloadValid(n3.type, r4))
                 throw new Error("invalid payload");
-              r3.data = n4;
+              n3.data = r4;
             }
-            return s2("decoded %s as %j", t3, r3), r3;
+            return i2("decoded %s as %j", t3, n3), n3;
           }
           static isPayloadValid(t3, e3) {
             switch (t3) {
@@ -22593,7 +22634,7 @@ ${i3}
                 return "string" == typeof e3 || "object" == typeof e3;
               case a2.EVENT:
               case a2.BINARY_EVENT:
-                return Array.isArray(e3) && e3.length > 0;
+                return Array.isArray(e3) && "string" == typeof e3[0];
               case a2.ACK:
               case a2.BINARY_ACK:
                 return Array.isArray(e3);
@@ -22620,29 +22661,28 @@ ${i3}
           }
         }
       }, function(t2, e2) {
-        var r2 = /^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/, n2 = ["source", "protocol", "authority", "userInfo", "user", "password", "host", "port", "relative", "path", "directory", "file", "query", "anchor"];
+        var n2 = /^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/, r2 = ["source", "protocol", "authority", "userInfo", "user", "password", "host", "port", "relative", "path", "directory", "file", "query", "anchor"];
         t2.exports = function(t3) {
-          var e3 = t3, o2 = t3.indexOf("["), i2 = t3.indexOf("]");
-          -1 != o2 && -1 != i2 && (t3 = t3.substring(0, o2) + t3.substring(o2, i2).replace(/:/g, ";") + t3.substring(i2, t3.length));
-          for (var s2, a2, c2 = r2.exec(t3 || ""), h2 = {}, u2 = 14; u2--; )
-            h2[n2[u2]] = c2[u2] || "";
-          return -1 != o2 && -1 != i2 && (h2.source = e3, h2.host = h2.host.substring(1, h2.host.length - 1).replace(/;/g, ":"), h2.authority = h2.authority.replace("[", "").replace("]", "").replace(/;/g, ":"), h2.ipv6uri = true), h2.pathNames = function(t4, e4) {
-            var r3 = e4.replace(/\/{2,9}/g, "/").split("/");
-            "/" != e4.substr(0, 1) && 0 !== e4.length || r3.splice(0, 1);
-            "/" == e4.substr(e4.length - 1, 1) && r3.splice(r3.length - 1, 1);
-            return r3;
-          }(0, h2.path), h2.queryKey = (s2 = h2.query, a2 = {}, s2.replace(/(?:^|&)([^&=]*)=?([^&]*)/g, function(t4, e4, r3) {
-            e4 && (a2[e4] = r3);
+          var e3 = t3, o2 = t3.indexOf("["), s2 = t3.indexOf("]");
+          -1 != o2 && -1 != s2 && (t3 = t3.substring(0, o2) + t3.substring(o2, s2).replace(/:/g, ";") + t3.substring(s2, t3.length));
+          for (var i2, a2, c2 = n2.exec(t3 || ""), h2 = {}, u2 = 14; u2--; )
+            h2[r2[u2]] = c2[u2] || "";
+          return -1 != o2 && -1 != s2 && (h2.source = e3, h2.host = h2.host.substring(1, h2.host.length - 1).replace(/;/g, ":"), h2.authority = h2.authority.replace("[", "").replace("]", "").replace(/;/g, ":"), h2.ipv6uri = true), h2.pathNames = function(t4, e4) {
+            var n3 = e4.replace(/\/{2,9}/g, "/").split("/");
+            "/" != e4.substr(0, 1) && 0 !== e4.length || n3.splice(0, 1);
+            "/" == e4.substr(e4.length - 1, 1) && n3.splice(n3.length - 1, 1);
+            return n3;
+          }(0, h2.path), h2.queryKey = (i2 = h2.query, a2 = {}, i2.replace(/(?:^|&)([^&=]*)=?([^&]*)/g, function(t4, e4, n3) {
+            e4 && (a2[e4] = n3);
           }), a2), h2;
         };
-      }, function(t2, e2, r2) {
+      }, function(t2, e2, n2) {
         Object.defineProperty(e2, "__esModule", { value: true }), e2.Manager = void 0;
-        const n2 = r2(19), o2 = r2(3), i2 = r2(12), s2 = r2(4), a2 = r2(14), c2 = r2(33), h2 = r2(15), u2 = r2(0)("socket.io-client:manager");
-        class f2 extends h2.StrictEventEmitter {
+        const r2 = n2(21), o2 = n2(15), s2 = n2(1), i2 = n2(6), a2 = n2(17), c2 = n2(39), h2 = n2(0)("socket.io-client:manager");
+        e2.Manager = class extends s2 {
           constructor(t3, e3) {
-            var r3;
-            super(), this.nsps = {}, this.subs = [], t3 && "object" == typeof t3 && (e3 = t3, t3 = void 0), (e3 = e3 || {}).path = e3.path || "/socket.io", this.opts = e3, (0, o2.installTimerFunctions)(this, e3), this.reconnection(false !== e3.reconnection), this.reconnectionAttempts(e3.reconnectionAttempts || 1 / 0), this.reconnectionDelay(e3.reconnectionDelay || 1e3), this.reconnectionDelayMax(e3.reconnectionDelayMax || 5e3), this.randomizationFactor(null !== (r3 = e3.randomizationFactor) && void 0 !== r3 ? r3 : 0.5), this.backoff = new c2({ min: this.reconnectionDelay(), max: this.reconnectionDelayMax(), jitter: this.randomizationFactor() }), this.timeout(null == e3.timeout ? 2e4 : e3.timeout), this._readyState = "closed", this.uri = t3;
-            const n3 = e3.parser || s2;
+            super(), this.nsps = {}, this.subs = [], t3 && "object" == typeof t3 && (e3 = t3, t3 = void 0), (e3 = e3 || {}).path = e3.path || "/socket.io", this.opts = e3, this.reconnection(false !== e3.reconnection), this.reconnectionAttempts(e3.reconnectionAttempts || 1 / 0), this.reconnectionDelay(e3.reconnectionDelay || 1e3), this.reconnectionDelayMax(e3.reconnectionDelayMax || 5e3), this.randomizationFactor(e3.randomizationFactor || 0.5), this.backoff = new c2({ min: this.reconnectionDelay(), max: this.reconnectionDelayMax(), jitter: this.randomizationFactor() }), this.timeout(null == e3.timeout ? 2e4 : e3.timeout), this._readyState = "closed", this.uri = t3;
+            const n3 = e3.parser || i2;
             this.encoder = new n3.Encoder(), this.decoder = new n3.Decoder(), this._autoConnect = false !== e3.autoConnect, this._autoConnect && this.open();
           }
           reconnection(t3) {
@@ -22670,174 +22710,239 @@ ${i3}
             !this._reconnecting && this._reconnection && 0 === this.backoff.attempts && this.reconnect();
           }
           open(t3) {
-            if (u2("readyState %s", this._readyState), ~this._readyState.indexOf("open"))
+            if (h2("readyState %s", this._readyState), ~this._readyState.indexOf("open"))
               return this;
-            u2("opening %s", this.uri), this.engine = n2(this.uri, this.opts);
-            const e3 = this.engine, r3 = this;
+            h2("opening %s", this.uri), this.engine = r2(this.uri, this.opts);
+            const e3 = this.engine, n3 = this;
             this._readyState = "opening", this.skipReconnect = false;
-            const o3 = (0, a2.on)(e3, "open", function() {
-              r3.onopen(), t3 && t3();
-            }), i3 = (0, a2.on)(e3, "error", (e4) => {
-              u2("error"), r3.cleanup(), r3._readyState = "closed", this.emitReserved("error", e4), t3 ? t3(e4) : r3.maybeReconnectOnOpen();
+            const o3 = a2.on(e3, "open", function() {
+              n3.onopen(), t3 && t3();
+            }), s3 = a2.on(e3, "error", (e4) => {
+              h2("error"), n3.cleanup(), n3._readyState = "closed", super.emit("error", e4), t3 ? t3(e4) : n3.maybeReconnectOnOpen();
             });
             if (false !== this._timeout) {
               const t4 = this._timeout;
-              u2("connect attempt will timeout after %d", t4), 0 === t4 && o3();
-              const r4 = this.setTimeoutFn(() => {
-                u2("connect attempt timed out after %d", t4), o3(), e3.close(), e3.emit("error", new Error("timeout"));
+              h2("connect attempt will timeout after %d", t4), 0 === t4 && o3();
+              const n4 = setTimeout(() => {
+                h2("connect attempt timed out after %d", t4), o3(), e3.close(), e3.emit("error", new Error("timeout"));
               }, t4);
-              this.opts.autoUnref && r4.unref(), this.subs.push(function() {
-                clearTimeout(r4);
+              this.subs.push(function() {
+                clearTimeout(n4);
               });
             }
-            return this.subs.push(o3), this.subs.push(i3), this;
+            return this.subs.push(o3), this.subs.push(s3), this;
           }
           connect(t3) {
             return this.open(t3);
           }
           onopen() {
-            u2("open"), this.cleanup(), this._readyState = "open", this.emitReserved("open");
+            h2("open"), this.cleanup(), this._readyState = "open", super.emit("open");
             const t3 = this.engine;
-            this.subs.push((0, a2.on)(t3, "ping", this.onping.bind(this)), (0, a2.on)(t3, "data", this.ondata.bind(this)), (0, a2.on)(t3, "error", this.onerror.bind(this)), (0, a2.on)(t3, "close", this.onclose.bind(this)), (0, a2.on)(this.decoder, "decoded", this.ondecoded.bind(this)));
+            this.subs.push(a2.on(t3, "ping", this.onping.bind(this)), a2.on(t3, "data", this.ondata.bind(this)), a2.on(t3, "error", this.onerror.bind(this)), a2.on(t3, "close", this.onclose.bind(this)), a2.on(this.decoder, "decoded", this.ondecoded.bind(this)));
           }
           onping() {
-            this.emitReserved("ping");
+            super.emit("ping");
           }
           ondata(t3) {
             this.decoder.add(t3);
           }
           ondecoded(t3) {
-            this.emitReserved("packet", t3);
+            super.emit("packet", t3);
           }
           onerror(t3) {
-            u2("error", t3), this.emitReserved("error", t3);
+            h2("error", t3), super.emit("error", t3);
           }
           socket(t3, e3) {
-            let r3 = this.nsps[t3];
-            return r3 || (r3 = new i2.Socket(this, t3, e3), this.nsps[t3] = r3), r3;
+            let n3 = this.nsps[t3];
+            return n3 || (n3 = new o2.Socket(this, t3, e3), this.nsps[t3] = n3), n3;
           }
           _destroy(t3) {
             const e3 = Object.keys(this.nsps);
             for (const t4 of e3) {
               if (this.nsps[t4].active)
-                return void u2("socket %s is still active, skipping close", t4);
+                return void h2("socket %s is still active, skipping close", t4);
             }
             this._close();
           }
           _packet(t3) {
-            u2("writing packet %j", t3);
+            h2("writing packet %j", t3), t3.query && 0 === t3.type && (t3.nsp += "?" + t3.query);
             const e3 = this.encoder.encode(t3);
-            for (let r3 = 0; r3 < e3.length; r3++)
-              this.engine.write(e3[r3], t3.options);
+            for (let n3 = 0; n3 < e3.length; n3++)
+              this.engine.write(e3[n3], t3.options);
           }
           cleanup() {
-            u2("cleanup"), this.subs.forEach((t3) => t3()), this.subs.length = 0, this.decoder.destroy();
+            h2("cleanup"), this.subs.forEach((t3) => t3()), this.subs.length = 0, this.decoder.destroy();
           }
           _close() {
-            u2("disconnect"), this.skipReconnect = true, this._reconnecting = false, "opening" === this._readyState && this.cleanup(), this.backoff.reset(), this._readyState = "closed", this.engine && this.engine.close();
+            h2("disconnect"), this.skipReconnect = true, this._reconnecting = false, "opening" === this._readyState && this.cleanup(), this.backoff.reset(), this._readyState = "closed", this.engine && this.engine.close();
           }
           disconnect() {
             return this._close();
           }
           onclose(t3) {
-            u2("onclose"), this.cleanup(), this.backoff.reset(), this._readyState = "closed", this.emitReserved("close", t3), this._reconnection && !this.skipReconnect && this.reconnect();
+            h2("onclose"), this.cleanup(), this.backoff.reset(), this._readyState = "closed", super.emit("close", t3), this._reconnection && !this.skipReconnect && this.reconnect();
           }
           reconnect() {
             if (this._reconnecting || this.skipReconnect)
               return this;
             const t3 = this;
             if (this.backoff.attempts >= this._reconnectionAttempts)
-              u2("reconnect failed"), this.backoff.reset(), this.emitReserved("reconnect_failed"), this._reconnecting = false;
+              h2("reconnect failed"), this.backoff.reset(), super.emit("reconnect_failed"), this._reconnecting = false;
             else {
               const e3 = this.backoff.duration();
-              u2("will wait %dms before reconnect attempt", e3), this._reconnecting = true;
-              const r3 = this.setTimeoutFn(() => {
-                t3.skipReconnect || (u2("attempting reconnect"), this.emitReserved("reconnect_attempt", t3.backoff.attempts), t3.skipReconnect || t3.open((e4) => {
-                  e4 ? (u2("reconnect attempt error"), t3._reconnecting = false, t3.reconnect(), this.emitReserved("reconnect_error", e4)) : (u2("reconnect success"), t3.onreconnect());
+              h2("will wait %dms before reconnect attempt", e3), this._reconnecting = true;
+              const n3 = setTimeout(() => {
+                t3.skipReconnect || (h2("attempting reconnect"), super.emit("reconnect_attempt", t3.backoff.attempts), t3.skipReconnect || t3.open((e4) => {
+                  e4 ? (h2("reconnect attempt error"), t3._reconnecting = false, t3.reconnect(), super.emit("reconnect_error", e4)) : (h2("reconnect success"), t3.onreconnect());
                 }));
               }, e3);
-              this.opts.autoUnref && r3.unref(), this.subs.push(function() {
-                clearTimeout(r3);
+              this.subs.push(function() {
+                clearTimeout(n3);
               });
             }
           }
           onreconnect() {
             const t3 = this.backoff.attempts;
-            this._reconnecting = false, this.backoff.reset(), this.emitReserved("reconnect", t3);
+            this._reconnecting = false, this.backoff.reset(), super.emit("reconnect", t3);
           }
-        }
-        e2.Manager = f2;
-      }, function(t2, e2, r2) {
-        const n2 = r2(21);
-        e2.websocket = n2;
-      }, function(t2, e2, r2) {
-        const n2 = r2(1), o2 = r2(2), { installTimerFunctions: i2 } = r2(3), s2 = r2(0)("engine.io-client:transport");
-        t2.exports = class extends o2 {
-          constructor(t3) {
-            super(), i2(this, t3), this.opts = t3, this.query = t3.query, this.readyState = "", this.socket = t3.socket;
+        };
+      }, function(t2, e2, n2) {
+        const r2 = n2(10), o2 = n2(24), s2 = n2(28), i2 = n2(29);
+        e2.polling = function(t3) {
+          let e3, n3 = false, i3 = false;
+          const a2 = false !== t3.jsonp;
+          if ("undefined" != typeof location) {
+            const e4 = "https:" === location.protocol;
+            let r3 = location.port;
+            r3 || (r3 = e4 ? 443 : 80), n3 = t3.hostname !== location.hostname || r3 !== t3.port, i3 = t3.secure !== e4;
           }
-          onError(t3, e3) {
-            const r3 = new Error(t3);
-            return r3.type = "TransportError", r3.description = e3, this.emit("error", r3), this;
+          if (t3.xdomain = n3, t3.xscheme = i3, e3 = new r2(t3), "open" in e3 && !t3.forceJSONP)
+            return new o2(t3);
+          if (!a2)
+            throw new Error("JSONP disabled");
+          return new s2(t3);
+        }, e2.websocket = i2;
+      }, function(t2, e2, n2) {
+        const r2 = n2(23), o2 = n2(3);
+        t2.exports = function(t3) {
+          const e3 = t3.xdomain, n3 = t3.xscheme, s2 = t3.enablesXDR;
+          try {
+            if ("undefined" != typeof XMLHttpRequest && (!e3 || r2))
+              return new XMLHttpRequest();
+          } catch (t4) {
           }
-          open() {
-            return "closed" !== this.readyState && "" !== this.readyState || (this.readyState = "opening", this.doOpen()), this;
+          try {
+            if ("undefined" != typeof XDomainRequest && !n3 && s2)
+              return new XDomainRequest();
+          } catch (t4) {
           }
-          close() {
-            return "opening" !== this.readyState && "open" !== this.readyState || (this.doClose(), this.onClose()), this;
+          if (!e3)
+            try {
+              return new o2[["Active"].concat("Object").join("X")]("Microsoft.XMLHTTP");
+            } catch (t4) {
+            }
+        };
+      }, function(t2, e2, n2) {
+        const r2 = n2(4), o2 = n2(5), s2 = n2(2), i2 = n2(13), a2 = n2(0)("engine.io-client:polling");
+        t2.exports = class extends r2 {
+          get name() {
+            return "polling";
           }
-          send(t3) {
-            "open" === this.readyState ? this.write(t3) : s2("transport is not open, discarding packets");
+          doOpen() {
+            this.poll();
           }
-          onOpen() {
-            this.readyState = "open", this.writable = true, this.emit("open");
+          pause(t3) {
+            const e3 = this;
+            function n3() {
+              a2("paused"), e3.readyState = "paused", t3();
+            }
+            if (this.readyState = "pausing", this.polling || !this.writable) {
+              let t4 = 0;
+              this.polling && (a2("we are currently polling - waiting to pause"), t4++, this.once("pollComplete", function() {
+                a2("pre-pause polling complete"), --t4 || n3();
+              })), this.writable || (a2("we are currently writing - waiting to pause"), t4++, this.once("drain", function() {
+                a2("pre-pause writing complete"), --t4 || n3();
+              }));
+            } else
+              n3();
+          }
+          poll() {
+            a2("polling"), this.polling = true, this.doPoll(), this.emit("poll");
           }
           onData(t3) {
-            const e3 = n2.decodePacket(t3, this.socket.binaryType);
-            this.onPacket(e3);
+            const e3 = this;
+            a2("polling got data %s", t3);
+            s2.decodePayload(t3, this.socket.binaryType).forEach(function(t4, n3, r3) {
+              if ("opening" === e3.readyState && "open" === t4.type && e3.onOpen(), "close" === t4.type)
+                return e3.onClose(), false;
+              e3.onPacket(t4);
+            }), "closed" !== this.readyState && (this.polling = false, this.emit("pollComplete"), "open" === this.readyState ? this.poll() : a2('ignoring poll - transport state "%s"', this.readyState));
           }
-          onPacket(t3) {
-            this.emit("packet", t3);
+          doClose() {
+            const t3 = this;
+            function e3() {
+              a2("writing close packet"), t3.write([{ type: "close" }]);
+            }
+            "open" === this.readyState ? (a2("transport open - closing"), e3()) : (a2("transport not open - deferring close"), this.once("open", e3));
           }
-          onClose() {
-            this.readyState = "closed", this.emit("close");
+          write(t3) {
+            this.writable = false, s2.encodePayload(t3, (t4) => {
+              this.doWrite(t4, () => {
+                this.writable = true, this.emit("drain");
+              });
+            });
+          }
+          uri() {
+            let t3 = this.query || {};
+            const e3 = this.opts.secure ? "https" : "http";
+            let n3 = "";
+            false !== this.opts.timestampRequests && (t3[this.opts.timestampParam] = i2()), this.supportsBinary || t3.sid || (t3.b64 = 1), t3 = o2.encode(t3), this.opts.port && ("https" === e3 && 443 !== Number(this.opts.port) || "http" === e3 && 80 !== Number(this.opts.port)) && (n3 = ":" + this.opts.port), t3.length && (t3 = "?" + t3);
+            return e3 + "://" + (-1 !== this.opts.hostname.indexOf(":") ? "[" + this.opts.hostname + "]" : this.opts.hostname) + n3 + this.opts.path + t3;
           }
         };
       }, function(t2, e2) {
-        const r2 = /* @__PURE__ */ Object.create(null);
-        r2.open = "0", r2.close = "1", r2.ping = "2", r2.pong = "3", r2.message = "4", r2.upgrade = "5", r2.noop = "6";
         const n2 = /* @__PURE__ */ Object.create(null);
-        Object.keys(r2).forEach((t3) => {
-          n2[r2[t3]] = t3;
+        n2.open = "0", n2.close = "1", n2.ping = "2", n2.pong = "3", n2.message = "4", n2.upgrade = "5", n2.noop = "6";
+        const r2 = /* @__PURE__ */ Object.create(null);
+        Object.keys(n2).forEach((t3) => {
+          r2[n2[t3]] = t3;
         });
-        t2.exports = { PACKET_TYPES: r2, PACKET_TYPES_REVERSE: n2, ERROR_PACKET: { type: "error", data: "parser error" } };
-      }, function(t2, e2) {
-        t2.exports = "undefined" != typeof self ? self : "undefined" != typeof window ? window : Function("return this")();
-      }, function(t2, e2) {
-        e2.encode = function(t3) {
+        t2.exports = { PACKET_TYPES: n2, PACKET_TYPES_REVERSE: r2, ERROR_PACKET: { type: "error", data: "parser error" } };
+      }, function(t2, e2, n2) {
+        var r2, o2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""), s2 = {}, i2 = 0, a2 = 0;
+        function c2(t3) {
           var e3 = "";
-          for (var r2 in t3)
-            t3.hasOwnProperty(r2) && (e3.length && (e3 += "&"), e3 += encodeURIComponent(r2) + "=" + encodeURIComponent(t3[r2]));
+          do {
+            e3 = o2[t3 % 64] + e3, t3 = Math.floor(t3 / 64);
+          } while (t3 > 0);
           return e3;
-        }, e2.decode = function(t3) {
-          for (var e3 = {}, r2 = t3.split("&"), n2 = 0, o2 = r2.length; n2 < o2; n2++) {
-            var i2 = r2[n2].split("=");
-            e3[decodeURIComponent(i2[0])] = decodeURIComponent(i2[1]);
-          }
+        }
+        function h2() {
+          var t3 = c2(+/* @__PURE__ */ new Date());
+          return t3 !== r2 ? (i2 = 0, r2 = t3) : t3 + "." + c2(i2++);
+        }
+        for (; a2 < 64; a2++)
+          s2[o2[a2]] = a2;
+        h2.encode = c2, h2.decode = function(t3) {
+          var e3 = 0;
+          for (a2 = 0; a2 < t3.length; a2++)
+            e3 = 64 * e3 + s2[t3.charAt(a2)];
           return e3;
-        };
-      }, function(t2, e2, r2) {
+        }, t2.exports = h2;
+      }, function(t2, e2) {
+        t2.exports.pick = (t3, ...e3) => e3.reduce((e4, n2) => (t3.hasOwnProperty(n2) && (e4[n2] = t3[n2]), e4), {});
+      }, function(t2, e2, n2) {
         Object.defineProperty(e2, "__esModule", { value: true }), e2.Socket = void 0;
-        const n2 = r2(4), o2 = r2(14), i2 = r2(15), s2 = r2(0)("socket.io-client:socket"), a2 = Object.freeze({ connect: 1, connect_error: 1, disconnect: 1, disconnecting: 1, newListener: 1, removeListener: 1 });
-        class c2 extends i2.StrictEventEmitter {
-          constructor(t3, e3, r3) {
-            super(), this.connected = false, this.disconnected = true, this.receiveBuffer = [], this.sendBuffer = [], this.ids = 0, this.acks = {}, this.flags = {}, this.io = t3, this.nsp = e3, r3 && r3.auth && (this.auth = r3.auth), this.io._autoConnect && this.open();
+        const r2 = n2(6), o2 = n2(1), s2 = n2(17), i2 = n2(0)("socket.io-client:socket"), a2 = Object.freeze({ connect: 1, connect_error: 1, disconnect: 1, disconnecting: 1, newListener: 1, removeListener: 1 });
+        e2.Socket = class extends o2 {
+          constructor(t3, e3, n3) {
+            super(), this.receiveBuffer = [], this.sendBuffer = [], this.ids = 0, this.acks = {}, this.flags = {}, this.io = t3, this.nsp = e3, this.ids = 0, this.acks = {}, this.receiveBuffer = [], this.sendBuffer = [], this.connected = false, this.disconnected = true, this.flags = {}, n3 && n3.auth && (this.auth = n3.auth), this.io._autoConnect && this.open();
           }
           subEvents() {
             if (this.subs)
               return;
             const t3 = this.io;
-            this.subs = [(0, o2.on)(t3, "open", this.onopen.bind(this)), (0, o2.on)(t3, "packet", this.onpacket.bind(this)), (0, o2.on)(t3, "error", this.onerror.bind(this)), (0, o2.on)(t3, "close", this.onclose.bind(this))];
+            this.subs = [s2.on(t3, "open", this.onopen.bind(this)), s2.on(t3, "packet", this.onpacket.bind(this)), s2.on(t3, "error", this.onerror.bind(this)), s2.on(t3, "close", this.onclose.bind(this))];
           }
           get active() {
             return !!this.subs;
@@ -22855,88 +22960,88 @@ ${i3}
             if (a2.hasOwnProperty(t3))
               throw new Error('"' + t3 + '" is a reserved event name');
             e3.unshift(t3);
-            const r3 = { type: n2.PacketType.EVENT, data: e3, options: {} };
-            r3.options.compress = false !== this.flags.compress, "function" == typeof e3[e3.length - 1] && (s2("emitting packet with ack id %d", this.ids), this.acks[this.ids] = e3.pop(), r3.id = this.ids++);
+            const n3 = { type: r2.PacketType.EVENT, data: e3, options: {} };
+            n3.options.compress = false !== this.flags.compress, "function" == typeof e3[e3.length - 1] && (i2("emitting packet with ack id %d", this.ids), this.acks[this.ids] = e3.pop(), n3.id = this.ids++);
             const o3 = this.io.engine && this.io.engine.transport && this.io.engine.transport.writable;
-            return this.flags.volatile && (!o3 || !this.connected) ? s2("discard packet as the transport is not currently writable") : this.connected ? this.packet(r3) : this.sendBuffer.push(r3), this.flags = {}, this;
+            return this.flags.volatile && (!o3 || !this.connected) ? i2("discard packet as the transport is not currently writable") : this.connected ? this.packet(n3) : this.sendBuffer.push(n3), this.flags = {}, this;
           }
           packet(t3) {
             t3.nsp = this.nsp, this.io._packet(t3);
           }
           onopen() {
-            s2("transport is open - connecting"), "function" == typeof this.auth ? this.auth((t3) => {
-              this.packet({ type: n2.PacketType.CONNECT, data: t3 });
-            }) : this.packet({ type: n2.PacketType.CONNECT, data: this.auth });
+            i2("transport is open - connecting"), "function" == typeof this.auth ? this.auth((t3) => {
+              this.packet({ type: r2.PacketType.CONNECT, data: t3 });
+            }) : this.packet({ type: r2.PacketType.CONNECT, data: this.auth });
           }
           onerror(t3) {
-            this.connected || this.emitReserved("connect_error", t3);
+            this.connected || super.emit("connect_error", t3);
           }
           onclose(t3) {
-            s2("close (%s)", t3), this.connected = false, this.disconnected = true, delete this.id, this.emitReserved("disconnect", t3);
+            i2("close (%s)", t3), this.connected = false, this.disconnected = true, delete this.id, super.emit("disconnect", t3);
           }
           onpacket(t3) {
             if (t3.nsp === this.nsp)
               switch (t3.type) {
-                case n2.PacketType.CONNECT:
+                case r2.PacketType.CONNECT:
                   if (t3.data && t3.data.sid) {
                     const e4 = t3.data.sid;
                     this.onconnect(e4);
                   } else
-                    this.emitReserved("connect_error", new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));
+                    super.emit("connect_error", new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));
                   break;
-                case n2.PacketType.EVENT:
-                case n2.PacketType.BINARY_EVENT:
+                case r2.PacketType.EVENT:
+                case r2.PacketType.BINARY_EVENT:
                   this.onevent(t3);
                   break;
-                case n2.PacketType.ACK:
-                case n2.PacketType.BINARY_ACK:
+                case r2.PacketType.ACK:
+                case r2.PacketType.BINARY_ACK:
                   this.onack(t3);
                   break;
-                case n2.PacketType.DISCONNECT:
+                case r2.PacketType.DISCONNECT:
                   this.ondisconnect();
                   break;
-                case n2.PacketType.CONNECT_ERROR:
+                case r2.PacketType.CONNECT_ERROR:
                   const e3 = new Error(t3.data.message);
-                  e3.data = t3.data.data, this.emitReserved("connect_error", e3);
+                  e3.data = t3.data.data, super.emit("connect_error", e3);
               }
           }
           onevent(t3) {
             const e3 = t3.data || [];
-            s2("emitting event %j", e3), null != t3.id && (s2("attaching ack callback to event"), e3.push(this.ack(t3.id))), this.connected ? this.emitEvent(e3) : this.receiveBuffer.push(Object.freeze(e3));
+            i2("emitting event %j", e3), null != t3.id && (i2("attaching ack callback to event"), e3.push(this.ack(t3.id))), this.connected ? this.emitEvent(e3) : this.receiveBuffer.push(Object.freeze(e3));
           }
           emitEvent(t3) {
             if (this._anyListeners && this._anyListeners.length) {
               const e3 = this._anyListeners.slice();
-              for (const r3 of e3)
-                r3.apply(this, t3);
+              for (const n3 of e3)
+                n3.apply(this, t3);
             }
             super.emit.apply(this, t3);
           }
           ack(t3) {
             const e3 = this;
-            let r3 = false;
+            let n3 = false;
             return function(...o3) {
-              r3 || (r3 = true, s2("sending ack %j", o3), e3.packet({ type: n2.PacketType.ACK, id: t3, data: o3 }));
+              n3 || (n3 = true, i2("sending ack %j", o3), e3.packet({ type: r2.PacketType.ACK, id: t3, data: o3 }));
             };
           }
           onack(t3) {
             const e3 = this.acks[t3.id];
-            "function" == typeof e3 ? (s2("calling ack %s with %j", t3.id, t3.data), e3.apply(this, t3.data), delete this.acks[t3.id]) : s2("bad ack %s", t3.id);
+            "function" == typeof e3 ? (i2("calling ack %s with %j", t3.id, t3.data), e3.apply(this, t3.data), delete this.acks[t3.id]) : i2("bad ack %s", t3.id);
           }
           onconnect(t3) {
-            s2("socket connected with id %s", t3), this.id = t3, this.connected = true, this.disconnected = false, this.emitBuffered(), this.emitReserved("connect");
+            i2("socket connected with id %s", t3), this.id = t3, this.connected = true, this.disconnected = false, super.emit("connect"), this.emitBuffered();
           }
           emitBuffered() {
             this.receiveBuffer.forEach((t3) => this.emitEvent(t3)), this.receiveBuffer = [], this.sendBuffer.forEach((t3) => this.packet(t3)), this.sendBuffer = [];
           }
           ondisconnect() {
-            s2("server disconnect (%s)", this.nsp), this.destroy(), this.onclose("io server disconnect");
+            i2("server disconnect (%s)", this.nsp), this.destroy(), this.onclose("io server disconnect");
           }
           destroy() {
             this.subs && (this.subs.forEach((t3) => t3()), this.subs = void 0), this.io._destroy(this);
           }
           disconnect() {
-            return this.connected && (s2("performing disconnect (%s)", this.nsp), this.packet({ type: n2.PacketType.DISCONNECT })), this.destroy(), this.connected && this.onclose("io client disconnect"), this;
+            return this.connected && (i2("performing disconnect (%s)", this.nsp), this.packet({ type: r2.PacketType.DISCONNECT })), this.destroy(), this.connected && this.onclose("io client disconnect"), this;
           }
           close() {
             return this.disconnect();
@@ -22958,9 +23063,9 @@ ${i3}
               return this;
             if (t3) {
               const e3 = this._anyListeners;
-              for (let r3 = 0; r3 < e3.length; r3++)
-                if (t3 === e3[r3])
-                  return e3.splice(r3, 1), this;
+              for (let n3 = 0; n3 < e3.length; n3++)
+                if (t3 === e3[n3])
+                  return e3.splice(n3, 1), this;
             } else
               this._anyListeners = [];
             return this;
@@ -22968,20 +23073,19 @@ ${i3}
           listenersAny() {
             return this._anyListeners || [];
           }
-        }
-        e2.Socket = c2;
-      }, function(t2, e2, r2) {
+        };
+      }, function(t2, e2, n2) {
         Object.defineProperty(e2, "__esModule", { value: true }), e2.hasBinary = e2.isBinary = void 0;
-        const n2 = "function" == typeof ArrayBuffer, o2 = Object.prototype.toString, i2 = "function" == typeof Blob || "undefined" != typeof Blob && "[object BlobConstructor]" === o2.call(Blob), s2 = "function" == typeof File || "undefined" != typeof File && "[object FileConstructor]" === o2.call(File);
+        const r2 = "function" == typeof ArrayBuffer, o2 = Object.prototype.toString, s2 = "function" == typeof Blob || "undefined" != typeof Blob && "[object BlobConstructor]" === o2.call(Blob), i2 = "function" == typeof File || "undefined" != typeof File && "[object FileConstructor]" === o2.call(File);
         function a2(t3) {
-          return n2 && (t3 instanceof ArrayBuffer || ((t4) => "function" == typeof ArrayBuffer.isView ? ArrayBuffer.isView(t4) : t4.buffer instanceof ArrayBuffer)(t3)) || i2 && t3 instanceof Blob || s2 && t3 instanceof File;
+          return r2 && (t3 instanceof ArrayBuffer || ((t4) => "function" == typeof ArrayBuffer.isView ? ArrayBuffer.isView(t4) : t4.buffer instanceof ArrayBuffer)(t3)) || s2 && t3 instanceof Blob || i2 && t3 instanceof File;
         }
-        e2.isBinary = a2, e2.hasBinary = function t3(e3, r3) {
+        e2.isBinary = a2, e2.hasBinary = function t3(e3, n3) {
           if (!e3 || "object" != typeof e3)
             return false;
           if (Array.isArray(e3)) {
-            for (let r4 = 0, n3 = e3.length; r4 < n3; r4++)
-              if (t3(e3[r4]))
+            for (let n4 = 0, r3 = e3.length; n4 < r3; n4++)
+              if (t3(e3[n4]))
                 return true;
             return false;
           }
@@ -22989,165 +23093,159 @@ ${i3}
             return true;
           if (e3.toJSON && "function" == typeof e3.toJSON && 1 === arguments.length)
             return t3(e3.toJSON(), true);
-          for (const r4 in e3)
-            if (Object.prototype.hasOwnProperty.call(e3, r4) && t3(e3[r4]))
+          for (const n4 in e3)
+            if (Object.prototype.hasOwnProperty.call(e3, n4) && t3(e3[n4]))
               return true;
           return false;
         };
-      }, function(t2, e2, r2) {
-        Object.defineProperty(e2, "__esModule", { value: true }), e2.on = void 0, e2.on = function(t3, e3, r3) {
-          return t3.on(e3, r3), function() {
-            t3.off(e3, r3);
+      }, function(t2, e2, n2) {
+        Object.defineProperty(e2, "__esModule", { value: true }), e2.on = void 0, e2.on = function(t3, e3, n3) {
+          return t3.on(e3, n3), function() {
+            t3.off(e3, n3);
           };
         };
-      }, function(t2, e2, r2) {
-        Object.defineProperty(e2, "__esModule", { value: true }), e2.StrictEventEmitter = void 0;
-        const n2 = r2(2);
-        e2.StrictEventEmitter = class extends n2 {
-          on(t3, e3) {
-            return super.on(t3, e3), this;
-          }
-          once(t3, e3) {
-            return super.once(t3, e3), this;
-          }
-          emit(t3, ...e3) {
-            return super.emit(t3, ...e3), this;
-          }
-          emitReserved(t3, ...e3) {
-            return super.emit(t3, ...e3), this;
-          }
-          listeners(t3) {
-            return super.listeners(t3);
-          }
-        };
-      }, function(t2, e2, r2) {
-        t2.exports = r2(17);
-      }, function(t2, e2, r2) {
-        Object.defineProperty(e2, "__esModule", { value: true }), e2.io = e2.Socket = e2.Manager = e2.protocol = void 0;
-        const n2 = r2(18), o2 = r2(6), i2 = r2(0)("socket.io-client");
-        t2.exports = e2 = a2;
-        const s2 = e2.managers = {};
-        function a2(t3, e3) {
-          "object" == typeof t3 && (e3 = t3, t3 = void 0), e3 = e3 || {};
-          const r3 = (0, n2.url)(t3, e3.path || "/socket.io"), a3 = r3.source, c3 = r3.id, h3 = r3.path, u3 = s2[c3] && h3 in s2[c3].nsps;
-          let f2;
-          return e3.forceNew || e3["force new connection"] || false === e3.multiplex || u3 ? (i2("ignoring socket cache for %s", a3), f2 = new o2.Manager(a3, e3)) : (s2[c3] || (i2("new io instance for %s", a3), s2[c3] = new o2.Manager(a3, e3)), f2 = s2[c3]), r3.query && !e3.query && (e3.query = r3.queryKey), f2.socket(r3.path, e3);
-        }
-        e2.io = a2;
-        var c2 = r2(4);
-        Object.defineProperty(e2, "protocol", { enumerable: true, get: function() {
-          return c2.protocol;
-        } }), e2.connect = a2;
-        var h2 = r2(6);
-        Object.defineProperty(e2, "Manager", { enumerable: true, get: function() {
-          return h2.Manager;
-        } });
-        var u2 = r2(12);
+      }, function(t2, e2, n2) {
+        t2.exports = n2(19);
+      }, function(t2, e2, n2) {
+        Object.defineProperty(e2, "__esModule", { value: true }), e2.Socket = e2.io = e2.Manager = e2.protocol = void 0;
+        const r2 = n2(20), o2 = n2(8), s2 = n2(15);
         Object.defineProperty(e2, "Socket", { enumerable: true, get: function() {
-          return u2.Socket;
-        } }), e2.default = a2;
-      }, function(t2, e2, r2) {
+          return s2.Socket;
+        } });
+        const i2 = n2(0)("socket.io-client");
+        t2.exports = e2 = c2;
+        const a2 = e2.managers = {};
+        function c2(t3, e3) {
+          "object" == typeof t3 && (e3 = t3, t3 = void 0), e3 = e3 || {};
+          const n3 = r2.url(t3), s3 = n3.source, c3 = n3.id, h3 = n3.path, u3 = a2[c3] && h3 in a2[c3].nsps;
+          let p2;
+          return e3.forceNew || e3["force new connection"] || false === e3.multiplex || u3 ? (i2("ignoring socket cache for %s", s3), p2 = new o2.Manager(s3, e3)) : (a2[c3] || (i2("new io instance for %s", s3), a2[c3] = new o2.Manager(s3, e3)), p2 = a2[c3]), n3.query && !e3.query && (e3.query = n3.query), p2.socket(n3.path, e3);
+        }
+        e2.io = c2;
+        var h2 = n2(6);
+        Object.defineProperty(e2, "protocol", { enumerable: true, get: function() {
+          return h2.protocol;
+        } }), e2.connect = c2;
+        var u2 = n2(8);
+        Object.defineProperty(e2, "Manager", { enumerable: true, get: function() {
+          return u2.Manager;
+        } });
+      }, function(t2, e2, n2) {
         Object.defineProperty(e2, "__esModule", { value: true }), e2.url = void 0;
-        const n2 = r2(5), o2 = r2(0)("socket.io-client:url");
-        e2.url = function(t3, e3 = "", r3) {
-          let i2 = t3;
-          r3 = r3 || "undefined" != typeof location && location, null == t3 && (t3 = r3.protocol + "//" + r3.host), "string" == typeof t3 && ("/" === t3.charAt(0) && (t3 = "/" === t3.charAt(1) ? r3.protocol + t3 : r3.host + t3), /^(https?|wss?):\/\//.test(t3) || (o2("protocol-less url %s", t3), t3 = void 0 !== r3 ? r3.protocol + "//" + t3 : "https://" + t3), o2("parse %s", t3), i2 = n2(t3)), i2.port || (/^(http|ws)$/.test(i2.protocol) ? i2.port = "80" : /^(http|ws)s$/.test(i2.protocol) && (i2.port = "443")), i2.path = i2.path || "/";
-          const s2 = -1 !== i2.host.indexOf(":") ? "[" + i2.host + "]" : i2.host;
-          return i2.id = i2.protocol + "://" + s2 + ":" + i2.port + e3, i2.href = i2.protocol + "://" + s2 + (r3 && r3.port === i2.port ? "" : ":" + i2.port), i2;
+        const r2 = n2(7), o2 = n2(0)("socket.io-client:url");
+        e2.url = function(t3, e3) {
+          let n3 = t3;
+          e3 = e3 || "undefined" != typeof location && location, null == t3 && (t3 = e3.protocol + "//" + e3.host), "string" == typeof t3 && ("/" === t3.charAt(0) && (t3 = "/" === t3.charAt(1) ? e3.protocol + t3 : e3.host + t3), /^(https?|wss?):\/\//.test(t3) || (o2("protocol-less url %s", t3), t3 = void 0 !== e3 ? e3.protocol + "//" + t3 : "https://" + t3), o2("parse %s", t3), n3 = r2(t3)), n3.port || (/^(http|ws)$/.test(n3.protocol) ? n3.port = "80" : /^(http|ws)s$/.test(n3.protocol) && (n3.port = "443")), n3.path = n3.path || "/";
+          const s2 = -1 !== n3.host.indexOf(":") ? "[" + n3.host + "]" : n3.host;
+          return n3.id = n3.protocol + "://" + s2 + ":" + n3.port, n3.href = n3.protocol + "://" + s2 + (e3 && e3.port === n3.port ? "" : ":" + n3.port), n3;
         };
-      }, function(t2, e2, r2) {
-        const n2 = r2(20);
-        t2.exports = (t3, e3) => new n2(t3, e3), t2.exports.Socket = n2, t2.exports.protocol = n2.protocol, t2.exports.Transport = r2(8), t2.exports.transports = r2(7), t2.exports.parser = r2(1);
-      }, function(t2, e2, r2) {
-        const n2 = r2(7), o2 = r2(2), i2 = r2(0)("engine.io-client:socket"), s2 = r2(1), a2 = r2(5), c2 = r2(11), { installTimerFunctions: h2 } = r2(3);
-        class u2 extends o2 {
+      }, function(t2, e2, n2) {
+        const r2 = n2(22);
+        t2.exports = (t3, e3) => new r2(t3, e3), t2.exports.Socket = r2, t2.exports.protocol = r2.protocol, t2.exports.Transport = n2(4), t2.exports.transports = n2(9), t2.exports.parser = n2(2);
+      }, function(t2, e2, n2) {
+        const r2 = n2(9), o2 = n2(1), s2 = n2(0)("engine.io-client:socket"), i2 = n2(2), a2 = n2(7), c2 = n2(5);
+        class h2 extends o2 {
           constructor(t3, e3 = {}) {
-            super(), t3 && "object" == typeof t3 && (e3 = t3, t3 = null), t3 ? (t3 = a2(t3), e3.hostname = t3.host, e3.secure = "https" === t3.protocol || "wss" === t3.protocol, e3.port = t3.port, t3.query && (e3.query = t3.query)) : e3.host && (e3.hostname = a2(e3.host).host), h2(this, e3), this.secure = null != e3.secure ? e3.secure : "undefined" != typeof location && "https:" === location.protocol, e3.hostname && !e3.port && (e3.port = this.secure ? "443" : "80"), this.hostname = e3.hostname || ("undefined" != typeof location ? location.hostname : "localhost"), this.port = e3.port || ("undefined" != typeof location && location.port ? location.port : this.secure ? 443 : 80), this.transports = e3.transports || ["websocket"], this.readyState = "", this.writeBuffer = [], this.prevBufferLen = 0, this.opts = Object.assign({ path: "/engine.io", agent: false, withCredentials: false, upgrade: true, jsonp: true, timestampParam: "t", rememberUpgrade: false, rejectUnauthorized: true, perMessageDeflate: { threshold: 1024 }, transportOptions: {}, closeOnBeforeunload: true }, e3), this.opts.path = this.opts.path.replace(/\/$/, "") + "/", "string" == typeof this.opts.query && (this.opts.query = c2.decode(this.opts.query)), this.id = null, this.upgrades = null, this.pingInterval = null, this.pingTimeout = null, this.pingTimeoutTimer = null, "function" == typeof addEventListener && (this.opts.closeOnBeforeunload && addEventListener("beforeunload", () => {
+            super(), t3 && "object" == typeof t3 && (e3 = t3, t3 = null), t3 ? (t3 = a2(t3), e3.hostname = t3.host, e3.secure = "https" === t3.protocol || "wss" === t3.protocol, e3.port = t3.port, t3.query && (e3.query = t3.query)) : e3.host && (e3.hostname = a2(e3.host).host), this.secure = null != e3.secure ? e3.secure : "undefined" != typeof location && "https:" === location.protocol, e3.hostname && !e3.port && (e3.port = this.secure ? "443" : "80"), this.hostname = e3.hostname || ("undefined" != typeof location ? location.hostname : "localhost"), this.port = e3.port || ("undefined" != typeof location && location.port ? location.port : this.secure ? 443 : 80), this.transports = e3.transports || ["polling", "websocket"], this.readyState = "", this.writeBuffer = [], this.prevBufferLen = 0, this.opts = Object.assign({ path: "/engine.io", agent: false, withCredentials: false, upgrade: true, jsonp: true, timestampParam: "t", rememberUpgrade: false, rejectUnauthorized: true, perMessageDeflate: { threshold: 1024 }, transportOptions: {} }, e3), this.opts.path = this.opts.path.replace(/\/$/, "") + "/", "string" == typeof this.opts.query && (this.opts.query = c2.decode(this.opts.query)), this.id = null, this.upgrades = null, this.pingInterval = null, this.pingTimeout = null, this.pingTimeoutTimer = null, "function" == typeof addEventListener && (addEventListener("beforeunload", () => {
               this.transport && (this.transport.removeAllListeners(), this.transport.close());
             }, false), "localhost" !== this.hostname && (this.offlineEventListener = () => {
               this.onClose("transport close");
             }, addEventListener("offline", this.offlineEventListener, false))), this.open();
           }
           createTransport(t3) {
-            i2('creating transport "%s"', t3);
+            s2('creating transport "%s"', t3);
             const e3 = function(t4) {
               const e4 = {};
-              for (let r4 in t4)
-                t4.hasOwnProperty(r4) && (e4[r4] = t4[r4]);
+              for (let n4 in t4)
+                t4.hasOwnProperty(n4) && (e4[n4] = t4[n4]);
               return e4;
             }(this.opts.query);
-            e3.EIO = s2.protocol, e3.transport = t3, this.id && (e3.sid = this.id);
-            const r3 = Object.assign({}, this.opts.transportOptions[t3], this.opts, { query: e3, socket: this, hostname: this.hostname, secure: this.secure, port: this.port });
-            return i2("options: %j", r3), new n2[t3](r3);
+            e3.EIO = i2.protocol, e3.transport = t3, this.id && (e3.sid = this.id);
+            const n3 = Object.assign({}, this.opts.transportOptions[t3], this.opts, { query: e3, socket: this, hostname: this.hostname, secure: this.secure, port: this.port });
+            return s2("options: %j", n3), new r2[t3](n3);
           }
           open() {
             let t3;
-            if (this.opts.rememberUpgrade && u2.priorWebsocketSuccess && -1 !== this.transports.indexOf("websocket"))
+            if (this.opts.rememberUpgrade && h2.priorWebsocketSuccess && -1 !== this.transports.indexOf("websocket"))
               t3 = "websocket";
             else {
-              if (0 === this.transports.length)
-                return void this.setTimeoutFn(() => {
-                  this.emit("error", "No transports available");
+              if (0 === this.transports.length) {
+                const t4 = this;
+                return void setTimeout(function() {
+                  t4.emit("error", "No transports available");
                 }, 0);
+              }
               t3 = this.transports[0];
             }
             this.readyState = "opening";
             try {
               t3 = this.createTransport(t3);
             } catch (t4) {
-              return i2("error while creating transport: %s", t4), this.transports.shift(), void this.open();
+              return s2("error while creating transport: %s", t4), this.transports.shift(), void this.open();
             }
             t3.open(), this.setTransport(t3);
           }
           setTransport(t3) {
-            i2("setting transport %s", t3.name), this.transport && (i2("clearing existing transport %s", this.transport.name), this.transport.removeAllListeners()), this.transport = t3, t3.on("drain", this.onDrain.bind(this)).on("packet", this.onPacket.bind(this)).on("error", this.onError.bind(this)).on("close", () => {
-              this.onClose("transport close");
+            s2("setting transport %s", t3.name);
+            const e3 = this;
+            this.transport && (s2("clearing existing transport %s", this.transport.name), this.transport.removeAllListeners()), this.transport = t3, t3.on("drain", function() {
+              e3.onDrain();
+            }).on("packet", function(t4) {
+              e3.onPacket(t4);
+            }).on("error", function(t4) {
+              e3.onError(t4);
+            }).on("close", function() {
+              e3.onClose("transport close");
             });
           }
           probe(t3) {
-            i2('probing transport "%s"', t3);
-            let e3 = this.createTransport(t3, { probe: 1 }), r3 = false;
-            u2.priorWebsocketSuccess = false;
-            const n3 = () => {
-              r3 || (i2('probe transport "%s" opened', t3), e3.send([{ type: "ping", data: "probe" }]), e3.once("packet", (n4) => {
-                if (!r3)
-                  if ("pong" === n4.type && "probe" === n4.data) {
-                    if (i2('probe transport "%s" pong', t3), this.upgrading = true, this.emit("upgrading", e3), !e3)
+            s2('probing transport "%s"', t3);
+            let e3 = this.createTransport(t3, { probe: 1 }), n3 = false;
+            const r3 = this;
+            function o3() {
+              if (r3.onlyBinaryUpgrades) {
+                const t4 = !this.supportsBinary && r3.transport.supportsBinary;
+                n3 = n3 || t4;
+              }
+              n3 || (s2('probe transport "%s" opened', t3), e3.send([{ type: "ping", data: "probe" }]), e3.once("packet", function(o4) {
+                if (!n3)
+                  if ("pong" === o4.type && "probe" === o4.data) {
+                    if (s2('probe transport "%s" pong', t3), r3.upgrading = true, r3.emit("upgrading", e3), !e3)
                       return;
-                    u2.priorWebsocketSuccess = "websocket" === e3.name, i2('pausing current transport "%s"', this.transport.name), this.transport.pause(() => {
-                      r3 || "closed" !== this.readyState && (i2("changing transport and sending upgrade packet"), f2(), this.setTransport(e3), e3.send([{ type: "upgrade" }]), this.emit("upgrade", e3), e3 = null, this.upgrading = false, this.flush());
+                    h2.priorWebsocketSuccess = "websocket" === e3.name, s2('pausing current transport "%s"', r3.transport.name), r3.transport.pause(function() {
+                      n3 || "closed" !== r3.readyState && (s2("changing transport and sending upgrade packet"), f2(), r3.setTransport(e3), e3.send([{ type: "upgrade" }]), r3.emit("upgrade", e3), e3 = null, r3.upgrading = false, r3.flush());
                     });
                   } else {
-                    i2('probe transport "%s" failed', t3);
-                    const r4 = new Error("probe error");
-                    r4.transport = e3.name, this.emit("upgradeError", r4);
+                    s2('probe transport "%s" failed', t3);
+                    const n4 = new Error("probe error");
+                    n4.transport = e3.name, r3.emit("upgradeError", n4);
                   }
               }));
-            };
-            function o3() {
-              r3 || (r3 = true, f2(), e3.close(), e3 = null);
             }
-            const s3 = (r4) => {
-              const n4 = new Error("probe error: " + r4);
-              n4.transport = e3.name, o3(), i2('probe transport "%s" failed because of error: %s', t3, r4), this.emit("upgradeError", n4);
-            };
-            function a3() {
-              s3("transport closed");
+            function i3() {
+              n3 || (n3 = true, f2(), e3.close(), e3 = null);
+            }
+            function a3(n4) {
+              const o4 = new Error("probe error: " + n4);
+              o4.transport = e3.name, i3(), s2('probe transport "%s" failed because of error: %s', t3, n4), r3.emit("upgradeError", o4);
             }
             function c3() {
-              s3("socket closed");
+              a3("transport closed");
             }
-            function h3(t4) {
-              e3 && t4.name !== e3.name && (i2('"%s" works - aborting "%s"', t4.name, e3.name), o3());
+            function u2() {
+              a3("socket closed");
             }
-            const f2 = () => {
-              e3.removeListener("open", n3), e3.removeListener("error", s3), e3.removeListener("close", a3), this.removeListener("close", c3), this.removeListener("upgrading", h3);
-            };
-            e3.once("open", n3), e3.once("error", s3), e3.once("close", a3), this.once("close", c3), this.once("upgrading", h3), e3.open();
+            function p2(t4) {
+              e3 && t4.name !== e3.name && (s2('"%s" works - aborting "%s"', t4.name, e3.name), i3());
+            }
+            function f2() {
+              e3.removeListener("open", o3), e3.removeListener("error", a3), e3.removeListener("close", c3), r3.removeListener("close", u2), r3.removeListener("upgrading", p2);
+            }
+            h2.priorWebsocketSuccess = false, e3.once("open", o3), e3.once("error", a3), e3.once("close", c3), this.once("close", u2), this.once("upgrading", p2), e3.open();
           }
           onOpen() {
-            if (i2("socket open"), this.readyState = "open", u2.priorWebsocketSuccess = "websocket" === this.transport.name, this.emit("open"), this.flush(), "open" === this.readyState && this.opts.upgrade && this.transport.pause) {
-              i2("starting upgrade probes");
+            if (s2("socket open"), this.readyState = "open", h2.priorWebsocketSuccess = "websocket" === this.transport.name, this.emit("open"), this.flush(), "open" === this.readyState && this.opts.upgrade && this.transport.pause) {
+              s2("starting upgrade probes");
               let t3 = 0;
               const e3 = this.upgrades.length;
               for (; t3 < e3; t3++)
@@ -23156,12 +23254,12 @@ ${i3}
           }
           onPacket(t3) {
             if ("opening" === this.readyState || "open" === this.readyState || "closing" === this.readyState)
-              switch (i2('socket receive: type "%s", data "%s"', t3.type, t3.data), this.emit("packet", t3), this.emit("heartbeat"), t3.type) {
+              switch (s2('socket receive: type "%s", data "%s"', t3.type, t3.data), this.emit("packet", t3), this.emit("heartbeat"), t3.type) {
                 case "open":
                   this.onHandshake(JSON.parse(t3.data));
                   break;
                 case "ping":
-                  this.resetPingTimeout(), this.sendPacket("pong"), this.emit("ping"), this.emit("pong");
+                  this.resetPingTimeout(), this.sendPacket("pong"), this.emit("pong");
                   break;
                 case "error":
                   const e3 = new Error("server error");
@@ -23171,13 +23269,13 @@ ${i3}
                   this.emit("data", t3.data), this.emit("message", t3.data);
               }
             else
-              i2('packet received with socket readyState "%s"', this.readyState);
+              s2('packet received with socket readyState "%s"', this.readyState);
           }
           onHandshake(t3) {
             this.emit("handshake", t3), this.id = t3.sid, this.transport.query.sid = t3.sid, this.upgrades = this.filterUpgrades(t3.upgrades), this.pingInterval = t3.pingInterval, this.pingTimeout = t3.pingTimeout, this.onOpen(), "closed" !== this.readyState && this.resetPingTimeout();
           }
           resetPingTimeout() {
-            this.clearTimeoutFn(this.pingTimeoutTimer), this.pingTimeoutTimer = this.setTimeoutFn(() => {
+            clearTimeout(this.pingTimeoutTimer), this.pingTimeoutTimer = setTimeout(() => {
               this.onClose("ping timeout");
             }, this.pingInterval + this.pingTimeout), this.opts.autoUnref && this.pingTimeoutTimer.unref();
           }
@@ -23185,53 +23283,307 @@ ${i3}
             this.writeBuffer.splice(0, this.prevBufferLen), this.prevBufferLen = 0, 0 === this.writeBuffer.length ? this.emit("drain") : this.flush();
           }
           flush() {
-            "closed" !== this.readyState && this.transport.writable && !this.upgrading && this.writeBuffer.length && (i2("flushing %d packets in socket", this.writeBuffer.length), this.transport.send(this.writeBuffer), this.prevBufferLen = this.writeBuffer.length, this.emit("flush"));
+            "closed" !== this.readyState && this.transport.writable && !this.upgrading && this.writeBuffer.length && (s2("flushing %d packets in socket", this.writeBuffer.length), this.transport.send(this.writeBuffer), this.prevBufferLen = this.writeBuffer.length, this.emit("flush"));
           }
-          write(t3, e3, r3) {
-            return this.sendPacket("message", t3, e3, r3), this;
+          write(t3, e3, n3) {
+            return this.sendPacket("message", t3, e3, n3), this;
           }
-          send(t3, e3, r3) {
-            return this.sendPacket("message", t3, e3, r3), this;
+          send(t3, e3, n3) {
+            return this.sendPacket("message", t3, e3, n3), this;
           }
-          sendPacket(t3, e3, r3, n3) {
-            if ("function" == typeof e3 && (n3 = e3, e3 = void 0), "function" == typeof r3 && (n3 = r3, r3 = null), "closing" === this.readyState || "closed" === this.readyState)
+          sendPacket(t3, e3, n3, r3) {
+            if ("function" == typeof e3 && (r3 = e3, e3 = void 0), "function" == typeof n3 && (r3 = n3, n3 = null), "closing" === this.readyState || "closed" === this.readyState)
               return;
-            (r3 = r3 || {}).compress = false !== r3.compress;
-            const o3 = { type: t3, data: e3, options: r3 };
-            this.emit("packetCreate", o3), this.writeBuffer.push(o3), n3 && this.once("flush", n3), this.flush();
+            (n3 = n3 || {}).compress = false !== n3.compress;
+            const o3 = { type: t3, data: e3, options: n3 };
+            this.emit("packetCreate", o3), this.writeBuffer.push(o3), r3 && this.once("flush", r3), this.flush();
           }
           close() {
-            const t3 = () => {
-              this.onClose("forced close"), i2("socket closing - telling transport to close"), this.transport.close();
-            }, e3 = () => {
-              this.removeListener("upgrade", e3), this.removeListener("upgradeError", e3), t3();
-            }, r3 = () => {
-              this.once("upgrade", e3), this.once("upgradeError", e3);
-            };
-            return "opening" !== this.readyState && "open" !== this.readyState || (this.readyState = "closing", this.writeBuffer.length ? this.once("drain", () => {
-              this.upgrading ? r3() : t3();
-            }) : this.upgrading ? r3() : t3()), this;
+            const t3 = this;
+            function e3() {
+              t3.onClose("forced close"), s2("socket closing - telling transport to close"), t3.transport.close();
+            }
+            function n3() {
+              t3.removeListener("upgrade", n3), t3.removeListener("upgradeError", n3), e3();
+            }
+            function r3() {
+              t3.once("upgrade", n3), t3.once("upgradeError", n3);
+            }
+            return "opening" !== this.readyState && "open" !== this.readyState || (this.readyState = "closing", this.writeBuffer.length ? this.once("drain", function() {
+              this.upgrading ? r3() : e3();
+            }) : this.upgrading ? r3() : e3()), this;
           }
           onError(t3) {
-            i2("socket error %j", t3), u2.priorWebsocketSuccess = false, this.emit("error", t3), this.onClose("transport error", t3);
+            s2("socket error %j", t3), h2.priorWebsocketSuccess = false, this.emit("error", t3), this.onClose("transport error", t3);
           }
           onClose(t3, e3) {
-            "opening" !== this.readyState && "open" !== this.readyState && "closing" !== this.readyState || (i2('socket close with reason: "%s"', t3), this.clearTimeoutFn(this.pingIntervalTimer), this.clearTimeoutFn(this.pingTimeoutTimer), this.transport.removeAllListeners("close"), this.transport.close(), this.transport.removeAllListeners(), "function" == typeof removeEventListener && removeEventListener("offline", this.offlineEventListener, false), this.readyState = "closed", this.id = null, this.emit("close", t3, e3), this.writeBuffer = [], this.prevBufferLen = 0);
+            if ("opening" === this.readyState || "open" === this.readyState || "closing" === this.readyState) {
+              s2('socket close with reason: "%s"', t3);
+              const n3 = this;
+              clearTimeout(this.pingIntervalTimer), clearTimeout(this.pingTimeoutTimer), this.transport.removeAllListeners("close"), this.transport.close(), this.transport.removeAllListeners(), "function" == typeof removeEventListener && removeEventListener("offline", this.offlineEventListener, false), this.readyState = "closed", this.id = null, this.emit("close", t3, e3), n3.writeBuffer = [], n3.prevBufferLen = 0;
+            }
           }
           filterUpgrades(t3) {
             const e3 = [];
-            let r3 = 0;
-            const n3 = t3.length;
-            for (; r3 < n3; r3++)
-              ~this.transports.indexOf(t3[r3]) && e3.push(t3[r3]);
+            let n3 = 0;
+            const r3 = t3.length;
+            for (; n3 < r3; n3++)
+              ~this.transports.indexOf(t3[n3]) && e3.push(t3[n3]);
             return e3;
           }
         }
-        u2.priorWebsocketSuccess = false, u2.protocol = s2.protocol, t2.exports = u2;
-      }, function(t2, e2, r2) {
+        h2.priorWebsocketSuccess = false, h2.protocol = i2.protocol, t2.exports = h2;
+      }, function(t2, e2) {
+        try {
+          t2.exports = "undefined" != typeof XMLHttpRequest && "withCredentials" in new XMLHttpRequest();
+        } catch (e3) {
+          t2.exports = false;
+        }
+      }, function(t2, e2, n2) {
+        const r2 = n2(10), o2 = n2(11), s2 = n2(1), { pick: i2 } = n2(14), a2 = n2(3), c2 = n2(0)("engine.io-client:polling-xhr");
+        function h2() {
+        }
+        const u2 = null != new r2({ xdomain: false }).responseType;
+        class p2 extends s2 {
+          constructor(t3, e3) {
+            super(), this.opts = e3, this.method = e3.method || "GET", this.uri = t3, this.async = false !== e3.async, this.data = void 0 !== e3.data ? e3.data : null, this.create();
+          }
+          create() {
+            const t3 = i2(this.opts, "agent", "enablesXDR", "pfx", "key", "passphrase", "cert", "ca", "ciphers", "rejectUnauthorized", "autoUnref");
+            t3.xdomain = !!this.opts.xd, t3.xscheme = !!this.opts.xs;
+            const e3 = this.xhr = new r2(t3), n3 = this;
+            try {
+              c2("xhr open %s: %s", this.method, this.uri), e3.open(this.method, this.uri, this.async);
+              try {
+                if (this.opts.extraHeaders) {
+                  e3.setDisableHeaderCheck && e3.setDisableHeaderCheck(true);
+                  for (let t4 in this.opts.extraHeaders)
+                    this.opts.extraHeaders.hasOwnProperty(t4) && e3.setRequestHeader(t4, this.opts.extraHeaders[t4]);
+                }
+              } catch (t4) {
+              }
+              if ("POST" === this.method)
+                try {
+                  e3.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
+                } catch (t4) {
+                }
+              try {
+                e3.setRequestHeader("Accept", "*/*");
+              } catch (t4) {
+              }
+              "withCredentials" in e3 && (e3.withCredentials = this.opts.withCredentials), this.opts.requestTimeout && (e3.timeout = this.opts.requestTimeout), this.hasXDR() ? (e3.onload = function() {
+                n3.onLoad();
+              }, e3.onerror = function() {
+                n3.onError(e3.responseText);
+              }) : e3.onreadystatechange = function() {
+                4 === e3.readyState && (200 === e3.status || 1223 === e3.status ? n3.onLoad() : setTimeout(function() {
+                  n3.onError("number" == typeof e3.status ? e3.status : 0);
+                }, 0));
+              }, c2("xhr data %s", this.data), e3.send(this.data);
+            } catch (t4) {
+              return void setTimeout(function() {
+                n3.onError(t4);
+              }, 0);
+            }
+            "undefined" != typeof document && (this.index = p2.requestsCount++, p2.requests[this.index] = this);
+          }
+          onSuccess() {
+            this.emit("success"), this.cleanup();
+          }
+          onData(t3) {
+            this.emit("data", t3), this.onSuccess();
+          }
+          onError(t3) {
+            this.emit("error", t3), this.cleanup(true);
+          }
+          cleanup(t3) {
+            if (void 0 !== this.xhr && null !== this.xhr) {
+              if (this.hasXDR() ? this.xhr.onload = this.xhr.onerror = h2 : this.xhr.onreadystatechange = h2, t3)
+                try {
+                  this.xhr.abort();
+                } catch (t4) {
+                }
+              "undefined" != typeof document && delete p2.requests[this.index], this.xhr = null;
+            }
+          }
+          onLoad() {
+            const t3 = this.xhr.responseText;
+            null !== t3 && this.onData(t3);
+          }
+          hasXDR() {
+            return "undefined" != typeof XDomainRequest && !this.xs && this.enablesXDR;
+          }
+          abort() {
+            this.cleanup();
+          }
+        }
+        if (p2.requestsCount = 0, p2.requests = {}, "undefined" != typeof document) {
+          if ("function" == typeof attachEvent)
+            attachEvent("onunload", f2);
+          else if ("function" == typeof addEventListener) {
+            addEventListener("onpagehide" in a2 ? "pagehide" : "unload", f2, false);
+          }
+        }
+        function f2() {
+          for (let t3 in p2.requests)
+            p2.requests.hasOwnProperty(t3) && p2.requests[t3].abort();
+        }
+        t2.exports = class extends o2 {
+          constructor(t3) {
+            if (super(t3), "undefined" != typeof location) {
+              const e4 = "https:" === location.protocol;
+              let n3 = location.port;
+              n3 || (n3 = e4 ? 443 : 80), this.xd = "undefined" != typeof location && t3.hostname !== location.hostname || n3 !== t3.port, this.xs = t3.secure !== e4;
+            }
+            const e3 = t3 && t3.forceBase64;
+            this.supportsBinary = u2 && !e3;
+          }
+          request(t3 = {}) {
+            return Object.assign(t3, { xd: this.xd, xs: this.xs }, this.opts), new p2(this.uri(), t3);
+          }
+          doWrite(t3, e3) {
+            const n3 = this.request({ method: "POST", data: t3 }), r3 = this;
+            n3.on("success", e3), n3.on("error", function(t4) {
+              r3.onError("xhr post error", t4);
+            });
+          }
+          doPoll() {
+            c2("xhr poll");
+            const t3 = this.request(), e3 = this;
+            t3.on("data", function(t4) {
+              e3.onData(t4);
+            }), t3.on("error", function(t4) {
+              e3.onError("xhr poll error", t4);
+            }), this.pollXhr = t3;
+          }
+        }, t2.exports.Request = p2;
+      }, function(t2, e2, n2) {
+        const { PACKET_TYPES: r2 } = n2(12), o2 = "function" == typeof Blob || "undefined" != typeof Blob && "[object BlobConstructor]" === Object.prototype.toString.call(Blob), s2 = "function" == typeof ArrayBuffer, i2 = (t3, e3) => {
+          const n3 = new FileReader();
+          return n3.onload = function() {
+            const t4 = n3.result.split(",")[1];
+            e3("b" + t4);
+          }, n3.readAsDataURL(t3);
+        };
+        t2.exports = ({ type: t3, data: e3 }, n3, a2) => {
+          return o2 && e3 instanceof Blob ? n3 ? a2(e3) : i2(e3, a2) : s2 && (e3 instanceof ArrayBuffer || (c2 = e3, "function" == typeof ArrayBuffer.isView ? ArrayBuffer.isView(c2) : c2 && c2.buffer instanceof ArrayBuffer)) ? n3 ? a2(e3 instanceof ArrayBuffer ? e3 : e3.buffer) : i2(new Blob([e3]), a2) : a2(r2[t3] + (e3 || ""));
+          var c2;
+        };
+      }, function(t2, e2, n2) {
+        const { PACKET_TYPES_REVERSE: r2, ERROR_PACKET: o2 } = n2(12);
+        let s2;
+        "function" == typeof ArrayBuffer && (s2 = n2(27));
+        const i2 = (t3, e3) => {
+          if (s2) {
+            const n3 = s2.decode(t3);
+            return a2(n3, e3);
+          }
+          return { base64: true, data: t3 };
+        }, a2 = (t3, e3) => {
+          switch (e3) {
+            case "blob":
+              return t3 instanceof ArrayBuffer ? new Blob([t3]) : t3;
+            case "arraybuffer":
+            default:
+              return t3;
+          }
+        };
+        t2.exports = (t3, e3) => {
+          if ("string" != typeof t3)
+            return { type: "message", data: a2(t3, e3) };
+          const n3 = t3.charAt(0);
+          if ("b" === n3)
+            return { type: "message", data: i2(t3.substring(1), e3) };
+          return r2[n3] ? t3.length > 1 ? { type: r2[n3], data: t3.substring(1) } : { type: r2[n3] } : o2;
+        };
+      }, function(t2, e2) {
+        !function(t3) {
+          e2.encode = function(e3) {
+            var n2, r2 = new Uint8Array(e3), o2 = r2.length, s2 = "";
+            for (n2 = 0; n2 < o2; n2 += 3)
+              s2 += t3[r2[n2] >> 2], s2 += t3[(3 & r2[n2]) << 4 | r2[n2 + 1] >> 4], s2 += t3[(15 & r2[n2 + 1]) << 2 | r2[n2 + 2] >> 6], s2 += t3[63 & r2[n2 + 2]];
+            return o2 % 3 == 2 ? s2 = s2.substring(0, s2.length - 1) + "=" : o2 % 3 == 1 && (s2 = s2.substring(0, s2.length - 2) + "=="), s2;
+          }, e2.decode = function(e3) {
+            var n2, r2, o2, s2, i2, a2 = 0.75 * e3.length, c2 = e3.length, h2 = 0;
+            "=" === e3[e3.length - 1] && (a2--, "=" === e3[e3.length - 2] && a2--);
+            var u2 = new ArrayBuffer(a2), p2 = new Uint8Array(u2);
+            for (n2 = 0; n2 < c2; n2 += 4)
+              r2 = t3.indexOf(e3[n2]), o2 = t3.indexOf(e3[n2 + 1]), s2 = t3.indexOf(e3[n2 + 2]), i2 = t3.indexOf(e3[n2 + 3]), p2[h2++] = r2 << 2 | o2 >> 4, p2[h2++] = (15 & o2) << 4 | s2 >> 2, p2[h2++] = (3 & s2) << 6 | 63 & i2;
+            return u2;
+          };
+        }("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
+      }, function(t2, e2, n2) {
+        const r2 = n2(11), o2 = n2(3), s2 = /\n/g, i2 = /\\n/g;
+        let a2;
+        t2.exports = class extends r2 {
+          constructor(t3) {
+            super(t3), this.query = this.query || {}, a2 || (a2 = o2.___eio = o2.___eio || []), this.index = a2.length;
+            const e3 = this;
+            a2.push(function(t4) {
+              e3.onData(t4);
+            }), this.query.j = this.index;
+          }
+          get supportsBinary() {
+            return false;
+          }
+          doClose() {
+            this.script && (this.script.onerror = () => {
+            }, this.script.parentNode.removeChild(this.script), this.script = null), this.form && (this.form.parentNode.removeChild(this.form), this.form = null, this.iframe = null), super.doClose();
+          }
+          doPoll() {
+            const t3 = this, e3 = document.createElement("script");
+            this.script && (this.script.parentNode.removeChild(this.script), this.script = null), e3.async = true, e3.src = this.uri(), e3.onerror = function(e4) {
+              t3.onError("jsonp poll error", e4);
+            };
+            const n3 = document.getElementsByTagName("script")[0];
+            n3 ? n3.parentNode.insertBefore(e3, n3) : (document.head || document.body).appendChild(e3), this.script = e3;
+            "undefined" != typeof navigator && /gecko/i.test(navigator.userAgent) && setTimeout(function() {
+              const t4 = document.createElement("iframe");
+              document.body.appendChild(t4), document.body.removeChild(t4);
+            }, 100);
+          }
+          doWrite(t3, e3) {
+            const n3 = this;
+            let r3;
+            if (!this.form) {
+              const t4 = document.createElement("form"), e4 = document.createElement("textarea"), n4 = this.iframeId = "eio_iframe_" + this.index;
+              t4.className = "socketio", t4.style.position = "absolute", t4.style.top = "-1000px", t4.style.left = "-1000px", t4.target = n4, t4.method = "POST", t4.setAttribute("accept-charset", "utf-8"), e4.name = "d", t4.appendChild(e4), document.body.appendChild(t4), this.form = t4, this.area = e4;
+            }
+            function o3() {
+              a3(), e3();
+            }
+            function a3() {
+              if (n3.iframe)
+                try {
+                  n3.form.removeChild(n3.iframe);
+                } catch (t4) {
+                  n3.onError("jsonp polling iframe removal error", t4);
+                }
+              try {
+                const t4 = '<iframe src="javascript:0" name="' + n3.iframeId + '">';
+                r3 = document.createElement(t4);
+              } catch (t4) {
+                r3 = document.createElement("iframe"), r3.name = n3.iframeId, r3.src = "javascript:0";
+              }
+              r3.id = n3.iframeId, n3.form.appendChild(r3), n3.iframe = r3;
+            }
+            this.form.action = this.uri(), a3(), t3 = t3.replace(i2, "\\\n"), this.area.value = t3.replace(s2, "\\n");
+            try {
+              this.form.submit();
+            } catch (t4) {
+            }
+            this.iframe.attachEvent ? this.iframe.onreadystatechange = function() {
+              "complete" === n3.iframe.readyState && o3();
+            } : this.iframe.onload = o3;
+          }
+        };
+      }, function(t2, e2, n2) {
         (function(e3) {
-          const n2 = r2(8), o2 = r2(1), i2 = r2(11), s2 = r2(30), { pick: a2 } = r2(3), { WebSocket: c2, usingBrowserWebSocket: h2, defaultBinaryType: u2, nextTick: f2 } = r2(31), p2 = r2(0)("engine.io-client:websocket"), l2 = "undefined" != typeof navigator && "string" == typeof navigator.product && "reactnative" === navigator.product.toLowerCase();
-          class d2 extends n2 {
+          const r2 = n2(2), o2 = n2(5), s2 = n2(13), i2 = n2(4), { pick: a2 } = n2(14), c2 = n2(3), h2 = n2(0)("engine.io-client:websocket");
+          let u2 = c2.WebSocket || c2.MozWebSocket, p2 = true, f2 = "arraybuffer";
+          "undefined" == typeof window && (u2 = n2(35), p2 = false, f2 = "nodebuffer");
+          const l2 = "undefined" != typeof navigator && "string" == typeof navigator.product && "reactnative" === navigator.product.toLowerCase();
+          class d2 extends i2 {
             constructor(t3) {
               super(t3), this.supportsBinary = !t3.forceBase64;
             }
@@ -23241,14 +23593,14 @@ ${i3}
             doOpen() {
               if (!this.check())
                 return;
-              const t3 = this.uri(), e4 = this.opts.protocols, r3 = l2 ? {} : a2(this.opts, "agent", "perMessageDeflate", "pfx", "key", "passphrase", "cert", "ca", "ciphers", "rejectUnauthorized", "localAddress", "protocolVersion", "origin", "maxPayload", "family", "checkServerIdentity");
-              this.opts.extraHeaders && (r3.headers = this.opts.extraHeaders);
+              const t3 = this.uri(), e4 = this.opts.protocols, n3 = l2 ? {} : a2(this.opts, "agent", "perMessageDeflate", "pfx", "key", "passphrase", "cert", "ca", "ciphers", "rejectUnauthorized", "localAddress", "protocolVersion", "origin", "maxPayload", "family", "checkServerIdentity");
+              this.opts.extraHeaders && (n3.headers = this.opts.extraHeaders);
               try {
-                this.ws = h2 && !l2 ? e4 ? new c2(t3, e4) : new c2(t3) : new c2(t3, e4, r3);
+                this.ws = p2 && !l2 ? e4 ? new u2(t3, e4) : new u2(t3) : new u2(t3, e4, n3);
               } catch (t4) {
-                return this.emit("error", t4);
+                return formatAppLog("log", "at node_modules/@hyoga/uni-socket.io/dist/uni-socket.io.js:1", "error", t4), this.emit("error", t4);
               }
-              this.ws.binaryType = this.socket.binaryType || u2, this.addEventListeners();
+              this.ws.binaryType = this.socket.binaryType || f2, this.addEventListeners();
             }
             addEventListeners() {
               this.ws.onopen = () => {
@@ -23256,27 +23608,33 @@ ${i3}
               }, this.ws.onclose = this.onClose.bind(this), this.ws.onmessage = (t3) => this.onData(t3.data), this.ws.onerror = (t3) => this.onError("websocket error", t3);
             }
             write(t3) {
+              const n3 = this;
               this.writable = false;
-              for (let r3 = 0; r3 < t3.length; r3++) {
-                const n3 = t3[r3], i3 = r3 === t3.length - 1;
-                o2.encodePacket(n3, this.supportsBinary, (t4) => {
-                  const r4 = {};
-                  if (!h2 && (n3.options && (r4.compress = n3.options.compress), this.opts.perMessageDeflate)) {
-                    ("string" == typeof t4 ? e3.byteLength(t4) : t4.length) < this.opts.perMessageDeflate.threshold && (r4.compress = false);
-                  }
-                  try {
-                    h2 ? this.ws.send(t4) : this.ws.send(t4, r4);
-                  } catch (t5) {
-                    p2("websocket closed before onclose event");
-                  }
-                  i3 && f2(() => {
-                    this.writable = true, this.emit("drain");
-                  }, this.setTimeoutFn);
-                });
+              let o3 = t3.length, s3 = 0;
+              const i3 = o3;
+              for (; s3 < i3; s3++)
+                !function(t4) {
+                  r2.encodePacket(t4, n3.supportsBinary, function(r3) {
+                    const s4 = {};
+                    if (!p2 && (t4.options && (s4.compress = t4.options.compress), n3.opts.perMessageDeflate)) {
+                      ("string" == typeof r3 ? e3.byteLength(r3) : r3.length) < n3.opts.perMessageDeflate.threshold && (s4.compress = false);
+                    }
+                    try {
+                      p2 ? n3.ws.send(r3) : n3.ws.send(r3, s4);
+                    } catch (t5) {
+                      h2("websocket closed before onclose event");
+                    }
+                    --o3 || a3();
+                  });
+                }(t3[s3]);
+              function a3() {
+                n3.emit("flush"), setTimeout(function() {
+                  n3.writable = true, n3.emit("drain");
+                }, 0);
               }
             }
             onClose() {
-              n2.prototype.onClose.call(this);
+              i2.prototype.onClose.call(this);
             }
             doClose() {
               void 0 !== this.ws && (this.ws.close(), this.ws = null);
@@ -23284,16 +23642,17 @@ ${i3}
             uri() {
               let t3 = this.query || {};
               const e4 = this.opts.secure ? "wss" : "ws";
-              let r3 = "";
-              return this.opts.port && ("wss" === e4 && 443 !== Number(this.opts.port) || "ws" === e4 && 80 !== Number(this.opts.port)) && (r3 = ":" + this.opts.port), this.opts.timestampRequests && (t3[this.opts.timestampParam] = s2()), this.supportsBinary || (t3.b64 = 1), t3 = i2.encode(t3), t3.length && (t3 = "?" + t3), e4 + "://" + (-1 !== this.opts.hostname.indexOf(":") ? "[" + this.opts.hostname + "]" : this.opts.hostname) + r3 + this.opts.path + t3;
+              let n3 = "";
+              this.opts.port && ("wss" === e4 && 443 !== Number(this.opts.port) || "ws" === e4 && 80 !== Number(this.opts.port)) && (n3 = ":" + this.opts.port), this.opts.timestampRequests && (t3[this.opts.timestampParam] = s2()), this.supportsBinary || (t3.b64 = 1), t3 = o2.encode(t3), t3.length && (t3 = "?" + t3);
+              return e4 + "://" + (-1 !== this.opts.hostname.indexOf(":") ? "[" + this.opts.hostname + "]" : this.opts.hostname) + n3 + this.opts.path + t3;
             }
             check() {
-              return !(!c2 || "__initialize" in c2 && this.name === d2.prototype.name);
+              return !(!u2 || "__initialize" in u2 && this.name === d2.prototype.name);
             }
           }
           t2.exports = d2;
-        }).call(this, r2(22).Buffer);
-      }, function(t2, e2, r2) {
+        }).call(this, n2(30).Buffer);
+      }, function(t2, e2, n2) {
         (function(t3) {
           /*!
            * The buffer module from node.js, for the browser.
@@ -23301,55 +23660,55 @@ ${i3}
            * @author   Feross Aboukhadijeh <http://feross.org>
            * @license  MIT
            */
-          var n2 = r2(24), o2 = r2(25), i2 = r2(26);
-          function s2() {
+          var r2 = n2(32), o2 = n2(33), s2 = n2(34);
+          function i2() {
             return c2.TYPED_ARRAY_SUPPORT ? 2147483647 : 1073741823;
           }
           function a2(t4, e3) {
-            if (s2() < e3)
+            if (i2() < e3)
               throw new RangeError("Invalid typed array length");
             return c2.TYPED_ARRAY_SUPPORT ? (t4 = new Uint8Array(e3)).__proto__ = c2.prototype : (null === t4 && (t4 = new c2(e3)), t4.length = e3), t4;
           }
-          function c2(t4, e3, r3) {
+          function c2(t4, e3, n3) {
             if (!(c2.TYPED_ARRAY_SUPPORT || this instanceof c2))
-              return new c2(t4, e3, r3);
+              return new c2(t4, e3, n3);
             if ("number" == typeof t4) {
               if ("string" == typeof e3)
                 throw new Error("If encoding is specified then the first argument must be a string");
-              return f2(this, t4);
+              return p2(this, t4);
             }
-            return h2(this, t4, e3, r3);
+            return h2(this, t4, e3, n3);
           }
-          function h2(t4, e3, r3, n3) {
+          function h2(t4, e3, n3, r3) {
             if ("number" == typeof e3)
               throw new TypeError('"value" argument must not be a number');
-            return "undefined" != typeof ArrayBuffer && e3 instanceof ArrayBuffer ? function(t5, e4, r4, n4) {
-              if (e4.byteLength, r4 < 0 || e4.byteLength < r4)
+            return "undefined" != typeof ArrayBuffer && e3 instanceof ArrayBuffer ? function(t5, e4, n4, r4) {
+              if (e4.byteLength, n4 < 0 || e4.byteLength < n4)
                 throw new RangeError("'offset' is out of bounds");
-              if (e4.byteLength < r4 + (n4 || 0))
+              if (e4.byteLength < n4 + (r4 || 0))
                 throw new RangeError("'length' is out of bounds");
-              e4 = void 0 === r4 && void 0 === n4 ? new Uint8Array(e4) : void 0 === n4 ? new Uint8Array(e4, r4) : new Uint8Array(e4, r4, n4);
-              c2.TYPED_ARRAY_SUPPORT ? (t5 = e4).__proto__ = c2.prototype : t5 = p2(t5, e4);
+              e4 = void 0 === n4 && void 0 === r4 ? new Uint8Array(e4) : void 0 === r4 ? new Uint8Array(e4, n4) : new Uint8Array(e4, n4, r4);
+              c2.TYPED_ARRAY_SUPPORT ? (t5 = e4).__proto__ = c2.prototype : t5 = f2(t5, e4);
               return t5;
-            }(t4, e3, r3, n3) : "string" == typeof e3 ? function(t5, e4, r4) {
-              "string" == typeof r4 && "" !== r4 || (r4 = "utf8");
-              if (!c2.isEncoding(r4))
+            }(t4, e3, n3, r3) : "string" == typeof e3 ? function(t5, e4, n4) {
+              "string" == typeof n4 && "" !== n4 || (n4 = "utf8");
+              if (!c2.isEncoding(n4))
                 throw new TypeError('"encoding" must be a valid string encoding');
-              var n4 = 0 | d2(e4, r4), o3 = (t5 = a2(t5, n4)).write(e4, r4);
-              o3 !== n4 && (t5 = t5.slice(0, o3));
+              var r4 = 0 | d2(e4, n4), o3 = (t5 = a2(t5, r4)).write(e4, n4);
+              o3 !== r4 && (t5 = t5.slice(0, o3));
               return t5;
-            }(t4, e3, r3) : function(t5, e4) {
+            }(t4, e3, n3) : function(t5, e4) {
               if (c2.isBuffer(e4)) {
-                var r4 = 0 | l2(e4.length);
-                return 0 === (t5 = a2(t5, r4)).length || e4.copy(t5, 0, 0, r4), t5;
+                var n4 = 0 | l2(e4.length);
+                return 0 === (t5 = a2(t5, n4)).length || e4.copy(t5, 0, 0, n4), t5;
               }
               if (e4) {
                 if ("undefined" != typeof ArrayBuffer && e4.buffer instanceof ArrayBuffer || "length" in e4)
-                  return "number" != typeof e4.length || (n4 = e4.length) != n4 ? a2(t5, 0) : p2(t5, e4);
-                if ("Buffer" === e4.type && i2(e4.data))
-                  return p2(t5, e4.data);
+                  return "number" != typeof e4.length || (r4 = e4.length) != r4 ? a2(t5, 0) : f2(t5, e4);
+                if ("Buffer" === e4.type && s2(e4.data))
+                  return f2(t5, e4.data);
               }
-              var n4;
+              var r4;
               throw new TypeError("First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.");
             }(t4, e3);
           }
@@ -23359,22 +23718,22 @@ ${i3}
             if (t4 < 0)
               throw new RangeError('"size" argument must not be negative');
           }
-          function f2(t4, e3) {
+          function p2(t4, e3) {
             if (u2(e3), t4 = a2(t4, e3 < 0 ? 0 : 0 | l2(e3)), !c2.TYPED_ARRAY_SUPPORT)
-              for (var r3 = 0; r3 < e3; ++r3)
-                t4[r3] = 0;
+              for (var n3 = 0; n3 < e3; ++n3)
+                t4[n3] = 0;
             return t4;
           }
-          function p2(t4, e3) {
-            var r3 = e3.length < 0 ? 0 : 0 | l2(e3.length);
-            t4 = a2(t4, r3);
-            for (var n3 = 0; n3 < r3; n3 += 1)
-              t4[n3] = 255 & e3[n3];
+          function f2(t4, e3) {
+            var n3 = e3.length < 0 ? 0 : 0 | l2(e3.length);
+            t4 = a2(t4, n3);
+            for (var r3 = 0; r3 < n3; r3 += 1)
+              t4[r3] = 255 & e3[r3];
             return t4;
           }
           function l2(t4) {
-            if (t4 >= s2())
-              throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x" + s2().toString(16) + " bytes");
+            if (t4 >= i2())
+              throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x" + i2().toString(16) + " bytes");
             return 0 | t4;
           }
           function d2(t4, e3) {
@@ -23383,190 +23742,190 @@ ${i3}
             if ("undefined" != typeof ArrayBuffer && "function" == typeof ArrayBuffer.isView && (ArrayBuffer.isView(t4) || t4 instanceof ArrayBuffer))
               return t4.byteLength;
             "string" != typeof t4 && (t4 = "" + t4);
-            var r3 = t4.length;
-            if (0 === r3)
+            var n3 = t4.length;
+            if (0 === n3)
               return 0;
-            for (var n3 = false; ; )
+            for (var r3 = false; ; )
               switch (e3) {
                 case "ascii":
                 case "latin1":
                 case "binary":
-                  return r3;
+                  return n3;
                 case "utf8":
                 case "utf-8":
                 case void 0:
-                  return D2(t4).length;
+                  return Y2(t4).length;
                 case "ucs2":
                 case "ucs-2":
                 case "utf16le":
                 case "utf-16le":
-                  return 2 * r3;
+                  return 2 * n3;
                 case "hex":
-                  return r3 >>> 1;
+                  return n3 >>> 1;
                 case "base64":
-                  return F2(t4).length;
+                  return q2(t4).length;
                 default:
-                  if (n3)
-                    return D2(t4).length;
-                  e3 = ("" + e3).toLowerCase(), n3 = true;
+                  if (r3)
+                    return Y2(t4).length;
+                  e3 = ("" + e3).toLowerCase(), r3 = true;
               }
           }
-          function y2(t4, e3, r3) {
-            var n3 = false;
+          function y2(t4, e3, n3) {
+            var r3 = false;
             if ((void 0 === e3 || e3 < 0) && (e3 = 0), e3 > this.length)
               return "";
-            if ((void 0 === r3 || r3 > this.length) && (r3 = this.length), r3 <= 0)
+            if ((void 0 === n3 || n3 > this.length) && (n3 = this.length), n3 <= 0)
               return "";
-            if ((r3 >>>= 0) <= (e3 >>>= 0))
+            if ((n3 >>>= 0) <= (e3 >>>= 0))
               return "";
             for (t4 || (t4 = "utf8"); ; )
               switch (t4) {
                 case "hex":
-                  return S2(this, e3, r3);
+                  return C2(this, e3, n3);
                 case "utf8":
                 case "utf-8":
-                  return R2(this, e3, r3);
+                  return x(this, e3, n3);
                 case "ascii":
-                  return P2(this, e3, r3);
+                  return S2(this, e3, n3);
                 case "latin1":
                 case "binary":
-                  return B2(this, e3, r3);
+                  return P2(this, e3, n3);
                 case "base64":
-                  return T2(this, e3, r3);
+                  return T2(this, e3, n3);
                 case "ucs2":
                 case "ucs-2":
                 case "utf16le":
                 case "utf-16le":
-                  return O2(this, e3, r3);
+                  return R2(this, e3, n3);
                 default:
-                  if (n3)
+                  if (r3)
                     throw new TypeError("Unknown encoding: " + t4);
-                  t4 = (t4 + "").toLowerCase(), n3 = true;
+                  t4 = (t4 + "").toLowerCase(), r3 = true;
               }
           }
-          function g2(t4, e3, r3) {
-            var n3 = t4[e3];
-            t4[e3] = t4[r3], t4[r3] = n3;
+          function g2(t4, e3, n3) {
+            var r3 = t4[e3];
+            t4[e3] = t4[n3], t4[n3] = r3;
           }
-          function m2(t4, e3, r3, n3, o3) {
+          function m2(t4, e3, n3, r3, o3) {
             if (0 === t4.length)
               return -1;
-            if ("string" == typeof r3 ? (n3 = r3, r3 = 0) : r3 > 2147483647 ? r3 = 2147483647 : r3 < -2147483648 && (r3 = -2147483648), r3 = +r3, isNaN(r3) && (r3 = o3 ? 0 : t4.length - 1), r3 < 0 && (r3 = t4.length + r3), r3 >= t4.length) {
+            if ("string" == typeof n3 ? (r3 = n3, n3 = 0) : n3 > 2147483647 ? n3 = 2147483647 : n3 < -2147483648 && (n3 = -2147483648), n3 = +n3, isNaN(n3) && (n3 = o3 ? 0 : t4.length - 1), n3 < 0 && (n3 = t4.length + n3), n3 >= t4.length) {
               if (o3)
                 return -1;
-              r3 = t4.length - 1;
-            } else if (r3 < 0) {
+              n3 = t4.length - 1;
+            } else if (n3 < 0) {
               if (!o3)
                 return -1;
-              r3 = 0;
+              n3 = 0;
             }
-            if ("string" == typeof e3 && (e3 = c2.from(e3, n3)), c2.isBuffer(e3))
-              return 0 === e3.length ? -1 : b2(t4, e3, r3, n3, o3);
+            if ("string" == typeof e3 && (e3 = c2.from(e3, r3)), c2.isBuffer(e3))
+              return 0 === e3.length ? -1 : v2(t4, e3, n3, r3, o3);
             if ("number" == typeof e3)
-              return e3 &= 255, c2.TYPED_ARRAY_SUPPORT && "function" == typeof Uint8Array.prototype.indexOf ? o3 ? Uint8Array.prototype.indexOf.call(t4, e3, r3) : Uint8Array.prototype.lastIndexOf.call(t4, e3, r3) : b2(t4, [e3], r3, n3, o3);
+              return e3 &= 255, c2.TYPED_ARRAY_SUPPORT && "function" == typeof Uint8Array.prototype.indexOf ? o3 ? Uint8Array.prototype.indexOf.call(t4, e3, n3) : Uint8Array.prototype.lastIndexOf.call(t4, e3, n3) : v2(t4, [e3], n3, r3, o3);
             throw new TypeError("val must be string, number or Buffer");
           }
-          function b2(t4, e3, r3, n3, o3) {
-            var i3, s3 = 1, a3 = t4.length, c3 = e3.length;
-            if (void 0 !== n3 && ("ucs2" === (n3 = String(n3).toLowerCase()) || "ucs-2" === n3 || "utf16le" === n3 || "utf-16le" === n3)) {
+          function v2(t4, e3, n3, r3, o3) {
+            var s3, i3 = 1, a3 = t4.length, c3 = e3.length;
+            if (void 0 !== r3 && ("ucs2" === (r3 = String(r3).toLowerCase()) || "ucs-2" === r3 || "utf16le" === r3 || "utf-16le" === r3)) {
               if (t4.length < 2 || e3.length < 2)
                 return -1;
-              s3 = 2, a3 /= 2, c3 /= 2, r3 /= 2;
+              i3 = 2, a3 /= 2, c3 /= 2, n3 /= 2;
             }
             function h3(t5, e4) {
-              return 1 === s3 ? t5[e4] : t5.readUInt16BE(e4 * s3);
+              return 1 === i3 ? t5[e4] : t5.readUInt16BE(e4 * i3);
             }
             if (o3) {
               var u3 = -1;
-              for (i3 = r3; i3 < a3; i3++)
-                if (h3(t4, i3) === h3(e3, -1 === u3 ? 0 : i3 - u3)) {
-                  if (-1 === u3 && (u3 = i3), i3 - u3 + 1 === c3)
-                    return u3 * s3;
+              for (s3 = n3; s3 < a3; s3++)
+                if (h3(t4, s3) === h3(e3, -1 === u3 ? 0 : s3 - u3)) {
+                  if (-1 === u3 && (u3 = s3), s3 - u3 + 1 === c3)
+                    return u3 * i3;
                 } else
-                  -1 !== u3 && (i3 -= i3 - u3), u3 = -1;
+                  -1 !== u3 && (s3 -= s3 - u3), u3 = -1;
             } else
-              for (r3 + c3 > a3 && (r3 = a3 - c3), i3 = r3; i3 >= 0; i3--) {
-                for (var f3 = true, p3 = 0; p3 < c3; p3++)
-                  if (h3(t4, i3 + p3) !== h3(e3, p3)) {
-                    f3 = false;
+              for (n3 + c3 > a3 && (n3 = a3 - c3), s3 = n3; s3 >= 0; s3--) {
+                for (var p3 = true, f3 = 0; f3 < c3; f3++)
+                  if (h3(t4, s3 + f3) !== h3(e3, f3)) {
+                    p3 = false;
                     break;
                   }
-                if (f3)
-                  return i3;
+                if (p3)
+                  return s3;
               }
             return -1;
           }
-          function v2(t4, e3, r3, n3) {
-            r3 = Number(r3) || 0;
-            var o3 = t4.length - r3;
-            n3 ? (n3 = Number(n3)) > o3 && (n3 = o3) : n3 = o3;
-            var i3 = e3.length;
-            if (i3 % 2 != 0)
+          function b2(t4, e3, n3, r3) {
+            n3 = Number(n3) || 0;
+            var o3 = t4.length - n3;
+            r3 ? (r3 = Number(r3)) > o3 && (r3 = o3) : r3 = o3;
+            var s3 = e3.length;
+            if (s3 % 2 != 0)
               throw new TypeError("Invalid hex string");
-            n3 > i3 / 2 && (n3 = i3 / 2);
-            for (var s3 = 0; s3 < n3; ++s3) {
-              var a3 = parseInt(e3.substr(2 * s3, 2), 16);
+            r3 > s3 / 2 && (r3 = s3 / 2);
+            for (var i3 = 0; i3 < r3; ++i3) {
+              var a3 = parseInt(e3.substr(2 * i3, 2), 16);
               if (isNaN(a3))
-                return s3;
-              t4[r3 + s3] = a3;
+                return i3;
+              t4[n3 + i3] = a3;
             }
-            return s3;
+            return i3;
           }
-          function w2(t4, e3, r3, n3) {
-            return V2(D2(e3, t4.length - r3), t4, r3, n3);
+          function w2(t4, e3, n3, r3) {
+            return F2(Y2(e3, t4.length - n3), t4, n3, r3);
           }
-          function E2(t4, e3, r3, n3) {
-            return V2(function(t5) {
-              for (var e4 = [], r4 = 0; r4 < t5.length; ++r4)
-                e4.push(255 & t5.charCodeAt(r4));
+          function _2(t4, e3, n3, r3) {
+            return F2(function(t5) {
+              for (var e4 = [], n4 = 0; n4 < t5.length; ++n4)
+                e4.push(255 & t5.charCodeAt(n4));
               return e4;
-            }(e3), t4, r3, n3);
+            }(e3), t4, n3, r3);
           }
-          function k(t4, e3, r3, n3) {
-            return E2(t4, e3, r3, n3);
+          function E2(t4, e3, n3, r3) {
+            return _2(t4, e3, n3, r3);
           }
-          function _2(t4, e3, r3, n3) {
-            return V2(F2(e3), t4, r3, n3);
+          function k(t4, e3, n3, r3) {
+            return F2(q2(e3), t4, n3, r3);
           }
-          function A2(t4, e3, r3, n3) {
-            return V2(function(t5, e4) {
-              for (var r4, n4, o3, i3 = [], s3 = 0; s3 < t5.length && !((e4 -= 2) < 0); ++s3)
-                r4 = t5.charCodeAt(s3), n4 = r4 >> 8, o3 = r4 % 256, i3.push(o3), i3.push(n4);
-              return i3;
-            }(e3, t4.length - r3), t4, r3, n3);
+          function A2(t4, e3, n3, r3) {
+            return F2(function(t5, e4) {
+              for (var n4, r4, o3, s3 = [], i3 = 0; i3 < t5.length && !((e4 -= 2) < 0); ++i3)
+                n4 = t5.charCodeAt(i3), r4 = n4 >> 8, o3 = n4 % 256, s3.push(o3), s3.push(r4);
+              return s3;
+            }(e3, t4.length - n3), t4, n3, r3);
           }
-          function T2(t4, e3, r3) {
-            return 0 === e3 && r3 === t4.length ? n2.fromByteArray(t4) : n2.fromByteArray(t4.slice(e3, r3));
+          function T2(t4, e3, n3) {
+            return 0 === e3 && n3 === t4.length ? r2.fromByteArray(t4) : r2.fromByteArray(t4.slice(e3, n3));
           }
-          function R2(t4, e3, r3) {
-            r3 = Math.min(t4.length, r3);
-            for (var n3 = [], o3 = e3; o3 < r3; ) {
-              var i3, s3, a3, c3, h3 = t4[o3], u3 = null, f3 = h3 > 239 ? 4 : h3 > 223 ? 3 : h3 > 191 ? 2 : 1;
-              if (o3 + f3 <= r3)
-                switch (f3) {
+          function x(t4, e3, n3) {
+            n3 = Math.min(t4.length, n3);
+            for (var r3 = [], o3 = e3; o3 < n3; ) {
+              var s3, i3, a3, c3, h3 = t4[o3], u3 = null, p3 = h3 > 239 ? 4 : h3 > 223 ? 3 : h3 > 191 ? 2 : 1;
+              if (o3 + p3 <= n3)
+                switch (p3) {
                   case 1:
                     h3 < 128 && (u3 = h3);
                     break;
                   case 2:
-                    128 == (192 & (i3 = t4[o3 + 1])) && (c3 = (31 & h3) << 6 | 63 & i3) > 127 && (u3 = c3);
+                    128 == (192 & (s3 = t4[o3 + 1])) && (c3 = (31 & h3) << 6 | 63 & s3) > 127 && (u3 = c3);
                     break;
                   case 3:
-                    i3 = t4[o3 + 1], s3 = t4[o3 + 2], 128 == (192 & i3) && 128 == (192 & s3) && (c3 = (15 & h3) << 12 | (63 & i3) << 6 | 63 & s3) > 2047 && (c3 < 55296 || c3 > 57343) && (u3 = c3);
+                    s3 = t4[o3 + 1], i3 = t4[o3 + 2], 128 == (192 & s3) && 128 == (192 & i3) && (c3 = (15 & h3) << 12 | (63 & s3) << 6 | 63 & i3) > 2047 && (c3 < 55296 || c3 > 57343) && (u3 = c3);
                     break;
                   case 4:
-                    i3 = t4[o3 + 1], s3 = t4[o3 + 2], a3 = t4[o3 + 3], 128 == (192 & i3) && 128 == (192 & s3) && 128 == (192 & a3) && (c3 = (15 & h3) << 18 | (63 & i3) << 12 | (63 & s3) << 6 | 63 & a3) > 65535 && c3 < 1114112 && (u3 = c3);
+                    s3 = t4[o3 + 1], i3 = t4[o3 + 2], a3 = t4[o3 + 3], 128 == (192 & s3) && 128 == (192 & i3) && 128 == (192 & a3) && (c3 = (15 & h3) << 18 | (63 & s3) << 12 | (63 & i3) << 6 | 63 & a3) > 65535 && c3 < 1114112 && (u3 = c3);
                 }
-              null === u3 ? (u3 = 65533, f3 = 1) : u3 > 65535 && (u3 -= 65536, n3.push(u3 >>> 10 & 1023 | 55296), u3 = 56320 | 1023 & u3), n3.push(u3), o3 += f3;
+              null === u3 ? (u3 = 65533, p3 = 1) : u3 > 65535 && (u3 -= 65536, r3.push(u3 >>> 10 & 1023 | 55296), u3 = 56320 | 1023 & u3), r3.push(u3), o3 += p3;
             }
             return function(t5) {
               var e4 = t5.length;
               if (e4 <= 4096)
                 return String.fromCharCode.apply(String, t5);
-              var r4 = "", n4 = 0;
-              for (; n4 < e4; )
-                r4 += String.fromCharCode.apply(String, t5.slice(n4, n4 += 4096));
-              return r4;
-            }(n3);
+              var n4 = "", r4 = 0;
+              for (; r4 < e4; )
+                n4 += String.fromCharCode.apply(String, t5.slice(r4, r4 += 4096));
+              return n4;
+            }(r3);
           }
           e2.Buffer = c2, e2.SlowBuffer = function(t4) {
             +t4 != t4 && (t4 = 0);
@@ -23580,18 +23939,18 @@ ${i3}
             } catch (t5) {
               return false;
             }
-          }(), e2.kMaxLength = s2(), c2.poolSize = 8192, c2._augment = function(t4) {
+          }(), e2.kMaxLength = i2(), c2.poolSize = 8192, c2._augment = function(t4) {
             return t4.__proto__ = c2.prototype, t4;
-          }, c2.from = function(t4, e3, r3) {
-            return h2(null, t4, e3, r3);
-          }, c2.TYPED_ARRAY_SUPPORT && (c2.prototype.__proto__ = Uint8Array.prototype, c2.__proto__ = Uint8Array, "undefined" != typeof Symbol && Symbol.species && c2[Symbol.species] === c2 && Object.defineProperty(c2, Symbol.species, { value: null, configurable: true })), c2.alloc = function(t4, e3, r3) {
-            return function(t5, e4, r4, n3) {
-              return u2(e4), e4 <= 0 ? a2(t5, e4) : void 0 !== r4 ? "string" == typeof n3 ? a2(t5, e4).fill(r4, n3) : a2(t5, e4).fill(r4) : a2(t5, e4);
-            }(null, t4, e3, r3);
+          }, c2.from = function(t4, e3, n3) {
+            return h2(null, t4, e3, n3);
+          }, c2.TYPED_ARRAY_SUPPORT && (c2.prototype.__proto__ = Uint8Array.prototype, c2.__proto__ = Uint8Array, "undefined" != typeof Symbol && Symbol.species && c2[Symbol.species] === c2 && Object.defineProperty(c2, Symbol.species, { value: null, configurable: true })), c2.alloc = function(t4, e3, n3) {
+            return function(t5, e4, n4, r3) {
+              return u2(e4), e4 <= 0 ? a2(t5, e4) : void 0 !== n4 ? "string" == typeof r3 ? a2(t5, e4).fill(n4, r3) : a2(t5, e4).fill(n4) : a2(t5, e4);
+            }(null, t4, e3, n3);
           }, c2.allocUnsafe = function(t4) {
-            return f2(null, t4);
+            return p2(null, t4);
           }, c2.allocUnsafeSlow = function(t4) {
-            return f2(null, t4);
+            return p2(null, t4);
           }, c2.isBuffer = function(t4) {
             return !(null == t4 || !t4._isBuffer);
           }, c2.compare = function(t4, e3) {
@@ -23599,12 +23958,12 @@ ${i3}
               throw new TypeError("Arguments must be Buffers");
             if (t4 === e3)
               return 0;
-            for (var r3 = t4.length, n3 = e3.length, o3 = 0, i3 = Math.min(r3, n3); o3 < i3; ++o3)
+            for (var n3 = t4.length, r3 = e3.length, o3 = 0, s3 = Math.min(n3, r3); o3 < s3; ++o3)
               if (t4[o3] !== e3[o3]) {
-                r3 = t4[o3], n3 = e3[o3];
+                n3 = t4[o3], r3 = e3[o3];
                 break;
               }
-            return r3 < n3 ? -1 : n3 < r3 ? 1 : 0;
+            return n3 < r3 ? -1 : r3 < n3 ? 1 : 0;
           }, c2.isEncoding = function(t4) {
             switch (String(t4).toLowerCase()) {
               case "hex":
@@ -23623,22 +23982,22 @@ ${i3}
                 return false;
             }
           }, c2.concat = function(t4, e3) {
-            if (!i2(t4))
+            if (!s2(t4))
               throw new TypeError('"list" argument must be an Array of Buffers');
             if (0 === t4.length)
               return c2.alloc(0);
-            var r3;
+            var n3;
             if (void 0 === e3)
-              for (e3 = 0, r3 = 0; r3 < t4.length; ++r3)
-                e3 += t4[r3].length;
-            var n3 = c2.allocUnsafe(e3), o3 = 0;
-            for (r3 = 0; r3 < t4.length; ++r3) {
-              var s3 = t4[r3];
-              if (!c2.isBuffer(s3))
+              for (e3 = 0, n3 = 0; n3 < t4.length; ++n3)
+                e3 += t4[n3].length;
+            var r3 = c2.allocUnsafe(e3), o3 = 0;
+            for (n3 = 0; n3 < t4.length; ++n3) {
+              var i3 = t4[n3];
+              if (!c2.isBuffer(i3))
                 throw new TypeError('"list" argument must be an Array of Buffers');
-              s3.copy(n3, o3), o3 += s3.length;
+              i3.copy(r3, o3), o3 += i3.length;
             }
-            return n3;
+            return r3;
           }, c2.byteLength = d2, c2.prototype._isBuffer = true, c2.prototype.swap16 = function() {
             var t4 = this.length;
             if (t4 % 2 != 0)
@@ -23662,594 +24021,791 @@ ${i3}
             return this;
           }, c2.prototype.toString = function() {
             var t4 = 0 | this.length;
-            return 0 === t4 ? "" : 0 === arguments.length ? R2(this, 0, t4) : y2.apply(this, arguments);
+            return 0 === t4 ? "" : 0 === arguments.length ? x(this, 0, t4) : y2.apply(this, arguments);
           }, c2.prototype.equals = function(t4) {
             if (!c2.isBuffer(t4))
               throw new TypeError("Argument must be a Buffer");
             return this === t4 || 0 === c2.compare(this, t4);
           }, c2.prototype.inspect = function() {
-            var t4 = "", r3 = e2.INSPECT_MAX_BYTES;
-            return this.length > 0 && (t4 = this.toString("hex", 0, r3).match(/.{2}/g).join(" "), this.length > r3 && (t4 += " ... ")), "<Buffer " + t4 + ">";
-          }, c2.prototype.compare = function(t4, e3, r3, n3, o3) {
+            var t4 = "", n3 = e2.INSPECT_MAX_BYTES;
+            return this.length > 0 && (t4 = this.toString("hex", 0, n3).match(/.{2}/g).join(" "), this.length > n3 && (t4 += " ... ")), "<Buffer " + t4 + ">";
+          }, c2.prototype.compare = function(t4, e3, n3, r3, o3) {
             if (!c2.isBuffer(t4))
               throw new TypeError("Argument must be a Buffer");
-            if (void 0 === e3 && (e3 = 0), void 0 === r3 && (r3 = t4 ? t4.length : 0), void 0 === n3 && (n3 = 0), void 0 === o3 && (o3 = this.length), e3 < 0 || r3 > t4.length || n3 < 0 || o3 > this.length)
+            if (void 0 === e3 && (e3 = 0), void 0 === n3 && (n3 = t4 ? t4.length : 0), void 0 === r3 && (r3 = 0), void 0 === o3 && (o3 = this.length), e3 < 0 || n3 > t4.length || r3 < 0 || o3 > this.length)
               throw new RangeError("out of range index");
-            if (n3 >= o3 && e3 >= r3)
+            if (r3 >= o3 && e3 >= n3)
               return 0;
-            if (n3 >= o3)
+            if (r3 >= o3)
               return -1;
-            if (e3 >= r3)
+            if (e3 >= n3)
               return 1;
             if (this === t4)
               return 0;
-            for (var i3 = (o3 >>>= 0) - (n3 >>>= 0), s3 = (r3 >>>= 0) - (e3 >>>= 0), a3 = Math.min(i3, s3), h3 = this.slice(n3, o3), u3 = t4.slice(e3, r3), f3 = 0; f3 < a3; ++f3)
-              if (h3[f3] !== u3[f3]) {
-                i3 = h3[f3], s3 = u3[f3];
+            for (var s3 = (o3 >>>= 0) - (r3 >>>= 0), i3 = (n3 >>>= 0) - (e3 >>>= 0), a3 = Math.min(s3, i3), h3 = this.slice(r3, o3), u3 = t4.slice(e3, n3), p3 = 0; p3 < a3; ++p3)
+              if (h3[p3] !== u3[p3]) {
+                s3 = h3[p3], i3 = u3[p3];
                 break;
               }
-            return i3 < s3 ? -1 : s3 < i3 ? 1 : 0;
-          }, c2.prototype.includes = function(t4, e3, r3) {
-            return -1 !== this.indexOf(t4, e3, r3);
-          }, c2.prototype.indexOf = function(t4, e3, r3) {
-            return m2(this, t4, e3, r3, true);
-          }, c2.prototype.lastIndexOf = function(t4, e3, r3) {
-            return m2(this, t4, e3, r3, false);
-          }, c2.prototype.write = function(t4, e3, r3, n3) {
+            return s3 < i3 ? -1 : i3 < s3 ? 1 : 0;
+          }, c2.prototype.includes = function(t4, e3, n3) {
+            return -1 !== this.indexOf(t4, e3, n3);
+          }, c2.prototype.indexOf = function(t4, e3, n3) {
+            return m2(this, t4, e3, n3, true);
+          }, c2.prototype.lastIndexOf = function(t4, e3, n3) {
+            return m2(this, t4, e3, n3, false);
+          }, c2.prototype.write = function(t4, e3, n3, r3) {
             if (void 0 === e3)
-              n3 = "utf8", r3 = this.length, e3 = 0;
-            else if (void 0 === r3 && "string" == typeof e3)
-              n3 = e3, r3 = this.length, e3 = 0;
+              r3 = "utf8", n3 = this.length, e3 = 0;
+            else if (void 0 === n3 && "string" == typeof e3)
+              r3 = e3, n3 = this.length, e3 = 0;
             else {
               if (!isFinite(e3))
                 throw new Error("Buffer.write(string, encoding, offset[, length]) is no longer supported");
-              e3 |= 0, isFinite(r3) ? (r3 |= 0, void 0 === n3 && (n3 = "utf8")) : (n3 = r3, r3 = void 0);
+              e3 |= 0, isFinite(n3) ? (n3 |= 0, void 0 === r3 && (r3 = "utf8")) : (r3 = n3, n3 = void 0);
             }
             var o3 = this.length - e3;
-            if ((void 0 === r3 || r3 > o3) && (r3 = o3), t4.length > 0 && (r3 < 0 || e3 < 0) || e3 > this.length)
+            if ((void 0 === n3 || n3 > o3) && (n3 = o3), t4.length > 0 && (n3 < 0 || e3 < 0) || e3 > this.length)
               throw new RangeError("Attempt to write outside buffer bounds");
-            n3 || (n3 = "utf8");
-            for (var i3 = false; ; )
-              switch (n3) {
+            r3 || (r3 = "utf8");
+            for (var s3 = false; ; )
+              switch (r3) {
                 case "hex":
-                  return v2(this, t4, e3, r3);
+                  return b2(this, t4, e3, n3);
                 case "utf8":
                 case "utf-8":
-                  return w2(this, t4, e3, r3);
+                  return w2(this, t4, e3, n3);
                 case "ascii":
-                  return E2(this, t4, e3, r3);
+                  return _2(this, t4, e3, n3);
                 case "latin1":
                 case "binary":
-                  return k(this, t4, e3, r3);
+                  return E2(this, t4, e3, n3);
                 case "base64":
-                  return _2(this, t4, e3, r3);
+                  return k(this, t4, e3, n3);
                 case "ucs2":
                 case "ucs-2":
                 case "utf16le":
                 case "utf-16le":
-                  return A2(this, t4, e3, r3);
+                  return A2(this, t4, e3, n3);
                 default:
-                  if (i3)
-                    throw new TypeError("Unknown encoding: " + n3);
-                  n3 = ("" + n3).toLowerCase(), i3 = true;
+                  if (s3)
+                    throw new TypeError("Unknown encoding: " + r3);
+                  r3 = ("" + r3).toLowerCase(), s3 = true;
               }
           }, c2.prototype.toJSON = function() {
             return { type: "Buffer", data: Array.prototype.slice.call(this._arr || this, 0) };
           };
-          function P2(t4, e3, r3) {
-            var n3 = "";
-            r3 = Math.min(t4.length, r3);
-            for (var o3 = e3; o3 < r3; ++o3)
-              n3 += String.fromCharCode(127 & t4[o3]);
-            return n3;
+          function S2(t4, e3, n3) {
+            var r3 = "";
+            n3 = Math.min(t4.length, n3);
+            for (var o3 = e3; o3 < n3; ++o3)
+              r3 += String.fromCharCode(127 & t4[o3]);
+            return r3;
           }
-          function B2(t4, e3, r3) {
-            var n3 = "";
-            r3 = Math.min(t4.length, r3);
-            for (var o3 = e3; o3 < r3; ++o3)
-              n3 += String.fromCharCode(t4[o3]);
-            return n3;
+          function P2(t4, e3, n3) {
+            var r3 = "";
+            n3 = Math.min(t4.length, n3);
+            for (var o3 = e3; o3 < n3; ++o3)
+              r3 += String.fromCharCode(t4[o3]);
+            return r3;
           }
-          function S2(t4, e3, r3) {
-            var n3 = t4.length;
-            (!e3 || e3 < 0) && (e3 = 0), (!r3 || r3 < 0 || r3 > n3) && (r3 = n3);
-            for (var o3 = "", i3 = e3; i3 < r3; ++i3)
-              o3 += Y2(t4[i3]);
+          function C2(t4, e3, n3) {
+            var r3 = t4.length;
+            (!e3 || e3 < 0) && (e3 = 0), (!n3 || n3 < 0 || n3 > r3) && (n3 = r3);
+            for (var o3 = "", s3 = e3; s3 < n3; ++s3)
+              o3 += D2(t4[s3]);
             return o3;
           }
-          function O2(t4, e3, r3) {
-            for (var n3 = t4.slice(e3, r3), o3 = "", i3 = 0; i3 < n3.length; i3 += 2)
-              o3 += String.fromCharCode(n3[i3] + 256 * n3[i3 + 1]);
+          function R2(t4, e3, n3) {
+            for (var r3 = t4.slice(e3, n3), o3 = "", s3 = 0; s3 < r3.length; s3 += 2)
+              o3 += String.fromCharCode(r3[s3] + 256 * r3[s3 + 1]);
             return o3;
           }
-          function C2(t4, e3, r3) {
+          function O2(t4, e3, n3) {
             if (t4 % 1 != 0 || t4 < 0)
               throw new RangeError("offset is not uint");
-            if (t4 + e3 > r3)
+            if (t4 + e3 > n3)
               throw new RangeError("Trying to access beyond buffer length");
           }
-          function x(t4, e3, r3, n3, o3, i3) {
+          function B2(t4, e3, n3, r3, o3, s3) {
             if (!c2.isBuffer(t4))
               throw new TypeError('"buffer" argument must be a Buffer instance');
-            if (e3 > o3 || e3 < i3)
+            if (e3 > o3 || e3 < s3)
               throw new RangeError('"value" argument is out of bounds');
-            if (r3 + n3 > t4.length)
+            if (n3 + r3 > t4.length)
               throw new RangeError("Index out of range");
           }
-          function N2(t4, e3, r3, n3) {
+          function L2(t4, e3, n3, r3) {
             e3 < 0 && (e3 = 65535 + e3 + 1);
-            for (var o3 = 0, i3 = Math.min(t4.length - r3, 2); o3 < i3; ++o3)
-              t4[r3 + o3] = (e3 & 255 << 8 * (n3 ? o3 : 1 - o3)) >>> 8 * (n3 ? o3 : 1 - o3);
+            for (var o3 = 0, s3 = Math.min(t4.length - n3, 2); o3 < s3; ++o3)
+              t4[n3 + o3] = (e3 & 255 << 8 * (r3 ? o3 : 1 - o3)) >>> 8 * (r3 ? o3 : 1 - o3);
           }
-          function L2(t4, e3, r3, n3) {
+          function N2(t4, e3, n3, r3) {
             e3 < 0 && (e3 = 4294967295 + e3 + 1);
-            for (var o3 = 0, i3 = Math.min(t4.length - r3, 4); o3 < i3; ++o3)
-              t4[r3 + o3] = e3 >>> 8 * (n3 ? o3 : 3 - o3) & 255;
+            for (var o3 = 0, s3 = Math.min(t4.length - n3, 4); o3 < s3; ++o3)
+              t4[n3 + o3] = e3 >>> 8 * (r3 ? o3 : 3 - o3) & 255;
           }
-          function I2(t4, e3, r3, n3, o3, i3) {
-            if (r3 + n3 > t4.length)
+          function j2(t4, e3, n3, r3, o3, s3) {
+            if (n3 + r3 > t4.length)
               throw new RangeError("Index out of range");
-            if (r3 < 0)
+            if (n3 < 0)
               throw new RangeError("Index out of range");
           }
-          function U2(t4, e3, r3, n3, i3) {
-            return i3 || I2(t4, 0, r3, 4), o2.write(t4, e3, r3, n3, 23, 4), r3 + 4;
+          function I2(t4, e3, n3, r3, s3) {
+            return s3 || j2(t4, 0, n3, 4), o2.write(t4, e3, n3, r3, 23, 4), n3 + 4;
           }
-          function j2(t4, e3, r3, n3, i3) {
-            return i3 || I2(t4, 0, r3, 8), o2.write(t4, e3, r3, n3, 52, 8), r3 + 8;
+          function M2(t4, e3, n3, r3, s3) {
+            return s3 || j2(t4, 0, n3, 8), o2.write(t4, e3, n3, r3, 52, 8), n3 + 8;
           }
           c2.prototype.slice = function(t4, e3) {
-            var r3, n3 = this.length;
-            if ((t4 = ~~t4) < 0 ? (t4 += n3) < 0 && (t4 = 0) : t4 > n3 && (t4 = n3), (e3 = void 0 === e3 ? n3 : ~~e3) < 0 ? (e3 += n3) < 0 && (e3 = 0) : e3 > n3 && (e3 = n3), e3 < t4 && (e3 = t4), c2.TYPED_ARRAY_SUPPORT)
-              (r3 = this.subarray(t4, e3)).__proto__ = c2.prototype;
+            var n3, r3 = this.length;
+            if ((t4 = ~~t4) < 0 ? (t4 += r3) < 0 && (t4 = 0) : t4 > r3 && (t4 = r3), (e3 = void 0 === e3 ? r3 : ~~e3) < 0 ? (e3 += r3) < 0 && (e3 = 0) : e3 > r3 && (e3 = r3), e3 < t4 && (e3 = t4), c2.TYPED_ARRAY_SUPPORT)
+              (n3 = this.subarray(t4, e3)).__proto__ = c2.prototype;
             else {
               var o3 = e3 - t4;
-              r3 = new c2(o3, void 0);
-              for (var i3 = 0; i3 < o3; ++i3)
-                r3[i3] = this[i3 + t4];
+              n3 = new c2(o3, void 0);
+              for (var s3 = 0; s3 < o3; ++s3)
+                n3[s3] = this[s3 + t4];
             }
+            return n3;
+          }, c2.prototype.readUIntLE = function(t4, e3, n3) {
+            t4 |= 0, e3 |= 0, n3 || O2(t4, e3, this.length);
+            for (var r3 = this[t4], o3 = 1, s3 = 0; ++s3 < e3 && (o3 *= 256); )
+              r3 += this[t4 + s3] * o3;
             return r3;
-          }, c2.prototype.readUIntLE = function(t4, e3, r3) {
-            t4 |= 0, e3 |= 0, r3 || C2(t4, e3, this.length);
-            for (var n3 = this[t4], o3 = 1, i3 = 0; ++i3 < e3 && (o3 *= 256); )
-              n3 += this[t4 + i3] * o3;
-            return n3;
-          }, c2.prototype.readUIntBE = function(t4, e3, r3) {
-            t4 |= 0, e3 |= 0, r3 || C2(t4, e3, this.length);
-            for (var n3 = this[t4 + --e3], o3 = 1; e3 > 0 && (o3 *= 256); )
-              n3 += this[t4 + --e3] * o3;
-            return n3;
+          }, c2.prototype.readUIntBE = function(t4, e3, n3) {
+            t4 |= 0, e3 |= 0, n3 || O2(t4, e3, this.length);
+            for (var r3 = this[t4 + --e3], o3 = 1; e3 > 0 && (o3 *= 256); )
+              r3 += this[t4 + --e3] * o3;
+            return r3;
           }, c2.prototype.readUInt8 = function(t4, e3) {
-            return e3 || C2(t4, 1, this.length), this[t4];
+            return e3 || O2(t4, 1, this.length), this[t4];
           }, c2.prototype.readUInt16LE = function(t4, e3) {
-            return e3 || C2(t4, 2, this.length), this[t4] | this[t4 + 1] << 8;
+            return e3 || O2(t4, 2, this.length), this[t4] | this[t4 + 1] << 8;
           }, c2.prototype.readUInt16BE = function(t4, e3) {
-            return e3 || C2(t4, 2, this.length), this[t4] << 8 | this[t4 + 1];
+            return e3 || O2(t4, 2, this.length), this[t4] << 8 | this[t4 + 1];
           }, c2.prototype.readUInt32LE = function(t4, e3) {
-            return e3 || C2(t4, 4, this.length), (this[t4] | this[t4 + 1] << 8 | this[t4 + 2] << 16) + 16777216 * this[t4 + 3];
+            return e3 || O2(t4, 4, this.length), (this[t4] | this[t4 + 1] << 8 | this[t4 + 2] << 16) + 16777216 * this[t4 + 3];
           }, c2.prototype.readUInt32BE = function(t4, e3) {
-            return e3 || C2(t4, 4, this.length), 16777216 * this[t4] + (this[t4 + 1] << 16 | this[t4 + 2] << 8 | this[t4 + 3]);
-          }, c2.prototype.readIntLE = function(t4, e3, r3) {
-            t4 |= 0, e3 |= 0, r3 || C2(t4, e3, this.length);
-            for (var n3 = this[t4], o3 = 1, i3 = 0; ++i3 < e3 && (o3 *= 256); )
-              n3 += this[t4 + i3] * o3;
-            return n3 >= (o3 *= 128) && (n3 -= Math.pow(2, 8 * e3)), n3;
-          }, c2.prototype.readIntBE = function(t4, e3, r3) {
-            t4 |= 0, e3 |= 0, r3 || C2(t4, e3, this.length);
-            for (var n3 = e3, o3 = 1, i3 = this[t4 + --n3]; n3 > 0 && (o3 *= 256); )
-              i3 += this[t4 + --n3] * o3;
-            return i3 >= (o3 *= 128) && (i3 -= Math.pow(2, 8 * e3)), i3;
+            return e3 || O2(t4, 4, this.length), 16777216 * this[t4] + (this[t4 + 1] << 16 | this[t4 + 2] << 8 | this[t4 + 3]);
+          }, c2.prototype.readIntLE = function(t4, e3, n3) {
+            t4 |= 0, e3 |= 0, n3 || O2(t4, e3, this.length);
+            for (var r3 = this[t4], o3 = 1, s3 = 0; ++s3 < e3 && (o3 *= 256); )
+              r3 += this[t4 + s3] * o3;
+            return r3 >= (o3 *= 128) && (r3 -= Math.pow(2, 8 * e3)), r3;
+          }, c2.prototype.readIntBE = function(t4, e3, n3) {
+            t4 |= 0, e3 |= 0, n3 || O2(t4, e3, this.length);
+            for (var r3 = e3, o3 = 1, s3 = this[t4 + --r3]; r3 > 0 && (o3 *= 256); )
+              s3 += this[t4 + --r3] * o3;
+            return s3 >= (o3 *= 128) && (s3 -= Math.pow(2, 8 * e3)), s3;
           }, c2.prototype.readInt8 = function(t4, e3) {
-            return e3 || C2(t4, 1, this.length), 128 & this[t4] ? -1 * (255 - this[t4] + 1) : this[t4];
+            return e3 || O2(t4, 1, this.length), 128 & this[t4] ? -1 * (255 - this[t4] + 1) : this[t4];
           }, c2.prototype.readInt16LE = function(t4, e3) {
-            e3 || C2(t4, 2, this.length);
-            var r3 = this[t4] | this[t4 + 1] << 8;
-            return 32768 & r3 ? 4294901760 | r3 : r3;
+            e3 || O2(t4, 2, this.length);
+            var n3 = this[t4] | this[t4 + 1] << 8;
+            return 32768 & n3 ? 4294901760 | n3 : n3;
           }, c2.prototype.readInt16BE = function(t4, e3) {
-            e3 || C2(t4, 2, this.length);
-            var r3 = this[t4 + 1] | this[t4] << 8;
-            return 32768 & r3 ? 4294901760 | r3 : r3;
+            e3 || O2(t4, 2, this.length);
+            var n3 = this[t4 + 1] | this[t4] << 8;
+            return 32768 & n3 ? 4294901760 | n3 : n3;
           }, c2.prototype.readInt32LE = function(t4, e3) {
-            return e3 || C2(t4, 4, this.length), this[t4] | this[t4 + 1] << 8 | this[t4 + 2] << 16 | this[t4 + 3] << 24;
+            return e3 || O2(t4, 4, this.length), this[t4] | this[t4 + 1] << 8 | this[t4 + 2] << 16 | this[t4 + 3] << 24;
           }, c2.prototype.readInt32BE = function(t4, e3) {
-            return e3 || C2(t4, 4, this.length), this[t4] << 24 | this[t4 + 1] << 16 | this[t4 + 2] << 8 | this[t4 + 3];
+            return e3 || O2(t4, 4, this.length), this[t4] << 24 | this[t4 + 1] << 16 | this[t4 + 2] << 8 | this[t4 + 3];
           }, c2.prototype.readFloatLE = function(t4, e3) {
-            return e3 || C2(t4, 4, this.length), o2.read(this, t4, true, 23, 4);
+            return e3 || O2(t4, 4, this.length), o2.read(this, t4, true, 23, 4);
           }, c2.prototype.readFloatBE = function(t4, e3) {
-            return e3 || C2(t4, 4, this.length), o2.read(this, t4, false, 23, 4);
+            return e3 || O2(t4, 4, this.length), o2.read(this, t4, false, 23, 4);
           }, c2.prototype.readDoubleLE = function(t4, e3) {
-            return e3 || C2(t4, 8, this.length), o2.read(this, t4, true, 52, 8);
+            return e3 || O2(t4, 8, this.length), o2.read(this, t4, true, 52, 8);
           }, c2.prototype.readDoubleBE = function(t4, e3) {
-            return e3 || C2(t4, 8, this.length), o2.read(this, t4, false, 52, 8);
-          }, c2.prototype.writeUIntLE = function(t4, e3, r3, n3) {
-            (t4 = +t4, e3 |= 0, r3 |= 0, n3) || x(this, t4, e3, r3, Math.pow(2, 8 * r3) - 1, 0);
-            var o3 = 1, i3 = 0;
-            for (this[e3] = 255 & t4; ++i3 < r3 && (o3 *= 256); )
-              this[e3 + i3] = t4 / o3 & 255;
-            return e3 + r3;
-          }, c2.prototype.writeUIntBE = function(t4, e3, r3, n3) {
-            (t4 = +t4, e3 |= 0, r3 |= 0, n3) || x(this, t4, e3, r3, Math.pow(2, 8 * r3) - 1, 0);
-            var o3 = r3 - 1, i3 = 1;
-            for (this[e3 + o3] = 255 & t4; --o3 >= 0 && (i3 *= 256); )
-              this[e3 + o3] = t4 / i3 & 255;
-            return e3 + r3;
-          }, c2.prototype.writeUInt8 = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 1, 255, 0), c2.TYPED_ARRAY_SUPPORT || (t4 = Math.floor(t4)), this[e3] = 255 & t4, e3 + 1;
-          }, c2.prototype.writeUInt16LE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 2, 65535, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = 255 & t4, this[e3 + 1] = t4 >>> 8) : N2(this, t4, e3, true), e3 + 2;
-          }, c2.prototype.writeUInt16BE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 2, 65535, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 8, this[e3 + 1] = 255 & t4) : N2(this, t4, e3, false), e3 + 2;
-          }, c2.prototype.writeUInt32LE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 4, 4294967295, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3 + 3] = t4 >>> 24, this[e3 + 2] = t4 >>> 16, this[e3 + 1] = t4 >>> 8, this[e3] = 255 & t4) : L2(this, t4, e3, true), e3 + 4;
-          }, c2.prototype.writeUInt32BE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 4, 4294967295, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 24, this[e3 + 1] = t4 >>> 16, this[e3 + 2] = t4 >>> 8, this[e3 + 3] = 255 & t4) : L2(this, t4, e3, false), e3 + 4;
-          }, c2.prototype.writeIntLE = function(t4, e3, r3, n3) {
-            if (t4 = +t4, e3 |= 0, !n3) {
-              var o3 = Math.pow(2, 8 * r3 - 1);
-              x(this, t4, e3, r3, o3 - 1, -o3);
+            return e3 || O2(t4, 8, this.length), o2.read(this, t4, false, 52, 8);
+          }, c2.prototype.writeUIntLE = function(t4, e3, n3, r3) {
+            (t4 = +t4, e3 |= 0, n3 |= 0, r3) || B2(this, t4, e3, n3, Math.pow(2, 8 * n3) - 1, 0);
+            var o3 = 1, s3 = 0;
+            for (this[e3] = 255 & t4; ++s3 < n3 && (o3 *= 256); )
+              this[e3 + s3] = t4 / o3 & 255;
+            return e3 + n3;
+          }, c2.prototype.writeUIntBE = function(t4, e3, n3, r3) {
+            (t4 = +t4, e3 |= 0, n3 |= 0, r3) || B2(this, t4, e3, n3, Math.pow(2, 8 * n3) - 1, 0);
+            var o3 = n3 - 1, s3 = 1;
+            for (this[e3 + o3] = 255 & t4; --o3 >= 0 && (s3 *= 256); )
+              this[e3 + o3] = t4 / s3 & 255;
+            return e3 + n3;
+          }, c2.prototype.writeUInt8 = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 1, 255, 0), c2.TYPED_ARRAY_SUPPORT || (t4 = Math.floor(t4)), this[e3] = 255 & t4, e3 + 1;
+          }, c2.prototype.writeUInt16LE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 2, 65535, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = 255 & t4, this[e3 + 1] = t4 >>> 8) : L2(this, t4, e3, true), e3 + 2;
+          }, c2.prototype.writeUInt16BE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 2, 65535, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 8, this[e3 + 1] = 255 & t4) : L2(this, t4, e3, false), e3 + 2;
+          }, c2.prototype.writeUInt32LE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 4, 4294967295, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3 + 3] = t4 >>> 24, this[e3 + 2] = t4 >>> 16, this[e3 + 1] = t4 >>> 8, this[e3] = 255 & t4) : N2(this, t4, e3, true), e3 + 4;
+          }, c2.prototype.writeUInt32BE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 4, 4294967295, 0), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 24, this[e3 + 1] = t4 >>> 16, this[e3 + 2] = t4 >>> 8, this[e3 + 3] = 255 & t4) : N2(this, t4, e3, false), e3 + 4;
+          }, c2.prototype.writeIntLE = function(t4, e3, n3, r3) {
+            if (t4 = +t4, e3 |= 0, !r3) {
+              var o3 = Math.pow(2, 8 * n3 - 1);
+              B2(this, t4, e3, n3, o3 - 1, -o3);
             }
-            var i3 = 0, s3 = 1, a3 = 0;
-            for (this[e3] = 255 & t4; ++i3 < r3 && (s3 *= 256); )
-              t4 < 0 && 0 === a3 && 0 !== this[e3 + i3 - 1] && (a3 = 1), this[e3 + i3] = (t4 / s3 >> 0) - a3 & 255;
-            return e3 + r3;
-          }, c2.prototype.writeIntBE = function(t4, e3, r3, n3) {
-            if (t4 = +t4, e3 |= 0, !n3) {
-              var o3 = Math.pow(2, 8 * r3 - 1);
-              x(this, t4, e3, r3, o3 - 1, -o3);
+            var s3 = 0, i3 = 1, a3 = 0;
+            for (this[e3] = 255 & t4; ++s3 < n3 && (i3 *= 256); )
+              t4 < 0 && 0 === a3 && 0 !== this[e3 + s3 - 1] && (a3 = 1), this[e3 + s3] = (t4 / i3 >> 0) - a3 & 255;
+            return e3 + n3;
+          }, c2.prototype.writeIntBE = function(t4, e3, n3, r3) {
+            if (t4 = +t4, e3 |= 0, !r3) {
+              var o3 = Math.pow(2, 8 * n3 - 1);
+              B2(this, t4, e3, n3, o3 - 1, -o3);
             }
-            var i3 = r3 - 1, s3 = 1, a3 = 0;
-            for (this[e3 + i3] = 255 & t4; --i3 >= 0 && (s3 *= 256); )
-              t4 < 0 && 0 === a3 && 0 !== this[e3 + i3 + 1] && (a3 = 1), this[e3 + i3] = (t4 / s3 >> 0) - a3 & 255;
-            return e3 + r3;
-          }, c2.prototype.writeInt8 = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 1, 127, -128), c2.TYPED_ARRAY_SUPPORT || (t4 = Math.floor(t4)), t4 < 0 && (t4 = 255 + t4 + 1), this[e3] = 255 & t4, e3 + 1;
-          }, c2.prototype.writeInt16LE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 2, 32767, -32768), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = 255 & t4, this[e3 + 1] = t4 >>> 8) : N2(this, t4, e3, true), e3 + 2;
-          }, c2.prototype.writeInt16BE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 2, 32767, -32768), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 8, this[e3 + 1] = 255 & t4) : N2(this, t4, e3, false), e3 + 2;
-          }, c2.prototype.writeInt32LE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 4, 2147483647, -2147483648), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = 255 & t4, this[e3 + 1] = t4 >>> 8, this[e3 + 2] = t4 >>> 16, this[e3 + 3] = t4 >>> 24) : L2(this, t4, e3, true), e3 + 4;
-          }, c2.prototype.writeInt32BE = function(t4, e3, r3) {
-            return t4 = +t4, e3 |= 0, r3 || x(this, t4, e3, 4, 2147483647, -2147483648), t4 < 0 && (t4 = 4294967295 + t4 + 1), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 24, this[e3 + 1] = t4 >>> 16, this[e3 + 2] = t4 >>> 8, this[e3 + 3] = 255 & t4) : L2(this, t4, e3, false), e3 + 4;
-          }, c2.prototype.writeFloatLE = function(t4, e3, r3) {
-            return U2(this, t4, e3, true, r3);
-          }, c2.prototype.writeFloatBE = function(t4, e3, r3) {
-            return U2(this, t4, e3, false, r3);
-          }, c2.prototype.writeDoubleLE = function(t4, e3, r3) {
-            return j2(this, t4, e3, true, r3);
-          }, c2.prototype.writeDoubleBE = function(t4, e3, r3) {
-            return j2(this, t4, e3, false, r3);
-          }, c2.prototype.copy = function(t4, e3, r3, n3) {
-            if (r3 || (r3 = 0), n3 || 0 === n3 || (n3 = this.length), e3 >= t4.length && (e3 = t4.length), e3 || (e3 = 0), n3 > 0 && n3 < r3 && (n3 = r3), n3 === r3)
+            var s3 = n3 - 1, i3 = 1, a3 = 0;
+            for (this[e3 + s3] = 255 & t4; --s3 >= 0 && (i3 *= 256); )
+              t4 < 0 && 0 === a3 && 0 !== this[e3 + s3 + 1] && (a3 = 1), this[e3 + s3] = (t4 / i3 >> 0) - a3 & 255;
+            return e3 + n3;
+          }, c2.prototype.writeInt8 = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 1, 127, -128), c2.TYPED_ARRAY_SUPPORT || (t4 = Math.floor(t4)), t4 < 0 && (t4 = 255 + t4 + 1), this[e3] = 255 & t4, e3 + 1;
+          }, c2.prototype.writeInt16LE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 2, 32767, -32768), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = 255 & t4, this[e3 + 1] = t4 >>> 8) : L2(this, t4, e3, true), e3 + 2;
+          }, c2.prototype.writeInt16BE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 2, 32767, -32768), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 8, this[e3 + 1] = 255 & t4) : L2(this, t4, e3, false), e3 + 2;
+          }, c2.prototype.writeInt32LE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 4, 2147483647, -2147483648), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = 255 & t4, this[e3 + 1] = t4 >>> 8, this[e3 + 2] = t4 >>> 16, this[e3 + 3] = t4 >>> 24) : N2(this, t4, e3, true), e3 + 4;
+          }, c2.prototype.writeInt32BE = function(t4, e3, n3) {
+            return t4 = +t4, e3 |= 0, n3 || B2(this, t4, e3, 4, 2147483647, -2147483648), t4 < 0 && (t4 = 4294967295 + t4 + 1), c2.TYPED_ARRAY_SUPPORT ? (this[e3] = t4 >>> 24, this[e3 + 1] = t4 >>> 16, this[e3 + 2] = t4 >>> 8, this[e3 + 3] = 255 & t4) : N2(this, t4, e3, false), e3 + 4;
+          }, c2.prototype.writeFloatLE = function(t4, e3, n3) {
+            return I2(this, t4, e3, true, n3);
+          }, c2.prototype.writeFloatBE = function(t4, e3, n3) {
+            return I2(this, t4, e3, false, n3);
+          }, c2.prototype.writeDoubleLE = function(t4, e3, n3) {
+            return M2(this, t4, e3, true, n3);
+          }, c2.prototype.writeDoubleBE = function(t4, e3, n3) {
+            return M2(this, t4, e3, false, n3);
+          }, c2.prototype.copy = function(t4, e3, n3, r3) {
+            if (n3 || (n3 = 0), r3 || 0 === r3 || (r3 = this.length), e3 >= t4.length && (e3 = t4.length), e3 || (e3 = 0), r3 > 0 && r3 < n3 && (r3 = n3), r3 === n3)
               return 0;
             if (0 === t4.length || 0 === this.length)
               return 0;
             if (e3 < 0)
               throw new RangeError("targetStart out of bounds");
-            if (r3 < 0 || r3 >= this.length)
+            if (n3 < 0 || n3 >= this.length)
               throw new RangeError("sourceStart out of bounds");
-            if (n3 < 0)
+            if (r3 < 0)
               throw new RangeError("sourceEnd out of bounds");
-            n3 > this.length && (n3 = this.length), t4.length - e3 < n3 - r3 && (n3 = t4.length - e3 + r3);
-            var o3, i3 = n3 - r3;
-            if (this === t4 && r3 < e3 && e3 < n3)
-              for (o3 = i3 - 1; o3 >= 0; --o3)
-                t4[o3 + e3] = this[o3 + r3];
-            else if (i3 < 1e3 || !c2.TYPED_ARRAY_SUPPORT)
-              for (o3 = 0; o3 < i3; ++o3)
-                t4[o3 + e3] = this[o3 + r3];
+            r3 > this.length && (r3 = this.length), t4.length - e3 < r3 - n3 && (r3 = t4.length - e3 + n3);
+            var o3, s3 = r3 - n3;
+            if (this === t4 && n3 < e3 && e3 < r3)
+              for (o3 = s3 - 1; o3 >= 0; --o3)
+                t4[o3 + e3] = this[o3 + n3];
+            else if (s3 < 1e3 || !c2.TYPED_ARRAY_SUPPORT)
+              for (o3 = 0; o3 < s3; ++o3)
+                t4[o3 + e3] = this[o3 + n3];
             else
-              Uint8Array.prototype.set.call(t4, this.subarray(r3, r3 + i3), e3);
-            return i3;
-          }, c2.prototype.fill = function(t4, e3, r3, n3) {
+              Uint8Array.prototype.set.call(t4, this.subarray(n3, n3 + s3), e3);
+            return s3;
+          }, c2.prototype.fill = function(t4, e3, n3, r3) {
             if ("string" == typeof t4) {
-              if ("string" == typeof e3 ? (n3 = e3, e3 = 0, r3 = this.length) : "string" == typeof r3 && (n3 = r3, r3 = this.length), 1 === t4.length) {
+              if ("string" == typeof e3 ? (r3 = e3, e3 = 0, n3 = this.length) : "string" == typeof n3 && (r3 = n3, n3 = this.length), 1 === t4.length) {
                 var o3 = t4.charCodeAt(0);
                 o3 < 256 && (t4 = o3);
               }
-              if (void 0 !== n3 && "string" != typeof n3)
+              if (void 0 !== r3 && "string" != typeof r3)
                 throw new TypeError("encoding must be a string");
-              if ("string" == typeof n3 && !c2.isEncoding(n3))
-                throw new TypeError("Unknown encoding: " + n3);
+              if ("string" == typeof r3 && !c2.isEncoding(r3))
+                throw new TypeError("Unknown encoding: " + r3);
             } else
               "number" == typeof t4 && (t4 &= 255);
-            if (e3 < 0 || this.length < e3 || this.length < r3)
+            if (e3 < 0 || this.length < e3 || this.length < n3)
               throw new RangeError("Out of range index");
-            if (r3 <= e3)
+            if (n3 <= e3)
               return this;
-            var i3;
-            if (e3 >>>= 0, r3 = void 0 === r3 ? this.length : r3 >>> 0, t4 || (t4 = 0), "number" == typeof t4)
-              for (i3 = e3; i3 < r3; ++i3)
-                this[i3] = t4;
+            var s3;
+            if (e3 >>>= 0, n3 = void 0 === n3 ? this.length : n3 >>> 0, t4 || (t4 = 0), "number" == typeof t4)
+              for (s3 = e3; s3 < n3; ++s3)
+                this[s3] = t4;
             else {
-              var s3 = c2.isBuffer(t4) ? t4 : D2(new c2(t4, n3).toString()), a3 = s3.length;
-              for (i3 = 0; i3 < r3 - e3; ++i3)
-                this[i3 + e3] = s3[i3 % a3];
+              var i3 = c2.isBuffer(t4) ? t4 : Y2(new c2(t4, r3).toString()), a3 = i3.length;
+              for (s3 = 0; s3 < n3 - e3; ++s3)
+                this[s3 + e3] = i3[s3 % a3];
             }
             return this;
           };
-          var M2 = /[^+\/0-9A-Za-z-_]/g;
-          function Y2(t4) {
+          var U2 = /[^+\/0-9A-Za-z-_]/g;
+          function D2(t4) {
             return t4 < 16 ? "0" + t4.toString(16) : t4.toString(16);
           }
-          function D2(t4, e3) {
-            var r3;
+          function Y2(t4, e3) {
+            var n3;
             e3 = e3 || 1 / 0;
-            for (var n3 = t4.length, o3 = null, i3 = [], s3 = 0; s3 < n3; ++s3) {
-              if ((r3 = t4.charCodeAt(s3)) > 55295 && r3 < 57344) {
+            for (var r3 = t4.length, o3 = null, s3 = [], i3 = 0; i3 < r3; ++i3) {
+              if ((n3 = t4.charCodeAt(i3)) > 55295 && n3 < 57344) {
                 if (!o3) {
-                  if (r3 > 56319) {
-                    (e3 -= 3) > -1 && i3.push(239, 191, 189);
+                  if (n3 > 56319) {
+                    (e3 -= 3) > -1 && s3.push(239, 191, 189);
                     continue;
                   }
-                  if (s3 + 1 === n3) {
-                    (e3 -= 3) > -1 && i3.push(239, 191, 189);
+                  if (i3 + 1 === r3) {
+                    (e3 -= 3) > -1 && s3.push(239, 191, 189);
                     continue;
                   }
-                  o3 = r3;
+                  o3 = n3;
                   continue;
                 }
-                if (r3 < 56320) {
-                  (e3 -= 3) > -1 && i3.push(239, 191, 189), o3 = r3;
+                if (n3 < 56320) {
+                  (e3 -= 3) > -1 && s3.push(239, 191, 189), o3 = n3;
                   continue;
                 }
-                r3 = 65536 + (o3 - 55296 << 10 | r3 - 56320);
+                n3 = 65536 + (o3 - 55296 << 10 | n3 - 56320);
               } else
-                o3 && (e3 -= 3) > -1 && i3.push(239, 191, 189);
-              if (o3 = null, r3 < 128) {
+                o3 && (e3 -= 3) > -1 && s3.push(239, 191, 189);
+              if (o3 = null, n3 < 128) {
                 if ((e3 -= 1) < 0)
                   break;
-                i3.push(r3);
-              } else if (r3 < 2048) {
+                s3.push(n3);
+              } else if (n3 < 2048) {
                 if ((e3 -= 2) < 0)
                   break;
-                i3.push(r3 >> 6 | 192, 63 & r3 | 128);
-              } else if (r3 < 65536) {
+                s3.push(n3 >> 6 | 192, 63 & n3 | 128);
+              } else if (n3 < 65536) {
                 if ((e3 -= 3) < 0)
                   break;
-                i3.push(r3 >> 12 | 224, r3 >> 6 & 63 | 128, 63 & r3 | 128);
+                s3.push(n3 >> 12 | 224, n3 >> 6 & 63 | 128, 63 & n3 | 128);
               } else {
-                if (!(r3 < 1114112))
+                if (!(n3 < 1114112))
                   throw new Error("Invalid code point");
                 if ((e3 -= 4) < 0)
                   break;
-                i3.push(r3 >> 18 | 240, r3 >> 12 & 63 | 128, r3 >> 6 & 63 | 128, 63 & r3 | 128);
+                s3.push(n3 >> 18 | 240, n3 >> 12 & 63 | 128, n3 >> 6 & 63 | 128, 63 & n3 | 128);
               }
             }
-            return i3;
+            return s3;
           }
-          function F2(t4) {
-            return n2.toByteArray(function(t5) {
+          function q2(t4) {
+            return r2.toByteArray(function(t5) {
               if ((t5 = function(t6) {
                 return t6.trim ? t6.trim() : t6.replace(/^\s+|\s+$/g, "");
-              }(t5).replace(M2, "")).length < 2)
+              }(t5).replace(U2, "")).length < 2)
                 return "";
               for (; t5.length % 4 != 0; )
                 t5 += "=";
               return t5;
             }(t4));
           }
-          function V2(t4, e3, r3, n3) {
-            for (var o3 = 0; o3 < n3 && !(o3 + r3 >= e3.length || o3 >= t4.length); ++o3)
-              e3[o3 + r3] = t4[o3];
+          function F2(t4, e3, n3, r3) {
+            for (var o3 = 0; o3 < r3 && !(o3 + n3 >= e3.length || o3 >= t4.length); ++o3)
+              e3[o3 + n3] = t4[o3];
             return o3;
           }
-        }).call(this, r2(23));
+        }).call(this, n2(31));
       }, function(t2, e2) {
-        var r2;
-        r2 = function() {
+        var n2;
+        n2 = function() {
           return this;
         }();
         try {
-          r2 = r2 || new Function("return this")();
+          n2 = n2 || new Function("return this")();
         } catch (t3) {
-          "object" == typeof window && (r2 = window);
+          "object" == typeof window && (n2 = window);
         }
-        t2.exports = r2;
-      }, function(t2, e2, r2) {
+        t2.exports = n2;
+      }, function(t2, e2, n2) {
         e2.byteLength = function(t3) {
-          var e3 = h2(t3), r3 = e3[0], n3 = e3[1];
-          return 3 * (r3 + n3) / 4 - n3;
+          var e3 = h2(t3), n3 = e3[0], r3 = e3[1];
+          return 3 * (n3 + r3) / 4 - r3;
         }, e2.toByteArray = function(t3) {
-          var e3, r3, n3 = h2(t3), s3 = n3[0], a3 = n3[1], c3 = new i2(function(t4, e4, r4) {
-            return 3 * (e4 + r4) / 4 - r4;
-          }(0, s3, a3)), u3 = 0, f2 = a3 > 0 ? s3 - 4 : s3;
-          for (r3 = 0; r3 < f2; r3 += 4)
-            e3 = o2[t3.charCodeAt(r3)] << 18 | o2[t3.charCodeAt(r3 + 1)] << 12 | o2[t3.charCodeAt(r3 + 2)] << 6 | o2[t3.charCodeAt(r3 + 3)], c3[u3++] = e3 >> 16 & 255, c3[u3++] = e3 >> 8 & 255, c3[u3++] = 255 & e3;
-          2 === a3 && (e3 = o2[t3.charCodeAt(r3)] << 2 | o2[t3.charCodeAt(r3 + 1)] >> 4, c3[u3++] = 255 & e3);
-          1 === a3 && (e3 = o2[t3.charCodeAt(r3)] << 10 | o2[t3.charCodeAt(r3 + 1)] << 4 | o2[t3.charCodeAt(r3 + 2)] >> 2, c3[u3++] = e3 >> 8 & 255, c3[u3++] = 255 & e3);
+          var e3, n3, r3 = h2(t3), i3 = r3[0], a3 = r3[1], c3 = new s2(function(t4, e4, n4) {
+            return 3 * (e4 + n4) / 4 - n4;
+          }(0, i3, a3)), u3 = 0, p2 = a3 > 0 ? i3 - 4 : i3;
+          for (n3 = 0; n3 < p2; n3 += 4)
+            e3 = o2[t3.charCodeAt(n3)] << 18 | o2[t3.charCodeAt(n3 + 1)] << 12 | o2[t3.charCodeAt(n3 + 2)] << 6 | o2[t3.charCodeAt(n3 + 3)], c3[u3++] = e3 >> 16 & 255, c3[u3++] = e3 >> 8 & 255, c3[u3++] = 255 & e3;
+          2 === a3 && (e3 = o2[t3.charCodeAt(n3)] << 2 | o2[t3.charCodeAt(n3 + 1)] >> 4, c3[u3++] = 255 & e3);
+          1 === a3 && (e3 = o2[t3.charCodeAt(n3)] << 10 | o2[t3.charCodeAt(n3 + 1)] << 4 | o2[t3.charCodeAt(n3 + 2)] >> 2, c3[u3++] = e3 >> 8 & 255, c3[u3++] = 255 & e3);
           return c3;
         }, e2.fromByteArray = function(t3) {
-          for (var e3, r3 = t3.length, o3 = r3 % 3, i3 = [], s3 = 0, a3 = r3 - o3; s3 < a3; s3 += 16383)
-            i3.push(u2(t3, s3, s3 + 16383 > a3 ? a3 : s3 + 16383));
-          1 === o3 ? (e3 = t3[r3 - 1], i3.push(n2[e3 >> 2] + n2[e3 << 4 & 63] + "==")) : 2 === o3 && (e3 = (t3[r3 - 2] << 8) + t3[r3 - 1], i3.push(n2[e3 >> 10] + n2[e3 >> 4 & 63] + n2[e3 << 2 & 63] + "="));
-          return i3.join("");
+          for (var e3, n3 = t3.length, o3 = n3 % 3, s3 = [], i3 = 0, a3 = n3 - o3; i3 < a3; i3 += 16383)
+            s3.push(u2(t3, i3, i3 + 16383 > a3 ? a3 : i3 + 16383));
+          1 === o3 ? (e3 = t3[n3 - 1], s3.push(r2[e3 >> 2] + r2[e3 << 4 & 63] + "==")) : 2 === o3 && (e3 = (t3[n3 - 2] << 8) + t3[n3 - 1], s3.push(r2[e3 >> 10] + r2[e3 >> 4 & 63] + r2[e3 << 2 & 63] + "="));
+          return s3.join("");
         };
-        for (var n2 = [], o2 = [], i2 = "undefined" != typeof Uint8Array ? Uint8Array : Array, s2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", a2 = 0, c2 = s2.length; a2 < c2; ++a2)
-          n2[a2] = s2[a2], o2[s2.charCodeAt(a2)] = a2;
+        for (var r2 = [], o2 = [], s2 = "undefined" != typeof Uint8Array ? Uint8Array : Array, i2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", a2 = 0, c2 = i2.length; a2 < c2; ++a2)
+          r2[a2] = i2[a2], o2[i2.charCodeAt(a2)] = a2;
         function h2(t3) {
           var e3 = t3.length;
           if (e3 % 4 > 0)
             throw new Error("Invalid string. Length must be a multiple of 4");
-          var r3 = t3.indexOf("=");
-          return -1 === r3 && (r3 = e3), [r3, r3 === e3 ? 0 : 4 - r3 % 4];
+          var n3 = t3.indexOf("=");
+          return -1 === n3 && (n3 = e3), [n3, n3 === e3 ? 0 : 4 - n3 % 4];
         }
-        function u2(t3, e3, r3) {
-          for (var o3, i3, s3 = [], a3 = e3; a3 < r3; a3 += 3)
-            o3 = (t3[a3] << 16 & 16711680) + (t3[a3 + 1] << 8 & 65280) + (255 & t3[a3 + 2]), s3.push(n2[(i3 = o3) >> 18 & 63] + n2[i3 >> 12 & 63] + n2[i3 >> 6 & 63] + n2[63 & i3]);
-          return s3.join("");
+        function u2(t3, e3, n3) {
+          for (var o3, s3, i3 = [], a3 = e3; a3 < n3; a3 += 3)
+            o3 = (t3[a3] << 16 & 16711680) + (t3[a3 + 1] << 8 & 65280) + (255 & t3[a3 + 2]), i3.push(r2[(s3 = o3) >> 18 & 63] + r2[s3 >> 12 & 63] + r2[s3 >> 6 & 63] + r2[63 & s3]);
+          return i3.join("");
         }
         o2["-".charCodeAt(0)] = 62, o2["_".charCodeAt(0)] = 63;
       }, function(t2, e2) {
-        e2.read = function(t3, e3, r2, n2, o2) {
-          var i2, s2, a2 = 8 * o2 - n2 - 1, c2 = (1 << a2) - 1, h2 = c2 >> 1, u2 = -7, f2 = r2 ? o2 - 1 : 0, p2 = r2 ? -1 : 1, l2 = t3[e3 + f2];
-          for (f2 += p2, i2 = l2 & (1 << -u2) - 1, l2 >>= -u2, u2 += a2; u2 > 0; i2 = 256 * i2 + t3[e3 + f2], f2 += p2, u2 -= 8)
+        /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+        e2.read = function(t3, e3, n2, r2, o2) {
+          var s2, i2, a2 = 8 * o2 - r2 - 1, c2 = (1 << a2) - 1, h2 = c2 >> 1, u2 = -7, p2 = n2 ? o2 - 1 : 0, f2 = n2 ? -1 : 1, l2 = t3[e3 + p2];
+          for (p2 += f2, s2 = l2 & (1 << -u2) - 1, l2 >>= -u2, u2 += a2; u2 > 0; s2 = 256 * s2 + t3[e3 + p2], p2 += f2, u2 -= 8)
             ;
-          for (s2 = i2 & (1 << -u2) - 1, i2 >>= -u2, u2 += n2; u2 > 0; s2 = 256 * s2 + t3[e3 + f2], f2 += p2, u2 -= 8)
+          for (i2 = s2 & (1 << -u2) - 1, s2 >>= -u2, u2 += r2; u2 > 0; i2 = 256 * i2 + t3[e3 + p2], p2 += f2, u2 -= 8)
             ;
-          if (0 === i2)
-            i2 = 1 - h2;
+          if (0 === s2)
+            s2 = 1 - h2;
           else {
-            if (i2 === c2)
-              return s2 ? NaN : 1 / 0 * (l2 ? -1 : 1);
-            s2 += Math.pow(2, n2), i2 -= h2;
+            if (s2 === c2)
+              return i2 ? NaN : 1 / 0 * (l2 ? -1 : 1);
+            i2 += Math.pow(2, r2), s2 -= h2;
           }
-          return (l2 ? -1 : 1) * s2 * Math.pow(2, i2 - n2);
-        }, e2.write = function(t3, e3, r2, n2, o2, i2) {
-          var s2, a2, c2, h2 = 8 * i2 - o2 - 1, u2 = (1 << h2) - 1, f2 = u2 >> 1, p2 = 23 === o2 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, l2 = n2 ? 0 : i2 - 1, d2 = n2 ? 1 : -1, y2 = e3 < 0 || 0 === e3 && 1 / e3 < 0 ? 1 : 0;
-          for (e3 = Math.abs(e3), isNaN(e3) || e3 === 1 / 0 ? (a2 = isNaN(e3) ? 1 : 0, s2 = u2) : (s2 = Math.floor(Math.log(e3) / Math.LN2), e3 * (c2 = Math.pow(2, -s2)) < 1 && (s2--, c2 *= 2), (e3 += s2 + f2 >= 1 ? p2 / c2 : p2 * Math.pow(2, 1 - f2)) * c2 >= 2 && (s2++, c2 /= 2), s2 + f2 >= u2 ? (a2 = 0, s2 = u2) : s2 + f2 >= 1 ? (a2 = (e3 * c2 - 1) * Math.pow(2, o2), s2 += f2) : (a2 = e3 * Math.pow(2, f2 - 1) * Math.pow(2, o2), s2 = 0)); o2 >= 8; t3[r2 + l2] = 255 & a2, l2 += d2, a2 /= 256, o2 -= 8)
+          return (l2 ? -1 : 1) * i2 * Math.pow(2, s2 - r2);
+        }, e2.write = function(t3, e3, n2, r2, o2, s2) {
+          var i2, a2, c2, h2 = 8 * s2 - o2 - 1, u2 = (1 << h2) - 1, p2 = u2 >> 1, f2 = 23 === o2 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, l2 = r2 ? 0 : s2 - 1, d2 = r2 ? 1 : -1, y2 = e3 < 0 || 0 === e3 && 1 / e3 < 0 ? 1 : 0;
+          for (e3 = Math.abs(e3), isNaN(e3) || e3 === 1 / 0 ? (a2 = isNaN(e3) ? 1 : 0, i2 = u2) : (i2 = Math.floor(Math.log(e3) / Math.LN2), e3 * (c2 = Math.pow(2, -i2)) < 1 && (i2--, c2 *= 2), (e3 += i2 + p2 >= 1 ? f2 / c2 : f2 * Math.pow(2, 1 - p2)) * c2 >= 2 && (i2++, c2 /= 2), i2 + p2 >= u2 ? (a2 = 0, i2 = u2) : i2 + p2 >= 1 ? (a2 = (e3 * c2 - 1) * Math.pow(2, o2), i2 += p2) : (a2 = e3 * Math.pow(2, p2 - 1) * Math.pow(2, o2), i2 = 0)); o2 >= 8; t3[n2 + l2] = 255 & a2, l2 += d2, a2 /= 256, o2 -= 8)
             ;
-          for (s2 = s2 << o2 | a2, h2 += o2; h2 > 0; t3[r2 + l2] = 255 & s2, l2 += d2, s2 /= 256, h2 -= 8)
+          for (i2 = i2 << o2 | a2, h2 += o2; h2 > 0; t3[n2 + l2] = 255 & i2, l2 += d2, i2 /= 256, h2 -= 8)
             ;
-          t3[r2 + l2 - d2] |= 128 * y2;
+          t3[n2 + l2 - d2] |= 128 * y2;
         };
       }, function(t2, e2) {
-        var r2 = {}.toString;
+        var n2 = {}.toString;
         t2.exports = Array.isArray || function(t3) {
-          return "[object Array]" == r2.call(t3);
+          return "[object Array]" == n2.call(t3);
         };
-      }, function(t2, e2, r2) {
-        const { PACKET_TYPES: n2 } = r2(9), o2 = "function" == typeof Blob || "undefined" != typeof Blob && "[object BlobConstructor]" === Object.prototype.toString.call(Blob), i2 = "function" == typeof ArrayBuffer, s2 = (t3, e3) => {
-          const r3 = new FileReader();
-          return r3.onload = function() {
-            const t4 = r3.result.split(",")[1];
-            e3("b" + t4);
-          }, r3.readAsDataURL(t3);
-        };
-        t2.exports = ({ type: t3, data: e3 }, r3, a2) => {
-          return o2 && e3 instanceof Blob ? r3 ? a2(e3) : s2(e3, a2) : i2 && (e3 instanceof ArrayBuffer || (c2 = e3, "function" == typeof ArrayBuffer.isView ? ArrayBuffer.isView(c2) : c2 && c2.buffer instanceof ArrayBuffer)) ? r3 ? a2(e3) : s2(new Blob([e3]), a2) : a2(n2[t3] + (e3 || ""));
-          var c2;
-        };
-      }, function(t2, e2, r2) {
-        const { PACKET_TYPES_REVERSE: n2, ERROR_PACKET: o2 } = r2(9);
-        let i2;
-        "function" == typeof ArrayBuffer && (i2 = r2(29));
-        const s2 = (t3, e3) => {
-          if (i2) {
-            const r3 = i2.decode(t3);
-            return a2(r3, e3);
+      }, function(t2, e2, n2) {
+        const r2 = n2(36), o2 = n2(37), s2 = n2(0)("@hyoga/uni-socket"), i2 = uni || wx;
+        class a2 extends r2 {
+          constructor(t3, e3, n3) {
+            super(), this._readyState = a2.CONNECTING, this._socket = null, null !== t3 && (Array.isArray(e3) ? e3 = e3.join(", ") : "object" == typeof e3 && null !== e3 && (n3 = e3, e3 = void 0), this.initAsClient(t3, e3, n3));
           }
-          return { base64: true, data: t3 };
-        }, a2 = (t3, e3) => {
-          switch (e3) {
-            case "blob":
-              return t3 instanceof ArrayBuffer ? new Blob([t3]) : t3;
-            case "arraybuffer":
-            default:
-              return t3;
+          initAsClient(t3, e3, n3) {
+            Object.assign(n3, { url: t3, header: { "content-type": "application/json" }, protocols: e3, timeout: 25e3 }), this._socket = this.createConnection(n3), this.addSocketEventListeners();
           }
-        };
-        t2.exports = (t3, e3) => {
-          if ("string" != typeof t3)
-            return { type: "message", data: a2(t3, e3) };
-          const r3 = t3.charAt(0);
-          return "b" === r3 ? { type: "message", data: s2(t3.substring(1), e3) } : n2[r3] ? t3.length > 1 ? { type: n2[r3], data: t3.substring(1) } : { type: n2[r3] } : o2;
-        };
-      }, function(t2, e2) {
-        !function(t3) {
-          e2.encode = function(e3) {
-            var r2, n2 = new Uint8Array(e3), o2 = n2.length, i2 = "";
-            for (r2 = 0; r2 < o2; r2 += 3)
-              i2 += t3[n2[r2] >> 2], i2 += t3[(3 & n2[r2]) << 4 | n2[r2 + 1] >> 4], i2 += t3[(15 & n2[r2 + 1]) << 2 | n2[r2 + 2] >> 6], i2 += t3[63 & n2[r2 + 2]];
-            return o2 % 3 == 2 ? i2 = i2.substring(0, i2.length - 1) + "=" : o2 % 3 == 1 && (i2 = i2.substring(0, i2.length - 2) + "=="), i2;
-          }, e2.decode = function(e3) {
-            var r2, n2, o2, i2, s2, a2 = 0.75 * e3.length, c2 = e3.length, h2 = 0;
-            "=" === e3[e3.length - 1] && (a2--, "=" === e3[e3.length - 2] && a2--);
-            var u2 = new ArrayBuffer(a2), f2 = new Uint8Array(u2);
-            for (r2 = 0; r2 < c2; r2 += 4)
-              n2 = t3.indexOf(e3[r2]), o2 = t3.indexOf(e3[r2 + 1]), i2 = t3.indexOf(e3[r2 + 2]), s2 = t3.indexOf(e3[r2 + 3]), f2[h2++] = n2 << 2 | o2 >> 4, f2[h2++] = (15 & o2) << 4 | i2 >> 2, f2[h2++] = (3 & i2) << 6 | 63 & s2;
-            return u2;
-          };
-        }("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
-      }, function(t2, e2, r2) {
-        var n2, o2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""), i2 = {}, s2 = 0, a2 = 0;
-        function c2(t3) {
-          var e3 = "";
-          do {
-            e3 = o2[t3 % 64] + e3, t3 = Math.floor(t3 / 64);
-          } while (t3 > 0);
-          return e3;
+          createConnection(t3) {
+            return i2.connectSocket({ complete: () => {
+            }, ...t3 });
+          }
+          addSocketEventListeners() {
+            this._socket.onOpen(() => {
+              this._readyState = a2.OPEN, this.onopen();
+            }), this._socket.onClose((t3) => {
+              s2("onclose: ", t3), this._readyState = a2.CLOSED, this.onclose(t3.code, t3.reason);
+            }), this._socket.onError((t3) => {
+              s2("onerror: ", t3), this.onerror(t3);
+            }), this._socket.onMessage((t3) => {
+              this.onmessage(t3);
+            });
+          }
+          send(t3) {
+            if (s2("send data: ", t3, this._readyState), this._readyState === a2.CONNECTING)
+              throw new Error("WebSocket is not open: readyState 0 (CONNECTING)");
+            "number" == typeof t3 && (t3 = t3.toString()), this._readyState === a2.OPEN && this._socket.send({ data: t3 });
+          }
+          close(t3, e3) {
+            s2("close socket: ", t3, e3), this._readyState = a2.CLOSING, this._socket.close({ code: t3, reason: e3 });
+          }
         }
-        function h2() {
-          var t3 = c2(+/* @__PURE__ */ new Date());
-          return t3 !== n2 ? (s2 = 0, n2 = t3) : t3 + "." + c2(s2++);
+        ["CONNECTING", "OPEN", "CLOSING", "CLOSED"].forEach((t3, e3) => {
+          a2[t3] = e3;
+        });
+        ["open", "error", "close", "message"].forEach((t3) => {
+          Object.defineProperty(a2.prototype, "on" + t3, { get() {
+            const e3 = this.listeners(t3);
+            for (var n3 = 0; n3 < e3.length; n3++)
+              if (e3[n3]._listener)
+                return e3[n3]._listener;
+          }, set(e3) {
+            const n3 = this.listeners(t3);
+            for (var r3 = 0; r3 < n3.length; r3++)
+              n3[r3]._listener && this.removeListener(t3, n3[r3]);
+            this.addEventListener(t3, e3);
+          } });
+        }), a2.prototype.addEventListener = o2.addEventListener, a2.prototype.removeEventListener = o2.removeEventListener, t2.exports = a2;
+      }, function(t2, e2, n2) {
+        var r2, o2 = "object" == typeof Reflect ? Reflect : null, s2 = o2 && "function" == typeof o2.apply ? o2.apply : function(t3, e3, n3) {
+          return Function.prototype.apply.call(t3, e3, n3);
+        };
+        r2 = o2 && "function" == typeof o2.ownKeys ? o2.ownKeys : Object.getOwnPropertySymbols ? function(t3) {
+          return Object.getOwnPropertyNames(t3).concat(Object.getOwnPropertySymbols(t3));
+        } : function(t3) {
+          return Object.getOwnPropertyNames(t3);
+        };
+        var i2 = Number.isNaN || function(t3) {
+          return t3 != t3;
+        };
+        function a2() {
+          a2.init.call(this);
         }
-        for (; a2 < 64; a2++)
-          i2[o2[a2]] = a2;
-        h2.encode = c2, h2.decode = function(t3) {
-          var e3 = 0;
-          for (a2 = 0; a2 < t3.length; a2++)
-            e3 = 64 * e3 + i2[t3.charAt(a2)];
-          return e3;
-        }, t2.exports = h2;
-      }, function(t2, e2, r2) {
-        const n2 = r2(10), o2 = "function" == typeof Promise && "function" == typeof Promise.resolve ? (t3) => Promise.resolve().then(t3) : (t3, e3) => e3(t3, 0);
-        t2.exports = { WebSocket: n2.WebSocket || n2.MozWebSocket, usingBrowserWebSocket: true, defaultBinaryType: "arraybuffer", nextTick: o2 };
-      }, function(t2, e2, r2) {
+        t2.exports = a2, t2.exports.once = function(t3, e3) {
+          return new Promise(function(n3, r3) {
+            function o3() {
+              void 0 !== s3 && t3.removeListener("error", s3), n3([].slice.call(arguments));
+            }
+            var s3;
+            "error" !== e3 && (s3 = function(n4) {
+              t3.removeListener(e3, o3), r3(n4);
+            }, t3.once("error", s3)), t3.once(e3, o3);
+          });
+        }, a2.EventEmitter = a2, a2.prototype._events = void 0, a2.prototype._eventsCount = 0, a2.prototype._maxListeners = void 0;
+        var c2 = 10;
+        function h2(t3) {
+          if ("function" != typeof t3)
+            throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof t3);
+        }
+        function u2(t3) {
+          return void 0 === t3._maxListeners ? a2.defaultMaxListeners : t3._maxListeners;
+        }
+        function p2(t3, e3, n3, r3) {
+          var o3, s3, i3, a3;
+          if (h2(n3), void 0 === (s3 = t3._events) ? (s3 = t3._events = /* @__PURE__ */ Object.create(null), t3._eventsCount = 0) : (void 0 !== s3.newListener && (t3.emit("newListener", e3, n3.listener ? n3.listener : n3), s3 = t3._events), i3 = s3[e3]), void 0 === i3)
+            i3 = s3[e3] = n3, ++t3._eventsCount;
+          else if ("function" == typeof i3 ? i3 = s3[e3] = r3 ? [n3, i3] : [i3, n3] : r3 ? i3.unshift(n3) : i3.push(n3), (o3 = u2(t3)) > 0 && i3.length > o3 && !i3.warned) {
+            i3.warned = true;
+            var c3 = new Error("Possible EventEmitter memory leak detected. " + i3.length + " " + String(e3) + " listeners added. Use emitter.setMaxListeners() to increase limit");
+            c3.name = "MaxListenersExceededWarning", c3.emitter = t3, c3.type = e3, c3.count = i3.length, a3 = c3, console && console.warn && formatAppLog("warn", "at node_modules/@hyoga/uni-socket.io/dist/uni-socket.io.js:10", a3);
+          }
+          return t3;
+        }
+        function f2() {
+          if (!this.fired)
+            return this.target.removeListener(this.type, this.wrapFn), this.fired = true, 0 === arguments.length ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
+        }
+        function l2(t3, e3, n3) {
+          var r3 = { fired: false, wrapFn: void 0, target: t3, type: e3, listener: n3 }, o3 = f2.bind(r3);
+          return o3.listener = n3, r3.wrapFn = o3, o3;
+        }
+        function d2(t3, e3, n3) {
+          var r3 = t3._events;
+          if (void 0 === r3)
+            return [];
+          var o3 = r3[e3];
+          return void 0 === o3 ? [] : "function" == typeof o3 ? n3 ? [o3.listener || o3] : [o3] : n3 ? function(t4) {
+            for (var e4 = new Array(t4.length), n4 = 0; n4 < e4.length; ++n4)
+              e4[n4] = t4[n4].listener || t4[n4];
+            return e4;
+          }(o3) : g2(o3, o3.length);
+        }
+        function y2(t3) {
+          var e3 = this._events;
+          if (void 0 !== e3) {
+            var n3 = e3[t3];
+            if ("function" == typeof n3)
+              return 1;
+            if (void 0 !== n3)
+              return n3.length;
+          }
+          return 0;
+        }
+        function g2(t3, e3) {
+          for (var n3 = new Array(e3), r3 = 0; r3 < e3; ++r3)
+            n3[r3] = t3[r3];
+          return n3;
+        }
+        Object.defineProperty(a2, "defaultMaxListeners", { enumerable: true, get: function() {
+          return c2;
+        }, set: function(t3) {
+          if ("number" != typeof t3 || t3 < 0 || i2(t3))
+            throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + t3 + ".");
+          c2 = t3;
+        } }), a2.init = function() {
+          void 0 !== this._events && this._events !== Object.getPrototypeOf(this)._events || (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0), this._maxListeners = this._maxListeners || void 0;
+        }, a2.prototype.setMaxListeners = function(t3) {
+          if ("number" != typeof t3 || t3 < 0 || i2(t3))
+            throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + t3 + ".");
+          return this._maxListeners = t3, this;
+        }, a2.prototype.getMaxListeners = function() {
+          return u2(this);
+        }, a2.prototype.emit = function(t3) {
+          for (var e3 = [], n3 = 1; n3 < arguments.length; n3++)
+            e3.push(arguments[n3]);
+          var r3 = "error" === t3, o3 = this._events;
+          if (void 0 !== o3)
+            r3 = r3 && void 0 === o3.error;
+          else if (!r3)
+            return false;
+          if (r3) {
+            var i3;
+            if (e3.length > 0 && (i3 = e3[0]), i3 instanceof Error)
+              throw i3;
+            var a3 = new Error("Unhandled error." + (i3 ? " (" + i3.message + ")" : ""));
+            throw a3.context = i3, a3;
+          }
+          var c3 = o3[t3];
+          if (void 0 === c3)
+            return false;
+          if ("function" == typeof c3)
+            s2(c3, this, e3);
+          else {
+            var h3 = c3.length, u3 = g2(c3, h3);
+            for (n3 = 0; n3 < h3; ++n3)
+              s2(u3[n3], this, e3);
+          }
+          return true;
+        }, a2.prototype.addListener = function(t3, e3) {
+          return p2(this, t3, e3, false);
+        }, a2.prototype.on = a2.prototype.addListener, a2.prototype.prependListener = function(t3, e3) {
+          return p2(this, t3, e3, true);
+        }, a2.prototype.once = function(t3, e3) {
+          return h2(e3), this.on(t3, l2(this, t3, e3)), this;
+        }, a2.prototype.prependOnceListener = function(t3, e3) {
+          return h2(e3), this.prependListener(t3, l2(this, t3, e3)), this;
+        }, a2.prototype.removeListener = function(t3, e3) {
+          var n3, r3, o3, s3, i3;
+          if (h2(e3), void 0 === (r3 = this._events))
+            return this;
+          if (void 0 === (n3 = r3[t3]))
+            return this;
+          if (n3 === e3 || n3.listener === e3)
+            0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : (delete r3[t3], r3.removeListener && this.emit("removeListener", t3, n3.listener || e3));
+          else if ("function" != typeof n3) {
+            for (o3 = -1, s3 = n3.length - 1; s3 >= 0; s3--)
+              if (n3[s3] === e3 || n3[s3].listener === e3) {
+                i3 = n3[s3].listener, o3 = s3;
+                break;
+              }
+            if (o3 < 0)
+              return this;
+            0 === o3 ? n3.shift() : function(t4, e4) {
+              for (; e4 + 1 < t4.length; e4++)
+                t4[e4] = t4[e4 + 1];
+              t4.pop();
+            }(n3, o3), 1 === n3.length && (r3[t3] = n3[0]), void 0 !== r3.removeListener && this.emit("removeListener", t3, i3 || e3);
+          }
+          return this;
+        }, a2.prototype.off = a2.prototype.removeListener, a2.prototype.removeAllListeners = function(t3) {
+          var e3, n3, r3;
+          if (void 0 === (n3 = this._events))
+            return this;
+          if (void 0 === n3.removeListener)
+            return 0 === arguments.length ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : void 0 !== n3[t3] && (0 == --this._eventsCount ? this._events = /* @__PURE__ */ Object.create(null) : delete n3[t3]), this;
+          if (0 === arguments.length) {
+            var o3, s3 = Object.keys(n3);
+            for (r3 = 0; r3 < s3.length; ++r3)
+              "removeListener" !== (o3 = s3[r3]) && this.removeAllListeners(o3);
+            return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
+          }
+          if ("function" == typeof (e3 = n3[t3]))
+            this.removeListener(t3, e3);
+          else if (void 0 !== e3)
+            for (r3 = e3.length - 1; r3 >= 0; r3--)
+              this.removeListener(t3, e3[r3]);
+          return this;
+        }, a2.prototype.listeners = function(t3) {
+          return d2(this, t3, true);
+        }, a2.prototype.rawListeners = function(t3) {
+          return d2(this, t3, false);
+        }, a2.listenerCount = function(t3, e3) {
+          return "function" == typeof t3.listenerCount ? t3.listenerCount(e3) : y2.call(t3, e3);
+        }, a2.prototype.listenerCount = y2, a2.prototype.eventNames = function() {
+          return this._eventsCount > 0 ? r2(this._events) : [];
+        };
+      }, function(t2, e2, n2) {
+        class r2 {
+          constructor(t3, e3) {
+            this.target = e3, this.type = t3;
+          }
+        }
+        class o2 extends r2 {
+          constructor(t3, e3) {
+            super("message", e3), this.data = t3;
+          }
+        }
+        class s2 extends r2 {
+          constructor(t3, e3, n3) {
+            super("close", n3), this.wasClean = n3._closeFrameReceived && n3._closeFrameSent, this.reason = e3, this.code = t3;
+          }
+        }
+        class i2 extends r2 {
+          constructor(t3) {
+            super("open", t3);
+          }
+        }
+        class a2 extends r2 {
+          constructor(t3, e3) {
+            super("error", e3), this.message = t3.message, this.error = t3;
+          }
+        }
+        const c2 = { addEventListener(t3, e3) {
+          function n3(t4) {
+            e3.call(this, new o2(t4, this));
+          }
+          function r3(t4, n4) {
+            e3.call(this, new s2(t4, n4, this));
+          }
+          function c3(t4) {
+            e3.call(this, new a2(t4, this));
+          }
+          function h2() {
+            e3.call(this, new i2(this));
+          }
+          "function" == typeof e3 && ("message" === t3 ? (n3._listener = e3, this.on(t3, n3)) : "close" === t3 ? (r3._listener = e3, this.on(t3, r3)) : "error" === t3 ? (c3._listener = e3, this.on(t3, c3)) : "open" === t3 ? (h2._listener = e3, this.on(t3, h2)) : this.on(t3, e3));
+        }, removeEventListener(t3, e3) {
+          const n3 = this.listeners(t3);
+          for (var r3 = 0; r3 < n3.length; r3++)
+            n3[r3] !== e3 && n3[r3]._listener !== e3 || this.removeListener(t3, n3[r3]);
+        } };
+        t2.exports = c2;
+      }, function(t2, e2, n2) {
         Object.defineProperty(e2, "__esModule", { value: true }), e2.reconstructPacket = e2.deconstructPacket = void 0;
-        const n2 = r2(13);
+        const r2 = n2(16);
         e2.deconstructPacket = function(t3) {
-          const e3 = [], r3 = t3.data, o2 = t3;
-          return o2.data = function t4(e4, r4) {
+          const e3 = [], n3 = t3.data, o2 = t3;
+          return o2.data = function t4(e4, n4) {
             if (!e4)
               return e4;
-            if (n2.isBinary(e4)) {
-              const t5 = { _placeholder: true, num: r4.length };
-              return r4.push(e4), t5;
+            if (r2.isBinary(e4)) {
+              const t5 = { _placeholder: true, num: n4.length };
+              return n4.push(e4), t5;
             }
             if (Array.isArray(e4)) {
-              const n3 = new Array(e4.length);
+              const r3 = new Array(e4.length);
               for (let o3 = 0; o3 < e4.length; o3++)
-                n3[o3] = t4(e4[o3], r4);
-              return n3;
+                r3[o3] = t4(e4[o3], n4);
+              return r3;
             }
             if ("object" == typeof e4 && !(e4 instanceof Date)) {
-              const n3 = {};
+              const r3 = {};
               for (const o3 in e4)
-                e4.hasOwnProperty(o3) && (n3[o3] = t4(e4[o3], r4));
-              return n3;
+                e4.hasOwnProperty(o3) && (r3[o3] = t4(e4[o3], n4));
+              return r3;
             }
             return e4;
-          }(r3, e3), o2.attachments = e3.length, { packet: o2, buffers: e3 };
+          }(n3, e3), o2.attachments = e3.length, { packet: o2, buffers: e3 };
         }, e2.reconstructPacket = function(t3, e3) {
-          return t3.data = function t4(e4, r3) {
+          return t3.data = function t4(e4, n3) {
             if (!e4)
               return e4;
             if (e4 && e4._placeholder)
-              return r3[e4.num];
+              return n3[e4.num];
             if (Array.isArray(e4))
-              for (let n3 = 0; n3 < e4.length; n3++)
-                e4[n3] = t4(e4[n3], r3);
+              for (let r3 = 0; r3 < e4.length; r3++)
+                e4[r3] = t4(e4[r3], n3);
             else if ("object" == typeof e4)
-              for (const n3 in e4)
-                e4.hasOwnProperty(n3) && (e4[n3] = t4(e4[n3], r3));
+              for (const r3 in e4)
+                e4.hasOwnProperty(r3) && (e4[r3] = t4(e4[r3], n3));
             return e4;
           }(t3.data, e3), t3.attachments = void 0, t3;
         };
       }, function(t2, e2) {
-        function r2(t3) {
+        function n2(t3) {
           t3 = t3 || {}, this.ms = t3.min || 100, this.max = t3.max || 1e4, this.factor = t3.factor || 2, this.jitter = t3.jitter > 0 && t3.jitter <= 1 ? t3.jitter : 0, this.attempts = 0;
         }
-        t2.exports = r2, r2.prototype.duration = function() {
+        t2.exports = n2, n2.prototype.duration = function() {
           var t3 = this.ms * Math.pow(this.factor, this.attempts++);
           if (this.jitter) {
-            var e3 = Math.random(), r3 = Math.floor(e3 * this.jitter * t3);
-            t3 = 0 == (1 & Math.floor(10 * e3)) ? t3 - r3 : t3 + r3;
+            var e3 = Math.random(), n3 = Math.floor(e3 * this.jitter * t3);
+            t3 = 0 == (1 & Math.floor(10 * e3)) ? t3 - n3 : t3 + n3;
           }
           return 0 | Math.min(t3, this.max);
-        }, r2.prototype.reset = function() {
+        }, n2.prototype.reset = function() {
           this.attempts = 0;
-        }, r2.prototype.setMin = function(t3) {
+        }, n2.prototype.setMin = function(t3) {
           this.ms = t3;
-        }, r2.prototype.setMax = function(t3) {
+        }, n2.prototype.setMax = function(t3) {
           this.max = t3;
-        }, r2.prototype.setJitter = function(t3) {
+        }, n2.prototype.setJitter = function(t3) {
           this.jitter = t3;
         };
       }]);
     });
-  })(weapp_socket_io);
-  const io = /* @__PURE__ */ getDefaultExportFromCjs(weapp_socket_ioExports);
+  })(uniSocket_io);
+  const io = /* @__PURE__ */ getDefaultExportFromCjs(uniSocket_ioExports);
   const _sfc_main$1 = {
     __name: "chat",
     setup(__props) {
@@ -24265,7 +24821,7 @@ ${i3}
       let options = vue.ref();
       onLoad(async (option) => {
         getHeight();
-        formatAppLog("log", "at pages/chat/chat.vue:87", option);
+        formatAppLog("log", "at pages/chat/chat.vue:79", option);
         itemId.value = option.id;
         objDate.value.title = option.remarked;
       });
@@ -24287,7 +24843,6 @@ ${i3}
         wh.value = val.windowHeight - 130;
       }
       function closeKeyBorder(e2) {
-        formatAppLog("log", "at pages/chat/chat.vue:116", e2);
         if (e2.detail.height == 0) {
           getHeight();
           if (emojiFlag.value) {
@@ -24312,25 +24867,34 @@ ${i3}
           wh.value = 440;
         }
       }
+      let socket = null;
       onShow(() => {
         connectSocket();
       });
       const connectSocket = () => {
-        vue.getCurrentInstance();
-        const socket = io("http://192.168.23.20:3000");
-        formatAppLog("log", "at pages/chat/chat.vue:149", socket);
+        socket = io("http://192.168.23.20:3000", {
+          transports: ["websocket", "polling"],
+          timeout: 5e3,
+          query: {
+            id: userInfo.id
+          }
+        });
         socket.on("connect", () => {
-          formatAppLog("log", "at pages/chat/chat.vue:151", socket.connected);
-          formatAppLog("log", "at pages/chat/chat.vue:152", "客服端连接成功");
+          formatAppLog("log", "at pages/chat/chat.vue:146", socket.connected);
+          formatAppLog("log", "at pages/chat/chat.vue:147", "客服端连接成功");
         });
         socket.on("init", (msg) => {
-          formatAppLog("log", "at pages/chat/chat.vue:156", msg);
+          formatAppLog("log", "at pages/chat/chat.vue:151", msg);
         });
-        setInterval(() => {
-          socket.emit("chat", "我是客户端推送过来的");
-        }, 1e3);
+        socket.emit("chat", "我是客户端推送过来的");
       };
       const sendMessage = () => {
+        if (socket) {
+          formatAppLog("log", "at pages/chat/chat.vue:164", socket, 111);
+          socket.emit("msgs", newMessage.value);
+          formatAppLog("log", "at pages/chat/chat.vue:166", newMessage.value, 333);
+          newMessage.value = "";
+        }
       };
       const debouncedInputChange = debounce$1(function inputChange(val) {
         newMessage.value = val;
@@ -24383,7 +24947,7 @@ ${i3}
       }
       function addEmoji(index2) {
         newMessage.value += emoji[index2];
-        formatAppLog("log", "at pages/chat/chat.vue:244", emoji[index2]);
+        formatAppLog("log", "at pages/chat/chat.vue:228", emoji[index2]);
       }
       return (_ctx, _cache) => {
         const _component_uv_popup = resolveEasycom(vue.resolveDynamicComponent("uv-popup"), __easycom_0);

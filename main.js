@@ -1,5 +1,4 @@
 import App from './App'
-import io from 'weapp.socket.io'
 // #ifndef VUE3
 import Vue from 'vue'
 import './uni.promisify.adaptor'

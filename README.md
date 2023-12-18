@@ -914,3 +914,72 @@ onLoad(() => {
 ## socket.io
 
 > [服务器初始化 | Socket.IO](https://socket.io/zh-CN/docs/v4/server-initialization/)
+
+* ==这里我卡了很久，由于插件和包问题，要考虑兼容性，我是用的vue3写的app，我这里应该去插件市场找插件，而不是直接按socket.io文档的库下载对应包，因为文档的包不一定适用app。直接去插件市场搜索socket.io,然后找到兼容app的就好了==
+
+* web和h5基本用法
+
+  * 服务端
+
+    ```js
+    const express = require("express");
+    const { Server } = require("socket.io");
+    const app = express();
+    const io = new Server(3000, {
+        cors: {
+            origin: "*"
+        }
+    });
+    // 这些事件都要写到io连接里面
+    io.on("connection", (socket) => {
+        console.log(socket.id);
+        socket.on("msg", (arg1) => {
+            console.log(arg1); 
+        });
+        socket.emit('chat', '我是发送到客户端')
+    });
+    
+    app.listen(8000, () => {
+        console.log('服务器已启动');
+    });
+    
+    ```
+
+    * 客户端
+
+      ```vue
+      <template>
+        <div class="container">
+          <div class="title">我是主页面,下面是路由</div>
+          <router-view></router-view>
+        </div>
+      </template>
+      <script setup>
+      import { io } from "socket.io-client";
+      import { reactive } from "vue";
+      import { useRouter, useRoute } from "vue-router";
+      const route = useRoute();
+      let status=reactive({
+        username:route.query.username
+      })
+      const socket = io('http://127.0.0.1:3000');
+      socket.on("connect", () => {
+        console.log(socket.id);
+      });
+      socket.emit('msg','我是发送到服务端')
+      socket.on('chat', (msg) => {
+          console.log('message: ' + msg);
+        });
+      console.log(route,11);
+      </script>
+      <style scoped lang="less">
+      .container {
+        margin: 20px;
+      }
+      </style>
+      
+      ```
+
+      
+
+    

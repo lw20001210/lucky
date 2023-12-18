@@ -45,20 +45,13 @@
 	import Header from "@/component/header.vue";
 	import request from "@/utils/request.js"
 	import emoji from "@/utils/emojs.js"
-	// import {
-	// 	connect,
-	// 	io
-	// } from "socket.io-client";
-	import io from 'weapp.socket.io'
-	//import io from "@/utils/socket.js"
+	import io from '@hyoga/uni-socket.io';
 	import {
 		onLoad,
 		onShow
 	} from "@dcloudio/uni-app";
 	import {
-		ref,
-		onMounted,
-		getCurrentInstance
+		ref
 	} from "vue";
 	import {
 		userStore
@@ -76,8 +69,7 @@
 	let emojiFlag = ref(false); //判断是否是表情包
 	let optionFlag = ref(false); //判断是否是多功能
 	const messages = ref([]);
-	let socket = null; // 提前声明socket变量
-
+	// let socket = null; // 提前声明socket变量
 	let newMessage = ref(''); //发送内容
 	let keyboardHeight = ref(0); //键盘高度
 	let popup = ref(); //表情包实例
@@ -113,7 +105,6 @@
 	}
 	// 判断键盘的状态
 	function closeKeyBorder(e) {
-		console.log(e);
 		if (e.detail.height == 0) {
 			getHeight()
 			if (emojiFlag.value) {
@@ -139,14 +130,18 @@
 			wh.value = 440
 		}
 	}
+	let socket = null; // 提前声明socket变量
 	onShow(() => {
 		connectSocket()
 	})
 	const connectSocket = () => {
-		const app = getCurrentInstance()
-		const socket = io("http://192.168.23.20:3000")
-		// socket = io("http://192.168.23.20:3000")
-		console.log(socket);
+		socket = io("http://192.168.23.20:3000",{
+			transports: [ 'websocket', 'polling' ],
+			timeout: 5000,
+			  query: {
+			   id:userInfo.id
+			  },
+		})
 		socket.on("connect", () => {
 			console.log(socket.connected); // true
 			console.log('客服端连接成功'); // 在连接成功后打印连接状态
@@ -155,31 +150,20 @@
 		socket.on("init", (msg) => {
 			console.log(msg);
 		});
-		setInterval(() => {
-			socket.emit("chat", "我是客户端推送过来的")
-		}, 1000)
-
+	socket.emit("chat", "我是客户端推送过来的")
 	}
-	// onMounted(() => {
-	// 	console.log('进来这个页面。。。');
-	// 	// socket = io("ws://192.168.23.20:5173")
-	// 	// socket.on("connect", () => {
-	// 	// 	console.log(socket.connected); // true
-	// 	// 	console.log('客服端连接成功'); // 在连接成功后打印连接状态
-	// 	// });
-	// 	// socket.on("init", (msg) => {
-	// 	// 	console.log(msg);
-	// 	// });
-	// 	// socket.emit("chat", "我是客户端推送过来的")
-	// 	// setInterval(() => {
-	// 	// 	socket.emit("chat", "我是客户端推送过来的")
-	// 	// }, 500)
-	// });
+
 
 	const sendMessage = () => {
+		// let data = request("/user/sendMessage",'post',{
+		// 	id: 999,
+		// 	msg:JSON.stringify(socket)
+		// })
+		// console.log(data,"我发送了消息");
 		if (socket) {
+			console.log(socket,111);
 			socket.emit("msgs", newMessage.value);
-			console.log(newMessage.value)
+			console.log(newMessage.value,333)
 			newMessage.value = "";
 
 		}
