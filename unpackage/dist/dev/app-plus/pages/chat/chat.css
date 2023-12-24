@@ -324,7 +324,7 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
   align-items: center;
 }
 .header .center[data-v-8548c3e5] {
-  width: 6.25rem;
+  width: 9.375rem;
   text-align: center;
 }
 .header .iconfont[data-v-8548c3e5] {
@@ -407,18 +407,104 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
   font-size: 2.8125rem;
 }
 
+[data-v-0a633310] .uni-scroll-view-refresh-inner {
+  background-color: transparent;
+  box-shadow: none;
+}
 .box[data-v-0a633310] {
   height: 100vh;
   box-sizing: border-box;
-  padding: 0.46875rem 0.9375rem 0;
+  padding: 0.46875rem 0;
   background-color: #f5f5f5;
   font-family: STKaiti;
+}
+.box .container[data-v-0a633310] {
+  padding: 0.25rem 0.9375rem 0;
 }
 .box .container .iconfont[data-v-0a633310] {
   font-size: 1.5625rem;
 }
+.box .divide[data-v-0a633310] {
+  margin: 0.3125rem 0 0;
+  height: 0.03125rem;
+  background-color: #e6e6e6;
+}
+.box .infoList[data-v-0a633310] {
+  padding: 0.3125rem 0.9375rem;
+}
 .box .scroll[data-v-0a633310] {
-  background: pink;
+  box-sizing: border-box;
+}
+.box .scroll .messageList[data-v-0a633310] {
+  display: flex;
+  color: #000;
+  margin-bottom: 0.78125rem;
+}
+.box .scroll .messageList .info[data-v-0a633310] {
+  flex: 1;
+  display: flex;
+}
+.box .scroll .messageList .info .img[data-v-0a633310] {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 0.3125rem;
+  overflow: hidden;
+}
+.box .scroll .messageList .info .content[data-v-0a633310] {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 2.5rem;
+  max-width: 70%;
+  border-radius: 0.3125rem;
+  margin-left: 0.625rem;
+  font-size: 0.9375rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box .scroll .messageList .info .content[data-v-0a633310]::before {
+  display: block;
+  content: "";
+  position: absolute;
+  left: -0.78125rem;
+  top: 0.875rem;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right: 0.375rem solid #fff;
+}
+.box .scroll .messageList .info .content uni-text[data-v-0a633310] {
+  padding: 0.3125rem 0.46875rem;
+}
+.box .scroll .messageList .info .contentImg[data-v-0a633310] {
+  flex: 1;
+  margin-left: 0.625rem;
+  min-height: 2.5rem;
+  max-width: 70%;
+  min-width: 30%;
+}
+.box .scroll .messageList .info .contentImg .imgMsg[data-v-0a633310] {
+  width: 100%;
+}
+.box .scroll .messageList .right[data-v-0a633310] {
+  display: flex;
+  justify-content: flex-end;
+}
+.box .scroll .messageList .right .contentImg[data-v-0a633310] {
+  flex: 1;
+  margin-right: 0.625rem;
+}
+.box .scroll .messageList .right .content[data-v-0a633310] {
+  position: relative;
+  margin-left: 0;
+  margin-right: 0.625rem;
+  background-color: #95ec69;
+}
+.box .scroll .messageList .right .content[data-v-0a633310]::before {
+  left: 100%;
+  border: 7px solid transparent;
+  border-left: 0.4375rem solid #95ec69;
 }
 .box .popul[data-v-0a633310] {
   position: fixed;
@@ -459,7 +545,7 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
 .box .list[data-v-0a633310] {
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   border-top: 0.03125rem solid #d3d3d3;
   padding: 0.46875rem 0.625rem;
@@ -473,4 +559,30 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
   width: 12.5%;
   height: 2.5rem;
   font-size: 1.5625rem;
+}
+.box .more[data-v-0a633310] {
+  padding-bottom: 0.625rem;
+}
+.box .more .optionItem[data-v-0a633310] {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.78125rem;
+}
+.box .more .optionItem .icon[data-v-0a633310] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  width: 2.8125rem;
+  height: 2.8125rem;
+  border-radius: 0.625rem;
+  margin-bottom: 0.3125rem;
+}
+.box .more .optionItem .icon .iconfont[data-v-0a633310] {
+  font-size: 1.40625rem;
+}
+.box .more .optionItem[data-v-0a633310]:nth-child(n+5) {
+  margin-bottom: 1.25rem;
 }

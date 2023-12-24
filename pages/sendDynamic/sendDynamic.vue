@@ -154,12 +154,16 @@
 		if (resultData.value.content.title == '') return showMsg('未填写发布内容')
 		// 这里我在onShow处理了一下，因为值为空字符串也是0
 		if ((resultData.value.status != 0) && (resultData.value.status != 1)) return showMsg('未选择权限')
-		const fileList = resultData.value.content.imgArr.map((item, index) => {
-			return {
-				name: index,
-				uri: item
-			}
-		})
+		let fileList=[{uri:'我没有上传图片'}];
+		if(resultData.value.content?.imgArr.length!=0){
+			 fileList = resultData.value.content?.imgArr.map((item, index) => {
+				return {
+					name: index,
+					uri: item
+				}
+			})
+		}
+		
 		uni.uploadFile({
 			url: `${mainUrl}/user/sedSpace`,
 			files: fileList,

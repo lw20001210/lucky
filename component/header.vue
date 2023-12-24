@@ -26,15 +26,28 @@
 	const props = defineProps(['obj'])
 	// console.log(props.obj);
 	// 返回上一级
-
-	//  || (page.$page.path=="/pagesfriendInfo/friendInfo")
+	let pages = getCurrentPages();
+	let currentPage = pages[pages.length - 1]; //当前跳过来的路由
+	let prePage = pages[pages.length - 2]; //上一个页面跳过来的路由
+	// console.log(currentPage.$page.fullPath, 1);
+	// console.log(prePage.$page.fullPath, 2);
 	function goBack() {
-		// let pages = getCurrentPages();
-		// let currentPage = pages[pages.length - 1];//当前跳过来的路由
-		// let prePage = pages[pages.length - 2];//上一个页面跳过来的路由
-		// // console.log(currentPage);
-		// // console.log(prePage);
+		if (prePage?.$page?.fullPath == "/pages/selfStar/selfStar" ||currentPage.$page.fullPath ==
+			"/pages/selfStar/selfStar") {
+				console.log(345);
+			uni.reLaunch({
+				url: "/pages/star/star"
+			});
+		} else {
+			uni.navigateBack();
+		}
+		// 	let pages = getCurrentPages();
+		// 	let currentPage = pages[pages.length - 1];//当前跳过来的路由
+		// 	let prePage = pages[pages.length - 2];//上一个页面跳过来的路由
+		// 	// // console.log(currentPage);
+		// 	// // console.log(prePage);
 		// console.log(currentPage.$page.fullPath, 1);
+
 		// console.log(prePage.$page.fullPath, 2);
 		// // console.log(prePage.$page.fullPath, 2);
 		// if (prePage?.$page.path == "/pages/detail/detail") {
@@ -48,7 +61,7 @@
 		// 		url: props.obj.path
 		// 	});
 		// }
-		uni.navigateBack();
+
 	}
 </script>
 
@@ -60,7 +73,8 @@
 		align-items: center;
 
 		.center {
-			width: 200rpx;
+			// width: 200rpx;
+			width: 300rpx;
 			text-align: center;
 		}
 

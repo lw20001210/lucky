@@ -5,7 +5,7 @@
 		</view>
 		<view class="describe">
 			<text style="font-size: 28rpx;">{{obj.remarked}}</text>
-			<text class='username'>在线<text class="autograph">
+			<text class='username'>{{obj.status==1?'在线':'离线'}}<text class="autograph">
 					{{obj.signature}}
 				</text></text>
 		</view>
@@ -13,9 +13,10 @@
 </template>
 
 <script setup>
-	import { defineProps} from 'vue';
+	
+	import {defineProps} from 'vue';
 	const props = defineProps(['obj'])
-	// console.log(props.obj.id);
+	// console.log(props.obj.status);
 	function goDetail(obj){
 		//console.log(obj);
 		uni.navigateTo({

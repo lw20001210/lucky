@@ -42,8 +42,9 @@
 			</view>
 			<uni-list :border="false">
 				<!-- 显示圆形头像 -->
-				<uni-list-chat :clickable="true"  v-for="item in friendList" :key="item.id" :avatar-circle="true" :title="item.remarked"
-					:avatar="item.avatar" @click="goChat(item)" note="您收到一条新的消息" :time="item.createTime"></uni-list-chat>
+				<uni-list-chat :clickable="true" v-for="item in friendList" :key="item.id" :avatar-circle="true"
+					:title="item.remarked" :avatar="item.avatar" @click="goChat(item)" note="您收到一条新的消息"
+					:time="item.createTime"></uni-list-chat>
 			</uni-list>
 		</scroll-view>
 	</view>
@@ -63,16 +64,26 @@
 	import request from "@/utils/request.js"
 	import friendItem from "@/component/friendItem.vue"
 	import {
+		statusStore
+	} from "@/pinia/userInfo/status.js"
+	import {
 		userStore
 	} from '@/pinia/userInfo/userInfo.js';
 	import loginVue from '../login/login.vue';
 	import {
-		onLoad,onShow
+		onShow,
+		onLoad
 	} from '@dcloudio/uni-app';
+	import {
+		mainUrl
+	} from "@/utils/config.js"
+	import io from '@hyoga/uni-socket.io';
 	let animationData = ref({}) //响应动画数据
 	let animation = ref(null); //创建动画对象
 	let isShow = ref(false); //判断下拉框
+	let socket = ref(null); // 提前声明socket变量
 	const userPower = new userStore();
+	const statusInfo = statusStore();
 	// 打开菜单
 	function openPopup() {
 		if (!animation.value) {
@@ -121,15 +132,15 @@
 			url: '/pages/search/search',
 		});
 	}
-	function goChat(item){
-		//console.log(item,33);
+
+	function goChat(item) {
+		statusInfo.avatar = item.avatar
 		uni.navigateTo({
 			url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
 		})
 	}
 	// 扫码加好友功能
 	function scanCode() {
-		console.log(1);
 		uni.scanCode({
 			success: function(res) {
 				// console.log('条码类型：' + res.scanType);
@@ -140,7 +151,7 @@
 			}
 		});
 	}
-	let friendList = ref(['0'])
+	let friendList = ref([])
 	async function getData() {
 		let {
 			data: res
@@ -155,15 +166,32 @@
 			}
 		})
 	}
-	// onLoad(() => {
-	// 	userPower.getUserInfo();
-	// 	getData();
-	// })
+
+	function socketIo() {
+		socket.value = io(mainUrl, {
+			transports: ['websocket', 'polling'],
+			timeout: 5000,
+			query: {
+				id: userPower.id
+			},
+		})
+		statusInfo.socket = socket.value;
+		// console.log(socket);
+		socket.value.on("connect", () => {
+
+		});
+		// 接收在线的用户
+		socket.value.on("init", (msg) => {
+			statusInfo.userList = msg;
+		});
+	}
 	onShow(() => {
 		userPower.getUserInfo();
 		getData();
 	})
-
+	onLoad(() => {
+		socketIo()
+	})
 </script>
 <style scoped lang="scss">
 	.container {

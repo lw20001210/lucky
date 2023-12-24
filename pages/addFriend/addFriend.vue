@@ -39,6 +39,10 @@
 	import {
 		ref
 	} from 'vue';
+	import {
+		statusStore
+	} from "@/pinia/userInfo/status.js"
+	const statusInfo = statusStore();
 	let user = userStore()
 	let data = ref({
 		leftFont: "icon-zuojiantou",
@@ -51,13 +55,13 @@
 		status: false,
 		sendId: 0,
 		acceptId: '',
-		avatar:"",
-		username:'',
+		avatar: "",
+		username: '',
 		nickname: '', //备注
 		content: '我是', //验证信息
 		createTime: Date.now()
 	});
-	// 退出登录到登录页或自动填充账号
+	// 获取接收方数据
 	onLoad(async (option) => {
 		let {
 			data: res
@@ -78,17 +82,24 @@
 		// console.log(e.detail.value)
 		applyInfo.value.nickname = e.detail.value;
 	}
-// 发送申请
+	// 发送申请
 	async function sendApply() {
 		applyInfo.value.sendId = user.id;
 		applyInfo.value.username = user.nickname;
 		applyInfo.value.avatar = user.avatar;
-		applyInfo.value.acceptId = userInfo.value.id;	
+		applyInfo.value.acceptId = userInfo.value.id;
 		let {
 			data: res
 		} = await request('/user/sendApply', 'post', applyInfo.value);
 		if (res.code != 200) return showMsg("发送失败")
-		
+		let obj = {
+			fromUid: user.id,
+			toUid: userInfo.value.id,
+			message: applyInfo.value.content,
+			createTime: Date.now(),
+			status: 0
+		}
+		statusInfo.socket.emit("chat", obj);
 		// 添加备注表
 		// request("/user/addRemark","post",{
 		// 	myId:user.id,

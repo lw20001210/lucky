@@ -33,6 +33,9 @@
 	import {
 		userStore
 	} from "@/pinia/userInfo/userInfo.js";
+	import {
+		statusStore
+	} from "@/pinia/userInfo/status.js"
 	import request from "../../utils/request.js"
 	import {
 		onLoad,
@@ -45,7 +48,8 @@
 		showMsg
 	} from '../../utils/Toast.js';
 	const userInfo = userStore();
-	let friendList = ref(['0'])
+	const statusInfo = statusStore();
+	let friendList = ref([])
 	const goSearch = () => {
 		uni.navigateTo({
 			url: '/pages/search/search',
@@ -91,6 +95,17 @@
 				item["remarked"] = item.nickname
 			}
 		})
+		// console.log(friendList.value);
+		// console.log(statusInfo.userList);
+		
+	    let newIds =  statusInfo.userList.map(val => val.uid);
+		friendList.value.forEach((item) => {
+			 if (newIds.includes(`${item.id}`)) {
+				  item.status = 1;
+			 } else {
+				 item.status = 0
+			 }
+		})
 		let {
 			data: result
 		} = await request("/user/getFriendNum", "get", {
@@ -100,15 +115,11 @@
 		return friendNum.value = result.data.length
 		// 获取申请表暂未处理人数
 	}
-	onLoad((option) => {
-		getData()
-	})
 	onShow((option) => {
 		getData()
 	})
 	// 监听折叠面板的变化
 	function change(e) {
-		// console.log(e);
 		getData()
 	}
 </script>

@@ -23,7 +23,7 @@
 				</view>
 			</view>
 			<view class="options">
-				<view class="item">
+				<view class="item" @click="goChat">
 					<text class="iconfont">&#xeb4c;</text>
 					<text class="text">发信息</text>
 				</view>
@@ -145,6 +145,11 @@
 				url: `/pages/friendInfo/friendInfo?id=${itemId.value}`
 			})
 		}
+	}
+	function goChat(){
+		uni.navigateTo({
+			url: `/pages/chat/chat?id=${itemId.value}&remarked=${spaceInfo.value.remarked}`
+		})
 	}
 </script>
 

@@ -59,7 +59,7 @@
   align-items: center;
 }
 .header .center[data-v-8548c3e5] {
-  width: 6.25rem;
+  width: 9.375rem;
   text-align: center;
 }
 .header .iconfont[data-v-8548c3e5] {
@@ -177,7 +177,7 @@
   position: relative;
   height: 14.0625rem;
   width: 100%;
-  background: url("../../static/images/bgg.jpg") no-repeat;
+  background: url("../../static/images/spaceBg.jpg") no-repeat;
   background-size: cover;
   overflow: visible;
 }
