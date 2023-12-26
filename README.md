@@ -28,6 +28,25 @@
           }
   ```
 
+##  h5,app样式不统一问题
+
+> 使用条件编译
+>
+> 	// 获取消息列表高度
+> 	function getHeight() {
+> 		const val = uni.getSystemInfoSync();
+> 		// #ifdef APP-PLUS
+> 		wh.value = val.windowHeight - 150;
+> 		// #endif
+> 		// #ifdef H5
+> 		wh.value = val.windowHeight - 120;
+> 		// #endif
+> 			
+> 	}
+
+## dayjs问题
+
+==时间戳一定要转换成数字类型==
 
 ## post请求解析form_data数据问题
 

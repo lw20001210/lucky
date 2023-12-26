@@ -95,7 +95,10 @@
 		let obj = {
 			fromUid: user.id,
 			toUid: userInfo.value.id,
-			message: applyInfo.value.content,
+			message: {
+				text:applyInfo.value.content,
+				img:''
+			},
 			createTime: Date.now(),
 			status: 0
 		}

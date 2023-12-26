@@ -1533,7 +1533,7 @@ This will fail in production.`);
       }
     });
   }
-  const mainUrl = "http://192.168.190.20:3000";
+  const mainUrl = "http://192.168.105.20:3000";
   const request = (url2, method, data = null) => {
     return new Promise((resolve, reject) => {
       uni.request({
@@ -12568,6 +12568,33 @@ ${i3}
     const targetTime = dayjs.unix(val / 1e3);
     return dayjs().to(dayjs(targetTime));
   }
+  function getTimeFormat(timestamp) {
+    const now2 = Date.now();
+    const date2 = dayjs(timestamp);
+    let dayType;
+    let timePeriod;
+    if (date2.isSame(dayjs(now2), "day")) {
+      dayType = "";
+    } else if (date2.isSame(dayjs(now2).subtract(1, "day"), "day")) {
+      dayType = "昨天";
+    } else {
+      if (date2.year() === dayjs(now2).year()) {
+        dayType = date2.format("MM-dd");
+      } else {
+        dayType = date2.format("YYYY-MM-dd");
+      }
+    }
+    const hour = date2.hour();
+    if (hour >= 0 && hour < 12) {
+      timePeriod = "上午";
+    } else if (hour >= 12 && hour < 18) {
+      timePeriod = "下午";
+    } else {
+      timePeriod = "晚上";
+    }
+    const formattedTime = date2.format("HH:mm");
+    return `${dayType}  ${timePeriod} ${formattedTime}`;
+  }
   function debounce$1(fn, delay) {
     let t2 = null;
     return function(e2) {
@@ -21652,7 +21679,10 @@ ${i3}
         let obj = {
           fromUid: user.id,
           toUid: userInfo.value.id,
-          message: applyInfo.value.content,
+          message: {
+            text: applyInfo.value.content,
+            img: ""
+          },
           createTime: Date.now(),
           status: 0
         };
@@ -24968,24 +24998,29 @@ ${i3}
     "🍒",
     "🍓"
   ];
+  const audioImg = "/static/images/voice.gif";
+  const audioShowImg = "/static/images/voice_shop.png";
   const _sfc_main$1 = {
     __name: "chat",
     setup(__props) {
+      var _a;
+      const recorderManager = uni.getRecorderManager();
+      const innerAudioContext = uni.createInnerAudioContext();
+      innerAudioContext.autoplay = true;
       const userInfo = userStore();
-      const isVoice = vue.ref(false);
       const statusInfo = statusStore();
       let foucsFlag = vue.ref(false);
       let emojiFlag = vue.ref(false);
       let optionFlag = vue.ref(false);
       const messages2 = vue.ref([]);
-      let newMessage = vue.ref({
-        text: "",
-        img: ""
-      });
+      let newMessage = vue.ref("");
+      const isVoice = vue.ref(false);
+      let voicePath = vue.ref("");
       let wh = vue.ref();
       let keyboardHeight = vue.ref(0);
       let popup2 = vue.ref();
       let options = vue.ref();
+      let audioAni = vue.ref();
       let itemId = vue.ref();
       let emojiHeight = vue.ref(531);
       let objDate = vue.ref({
@@ -24993,21 +25028,7 @@ ${i3}
         title: "",
         path: "/pages/home/home"
       });
-      function goDetail() {
-        uni.navigateTo({
-          url: `/pages/detail/detail?id=${itemId.value}`
-        });
-      }
-      let scrollHeight = vue.ref(99999999);
-      function scrollBottom() {
-        setTimeout(() => {
-          scrollHeight.value += 1;
-          scrollTop.value += scrollHeight.value;
-        }, 20);
-      }
-      onShow(() => {
-        scrollBottom();
-      });
+      let audioIndex = vue.ref(-1);
       let scrollTop = vue.ref(0);
       let refreshFlag = vue.ref(true);
       let triggered = vue.ref(false);
@@ -25019,6 +25040,45 @@ ${i3}
         toUid: itemId.value ? itemId.value : 0,
         page: page2.value,
         pageNum: pageNum.value
+      });
+      let scrollHeight = vue.ref(99999999);
+      function scrollBottom() {
+        setTimeout(() => {
+          scrollHeight.value += 1;
+          scrollTop.value += scrollHeight.value;
+        }, 20);
+      }
+      function goDetail() {
+        uni.navigateTo({
+          url: `/pages/detail/detail?id=${itemId.value}`
+        });
+      }
+      onShow(() => {
+        recorderManager.onStop(function(res) {
+          voicePath.value = res.tempFilePath;
+          let objs = {
+            fromUid: userInfo.id,
+            toUid: itemId.value,
+            message: voicePath.value,
+            type: 2,
+            createTime: Date.now(),
+            status: 0,
+            audioTime: ""
+          };
+          let time = Math.ceil((Date.now() - starTime.value) / 1e3);
+          objs.avatar = userInfo.avatar;
+          objs.audioTime = time;
+          messages2.value.push(objs);
+          formatAppLog("log", "at pages/chat/chat.vue:264", objs, 22);
+          pathToBase64(res.tempFilePath).then((base64) => {
+            objs.message = base64;
+            statusInfo.socket.emit("getChatVoice", objs);
+            scrollBottom();
+          }).catch((err) => {
+            showMsg$1("信息错误");
+          });
+        });
+        scrollBottom();
       });
       function onSrcollTop(e2) {
         triggered.value = true;
@@ -25051,7 +25111,7 @@ ${i3}
         });
       });
       const sendFlag = vue.computed(() => {
-        if (newMessage.value.text == "") {
+        if (newMessage.value == "") {
           return true;
         } else {
           return false;
@@ -25060,7 +25120,7 @@ ${i3}
       function getChatList(obj2) {
         statusInfo.socket.emit("getMsgList", obj2);
       }
-      statusInfo.socket.on("msgList", (msgs) => {
+      (_a = statusInfo.socket) == null ? void 0 : _a.on("msgList", (msgs) => {
         if (msgs.total == 0) {
           setTimeout(() => {
             triggered.value = false;
@@ -25088,6 +25148,19 @@ ${i3}
           }, 1e3);
         }
       });
+      function getTime(time, index2) {
+        if (index2 == 0) {
+          return getTimeFormat(Number(time));
+        } else {
+          let preTime = messages2.value[index2 - 1].createTime;
+          let preT = (time - preTime) / 1e3;
+          if (preT > 5 * 60) {
+            return getTimeFormat(Number(time));
+          } else {
+            return "";
+          }
+        }
+      }
       function getInputHeight(e2) {
         if (e2.detail.height != 0) {
           keyboardHeight.value = parseInt(e2.detail.height) * 2 - 25;
@@ -25126,15 +25199,14 @@ ${i3}
         scrollBottom();
       }
       const sendMessage = () => {
-        if (newMessage.value.text == "")
+        if (newMessage.value == "")
           return showMsg$1("你还未输入内容");
         let objs = {
           fromUid: userInfo.id,
           toUid: itemId.value,
-          message: {
-            text: newMessage.value.text,
-            img: ""
-          },
+          message: newMessage.value,
+          type: 0,
+          //0为文本，1为图片，2为语音，3为位置
           createTime: Date.now(),
           status: 0
         };
@@ -25143,14 +25215,12 @@ ${i3}
         if (messages2.value.length % 30 == 0) {
           page2.value += 1;
         }
-        formatAppLog("log", "at pages/chat/chat.vue:354", "我是发送消息");
         messages2.value.push(objs);
-        newMessage.value.text = "";
-        newMessage.value.img = "";
+        newMessage.value = "";
         scrollBottom();
       };
       const debouncedInputChange = debounce$1(function inputChange(val) {
-        newMessage.value.text = val;
+        newMessage.value = val;
       }, 800);
       const handleInput = (e2) => {
         debouncedInputChange(e2.detail.value);
@@ -25201,17 +25271,15 @@ ${i3}
         }
       }
       function addEmoji(index2) {
-        newMessage.value.text += emoji[index2];
-        formatAppLog("log", "at pages/chat/chat.vue:431", emoji[index2]);
+        newMessage.value += emoji[index2];
+        formatAppLog("log", "at pages/chat/chat.vue:511", emoji[index2]);
       }
       function selectImg(type) {
         let objs = {
           fromUid: userInfo.id,
           toUid: itemId.value,
-          message: {
-            text: "",
-            img: ""
-          },
+          message: "",
+          type: 1,
           createTime: Date.now(),
           status: 0
         };
@@ -25224,44 +25292,84 @@ ${i3}
               src: res.tempFilePaths[0],
               success: function(image2) {
                 pathToBase64(image2.path).then((base64) => {
-                  objs.message.img = base64;
+                  objs.message = base64;
                   objs.avatar = userInfo.avatar;
                   messages2.value.push(objs);
                   statusInfo.socket.emit("getChatImg", objs);
                   scrollBottom();
-                  newMessage.value.msg = "";
-                  newMessage.value.text = "";
+                  newMessage.value = "";
                 }).catch((error2) => {
-                  formatAppLog("error", "at pages/chat/chat.vue:464", error2);
+                  formatAppLog("error", "at pages/chat/chat.vue:541", error2);
                 });
               }
             });
           }
         });
       }
+      function previewImg(url2) {
+        uni.previewImage({
+          urls: [url2],
+          longPressActions: {
+            itemList: ["保存图片"],
+            success: function(data) {
+              uni.saveImageToPhotosAlbum({
+                filePath: url2,
+                success: function() {
+                  formatAppLog("log", "at pages/chat/chat.vue:562", "save success");
+                }
+              });
+            },
+            fail: function(err) {
+              formatAppLog("log", "at pages/chat/chat.vue:567", err.errMsg);
+            }
+          }
+        });
+      }
       function optionClick(type) {
         if (type == 1) {
-          formatAppLog("log", "at pages/chat/chat.vue:476", "我是相册");
+          formatAppLog("log", "at pages/chat/chat.vue:576", "我是相册");
           selectImg("album");
         } else if (type == 2) {
           selectImg("camera");
-          formatAppLog("log", "at pages/chat/chat.vue:480", "我是拍摄");
+          formatAppLog("log", "at pages/chat/chat.vue:580", "我是拍摄");
         } else if (type == 3) {
-          formatAppLog("log", "at pages/chat/chat.vue:482", "我是视频通话");
+          formatAppLog("log", "at pages/chat/chat.vue:582", "我是视频通话");
         } else if (type == 4) {
-          formatAppLog("log", "at pages/chat/chat.vue:484", "我是位置");
+          formatAppLog("log", "at pages/chat/chat.vue:584", "我是位置");
         } else {
           showMsg$1("功能尚未开发");
         }
       }
+      let starTime = vue.ref("");
       function transForm() {
         isVoice.value = !isVoice.value;
       }
       function startRecord(e2) {
-        formatAppLog("log", "at pages/chat/chat.vue:498", e2, "我是下按");
+        starTime.value = Date.now();
+        formatAppLog("log", "at pages/chat/chat.vue:600", "开始录音");
+        recorderManager.start();
+        audioAni.value.open("center");
       }
       function touchEnd(e2) {
-        formatAppLog("log", "at pages/chat/chat.vue:506", e2, "录音结束");
+        recorderManager.stop();
+        audioAni.value.close();
+      }
+      function playVoice() {
+        formatAppLog("log", "at pages/chat/chat.vue:611", "播放录音");
+        if (voicePath.value) {
+          innerAudioContext.src = voicePath.value;
+          innerAudioContext.play();
+        }
+      }
+      function changeStatus(message, index2) {
+        formatAppLog("log", "at pages/chat/chat.vue:619", message, index2);
+        audioIndex.value = index2;
+        innerAudioContext.src = message;
+        innerAudioContext.play();
+        innerAudioContext.onEnded(() => {
+          recorderManager.stop();
+          audioIndex.value = -1;
+        });
       }
       return (_ctx, _cache) => {
         const _component_uv_popup = resolveEasycom(vue.resolveDynamicComponent("uv-popup"), __easycom_0);
@@ -25278,7 +25386,10 @@ ${i3}
               /* STABLE */
             }, 8, ["obj"])
           ]),
-          vue.createElementVNode("view", { class: "divide" }),
+          vue.createElementVNode("view", {
+            class: "divide",
+            onClick: playVoice
+          }),
           vue.createElementVNode("view", { class: "infoList" }, [
             vue.createCommentVNode(" height: wh+'px' "),
             vue.createElementVNode("scroll-view", {
@@ -25300,65 +25411,131 @@ ${i3}
                     class: "messageList",
                     key: index2
                   }, [
-                    item.fromUid == vue.unref(userInfo).id ? (vue.openBlock(), vue.createElementBlock("view", {
+                    getTime(item.createTime, index2) ? (vue.openBlock(), vue.createElementBlock("view", {
                       key: 0,
+                      class: "time"
+                    }, [
+                      vue.createElementVNode(
+                        "view",
+                        { class: "time_text" },
+                        vue.toDisplayString(getTime(item.createTime, index2)),
+                        1
+                        /* TEXT */
+                      ),
+                      index2 == 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                        key: 0,
+                        class: "time_text"
+                      }, "你们已经成功添加为好友,现在可以开始聊天了")) : vue.createCommentVNode("v-if", true)
+                    ])) : vue.createCommentVNode("v-if", true),
+                    item.fromUid == vue.unref(userInfo).id ? (vue.openBlock(), vue.createElementBlock("view", {
+                      key: 1,
                       class: "info right"
                     }, [
-                      item.message.text != "" ? (vue.openBlock(), vue.createElementBlock("view", {
+                      vue.createCommentVNode(" 文字消息 "),
+                      item.type == 0 ? (vue.openBlock(), vue.createElementBlock("view", {
                         key: 0,
                         class: "content"
                       }, [
                         vue.createElementVNode(
                           "text",
                           null,
-                          vue.toDisplayString(item.message.text),
+                          vue.toDisplayString(item.message),
                           1
                           /* TEXT */
                         )
-                      ])) : (vue.openBlock(), vue.createElementBlock("view", {
+                      ])) : vue.createCommentVNode("v-if", true),
+                      vue.createCommentVNode(" 图片消息 "),
+                      item.type == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
                         key: 1,
                         class: "contentImg"
                       }, [
                         vue.createElementVNode("image", {
+                          "lazy-load": true,
                           class: "imgMsg",
-                          src: item.message.img,
+                          onClick: ($event) => previewImg(item.message),
+                          src: item.message,
                           mode: ""
-                        }, null, 8, ["src"])
-                      ])),
+                        }, null, 8, ["onClick", "src"])
+                      ])) : vue.createCommentVNode("v-if", true),
+                      vue.createCommentVNode(" 语音消息 "),
+                      item.type == 2 ? (vue.openBlock(), vue.createElementBlock("view", {
+                        key: 2,
+                        class: "content"
+                      }, [
+                        vue.createCommentVNode(` <image @click="changeStatus(item.message, index)"\r
+								:src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'"\r
+								:lazy-load="true"></image> `),
+                        vue.createElementVNode(
+                          "text",
+                          null,
+                          vue.toDisplayString(item.audioTime),
+                          1
+                          /* TEXT */
+                        ),
+                        vue.createElementVNode("image", {
+                          onClick: ($event) => changeStatus(item.message, index2),
+                          src: index2 === vue.unref(audioIndex) ? vue.unref(audioImg) : vue.unref(audioShowImg),
+                          "lazy-load": true
+                        }, null, 8, ["onClick", "src"])
+                      ])) : vue.createCommentVNode("v-if", true),
                       vue.createElementVNode("image", {
+                        "lazy-load": true,
                         class: "img",
                         src: item.avatar
                       }, null, 8, ["src"])
                     ])) : (vue.openBlock(), vue.createElementBlock("view", {
-                      key: 1,
+                      key: 2,
                       class: "info"
                     }, [
                       vue.createElementVNode("image", {
+                        "lazy-load": true,
                         class: "img",
                         src: item.avatar,
                         onClick: goDetail
                       }, null, 8, ["src"]),
-                      item.message.text != "" ? (vue.openBlock(), vue.createElementBlock("view", {
+                      item.type == 0 ? (vue.openBlock(), vue.createElementBlock("view", {
                         key: 0,
                         class: "content"
                       }, [
                         vue.createElementVNode(
                           "text",
                           null,
-                          vue.toDisplayString(item.message.text),
+                          vue.toDisplayString(item.message),
                           1
                           /* TEXT */
                         )
-                      ])) : (vue.openBlock(), vue.createElementBlock("view", {
+                      ])) : vue.createCommentVNode("v-if", true),
+                      item.type == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
                         key: 1,
                         class: "contentImg"
                       }, [
                         vue.createElementVNode("image", {
+                          "lazy-load": true,
+                          onClick: ($event) => previewImg(item.message.img),
                           class: "imgMsg",
-                          src: item.message.img,
+                          src: item.message,
                           mode: ""
-                        }, null, 8, ["src"])
-                      ]))
+                        }, null, 8, ["onClick", "src"])
+                      ])) : vue.createCommentVNode("v-if", true),
+                      item.type == 2 ? (vue.openBlock(), vue.createElementBlock("view", {
+                        key: 2,
+                        class: "content"
+                      }, [
+                        vue.createCommentVNode(' 	<image @click="changeStatus(item.message, index)"\r\n								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image> '),
+                        vue.createElementVNode("image", {
+                          onClick: ($event) => changeStatus(item.message, index2),
+                          src: index2 === vue.unref(audioIndex) ? vue.unref(audioImg) : vue.unref(audioShowImg),
+                          "lazy-load": true
+                        }, null, 8, ["onClick", "src"]),
+                        vue.createElementVNode(
+                          "text",
+                          null,
+                          vue.toDisplayString(item.audioTime),
+                          1
+                          /* TEXT */
+                        ),
+                        vue.createCommentVNode(` 	<image @click="changeStatus(item.message, index)" :src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'" :lazy-load="true"></image> `)
+                      ])) : vue.createCommentVNode("v-if", true)
                     ]))
                   ]);
                 }),
@@ -25392,14 +25569,13 @@ ${i3}
                 onKeyboardheightchange: closeKeyBorder,
                 onFocus: getInputHeight,
                 focus: vue.unref(foucsFlag),
-                value: vue.unref(newMessage).text,
+                value: vue.unref(newMessage),
                 "auto-height": ""
               }, null, 40, ["focus", "value"])) : (vue.openBlock(), vue.createElementBlock("view", {
                 key: 3,
                 class: "input",
                 style: { "display": "flex", "justify-content": "center", "flex-direction": "row" },
                 onTouchstart: startRecord,
-                onTouchmove: _cache[0] || (_cache[0] = (...args) => _ctx.touchMove && _ctx.touchMove(...args)),
                 onTouchend: vue.withModifiers(touchEnd, ["prevent"])
               }, [
                 vue.createElementVNode("text", { style: { "color": "#707070" } }, "按住说话")
@@ -25490,7 +25666,7 @@ ${i3}
                   [
                     vue.createElementVNode("view", {
                       class: "optionItem",
-                      onClick: _cache[1] || (_cache[1] = ($event) => optionClick(1))
+                      onClick: _cache[0] || (_cache[0] = ($event) => optionClick(1))
                     }, [
                       vue.createElementVNode("view", { class: "icon" }, [
                         vue.createElementVNode("text", { class: "iconfont" }, "")
@@ -25499,7 +25675,7 @@ ${i3}
                     ]),
                     vue.createElementVNode("view", {
                       class: "optionItem",
-                      onClick: _cache[2] || (_cache[2] = ($event) => optionClick(2))
+                      onClick: _cache[1] || (_cache[1] = ($event) => optionClick(2))
                     }, [
                       vue.createElementVNode("view", { class: "icon" }, [
                         vue.createElementVNode("text", { class: "iconfont" }, "")
@@ -25508,7 +25684,7 @@ ${i3}
                     ]),
                     vue.createElementVNode("view", {
                       class: "optionItem",
-                      onClick: _cache[3] || (_cache[3] = ($event) => optionClick(3))
+                      onClick: _cache[2] || (_cache[2] = ($event) => optionClick(3))
                     }, [
                       vue.createElementVNode("view", { class: "icon" }, [
                         vue.createElementVNode("text", { class: "iconfont" }, "")
@@ -25517,7 +25693,7 @@ ${i3}
                     ]),
                     vue.createElementVNode("view", {
                       class: "optionItem",
-                      onClick: _cache[4] || (_cache[4] = ($event) => optionClick(4))
+                      onClick: _cache[3] || (_cache[3] = ($event) => optionClick(4))
                     }, [
                       vue.createElementVNode("view", { class: "icon" }, [
                         vue.createElementVNode("text", { class: "iconfont" }, "")
@@ -25555,6 +25731,31 @@ ${i3}
                   4
                   /* STYLE */
                 )
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          ),
+          vue.createVNode(
+            _component_uv_popup,
+            {
+              bgColor: "none",
+              class: "audioBg",
+              ref_key: "audioAni",
+              ref: audioAni
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("view", { class: "bg" }, [
+                  vue.createElementVNode("image", {
+                    class: "img",
+                    src: vue.unref(audioImg),
+                    mode: "",
+                    "lazy-load": true
+                  }, null, 8, ["src"])
+                ])
               ]),
               _: 1
               /* STABLE */

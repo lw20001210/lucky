@@ -7,7 +7,7 @@
 				</template>
 			</Header>
 		</view>
-		<view class="divide">
+		<view class="divide" @click="playVoice">
 		</view>
 		<view class="infoList">
 			<!-- height: wh+'px' -->
@@ -15,22 +15,50 @@
 				:refresher-triggered="triggered" :scroll-top="scrollTop" class="scroll" scroll-y="true"
 				:style="{ height: wh+'px' }" @scrolltoupper="onSrcollTop">
 				<view v-for="(item,index) in messages" class="messageList" :key="index">
+					<view class="time" v-if="getTime(item.createTime,index)">
+						<view class="time_text">{{getTime(item.createTime,index)}}</view>
+						<view class="time_text" v-if="index==0">你们已经成功添加为好友,现在可以开始聊天了</view>
+					</view>
 					<view class="info right" v-if="item.fromUid==userInfo.id">
-						<view class="content" v-if="item.message.text!=''">
-							<text>{{item.message.text}}</text>
+						<!-- 文字消息 -->
+						<view class="content" v-if="item.type==0">
+							<text>{{item.message}}</text>
 						</view>
-						<view class="contentImg" v-else>
-							<image class="imgMsg" :src="item.message.img" mode=""></image>
+						<!-- 图片消息 -->
+						<view class="contentImg" v-if="item.type==1">
+							<image :lazy-load="true" class="imgMsg" @click="previewImg(item.message)"
+								:src="item.message" mode="">
+							</image>
 						</view>
-						<image class="img" :src="item.avatar"></image>
+						<!-- 语音消息 -->
+						<view class="content" v-if="item.type==2">
+							<!-- <image @click="changeStatus(item.message, index)"
+								:src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'"
+								:lazy-load="true"></image> -->
+							<text>{{item.audioTime}}</text>
+							<image @click="changeStatus(item.message,index)"
+								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image>
+						</view>
+						<image :lazy-load="true" class="img" :src="item.avatar"></image>
 					</view>
 					<view class="info" v-else>
-						<image class="img" :src="item.avatar" @click="goDetail"></image>
-						<view class="content" v-if="item.message.text!=''">
-							<text>{{item.message.text}}</text>
+						<image :lazy-load="true" class="img" :src="item.avatar" @click="goDetail"></image>
+						<view class="content" v-if="item.type==0">
+							<text>{{item.message}}</text>
 						</view>
-						<view class="contentImg" v-else>
-							<image class="imgMsg" :src="item.message.img" mode=""></image>
+						<view class="contentImg" v-if="item.type==1">
+							<image :lazy-load="true" @click="previewImg(item.message.img)" class="imgMsg"
+								:src="item.message" mode="">
+							</image>
+						</view>
+						<view class="content" v-if="item.type==2">
+							<!-- 	<image @click="changeStatus(item.message, index)"
+								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image> -->
+
+							<image @click="changeStatus(item.message,index)"
+								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image>
+							<text>{{item.audioTime}}</text>
+							<!-- 	<image @click="changeStatus(item.message, index)" :src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'" :lazy-load="true"></image> -->
 						</view>
 					</view>
 				</view>
@@ -40,11 +68,11 @@
 			<text class="iconfont size" v-if="isVoice" @click="transForm">&#xe652;</text>
 			<text class="iconfont size" v-else @click="transForm">&#xe6e0;</text>
 			<textarea v-if="!isVoice" @input="handleInput" placeholder="请输入内容" :adjust-position="false" class="input"
-				@keyboardheightchange="closeKeyBorder" @focus="getInputHeight" :focus="foucsFlag"
-				:value="newMessage.text" auto-height />
+				@keyboardheightchange="closeKeyBorder" @focus="getInputHeight" :focus="foucsFlag" :value="newMessage"
+				auto-height />
 			<block v-else>
 				<view class="input" style="display: flex;justify-content: center;flex-direction: row; "
-					@touchstart="startRecord" @touchmove="touchMove" @touchend.prevent="touchEnd">
+					@touchstart="startRecord" @touchend.prevent="touchEnd">
 					<text style="color: #707070;">按住说话</text>
 				</view>
 			</block>
@@ -112,12 +140,20 @@
 				</view>
 			</view>
 		</uv-popup>
+		<uv-popup bgColor="none" class="audioBg" ref="audioAni">
+			<view class="bg">
+				<image class="img" :src="audioImg" mode="" :lazy-load="true"></image>
+			</view>
+		</uv-popup>
 	</view>
 </template>
 
 <script setup>
 	import Header from "@/component/header.vue";
 	import request from "@/utils/request.js"
+	import {
+		getTimeFormat
+	} from "@/utils/format.js"
 	import emoji from "@/utils/emojs.js"
 	import {
 		onLoad,
@@ -128,6 +164,7 @@
 		ref,
 		computed,
 		onMounted,
+		nextTick
 	} from "vue";
 	import {
 		userStore
@@ -146,23 +183,29 @@
 	import {
 		showMsg
 	} from "@/utils/Toast.js"
+	//录音
+	import audioImg from "@/static/images/voice.gif"
+	import audioShowImg from "@/static/images/voice_shop.png"
+	const recorderManager = uni.getRecorderManager();
+	const innerAudioContext = uni.createInnerAudioContext();
+	innerAudioContext.autoplay = true;
 	const userInfo = userStore();
-	const isVoice = ref(false)
 	const statusInfo = statusStore();
 	let foucsFlag = ref(false); //判断是否聚焦
 	let emojiFlag = ref(false); //判断是否是表情包
 	let optionFlag = ref(false); //判断是否是多功能
 	const messages = ref([]); //消息列表
-	//let newMessage = ref(''); //发送内容
-	let newMessage = ref({
-		text: '',
-		img: ''
-	})
+	//发送内容
+	let newMessage = ref('')
+	const isVoice = ref(false); //是否准备录音
+	let voicePath = ref(''); //录音地址
 	// 滚动栏的高度
 	let wh = ref()
 	let keyboardHeight = ref(0); //键盘高度
 	let popup = ref(); //表情包实例
 	let options = ref(); //多功能实例
+	let audioAni = ref(); //录音实例
+
 	let itemId = ref(); //朋友id
 	// let itemAvatar = ref(); //朋友头像
 	let emojiHeight = ref(531); //即是表情包弹出层的高度，也是功能选项弹出层高度
@@ -173,12 +216,20 @@
 		path: '/pages/home/home'
 	})
 
-	// 点击头像去friend的detail页面
-	function goDetail() {
-		uni.navigateTo({
-			url: `/pages/detail/detail?id=${itemId.value}`
-		})
-	}
+	let audioIndex = ref(-1) //判断点击了哪个语音
+	let scrollTop = ref(0); //滚动距离
+	let refreshFlag = ref(true); //是否开启下拉刷新
+	let triggered = ref(false); //是否处触发下拉刷新
+	let page = ref(1)
+	let pageNum = ref(30);
+	let total = ref(0) //总消息数
+	let obj = ref({
+		fromUid: userInfo.id,
+		toUid: itemId.value ? itemId.value : 0,
+		page: page.value,
+		pageNum: pageNum.value
+	})
+
 	let scrollHeight = ref(99999999)
 	// 触底事件
 	function scrollBottom() {
@@ -187,21 +238,42 @@
 			scrollTop.value += scrollHeight.value;
 		}, 20)
 	}
+	// 点击头像去friend的detail页面
+	function goDetail() {
+		uni.navigateTo({
+			url: `/pages/detail/detail?id=${itemId.value}`
+		})
+	}
+
 	onShow(() => {
+		recorderManager.onStop(function(res) {
+			voicePath.value = res.tempFilePath;
+			let objs = {
+				fromUid: userInfo.id,
+				toUid: itemId.value,
+				message: voicePath.value,
+				type: 2,
+				createTime: Date.now(),
+				status: 0,
+				audioTime: ''
+			}
+			let time = Math.ceil((Date.now() - starTime.value) / 1000);
+			objs.avatar = userInfo.avatar;
+			objs.audioTime = time;
+			messages.value.push(objs)
+			console.log(objs, 22);
+			pathToBase64(res.tempFilePath)
+				.then(base64 => {
+					objs.message = base64;
+					statusInfo.socket.emit("getChatVoice", objs);
+					scrollBottom()
+				}).catch(err => {
+					showMsg("信息错误")
+				})
+		});
 		scrollBottom();
 	})
-	let scrollTop = ref(0); //滚动距离
-	let refreshFlag = ref(true); //是否开启下拉刷新
-	let triggered = ref(false);
-	let page = ref(1)
-	let pageNum = ref(30);
-	let total = ref(0)
-	let obj = ref({
-		fromUid: userInfo.id,
-		toUid: itemId.value ? itemId.value : 0,
-		page: page.value,
-		pageNum: pageNum.value
-	})
+
 	// 触发下拉加载事件
 	function onSrcollTop(e) {
 		triggered.value = true;
@@ -214,7 +286,6 @@
 		}
 		page.value += 1;
 		obj.value.page = page.value;
-		// console.log(obj.value, 222);
 		getChatList(obj.value)
 	}
 
@@ -238,7 +309,7 @@
 	})
 	// 判断是否显示发送
 	const sendFlag = computed(() => {
-		if (newMessage.value.text == '') {
+		if (newMessage.value == '') {
 			return true
 		} else {
 			return false
@@ -249,7 +320,7 @@
 		statusInfo.socket.emit("getMsgList", obj);
 	}
 	// 接收服务器返回来的数据
-	statusInfo.socket.on('msgList', (msgs) => {
+	statusInfo.socket?.on('msgList', (msgs) => {
 		if (msgs.total == 0) {
 			setTimeout(() => {
 				triggered.value = false;
@@ -257,7 +328,6 @@
 			}, 1000)
 		}
 		total.value = msgs.total;
-		//console.log(msgs.data, 999);
 		msgs.data.forEach((item) => {
 			if (item.fromUid == userInfo.id) {
 				item.avatar = userInfo.avatar
@@ -280,6 +350,21 @@
 	})
 
 
+	// 处理时间日期显示
+	function getTime(time, index) {
+		if (index == 0) {
+			return getTimeFormat(Number(time))
+		} else {
+			//上一条消息的时间戳
+			let preTime = messages.value[index - 1].createTime
+			let preT = (time - preTime) / 1000
+			if (preT > 5 * 60) {
+				return getTimeFormat(Number(time))
+			} else {
+				return ''
+			}
+		}
+	}
 	// 获取键盘高度
 	function getInputHeight(e) {
 		if (e.detail.height != 0) {
@@ -296,7 +381,6 @@
 		// #ifdef H5
 		wh.value = val.windowHeight - 120;
 		// #endif
-
 	}
 	// 判断键盘的状态
 	function closeKeyBorder(e) {
@@ -334,14 +418,12 @@
 	}
 	//发送消息
 	const sendMessage = () => {
-		if (newMessage.value.text == '') return showMsg('你还未输入内容')
+		if (newMessage.value == '') return showMsg('你还未输入内容')
 		let objs = {
 			fromUid: userInfo.id,
 			toUid: itemId.value,
-			message: {
-				text: newMessage.value.text,
-				img: ''
-			},
+			message: newMessage.value,
+			type: 0, //0为文本，1为图片，2为语音，3为位置
 			createTime: Date.now(),
 			status: 0
 		}
@@ -351,15 +433,13 @@
 		if (messages.value.length % 30 == 0) {
 			page.value += 1
 		}
-		console.log('我是发送消息');
 		messages.value.push(objs)
-		newMessage.value.text = '';
-		newMessage.value.img = '';
+		newMessage.value = ''
 		scrollBottom()
 	};
 
 	const debouncedInputChange = debounce(function inputChange(val) {
-		newMessage.value.text = val
+		newMessage.value = val
 	}, 800); // 使用防抖函数包装inputChange
 	const handleInput = (e) => {
 		debouncedInputChange(e.detail.value); // 调用防抖函数处理@input事件
@@ -427,7 +507,7 @@
 	}
 	// 添加表情包
 	function addEmoji(index) {
-		newMessage.value.text += emoji[index]
+		newMessage.value += emoji[index]
 		console.log(emoji[index]);
 	}
 
@@ -436,10 +516,8 @@
 		let objs = {
 			fromUid: userInfo.id,
 			toUid: itemId.value,
-			message: {
-				text: '',
-				img: ''
-			},
+			message: '',
+			type: 1,
 			createTime: Date.now(),
 			status: 0
 		}
@@ -452,13 +530,12 @@
 					success: function(image) {
 						pathToBase64(image.path)
 							.then(base64 => {
-								objs.message.img = base64;
+								objs.message = base64;
 								objs.avatar = userInfo.avatar;
 								messages.value.push(objs);
 								statusInfo.socket.emit("getChatImg", objs);
 								scrollBottom()
-								newMessage.value.msg = ''
-								newMessage.value.text = ''
+								newMessage.value = ''
 							})
 							.catch(error => {
 								console.error(error)
@@ -470,6 +547,29 @@
 		});
 
 	}
+
+	// 图片预览
+	function previewImg(url) {
+		// 预览和保存图片
+		uni.previewImage({
+			urls: [url],
+			longPressActions: {
+				itemList: ['保存图片'],
+				success: function(data) {
+					uni.saveImageToPhotosAlbum({
+						filePath: url,
+						success: function() {
+							console.log('save success');
+						}
+					});
+				},
+				fail: function(err) {
+					console.log(err.errMsg);
+				}
+			}
+		});
+	}
+
 	// 点击功能合集里面的选项
 	function optionClick(type) {
 		if (type == 1) {
@@ -486,6 +586,7 @@
 			showMsg("功能尚未开发")
 		}
 	}
+	let starTime = ref('');
 	// 改变语音标志
 	function transForm() {
 		isVoice.value = !isVoice.value
@@ -495,15 +596,34 @@
 	 * */
 	//开始录音
 	function startRecord(e) {
-		console.log(e, '我是下按');
-	}
-	//录音移动
-	function touchMova(e) {
-		console.log(e, '我是下按移动');
+		starTime.value = Date.now()
+		console.log('开始录音');
+		recorderManager.start();
+		audioAni.value.open('center');
 	}
 	//录音结束
 	function touchEnd(e) {
-		console.log(e, '录音结束');
+		recorderManager.stop();
+		audioAni.value.close();
+	}
+	//播放录音
+	function playVoice() {
+		console.log('播放录音');
+		if (voicePath.value) {
+			innerAudioContext.src = voicePath.value;
+			innerAudioContext.play();
+		}
+	}
+	// 动态切换语音状态
+	function changeStatus(message, index) {
+		console.log(message, index);
+		audioIndex.value = index;
+		innerAudioContext.src = message;
+		innerAudioContext.play();
+		innerAudioContext.onEnded(() => {
+			recorderManager.stop();
+			audioIndex.value = -1;
+		})
 	}
 </script>
 
@@ -535,6 +655,7 @@
 		.divide {
 			margin: 10rpx 0 0;
 			height: 1rpx;
+			// height: 100px;
 			background-color: #e6e6e6;
 		}
 
@@ -547,8 +668,20 @@
 
 			.messageList {
 				display: flex;
+				flex-direction: column;
 				color: #000;
 				margin-bottom: 25rpx;
+
+				.time {
+					margin: 10rpx 0;
+
+					.time_text {
+						text-align: center;
+						margin: 10rpx 0;
+						font-size: 25rpx;
+						color: #5e5e5e;
+					}
+				}
 
 				.info {
 					flex: 1;
@@ -590,6 +723,13 @@
 							// padding: 10rpx 20rpx;
 							padding: 10rpx 15rpx;
 						}
+
+						image {
+							width: 35rpx;
+							height: 30rpx;
+							margin-right:0rpx;
+							margin-left:15rpx;
+						}
 					}
 
 					.contentImg {
@@ -619,6 +759,12 @@
 						margin-left: 0;
 						margin-right: 20rpx;
 						background-color: #95ec69;
+
+						image {
+							transform: rotateY(180deg);
+							margin-right:15rpx;
+							margin-left: 0rpx;
+						}
 
 						&::before {
 							left: 100%;
@@ -726,5 +872,24 @@
 				margin-bottom: 40rpx;
 			}
 		}
+	}
+
+	.audioBg {
+		.bg {
+			margin-top: 200rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #55ffff;
+			width: 400rpx;
+			height: 150px;
+			border-radius: 20rpx;
+
+			.img {
+				width: 50%;
+				height: 50%;
+			}
+		}
+
 	}
 </style>
