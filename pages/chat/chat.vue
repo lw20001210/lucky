@@ -14,7 +14,7 @@
 			<scroll-view refresher-background="#f5f5f5" :refresher-enabled="refreshFlag" :refresher-threshold="40"
 				:refresher-triggered="triggered" :scroll-top="scrollTop" class="scroll" scroll-y="true"
 				:style="{ height: wh+'px' }" @scrolltoupper="onSrcollTop">
-				<view v-for="(item,index) in messages" class="messageList" :key="index">
+				<view v-for="(item,index) in messages" class="messageList" :key="createTime">
 					<view class="time" v-if="getTime(item.createTime,index)">
 						<view class="time_text">{{getTime(item.createTime,index)}}</view>
 						<view class="time_text" v-if="index==0">你们已经成功添加为好友,现在可以开始聊天了</view>
@@ -39,18 +39,27 @@
 							<image @click="changeStatus(item.message,index)"
 								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image>
 						</view>
+						<!-- 位置 -->
+						<view class="mapBox" v-if="item.type === 3">
+							<map @tap="openMap(item)" :scale="12" :latitude="item.latitude" :longitude="item.longitude"
+								:markers="item.address.markers" style="width: 500rpx; height: 300rpx;"></map>
+						</view>
+
 						<image :lazy-load="true" class="img" :src="item.avatar"></image>
 					</view>
 					<view class="info" v-else>
 						<image :lazy-load="true" class="img" :src="item.avatar" @click="goDetail"></image>
+						<!-- 文本 -->
 						<view class="content" v-if="item.type==0">
 							<text>{{item.message}}</text>
 						</view>
+						<!-- 图片 -->
 						<view class="contentImg" v-if="item.type==1">
 							<image :lazy-load="true" @click="previewImg(item.message.img)" class="imgMsg"
 								:src="item.message" mode="">
 							</image>
 						</view>
+						<!-- 语音 -->
 						<view class="content" v-if="item.type==2">
 							<!-- 	<image @click="changeStatus(item.message, index)"
 								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image> -->
@@ -60,6 +69,12 @@
 							<text>{{item.audioTime}}</text>
 							<!-- 	<image @click="changeStatus(item.message, index)" :src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'" :lazy-load="true"></image> -->
 						</view>
+						<!-- 位置 -->
+						<view class="mapBox" v-if="item.type === 3">
+							<map @tap="openMap(item)" :scale="12" :latitude="item.latitude" :longitude="item.longitude"
+								:markers="item.address.markers" style="width: 470rpx; height: 300rpx;"></map>
+						</view>
+
 					</view>
 				</view>
 			</scroll-view>
@@ -110,15 +125,15 @@
 				</view>
 				<view class="optionItem" @click="optionClick(3)">
 					<view class="icon">
-						<text class="iconfont">&#xe66b;</text>
-					</view>
-					<text class="item_text">视频通话</text>
-				</view>
-				<view class="optionItem" @click="optionClick(4)">
-					<view class="icon">
 						<text class="iconfont">&#xe662;</text>
 					</view>
 					<text class="item_text">位置</text>
+				</view>
+				<view class="optionItem" @click="optionClick(4)">
+					<view class="icon">
+						<text class="iconfont">&#xe66b;</text>
+					</view>
+					<text class="item_text">视频通话</text>
 				</view>
 				<view class="optionItem" @click="optionClick">
 					<view class="icon">
@@ -158,13 +173,12 @@
 	import {
 		onLoad,
 		onShow,
-		onUnload
 	} from "@dcloudio/uni-app";
 	import {
 		ref,
 		computed,
 		onMounted,
-		nextTick
+		watch
 	} from "vue";
 	import {
 		userStore
@@ -244,7 +258,23 @@
 			url: `/pages/detail/detail?id=${itemId.value}`
 		})
 	}
-
+	watch(messages, (val) => {
+		messages.value.forEach(item => {
+			if (item.type === 3) {
+				item.address.markers = [{
+					id: 1,
+					width: 10,
+					height: 10,
+					latitude: item.latitude,
+					longitude: item.longitude,
+					iconPath: '/static/images/address.png'
+				}];
+			}
+		});
+	}, {
+		deep: true,
+		immediate: true
+	});
 	onShow(() => {
 		recorderManager.onStop(function(res) {
 			voicePath.value = res.tempFilePath;
@@ -261,7 +291,6 @@
 			objs.avatar = userInfo.avatar;
 			objs.audioTime = time;
 			messages.value.push(objs)
-			console.log(objs, 22);
 			pathToBase64(res.tempFilePath)
 				.then(base64 => {
 					objs.message = base64;
@@ -279,11 +308,18 @@
 		triggered.value = true;
 		refreshFlag.value = true;
 		let num = page.value * pageNum.value;
-		if (messages.value.length == 0 || num > total.value) {
-			triggered.value = false;
-			refreshFlag.value = false;
-			return showMsg('已经没有数据了')
+		if (messages.value.length > 20) { //这里给个判断，不然消息很少也会触发提示
+			if (messages.value.length == 0 || num > total.value) {
+				triggered.value = false;
+				refreshFlag.value = false;
+				return showMsg('已经没有数据了')
+			}
 		}
+		// if (messages.value.length == 0 || num > total.value) {
+		// 	triggered.value = false;
+		// 	refreshFlag.value = false;
+		// 	return showMsg('已经没有数据了')
+		// }
 		page.value += 1;
 		obj.value.page = page.value;
 		getChatList(obj.value)
@@ -416,28 +452,38 @@
 		}
 		scrollBottom();
 	}
-	//发送消息
-	const sendMessage = () => {
-		if (newMessage.value == '') return showMsg('你还未输入内容')
-		let objs = {
-			fromUid: userInfo.id,
-			toUid: itemId.value,
-			message: newMessage.value,
-			type: 0, //0为文本，1为图片，2为语音，3为位置
-			createTime: Date.now(),
-			status: 0
-		}
-		statusInfo.socket.emit("chat", objs);
-		// statusInfo.socket.emit("chat", objs);
-		objs.avatar = userInfo.avatar;
-		if (messages.value.length % 30 == 0) {
-			page.value += 1
-		}
-		messages.value.push(objs)
-		newMessage.value = ''
-		scrollBottom()
-	};
 
+	// 点击功能合集里面的选项
+	function optionClick(type) {
+		if (type == 1) {
+			// console.log('我是相册');
+			selectImg('album')
+		} else if (type == 2) {
+			selectImg('camera')
+			// console.log("我是拍摄");
+		} else if (type == 3) {
+			// console.log("我是位置");
+			sendAddress()
+		} else if (type == 4) {
+			let data = {
+				type: 3, //发起视频通话
+				avatar: statusInfo.avatar,
+				fromUid: userInfo.id,
+				toUid: itemId.value,
+			}
+			uni.navigateTo({
+				url: '/pages/play/play?data=' + JSON.stringify(data)
+			})
+			console.log("我是视频通话");
+		} else {
+			showMsg("功能尚未开发")
+		}
+	}
+	let starTime = ref(''); //录音开始时间
+	// 改变语音标志
+	function transForm() {
+		isVoice.value = !isVoice.value
+	}
 	const debouncedInputChange = debounce(function inputChange(val) {
 		newMessage.value = val
 	}, 800); // 使用防抖函数包装inputChange
@@ -510,8 +556,28 @@
 		newMessage.value += emoji[index]
 		console.log(emoji[index]);
 	}
-
-	// 点击了相册或拍摄
+	//发送文本消息
+	const sendMessage = () => {
+		if (newMessage.value == '') return showMsg('你还未输入内容')
+		let objs = {
+			fromUid: userInfo.id,
+			toUid: itemId.value,
+			message: newMessage.value,
+			type: 0, //0为文本，1为图片，2为语音，3为位置
+			createTime: Date.now(),
+			status: 0
+		}
+		statusInfo.socket.emit("chat", objs);
+		// statusInfo.socket.emit("chat", objs);
+		objs.avatar = userInfo.avatar;
+		if (messages.value.length % 30 == 0) {
+			page.value += 1
+		}
+		messages.value.push(objs)
+		newMessage.value = ''
+		scrollBottom()
+	};
+	// 相册或拍摄
 	function selectImg(type) {
 		let objs = {
 			fromUid: userInfo.id,
@@ -570,34 +636,14 @@
 		});
 	}
 
-	// 点击功能合集里面的选项
-	function optionClick(type) {
-		if (type == 1) {
-			console.log('我是相册');
-			selectImg('album')
-		} else if (type == 2) {
-			selectImg('camera')
-			console.log("我是拍摄");
-		} else if (type == 3) {
-			console.log("我是视频通话");
-		} else if (type == 4) {
-			console.log("我是位置");
-		} else {
-			showMsg("功能尚未开发")
-		}
-	}
-	let starTime = ref('');
-	// 改变语音标志
-	function transForm() {
-		isVoice.value = !isVoice.value
-	}
+
 	/**
 	 * 语音功能
 	 * */
 	//开始录音
 	function startRecord(e) {
 		starTime.value = Date.now()
-		console.log('开始录音');
+		//console.log('开始录音');
 		recorderManager.start();
 		audioAni.value.open('center');
 	}
@@ -623,6 +669,39 @@
 		innerAudioContext.onEnded(() => {
 			recorderManager.stop();
 			audioIndex.value = -1;
+		})
+	}
+	// 获取位置
+	function sendAddress() {
+		uni.chooseLocation({
+			success: function(res) {
+				let obj = {
+					fromUid: userInfo.id,
+					toUid: itemId.value,
+					type: 3,
+					createTime: Date.now(),
+					status: 0,
+					latitude: res.latitude,
+					longitude: res.longitude,
+					address: {
+						descript: res.address
+					}
+				}
+				messages.value.push(obj);
+				statusInfo.socket.emit('getLocal', obj)
+				scrollBottom()
+			}
+		});
+	}
+	/**
+	 * 地图位置
+	 * */
+	function openMap(info) {
+		console.log(info);
+		uni.openLocation({
+			latitude: info.latitude, //要去的纬度-地址
+			longitude: info.longitude, //要去的经度-地址
+			address: info.address.descript
 		})
 	}
 </script>
@@ -727,8 +806,8 @@
 						image {
 							width: 35rpx;
 							height: 30rpx;
-							margin-right:0rpx;
-							margin-left:15rpx;
+							margin-right: 0rpx;
+							margin-left: 15rpx;
 						}
 					}
 
@@ -762,7 +841,7 @@
 
 						image {
 							transform: rotateY(180deg);
-							margin-right:15rpx;
+							margin-right: 15rpx;
 							margin-left: 0rpx;
 						}
 
