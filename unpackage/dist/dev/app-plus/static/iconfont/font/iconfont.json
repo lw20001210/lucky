@@ -6,6 +6,20 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "9241143",
+      "name": "跳转",
+      "font_class": "iconzhengli_tiaozhuan",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "33151439",
+      "name": "电话-挂断_fill",
+      "font_class": "telephone-hang-up_fill",
+      "unicode": "e852",
+      "unicode_decimal": 59474
+    },
+    {
       "icon_id": "1725972",
       "name": "语音",
       "font_class": "yuyin1",

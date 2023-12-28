@@ -14,7 +14,7 @@
 			<scroll-view refresher-background="#f5f5f5" :refresher-enabled="refreshFlag" :refresher-threshold="40"
 				:refresher-triggered="triggered" :scroll-top="scrollTop" class="scroll" scroll-y="true"
 				:style="{ height: wh+'px' }" @scrolltoupper="onSrcollTop">
-				<view v-for="(item,index) in messages" class="messageList" :key="createTime">
+				<view v-for="(item,index) in messages" class="messageList" :key="index">
 					<view class="time" v-if="getTime(item.createTime,index)">
 						<view class="time_text">{{getTime(item.createTime,index)}}</view>
 						<view class="time_text" v-if="index==0">你们已经成功添加为好友,现在可以开始聊天了</view>
@@ -294,7 +294,7 @@
 			pathToBase64(res.tempFilePath)
 				.then(base64 => {
 					objs.message = base64;
-					statusInfo.socket.emit("getChatVoice", objs);
+					statusInfo.socket?.emit("getChatVoice", objs);
 					scrollBottom()
 				}).catch(err => {
 					showMsg("信息错误")
@@ -315,11 +315,6 @@
 				return showMsg('已经没有数据了')
 			}
 		}
-		// if (messages.value.length == 0 || num > total.value) {
-		// 	triggered.value = false;
-		// 	refreshFlag.value = false;
-		// 	return showMsg('已经没有数据了')
-		// }
 		page.value += 1;
 		obj.value.page = page.value;
 		getChatList(obj.value)
@@ -334,7 +329,7 @@
 		obj.value.page = page.value;
 		obj.value.pageNum = pageNum.value
 		getChatList(obj.value);
-		statusInfo.socket.on('msgNotice', data => {
+		statusInfo.socket?.on('msgNotice', data => {
 			//判断消息是否展示在当前页面
 			if (data.toUid == userInfo.id && itemId.value == data.fromUid) {
 				data.avatar = statusInfo.avatar
@@ -353,7 +348,7 @@
 	})
 	// 获取聊天数据
 	function getChatList(obj) {
-		statusInfo.socket.emit("getMsgList", obj);
+		statusInfo.socket?.emit("getMsgList", obj);
 	}
 	// 接收服务器返回来的数据
 	statusInfo.socket?.on('msgList', (msgs) => {
@@ -465,16 +460,10 @@
 			// console.log("我是位置");
 			sendAddress()
 		} else if (type == 4) {
-			let data = {
-				type: 3, //发起视频通话
-				avatar: statusInfo.avatar,
-				fromUid: userInfo.id,
-				toUid: itemId.value,
-			}
 			uni.navigateTo({
-				url: '/pages/play/play?data=' + JSON.stringify(data)
+				url: `/pages/videoCall/videoCall?fromId=${userInfo.id}&toUid=${itemId.value}&type=4`
 			})
-			console.log("我是视频通话");
+			// console.log("我是视频通话");
 		} else {
 			showMsg("功能尚未开发")
 		}
@@ -567,7 +556,7 @@
 			createTime: Date.now(),
 			status: 0
 		}
-		statusInfo.socket.emit("chat", objs);
+		statusInfo.socket?.emit("chat", objs);
 		// statusInfo.socket.emit("chat", objs);
 		objs.avatar = userInfo.avatar;
 		if (messages.value.length % 30 == 0) {
@@ -582,7 +571,7 @@
 		let objs = {
 			fromUid: userInfo.id,
 			toUid: itemId.value,
-			message: '',
+			message: '图片',
 			type: 1,
 			createTime: Date.now(),
 			status: 0
@@ -599,7 +588,7 @@
 								objs.message = base64;
 								objs.avatar = userInfo.avatar;
 								messages.value.push(objs);
-								statusInfo.socket.emit("getChatImg", objs);
+								statusInfo.socket?.emit("getChatImg", objs);
 								scrollBottom()
 								newMessage.value = ''
 							})
@@ -678,6 +667,7 @@
 				let obj = {
 					fromUid: userInfo.id,
 					toUid: itemId.value,
+					message:"位置",
 					type: 3,
 					createTime: Date.now(),
 					status: 0,
@@ -688,7 +678,7 @@
 					}
 				}
 				messages.value.push(obj);
-				statusInfo.socket.emit('getLocal', obj)
+				statusInfo.socket?.emit('getLocal', obj)
 				scrollBottom()
 			}
 		});

@@ -39,10 +39,10 @@
 	import {
 		ref
 	} from 'vue';
-	import {
-		statusStore
-	} from "@/pinia/userInfo/status.js"
-	const statusInfo = statusStore();
+	// import {
+	// 	statusStore
+	// } from "@/pinia/userInfo/status.js"
+	// const statusInfo = statusStore();
 	let user = userStore()
 	let data = ref({
 		leftFont: "icon-zuojiantou",
@@ -92,17 +92,17 @@
 			data: res
 		} = await request('/user/sendApply', 'post', applyInfo.value);
 		if (res.code != 200) return showMsg("发送失败")
-		let obj = {
-			fromUid: user.id,
-			toUid: userInfo.value.id,
-			message: {
-				text:applyInfo.value.content,
-				img:''
-			},
-			createTime: Date.now(),
-			status: 0
-		}
-		statusInfo.socket.emit("chat", obj);
+		// let obj = {
+		// 	fromUid: user.id,
+		// 	toUid: userInfo.value.id,
+		// 	message: {
+		// 		text:applyInfo.value.content,
+		// 		img:''
+		// 	},
+		// 	createTime: Date.now(),
+		// 	status: 0
+		// }
+		// statusInfo.socket.emit("chat", obj);
 		// 添加备注表
 		// request("/user/addRemark","post",{
 		// 	myId:user.id,

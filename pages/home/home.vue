@@ -43,8 +43,8 @@
 			<uni-list :border="false">
 				<!-- 显示圆形头像 -->
 				<uni-list-chat :clickable="true" v-for="item in friendList" :key="item.id" :avatar-circle="true"
-					:title="item.remarked" :avatar="item.avatar" @click="goChat(item)" note="您收到一条新的消息"
-					:time="item.createTime"></uni-list-chat>
+					:title="item.remarked" :avatar="item.avatar" @click="goChat(item)" :note="item.message"
+					:time="item.createTime" :showBadge="true" :badge-text="item.total"></uni-list-chat>
 			</uni-list>
 		</scroll-view>
 	</view>
@@ -54,6 +54,9 @@
 		setLocal,
 		getLocal
 	} from '@/utils/local.js'
+	import {
+		getTimeFormat
+	} from "@/utils/format.js"
 	import {
 		ref,
 		onMounted,
@@ -159,12 +162,80 @@
 			id: userPower.id
 		})
 		if (res.code != 200) return showMsg("获取数据失败")
-		friendList.value = res.data;
-		friendList.value.forEach(item => {
+		// friendList.value = res.data;
+		// friendList.value.forEach(item => {
+		// 	if (item.id == userPower.id) {
+		// 		item["remarked"] = item.nickname
+		// 	}
+		// })
+		res.data.forEach(item => {
 			if (item.id == userPower.id) {
 				item["remarked"] = item.nickname
 			}
 		})
+		let {
+			data: otherData
+		} = await request("/user/getFriendStatus", "get", {
+			id: userPower.id
+		})
+		// friendList.value.forEach(item => {
+		// 	item.total = 0
+		// 	otherData.data.total.forEach(val => {
+		// 		if (userPower.id == val.toUid) {
+		// 			if (item.id == val.fromUid) {
+		// 				item.total += 1
+		// 			}
+		// 		}
+		// 	})
+		// })
+		res.data.forEach(item => {
+			item.total = 0
+			otherData.data.total.forEach(val => {
+				if (userPower.id == val.toUid) {
+					if (item.id == val.fromUid) {
+						item.total += 1
+					}
+				}
+			})
+		})
+		let categorizedArr = {};
+		//只留最后一条消息
+		otherData.data.datas.forEach(item => {
+			let key = item.fromUid < item.toUid ? `${item.fromUid}-${item.toUid}` :
+				`${item.toUid}-${item.fromUid}`;
+			// if (!categorizedArr[key]) {
+			//     categorizedArr[key] = [];
+			// }
+			// categorizedArr[key].push(item);
+			categorizedArr[key] = item;
+		});
+
+		let result = Object.values(categorizedArr);
+		friendList.value=res.data;
+		friendList.value.forEach((item => {
+			item.message = ''
+			result.forEach(val => {
+				if ((userPower.id == val.fromUid && item.id == val.toUid) || userPower.id == val
+					.toUid && item.id == val.fromUid) {
+
+					item.createTime = getTimeFormat(Number(val.createTime))
+					if (val.type == 0) {
+						item.message = val.message
+					} else if (val.type == 1) {
+						item.message = "图片"
+					} else if (val.type == 2) {
+						item.message = "语音"
+					} else if (val.type == 3) {
+						item.message = "位置"
+					} else if (val.type == 4) {
+						item.message = "视频"
+					} else {
+						item.message = ''
+					}
+				}
+			})
+		}))
+		console.log(friendList.value, 9999);
 	}
 
 	function socketIo() {
@@ -176,7 +247,6 @@
 			},
 		})
 		statusInfo.socket = socket.value;
-		// console.log(socket);
 		socket.value.on("connect", () => {
 
 		});
@@ -190,7 +260,7 @@
 		getData();
 	})
 	onLoad(() => {
-		socketIo()
+		socketIo()	
 	})
 </script>
 <style scoped lang="scss">

@@ -1,0 +1,97 @@
+.container[data-v-dd14bb92] {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.container .video_box[data-v-dd14bb92] {
+  position: fixed;
+  top: 5.625rem;
+  right: 0.9375rem;
+}
+.container .bg[data-v-dd14bb92] {
+  flex: 1;
+}
+.container .bg uni-image[data-v-dd14bb92] {
+  position: relative;
+}
+.container .bg .image_bg[data-v-dd14bb92] {
+  position: absolute;
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+}
+.container .head[data-v-dd14bb92] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 2.75rem;
+  line-height: 2.75rem;
+  padding: 0 0.9375rem;
+  justify-content: space-between;
+}
+.container .head .head_msg[data-v-dd14bb92] {
+  color: #ddd;
+  color: red;
+  font-size: 1rem;
+  margin-left: 5.3125rem;
+}
+.avatar_box[data-v-dd14bb92] {
+  position: fixed;
+  top: 9.375rem;
+}
+.avatar[data-v-dd14bb92] {
+  width: 4.6875rem;
+  height: 4.6875rem;
+  border-radius: 3.125rem;
+}
+.avater_wrap[data-v-dd14bb92] {
+  width: 23.4375rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.btn[data-v-dd14bb92] {
+  z-index: 999;
+  position: fixed;
+  bottom: 6.25rem;
+  background-color: pink;
+}
+.btn .btn_wrap[data-v-dd14bb92] {
+  width: 23.4375rem;
+  display: flex;
+  background-color: pink;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.btn .btn_wrap .box[data-v-dd14bb92] {
+  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.btn .btn_wrap .box .item[data-v-dd14bb92] {
+  display: flex;
+  background-color: pink;
+  align-items: center;
+  justify-content: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 3.125rem;
+}
+.btn .btn_wrap .box .item_text[data-v-dd14bb92] {
+  color: #E4DEDE;
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  background-color: pink;
+}
+.btn .btn_wrap .box .item1[data-v-dd14bb92] {
+  background-color: #FF5D5B;
+}
+.btn .btn_wrap .box .item2[data-v-dd14bb92] {
+  background: rgba(0, 0, 0, 0.3);
+}

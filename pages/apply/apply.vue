@@ -59,6 +59,9 @@
 	import {
 		showMsg
 	} from "../../utils/Toast"
+	import {
+		statusStore
+	} from "@/pinia/userInfo/status.js"
 	let nickname = ref(); //备注名
 	let applyList = ref([])
 	let infoValue = ref(); //备注名信息
@@ -77,6 +80,7 @@
 		path: '/pages/linkman/linkman'
 	})
 	const user = userStore();
+	const statusInfo = statusStore();
 	onLoad((option) => {
 		// 获取好友申请列表信息
 		getApplyList();
@@ -143,6 +147,15 @@
 	async function dialogInputConfirm(val) {
 		//如果点击了确定
 		if (val) {
+			let obj = {
+				fromUid: seletedDate.value.sendId,
+				toUid: user.id,
+				message: seletedDate.value.content,
+				type: 0,
+				status: 0,
+				createTime: Date.now()
+			}
+			statusInfo.socket?.emit("chat", obj);
 			let {
 				data: res
 			} = await request("/user/createShip", "post", {
@@ -150,6 +163,7 @@
 				friendId: seletedDate.value.sendId,
 				friendName: val
 			})
+
 			if (res.code == 200) {
 				showMsg("添加好友成功", 1000, "loading");
 				seletedDate.value = [];

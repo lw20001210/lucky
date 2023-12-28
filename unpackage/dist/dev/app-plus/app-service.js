@@ -9280,7 +9280,7 @@ This will fail in production.`);
     const { data: n2, functionName: s2, method: r2, headers: i2, signHeaderKeys: o2 = [], config: a2 } = t2, c2 = Date.now(), u2 = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(e3) {
       var t3 = 16 * Math.random() | 0;
       return ("x" === e3 ? t3 : 3 & t3 | 8).toString(16);
-    }), h2 = Object.assign({}, i2, { "x-from-app-id": a2.spaceAppId, "x-from-env-id": a2.spaceId, "x-to-env-id": a2.spaceId, "x-from-instance-id": c2, "x-from-function-name": s2, "x-client-timestamp": c2, "x-alipay-source": "client", "x-request-id": u2, "x-alipay-callid": u2 }), l2 = ["x-from-app-id", "x-from-env-id", "x-to-env-id", "x-from-instance-id", "x-from-function-name", "x-client-timestamp"].concat(o2), [d2 = "", p2 = ""] = e2.split("?") || [], f2 = function(e3) {
+    }), h2 = Object.assign({}, i2, { "x-from-app-id": a2.spaceAppId, "x-from-env-id": a2.spaceId, "x-to-env-id": a2.spaceId, "x-from-instance-id": c2, "x-from-function-name": s2, "x-client-timestamp": c2, "x-alipay-source": "client", "x-request-id": u2, "x-alipay-callid": u2, "x-trace-id": u2 }), l2 = ["x-from-app-id", "x-from-env-id", "x-to-env-id", "x-from-instance-id", "x-from-function-name", "x-client-timestamp"].concat(o2), [d2 = "", p2 = ""] = e2.split("?") || [], f2 = function(e3) {
       const t3 = e3.signedHeaders.join(";"), n3 = e3.signedHeaders.map((t4) => `${t4.toLowerCase()}:${e3.headers[t4]}
 `).join(""), s3 = _e(e3.body).toString(At), r3 = `${e3.method.toUpperCase()}
 ${e3.path}
@@ -9299,11 +9299,12 @@ ${i3}
   function Tt({ url: e2, data: t2, method: n2 = "POST", headers: s2 = {} }) {
     return new Promise((r2, i2) => {
       ne.request({ url: e2, method: n2, data: t2, header: s2, dataType: "json", complete: (e3 = {}) => {
+        const t3 = s2["x-trace-id"] || "";
         if (!e3.statusCode || e3.statusCode >= 400) {
-          const { errMsg: t3 } = e3.data || {};
-          return i2(new te({ code: "SYS_ERR", message: t3 || e3.errMsg || "request:fail", requestId: e3.requestID }));
+          const { message: n3, errMsg: s3, trace_id: r3 } = e3.data || {};
+          return i2(new te({ code: "SYS_ERR", message: n3 || s3 || "request:fail", requestId: r3 || t3 }));
         }
-        r2({ status: e3.statusCode, data: e3.data, headers: e3.header, requestId: e3.requestID });
+        r2({ status: e3.statusCode, data: e3.data, headers: e3.header, requestId: t3 });
       } });
     });
   }
@@ -9312,7 +9313,7 @@ ${i3}
     return Tt({ url: i2, data: s2, method: r2, headers: o2 }).then((e3) => {
       const t3 = e3.data || {};
       if (!t3.success)
-        throw new te({ code: e3.code, message: e3.message, requestId: e3.trace_id });
+        throw new te({ code: e3.errCode, message: e3.errMsg, requestId: e3.requestId });
       return t3.data || {};
     }).catch((e3) => {
       throw new te({ code: e3.errCode, message: e3.errMsg, requestId: e3.requestId });
@@ -9325,7 +9326,10 @@ ${i3}
     const s2 = t2.substring(0, n2), r2 = t2.substring(n2 + 1);
     return s2 !== this.config.spaceId && console.warn("file ".concat(e2, " does not belong to env ").concat(this.config.spaceId)), r2;
   }
-  var Ot = class {
+  function Ot(e2 = "") {
+    return "cloud://".concat(this.config.spaceId, "/").concat(e2.replace(/^\/+/, ""));
+  }
+  var Et = class {
     constructor(e2) {
       if (["spaceId", "spaceAppId", "accessKey", "secretKey"].forEach((t2) => {
         if (!Object.prototype.hasOwnProperty.call(e2, t2))
@@ -9380,14 +9384,14 @@ ${i3}
         }
         Ct({ path: "/?download_url", data: { file_list: s2 }, method: "POST" }, this.config).then((e3) => {
           const { file_list: n3 = [] } = e3;
-          t2({ fileList: n3.map((e4) => ({ fileID: e4.file_id, tempFileURL: e4.download_url })) });
+          t2({ fileList: n3.map((e4) => ({ fileID: Ot.call(this, e4.file_id), tempFileURL: e4.download_url })) });
         }).catch((e3) => n2(e3));
       });
     }
   };
-  var Et = { init: (e2) => {
+  var Lt = { init: (e2) => {
     e2.provider = "alipay";
-    const t2 = new Ot(e2);
+    const t2 = new Et(e2);
     return t2.auth = function() {
       return { signInAnonymously: function() {
         return Promise.resolve();
@@ -9396,7 +9400,7 @@ ${i3}
       } };
     }, t2;
   } };
-  function Lt({ data: e2 }) {
+  function Rt({ data: e2 }) {
     let t2;
     t2 = he();
     const n2 = JSON.parse(JSON.stringify(e2 || {}));
@@ -9406,7 +9410,7 @@ ${i3}
     }
     return n2;
   }
-  async function Rt({ name: e2, data: t2 } = {}) {
+  async function Ut({ name: e2, data: t2 } = {}) {
     await this.__dev__.initLocalNetwork();
     const { localAddress: n2, localPort: s2 } = this.__dev__, r2 = { aliyun: "aliyun", tencent: "tcb", alipay: "alipay" }[this.config.provider], i2 = this.config.spaceId, o2 = `http://${n2}:${s2}/system/check-function`, a2 = `http://${n2}:${s2}/cloudfunctions/${e2}`;
     return new Promise((t3, n3) => {
@@ -9444,33 +9448,33 @@ ${i3}
         return this._callCloudFunction({ name: e2, data: t2 });
       }
       return new Promise((e3, n4) => {
-        const s4 = Lt.call(this, { data: t2 });
+        const s4 = Rt.call(this, { data: t2 });
         ne.request({ method: "POST", url: a2, data: { provider: r2, platform: P, param: s4 }, success: ({ statusCode: t3, data: s5 } = {}) => !t3 || t3 >= 400 ? n4(new te({ code: s5.code || "SYS_ERR", message: s5.message || "request:fail" })) : e3({ result: s5 }), fail(e4) {
           n4(new te({ code: e4.code || e4.errCode || "SYS_ERR", message: e4.message || e4.errMsg || "request:fail" }));
         } });
       });
     });
   }
-  const Ut = [{ rule: /fc_function_not_found|FUNCTION_NOT_FOUND/, content: "，云函数[{functionName}]在云端不存在，请检查此云函数名称是否正确以及该云函数是否已上传到服务空间", mode: "append" }];
-  var Nt = /[\\^$.*+?()[\]{}|]/g, Dt = RegExp(Nt.source);
-  function Mt(e2, t2, n2) {
-    return e2.replace(new RegExp((s2 = t2) && Dt.test(s2) ? s2.replace(Nt, "\\$&") : s2, "g"), n2);
+  const Nt = [{ rule: /fc_function_not_found|FUNCTION_NOT_FOUND/, content: "，云函数[{functionName}]在云端不存在，请检查此云函数名称是否正确以及该云函数是否已上传到服务空间", mode: "append" }];
+  var Dt = /[\\^$.*+?()[\]{}|]/g, Mt = RegExp(Dt.source);
+  function qt(e2, t2, n2) {
+    return e2.replace(new RegExp((s2 = t2) && Mt.test(s2) ? s2.replace(Dt, "\\$&") : s2, "g"), n2);
     var s2;
   }
-  const Ft = "request", Kt = "response", jt = "both";
-  const kn = { code: 2e4, message: "System error" }, An = { code: 20101, message: "Invalid client" };
-  function Cn(e2) {
+  const Kt = "request", jt = "response", $t = "both";
+  const An = { code: 2e4, message: "System error" }, Pn = { code: 20101, message: "Invalid client" };
+  function xn(e2) {
     const { errSubject: t2, subject: n2, errCode: s2, errMsg: r2, code: i2, message: o2, cause: a2 } = e2 || {};
-    return new te({ subject: t2 || n2 || "uni-secure-network", code: s2 || i2 || kn.code, message: r2 || o2, cause: a2 });
+    return new te({ subject: t2 || n2 || "uni-secure-network", code: s2 || i2 || An.code, message: r2 || o2, cause: a2 });
   }
-  let On;
-  function Nn({ secretType: e2 } = {}) {
-    return e2 === Ft || e2 === Kt || e2 === jt;
+  let En;
+  function Dn({ secretType: e2 } = {}) {
+    return e2 === Kt || e2 === jt || e2 === $t;
   }
-  function Dn({ name: e2, data: t2 = {} } = {}) {
+  function Mn({ name: e2, data: t2 = {} } = {}) {
     return "DCloud-clientDB" === e2 && "encryption" === t2.redirectTo && "getAppClientKey" === t2.action;
   }
-  function Mn({ provider: e2, spaceId: t2, functionName: n2 } = {}) {
+  function qn({ provider: e2, spaceId: t2, functionName: n2 } = {}) {
     const { appId: s2, uniPlatform: r2, osName: i2 } = ce();
     let o2 = r2;
     "app" === r2 && (o2 = i2);
@@ -9501,56 +9505,56 @@ ${i3}
       return false;
     if ((c2[h2] || []).find((e3 = {}) => e3.appId === s2 && (e3.platform || "").toLowerCase() === o2.toLowerCase()))
       return true;
-    throw console.error(`此应用[appId: ${s2}, platform: ${o2}]不在云端配置的允许访问的应用列表内，参考：https://uniapp.dcloud.net.cn/uniCloud/secure-network.html#verify-client`), Cn(An);
+    throw console.error(`此应用[appId: ${s2}, platform: ${o2}]不在云端配置的允许访问的应用列表内，参考：https://uniapp.dcloud.net.cn/uniCloud/secure-network.html#verify-client`), xn(Pn);
   }
-  function qn({ functionName: e2, result: t2, logPvd: n2 }) {
+  function Fn({ functionName: e2, result: t2, logPvd: n2 }) {
     if (this.__dev__.debugLog && t2 && t2.requestId) {
       const s2 = JSON.stringify({ spaceId: this.config.spaceId, functionName: e2, requestId: t2.requestId });
       console.log(`[${n2}-request]${s2}[/${n2}-request]`);
     }
   }
-  function Fn(e2) {
+  function Kn(e2) {
     const t2 = e2.callFunction, n2 = function(n3) {
       const s2 = n3.name;
-      n3.data = Lt.call(e2, { data: n3.data });
-      const r2 = { aliyun: "aliyun", tencent: "tcb", tcb: "tcb", alipay: "alipay" }[this.config.provider], i2 = Nn(n3), o2 = Dn(n3), a2 = i2 || o2;
-      return t2.call(this, n3).then((e3) => (e3.errCode = 0, !a2 && qn.call(this, { functionName: s2, result: e3, logPvd: r2 }), Promise.resolve(e3)), (e3) => (!a2 && qn.call(this, { functionName: s2, result: e3, logPvd: r2 }), e3 && e3.message && (e3.message = function({ message: e4 = "", extraInfo: t3 = {}, formatter: n4 = [] } = {}) {
+      n3.data = Rt.call(e2, { data: n3.data });
+      const r2 = { aliyun: "aliyun", tencent: "tcb", tcb: "tcb", alipay: "alipay" }[this.config.provider], i2 = Dn(n3), o2 = Mn(n3), a2 = i2 || o2;
+      return t2.call(this, n3).then((e3) => (e3.errCode = 0, !a2 && Fn.call(this, { functionName: s2, result: e3, logPvd: r2 }), Promise.resolve(e3)), (e3) => (!a2 && Fn.call(this, { functionName: s2, result: e3, logPvd: r2 }), e3 && e3.message && (e3.message = function({ message: e4 = "", extraInfo: t3 = {}, formatter: n4 = [] } = {}) {
         for (let s3 = 0; s3 < n4.length; s3++) {
           const { rule: r3, content: i3, mode: o3 } = n4[s3], a3 = e4.match(r3);
           if (!a3)
             continue;
           let c2 = i3;
           for (let e5 = 1; e5 < a3.length; e5++)
-            c2 = Mt(c2, `{$${e5}}`, a3[e5]);
+            c2 = qt(c2, `{$${e5}}`, a3[e5]);
           for (const e5 in t3)
-            c2 = Mt(c2, `{${e5}}`, t3[e5]);
+            c2 = qt(c2, `{${e5}}`, t3[e5]);
           return "replace" === o3 ? c2 : e4 + c2;
         }
         return e4;
-      }({ message: `[${n3.name}]: ${e3.message}`, formatter: Ut, extraInfo: { functionName: s2 } })), Promise.reject(e3)));
+      }({ message: `[${n3.name}]: ${e3.message}`, formatter: Nt, extraInfo: { functionName: s2 } })), Promise.reject(e3)));
     };
     e2.callFunction = function(t3) {
       const { provider: s2, spaceId: r2 } = e2.config, i2 = t3.name;
       let o2, a2;
-      if (t3.data = t3.data || {}, e2.__dev__.debugInfo && !e2.__dev__.debugInfo.forceRemote && C ? (e2._callCloudFunction || (e2._callCloudFunction = n2, e2._callLocalFunction = Rt), o2 = Rt) : o2 = n2, o2 = o2.bind(e2), Dn(t3))
+      if (t3.data = t3.data || {}, e2.__dev__.debugInfo && !e2.__dev__.debugInfo.forceRemote && C ? (e2._callCloudFunction || (e2._callCloudFunction = n2, e2._callLocalFunction = Ut), o2 = Ut) : o2 = n2, o2 = o2.bind(e2), Mn(t3))
         a2 = n2.call(e2, t3);
-      else if (Nn(t3)) {
-        a2 = new On({ secretType: t3.secretType, uniCloudIns: e2 }).wrapEncryptDataCallFunction(n2.bind(e2))(t3);
-      } else if (Mn({ provider: s2, spaceId: r2, functionName: i2 })) {
-        a2 = new On({ secretType: t3.secretType, uniCloudIns: e2 }).wrapVerifyClientCallFunction(n2.bind(e2))(t3);
+      else if (Dn(t3)) {
+        a2 = new En({ secretType: t3.secretType, uniCloudIns: e2 }).wrapEncryptDataCallFunction(n2.bind(e2))(t3);
+      } else if (qn({ provider: s2, spaceId: r2, functionName: i2 })) {
+        a2 = new En({ secretType: t3.secretType, uniCloudIns: e2 }).wrapVerifyClientCallFunction(n2.bind(e2))(t3);
       } else
         a2 = o2(t3);
       return Object.defineProperty(a2, "result", { get: () => (console.warn("当前返回结果为Promise类型，不可直接访问其result属性，详情请参考：https://uniapp.dcloud.net.cn/uniCloud/faq?id=promise"), {}) }), a2;
     };
   }
-  On = class {
+  En = class {
     constructor() {
-      throw Cn({ message: `Platform ${P} is not enabled, please check whether secure network module is enabled in your manifest.json` });
+      throw xn({ message: `Platform ${P} is not enabled, please check whether secure network module is enabled in your manifest.json` });
     }
   };
-  const Kn = Symbol("CLIENT_DB_INTERNAL");
-  function jn(e2, t2) {
-    return e2.then = "DoNotReturnProxyWithAFunctionNamedThen", e2._internalType = Kn, e2.inspect = null, e2.__v_raw = void 0, new Proxy(e2, { get(e3, n2, s2) {
+  const jn = Symbol("CLIENT_DB_INTERNAL");
+  function $n(e2, t2) {
+    return e2.then = "DoNotReturnProxyWithAFunctionNamedThen", e2._internalType = jn, e2.inspect = null, e2.__v_raw = void 0, new Proxy(e2, { get(e3, n2, s2) {
       if ("_uniClient" === n2)
         return null;
       if ("symbol" == typeof n2)
@@ -9562,7 +9566,7 @@ ${i3}
       return t2.get(e3, n2, s2);
     } });
   }
-  function $n(e2) {
+  function Bn(e2) {
     return { on: (t2, n2) => {
       e2[t2] = e2[t2] || [], e2[t2].indexOf(n2) > -1 || e2[t2].push(n2);
     }, off: (t2, n2) => {
@@ -9571,17 +9575,17 @@ ${i3}
       -1 !== s2 && e2[t2].splice(s2, 1);
     } };
   }
-  const Bn = ["db.Geo", "db.command", "command.aggregate"];
-  function Wn(e2, t2) {
-    return Bn.indexOf(`${e2}.${t2}`) > -1;
+  const Wn = ["db.Geo", "db.command", "command.aggregate"];
+  function Hn(e2, t2) {
+    return Wn.indexOf(`${e2}.${t2}`) > -1;
   }
-  function Hn(e2) {
+  function zn(e2) {
     switch (f(e2 = se(e2))) {
       case "array":
-        return e2.map((e3) => Hn(e3));
+        return e2.map((e3) => zn(e3));
       case "object":
-        return e2._internalType === Kn || Object.keys(e2).forEach((t2) => {
-          e2[t2] = Hn(e2[t2]);
+        return e2._internalType === jn || Object.keys(e2).forEach((t2) => {
+          e2[t2] = zn(e2[t2]);
         }), e2;
       case "regexp":
         return { $regexp: { source: e2.source, flags: e2.flags } };
@@ -9591,10 +9595,10 @@ ${i3}
         return e2;
     }
   }
-  function zn(e2) {
+  function Jn(e2) {
     return e2 && e2.content && e2.content.$method;
   }
-  class Jn {
+  class Gn {
     constructor(e2, t2, n2) {
       this.content = e2, this.prevStage = t2 || null, this.udb = null, this._database = n2;
     }
@@ -9603,7 +9607,7 @@ ${i3}
       const t2 = [e2.content];
       for (; e2.prevStage; )
         e2 = e2.prevStage, t2.push(e2.content);
-      return { $db: t2.reverse().map((e3) => ({ $method: e3.$method, $param: Hn(e3.$param) })) };
+      return { $db: t2.reverse().map((e3) => ({ $method: e3.$method, $param: zn(e3.$param) })) };
     }
     toString() {
       return JSON.stringify(this.toJSON());
@@ -9618,7 +9622,7 @@ ${i3}
     get isAggregate() {
       let e2 = this;
       for (; e2; ) {
-        const t2 = zn(e2), n2 = zn(e2.prevStage);
+        const t2 = Jn(e2), n2 = Jn(e2.prevStage);
         if ("aggregate" === t2 && "collection" === n2 || "pipeline" === t2)
           return true;
         e2 = e2.prevStage;
@@ -9628,7 +9632,7 @@ ${i3}
     get isCommand() {
       let e2 = this;
       for (; e2; ) {
-        if ("command" === zn(e2))
+        if ("command" === Jn(e2))
           return true;
         e2 = e2.prevStage;
       }
@@ -9637,7 +9641,7 @@ ${i3}
     get isAggregateCommand() {
       let e2 = this;
       for (; e2; ) {
-        const t2 = zn(e2), n2 = zn(e2.prevStage);
+        const t2 = Jn(e2), n2 = Jn(e2.prevStage);
         if ("aggregate" === t2 && "command" === n2)
           return true;
         e2 = e2.prevStage;
@@ -9647,7 +9651,7 @@ ${i3}
     getNextStageFn(e2) {
       const t2 = this;
       return function() {
-        return Gn({ $method: e2, $param: Hn(Array.from(arguments)) }, t2, t2._database);
+        return Vn({ $method: e2, $param: zn(Array.from(arguments)) }, t2, t2._database);
       };
     }
     get count() {
@@ -9681,22 +9685,22 @@ ${i3}
     }
     _send(e2, t2) {
       const n2 = this.getAction(), s2 = this.getCommand();
-      if (s2.$db.push({ $method: e2, $param: Hn(t2) }), S) {
+      if (s2.$db.push({ $method: e2, $param: zn(t2) }), S) {
         const e3 = s2.$db.find((e4) => "collection" === e4.$method), t3 = e3 && e3.$param;
         t3 && 1 === t3.length && "string" == typeof e3.$param[0] && e3.$param[0].indexOf(",") > -1 && console.warn("检测到使用JQL语法联表查询时，未使用getTemp先过滤主表数据，在主表数据量大的情况下可能会查询缓慢。\n- 如何优化请参考此文档：https://uniapp.dcloud.net.cn/uniCloud/jql?id=lookup-with-temp \n- 如果主表数据量很小请忽略此信息，项目发行时不会出现此提示。");
       }
       return this._database._callCloudFunction({ action: n2, command: s2 });
     }
   }
-  function Gn(e2, t2, n2) {
-    return jn(new Jn(e2, t2, n2), { get(e3, t3) {
+  function Vn(e2, t2, n2) {
+    return $n(new Gn(e2, t2, n2), { get(e3, t3) {
       let s2 = "db";
-      return e3 && e3.content && (s2 = e3.content.$method), Wn(s2, t3) ? Gn({ $method: t3 }, e3, n2) : function() {
-        return Gn({ $method: t3, $param: Hn(Array.from(arguments)) }, e3, n2);
+      return e3 && e3.content && (s2 = e3.content.$method), Hn(s2, t3) ? Vn({ $method: t3 }, e3, n2) : function() {
+        return Vn({ $method: t3, $param: zn(Array.from(arguments)) }, e3, n2);
       };
     } });
   }
-  function Vn({ path: e2, method: t2 }) {
+  function Yn({ path: e2, method: t2 }) {
     return class {
       constructor() {
         this.param = Array.from(arguments);
@@ -9709,14 +9713,14 @@ ${i3}
       }
     };
   }
-  function Yn(e2, t2 = {}) {
-    return jn(new e2(t2), { get: (e3, t3) => Wn("db", t3) ? Gn({ $method: t3 }, null, e3) : function() {
-      return Gn({ $method: t3, $param: Hn(Array.from(arguments)) }, null, e3);
+  function Qn(e2, t2 = {}) {
+    return $n(new e2(t2), { get: (e3, t3) => Hn("db", t3) ? Vn({ $method: t3 }, null, e3) : function() {
+      return Vn({ $method: t3, $param: zn(Array.from(arguments)) }, null, e3);
     } });
   }
-  class Qn extends class {
+  class Xn extends class {
     constructor({ uniClient: e2 = {}, isJQL: t2 = false } = {}) {
-      this._uniClient = e2, this._authCallBacks = {}, this._dbCallBacks = {}, e2._isDefault && (this._dbCallBacks = L("_globalUniCloudDatabaseCallback")), t2 || (this.auth = $n(this._authCallBacks)), this._isJQL = t2, Object.assign(this, $n(this._dbCallBacks)), this.env = jn({}, { get: (e3, t3) => ({ $env: t3 }) }), this.Geo = jn({}, { get: (e3, t3) => Vn({ path: ["Geo"], method: t3 }) }), this.serverDate = Vn({ path: [], method: "serverDate" }), this.RegExp = Vn({ path: [], method: "RegExp" });
+      this._uniClient = e2, this._authCallBacks = {}, this._dbCallBacks = {}, e2._isDefault && (this._dbCallBacks = L("_globalUniCloudDatabaseCallback")), t2 || (this.auth = Bn(this._authCallBacks)), this._isJQL = t2, Object.assign(this, Bn(this._dbCallBacks)), this.env = $n({}, { get: (e3, t3) => ({ $env: t3 }) }), this.Geo = $n({}, { get: (e3, t3) => Yn({ path: ["Geo"], method: t3 }) }), this.serverDate = Yn({ path: [], method: "serverDate" }), this.RegExp = Yn({ path: [], method: "RegExp" });
     }
     getCloudEnv(e2) {
       if ("string" != typeof e2 || !e2.trim())
@@ -9795,21 +9799,21 @@ ${i3}
       });
     }
   }
-  const Xn = "token无效，跳转登录页面", Zn = "token过期，跳转登录页面", es = { TOKEN_INVALID_TOKEN_EXPIRED: Zn, TOKEN_INVALID_INVALID_CLIENTID: Xn, TOKEN_INVALID: Xn, TOKEN_INVALID_WRONG_TOKEN: Xn, TOKEN_INVALID_ANONYMOUS_USER: Xn }, ts = { "uni-id-token-expired": Zn, "uni-id-check-token-failed": Xn, "uni-id-token-not-exist": Xn, "uni-id-check-device-feature-failed": Xn };
-  function ns(e2, t2) {
+  const Zn = "token无效，跳转登录页面", es = "token过期，跳转登录页面", ts = { TOKEN_INVALID_TOKEN_EXPIRED: es, TOKEN_INVALID_INVALID_CLIENTID: Zn, TOKEN_INVALID: Zn, TOKEN_INVALID_WRONG_TOKEN: Zn, TOKEN_INVALID_ANONYMOUS_USER: Zn }, ns = { "uni-id-token-expired": es, "uni-id-check-token-failed": Zn, "uni-id-token-not-exist": Zn, "uni-id-check-device-feature-failed": Zn };
+  function ss(e2, t2) {
     let n2 = "";
     return n2 = e2 ? `${e2}/${t2}` : t2, n2.replace(/^\//, "");
   }
-  function ss(e2 = [], t2 = "") {
+  function rs(e2 = [], t2 = "") {
     const n2 = [], s2 = [];
     return e2.forEach((e3) => {
-      true === e3.needLogin ? n2.push(ns(t2, e3.path)) : false === e3.needLogin && s2.push(ns(t2, e3.path));
+      true === e3.needLogin ? n2.push(ss(t2, e3.path)) : false === e3.needLogin && s2.push(ss(t2, e3.path));
     }), { needLoginPage: n2, notNeedLoginPage: s2 };
   }
-  function rs(e2) {
+  function is(e2) {
     return e2.split("?")[0].replace(/^\//, "");
   }
-  function is() {
+  function os$1() {
     return function(e2) {
       let t2 = e2 && e2.$page && e2.$page.fullPath || "";
       return t2 ? ("/" !== t2.charAt(0) && (t2 = "/" + t2), t2) : t2;
@@ -9818,32 +9822,32 @@ ${i3}
       return e2[e2.length - 1];
     }());
   }
-  function os$1() {
-    return rs(is());
+  function as() {
+    return is(os$1());
   }
-  function as(e2 = "", t2 = {}) {
+  function cs(e2 = "", t2 = {}) {
     if (!e2)
       return false;
     if (!(t2 && t2.list && t2.list.length))
       return false;
-    const n2 = t2.list, s2 = rs(e2);
+    const n2 = t2.list, s2 = is(e2);
     return n2.some((e3) => e3.pagePath === s2);
   }
-  const cs = !!e.uniIdRouter;
-  const { loginPage: us, routerNeedLogin: hs, resToLogin: ls, needLoginPage: ds, notNeedLoginPage: ps, loginPageInTabBar: fs } = function({ pages: t2 = [], subPackages: n2 = [], uniIdRouter: s2 = {}, tabBar: r2 = {} } = e) {
-    const { loginPage: i2, needLogin: o2 = [], resToLogin: a2 = true } = s2, { needLoginPage: c2, notNeedLoginPage: u2 } = ss(t2), { needLoginPage: h2, notNeedLoginPage: l2 } = function(e2 = []) {
+  const us = !!e.uniIdRouter;
+  const { loginPage: hs, routerNeedLogin: ls, resToLogin: ds, needLoginPage: ps, notNeedLoginPage: fs, loginPageInTabBar: gs } = function({ pages: t2 = [], subPackages: n2 = [], uniIdRouter: s2 = {}, tabBar: r2 = {} } = e) {
+    const { loginPage: i2, needLogin: o2 = [], resToLogin: a2 = true } = s2, { needLoginPage: c2, notNeedLoginPage: u2 } = rs(t2), { needLoginPage: h2, notNeedLoginPage: l2 } = function(e2 = []) {
       const t3 = [], n3 = [];
       return e2.forEach((e3) => {
-        const { root: s3, pages: r3 = [] } = e3, { needLoginPage: i3, notNeedLoginPage: o3 } = ss(r3, s3);
+        const { root: s3, pages: r3 = [] } = e3, { needLoginPage: i3, notNeedLoginPage: o3 } = rs(r3, s3);
         t3.push(...i3), n3.push(...o3);
       }), { needLoginPage: t3, notNeedLoginPage: n3 };
     }(n2);
-    return { loginPage: i2, routerNeedLogin: o2, resToLogin: a2, needLoginPage: [...c2, ...h2], notNeedLoginPage: [...u2, ...l2], loginPageInTabBar: as(i2, r2) };
+    return { loginPage: i2, routerNeedLogin: o2, resToLogin: a2, needLoginPage: [...c2, ...h2], notNeedLoginPage: [...u2, ...l2], loginPageInTabBar: cs(i2, r2) };
   }();
-  if (ds.indexOf(us) > -1)
-    throw new Error(`Login page [${us}] should not be "needLogin", please check your pages.json`);
-  function gs(e2) {
-    const t2 = os$1();
+  if (ps.indexOf(hs) > -1)
+    throw new Error(`Login page [${hs}] should not be "needLogin", please check your pages.json`);
+  function ms(e2) {
+    const t2 = as();
     if ("/" === e2.charAt(0))
       return e2;
     const [n2, s2] = e2.split("?"), r2 = n2.replace(/^\//, "").split("/"), i2 = t2.split("/");
@@ -9854,44 +9858,44 @@ ${i3}
     }
     return "" === i2[0] && i2.shift(), "/" + i2.join("/") + (s2 ? "?" + s2 : "");
   }
-  function ms(e2) {
-    const t2 = rs(gs(e2));
-    return !(ps.indexOf(t2) > -1) && (ds.indexOf(t2) > -1 || hs.some((t3) => function(e3, t4) {
+  function ys(e2) {
+    const t2 = is(ms(e2));
+    return !(fs.indexOf(t2) > -1) && (ps.indexOf(t2) > -1 || ls.some((t3) => function(e3, t4) {
       return new RegExp(t4).test(e3);
     }(e2, t3)));
   }
-  function ys({ redirect: e2 }) {
-    const t2 = rs(e2), n2 = rs(us);
-    return os$1() !== n2 && t2 !== n2;
+  function _s({ redirect: e2 }) {
+    const t2 = is(e2), n2 = is(hs);
+    return as() !== n2 && t2 !== n2;
   }
-  function _s({ api: e2, redirect: t2 } = {}) {
-    if (!t2 || !ys({ redirect: t2 }))
+  function ws({ api: e2, redirect: t2 } = {}) {
+    if (!t2 || !_s({ redirect: t2 }))
       return;
     const n2 = function(e3, t3) {
       return "/" !== e3.charAt(0) && (e3 = "/" + e3), t3 ? e3.indexOf("?") > -1 ? e3 + `&uniIdRedirectUrl=${encodeURIComponent(t3)}` : e3 + `?uniIdRedirectUrl=${encodeURIComponent(t3)}` : e3;
-    }(us, t2);
-    fs ? "navigateTo" !== e2 && "redirectTo" !== e2 || (e2 = "switchTab") : "switchTab" === e2 && (e2 = "navigateTo");
+    }(hs, t2);
+    gs ? "navigateTo" !== e2 && "redirectTo" !== e2 || (e2 = "switchTab") : "switchTab" === e2 && (e2 = "navigateTo");
     const s2 = { navigateTo: uni.navigateTo, redirectTo: uni.redirectTo, switchTab: uni.switchTab, reLaunch: uni.reLaunch };
     setTimeout(() => {
       s2[e2]({ url: n2 });
     });
   }
-  function ws({ url: e2 } = {}) {
+  function vs({ url: e2 } = {}) {
     const t2 = { abortLoginPageJump: false, autoToLoginPage: false }, n2 = function() {
       const { token: e3, tokenExpired: t3 } = re();
       let n3;
       if (e3) {
         if (t3 < Date.now()) {
           const e4 = "uni-id-token-expired";
-          n3 = { errCode: e4, errMsg: ts[e4] };
+          n3 = { errCode: e4, errMsg: ns[e4] };
         }
       } else {
         const e4 = "uni-id-check-token-failed";
-        n3 = { errCode: e4, errMsg: ts[e4] };
+        n3 = { errCode: e4, errMsg: ns[e4] };
       }
       return n3;
     }();
-    if (ms(e2) && n2) {
+    if (ys(e2) && n2) {
       n2.uniIdRedirectUrl = e2;
       if (J($).length > 0)
         return setTimeout(() => {
@@ -9901,21 +9905,21 @@ ${i3}
     }
     return t2;
   }
-  function vs() {
+  function Is() {
     !function() {
-      const e3 = is(), { abortLoginPageJump: t2, autoToLoginPage: n2 } = ws({ url: e3 });
-      t2 || n2 && _s({ api: "redirectTo", redirect: e3 });
+      const e3 = os$1(), { abortLoginPageJump: t2, autoToLoginPage: n2 } = vs({ url: e3 });
+      t2 || n2 && ws({ api: "redirectTo", redirect: e3 });
     }();
     const e2 = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
     for (let t2 = 0; t2 < e2.length; t2++) {
       const n2 = e2[t2];
       uni.addInterceptor(n2, { invoke(e3) {
-        const { abortLoginPageJump: t3, autoToLoginPage: s2 } = ws({ url: e3.url });
-        return t3 ? e3 : s2 ? (_s({ api: n2, redirect: gs(e3.url) }), false) : e3;
+        const { abortLoginPageJump: t3, autoToLoginPage: s2 } = vs({ url: e3.url });
+        return t3 ? e3 : s2 ? (ws({ api: n2, redirect: ms(e3.url) }), false) : e3;
       } });
     }
   }
-  function Is() {
+  function Ss() {
     this.onResponse((e2) => {
       const { type: t2, content: n2 } = e2;
       let s2 = false;
@@ -9925,7 +9929,7 @@ ${i3}
             if ("object" != typeof e3)
               return false;
             const { errCode: t3 } = e3 || {};
-            return t3 in ts;
+            return t3 in ns;
           }(n2);
           break;
         case "clientdb":
@@ -9933,20 +9937,20 @@ ${i3}
             if ("object" != typeof e3)
               return false;
             const { errCode: t3 } = e3 || {};
-            return t3 in es;
+            return t3 in ts;
           }(n2);
       }
       s2 && function(e3 = {}) {
         const t3 = J($);
         Z().then(() => {
-          const n3 = is();
-          if (n3 && ys({ redirect: n3 }))
-            return t3.length > 0 ? Y($, Object.assign({ uniIdRedirectUrl: n3 }, e3)) : void (us && _s({ api: "navigateTo", redirect: n3 }));
+          const n3 = os$1();
+          if (n3 && _s({ redirect: n3 }))
+            return t3.length > 0 ? Y($, Object.assign({ uniIdRedirectUrl: n3 }, e3)) : void (hs && ws({ api: "navigateTo", redirect: n3 }));
         });
       }(n2);
     });
   }
-  function Ss(e2) {
+  function bs(e2) {
     !function(e3) {
       e3.onResponse = function(e4) {
         G(j, e4);
@@ -9958,9 +9962,9 @@ ${i3}
         G($, e4);
       }, e3.offNeedLogin = function(e4) {
         V($, e4);
-      }, cs && (L("_globalUniCloudStatus").needLoginInit || (L("_globalUniCloudStatus").needLoginInit = true, Z().then(() => {
-        vs.call(e3);
-      }), ls && Is.call(e3)));
+      }, us && (L("_globalUniCloudStatus").needLoginInit || (L("_globalUniCloudStatus").needLoginInit = true, Z().then(() => {
+        Is.call(e3);
+      }), ds && Ss.call(e3)));
     }(e2), function(e3) {
       e3.onRefreshToken = function(e4) {
         G(B, e4);
@@ -9969,15 +9973,15 @@ ${i3}
       };
     }(e2);
   }
-  let bs;
-  const ks = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", As = /^(?:[A-Za-z\d+/]{4})*?(?:[A-Za-z\d+/]{2}(?:==)?|[A-Za-z\d+/]{3}=?)?$/;
-  function Ps() {
+  let ks;
+  const As = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", Ps = /^(?:[A-Za-z\d+/]{4})*?(?:[A-Za-z\d+/]{2}(?:==)?|[A-Za-z\d+/]{3}=?)?$/;
+  function Ts() {
     const e2 = re().token || "", t2 = e2.split(".");
     if (!e2 || 3 !== t2.length)
       return { uid: null, role: [], permission: [], tokenExpired: 0 };
     let n2;
     try {
-      n2 = JSON.parse((s2 = t2[1], decodeURIComponent(bs(s2).split("").map(function(e3) {
+      n2 = JSON.parse((s2 = t2[1], decodeURIComponent(ks(s2).split("").map(function(e3) {
         return "%" + ("00" + e3.charCodeAt(0).toString(16)).slice(-2);
       }).join(""))));
     } catch (e3) {
@@ -9986,16 +9990,16 @@ ${i3}
     var s2;
     return n2.tokenExpired = 1e3 * n2.exp, delete n2.exp, delete n2.iat, n2;
   }
-  bs = "function" != typeof atob ? function(e2) {
-    if (e2 = String(e2).replace(/[\t\n\f\r ]+/g, ""), !As.test(e2))
+  ks = "function" != typeof atob ? function(e2) {
+    if (e2 = String(e2).replace(/[\t\n\f\r ]+/g, ""), !Ps.test(e2))
       throw new Error("Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.");
     var t2;
     e2 += "==".slice(2 - (3 & e2.length));
     for (var n2, s2, r2 = "", i2 = 0; i2 < e2.length; )
-      t2 = ks.indexOf(e2.charAt(i2++)) << 18 | ks.indexOf(e2.charAt(i2++)) << 12 | (n2 = ks.indexOf(e2.charAt(i2++))) << 6 | (s2 = ks.indexOf(e2.charAt(i2++))), r2 += 64 === n2 ? String.fromCharCode(t2 >> 16 & 255) : 64 === s2 ? String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255) : String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255, 255 & t2);
+      t2 = As.indexOf(e2.charAt(i2++)) << 18 | As.indexOf(e2.charAt(i2++)) << 12 | (n2 = As.indexOf(e2.charAt(i2++))) << 6 | (s2 = As.indexOf(e2.charAt(i2++))), r2 += 64 === n2 ? String.fromCharCode(t2 >> 16 & 255) : 64 === s2 ? String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255) : String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255, 255 & t2);
     return r2;
   } : atob;
-  var Ts = n(function(e2, t2) {
+  var Cs = n(function(e2, t2) {
     Object.defineProperty(t2, "__esModule", { value: true });
     const n2 = "chooseAndUploadFile:ok", s2 = "chooseAndUploadFile:fail";
     function r2(e3, t3) {
@@ -10070,9 +10074,9 @@ ${i3}
         }(t3), t3);
       };
     };
-  }), Cs = t$2(Ts);
-  const xs = "manual";
-  function Os(e2) {
+  }), xs = t$2(Cs);
+  const Os = "manual";
+  function Es(e2) {
     return { props: { localdata: { type: Array, default: () => [] }, options: { type: [Object, Array], default: () => ({}) }, spaceInfo: { type: Object, default: () => ({}) }, collection: { type: [String, Array], default: "" }, action: { type: String, default: "" }, field: { type: String, default: "" }, orderby: { type: String, default: "" }, where: { type: [String, Object], default: "" }, pageData: { type: String, default: "add" }, pageCurrent: { type: Number, default: 1 }, pageSize: { type: Number, default: 20 }, getcount: { type: [Boolean, String], default: false }, gettree: { type: [Boolean, String], default: false }, gettreepath: { type: [Boolean, String], default: false }, startwith: { type: String, default: "" }, limitlevel: { type: Number, default: 10 }, groupby: { type: String, default: "" }, groupField: { type: String, default: "" }, distinct: { type: [Boolean, String], default: false }, foreignKey: { type: String, default: "" }, loadtime: { type: String, default: "auto" }, manual: { type: Boolean, default: false } }, data: () => ({ mixinDatacomLoading: false, mixinDatacomHasMore: false, mixinDatacomResData: [], mixinDatacomErrorMessage: "", mixinDatacomPage: {} }), created() {
       this.mixinDatacomPage = { current: this.pageCurrent, size: this.pageSize, count: 0 }, this.$watch(() => {
         var e3 = [];
@@ -10080,7 +10084,7 @@ ${i3}
           e3.push(this[t2]);
         }), e3;
       }, (e3, t2) => {
-        if (this.loadtime === xs)
+        if (this.loadtime === Os)
           return;
         let n2 = false;
         const s2 = [];
@@ -10122,90 +10126,98 @@ ${i3}
       return f2 && (m2.getTree = y2), g2 && (m2.getTreePath = y2), n2 = n2.skip(d2 * (l2 - 1)).limit(d2).get(m2), n2;
     } } };
   }
-  function Es(e2) {
+  function Ls(e2) {
     return function(t2, n2 = {}) {
       n2 = function(e3, t3 = {}) {
         return e3.customUI = t3.customUI || e3.customUI, e3.parseSystemError = t3.parseSystemError || e3.parseSystemError, Object.assign(e3.loadingOptions, t3.loadingOptions), Object.assign(e3.errorOptions, t3.errorOptions), "object" == typeof t3.secretMethods && (e3.secretMethods = t3.secretMethods), e3;
       }({ customUI: false, loadingOptions: { title: "加载中...", mask: true }, errorOptions: { type: "modal", retry: false } }, n2);
       const { customUI: s2, loadingOptions: r2, errorOptions: i2, parseSystemError: o2 } = n2, a2 = !s2;
-      return new Proxy({}, { get: (s3, c2) => function({ fn: e3, interceptorName: t3, getCallbackArgs: n3 } = {}) {
-        return async function(...s4) {
-          const r3 = n3 ? n3({ params: s4 }) : {};
-          let i3, o3;
-          try {
-            return await M(q(t3, "invoke"), { ...r3 }), i3 = await e3(...s4), await M(q(t3, "success"), { ...r3, result: i3 }), i3;
-          } catch (e4) {
-            throw o3 = e4, await M(q(t3, "fail"), { ...r3, error: o3 }), o3;
-          } finally {
-            await M(q(t3, "complete"), o3 ? { ...r3, error: o3 } : { ...r3, result: i3 });
-          }
-        };
-      }({ fn: async function s4(...h2) {
-        let l2;
-        a2 && uni.showLoading({ title: r2.title, mask: r2.mask });
-        const d2 = { name: t2, type: u, data: { method: c2, params: h2 } };
-        "object" == typeof n2.secretMethods && function(e3, t3) {
-          const n3 = t3.data.method, s5 = e3.secretMethods || {}, r3 = s5[n3] || s5["*"];
-          r3 && (t3.secretType = r3);
-        }(n2, d2);
-        let p2 = false;
-        try {
-          l2 = await e2.callFunction(d2);
-        } catch (e3) {
-          p2 = true, l2 = { result: new te(e3) };
+      return new Proxy({}, { get(s3, c2) {
+        switch (c2) {
+          case "toString":
+            return "[object UniCloudObject]";
+          case "toJSON":
+            return {};
         }
-        const { errSubject: f2, errCode: g2, errMsg: m2, newToken: y2 } = l2.result || {};
-        if (a2 && uni.hideLoading(), y2 && y2.token && y2.tokenExpired && (ie(y2), Y(B, { ...y2 })), g2) {
-          let e3 = m2;
-          if (p2 && o2) {
-            e3 = (await o2({ objectName: t2, methodName: c2, params: h2, errSubject: f2, errCode: g2, errMsg: m2 })).errMsg || m2;
-          }
-          if (a2)
-            if ("toast" === i2.type)
-              uni.showToast({ title: e3, icon: "none" });
-            else {
-              if ("modal" !== i2.type)
-                throw new Error(`Invalid errorOptions.type: ${i2.type}`);
-              {
-                const { confirm: t3 } = await async function({ title: e4, content: t4, showCancel: n4, cancelText: s5, confirmText: r3 } = {}) {
-                  return new Promise((i3, o3) => {
-                    uni.showModal({ title: e4, content: t4, showCancel: n4, cancelText: s5, confirmText: r3, success(e5) {
-                      i3(e5);
-                    }, fail() {
-                      i3({ confirm: false, cancel: true });
-                    } });
-                  });
-                }({ title: "提示", content: e3, showCancel: i2.retry, cancelText: "取消", confirmText: i2.retry ? "重试" : "确定" });
-                if (i2.retry && t3)
-                  return s4(...h2);
-              }
+        return function({ fn: e3, interceptorName: t3, getCallbackArgs: n3 } = {}) {
+          return async function(...s4) {
+            const r3 = n3 ? n3({ params: s4 }) : {};
+            let i3, o3;
+            try {
+              return await M(q(t3, "invoke"), { ...r3 }), i3 = await e3(...s4), await M(q(t3, "success"), { ...r3, result: i3 }), i3;
+            } catch (e4) {
+              throw o3 = e4, await M(q(t3, "fail"), { ...r3, error: o3 }), o3;
+            } finally {
+              await M(q(t3, "complete"), o3 ? { ...r3, error: o3 } : { ...r3, result: i3 });
             }
-          const n3 = new te({ subject: f2, code: g2, message: m2, requestId: l2.requestId });
-          throw n3.detail = l2.result, Y(j, { type: z, content: n3 }), n3;
-        }
-        return Y(j, { type: z, content: l2.result }), l2.result;
-      }, interceptorName: "callObject", getCallbackArgs: function({ params: e3 } = {}) {
-        return { objectName: t2, methodName: c2, params: e3 };
-      } }) });
+          };
+        }({ fn: async function s4(...h2) {
+          let l2;
+          a2 && uni.showLoading({ title: r2.title, mask: r2.mask });
+          const d2 = { name: t2, type: u, data: { method: c2, params: h2 } };
+          "object" == typeof n2.secretMethods && function(e3, t3) {
+            const n3 = t3.data.method, s5 = e3.secretMethods || {}, r3 = s5[n3] || s5["*"];
+            r3 && (t3.secretType = r3);
+          }(n2, d2);
+          let p2 = false;
+          try {
+            l2 = await e2.callFunction(d2);
+          } catch (e3) {
+            p2 = true, l2 = { result: new te(e3) };
+          }
+          const { errSubject: f2, errCode: g2, errMsg: m2, newToken: y2 } = l2.result || {};
+          if (a2 && uni.hideLoading(), y2 && y2.token && y2.tokenExpired && (ie(y2), Y(B, { ...y2 })), g2) {
+            let e3 = m2;
+            if (p2 && o2) {
+              e3 = (await o2({ objectName: t2, methodName: c2, params: h2, errSubject: f2, errCode: g2, errMsg: m2 })).errMsg || m2;
+            }
+            if (a2)
+              if ("toast" === i2.type)
+                uni.showToast({ title: e3, icon: "none" });
+              else {
+                if ("modal" !== i2.type)
+                  throw new Error(`Invalid errorOptions.type: ${i2.type}`);
+                {
+                  const { confirm: t3 } = await async function({ title: e4, content: t4, showCancel: n4, cancelText: s5, confirmText: r3 } = {}) {
+                    return new Promise((i3, o3) => {
+                      uni.showModal({ title: e4, content: t4, showCancel: n4, cancelText: s5, confirmText: r3, success(e5) {
+                        i3(e5);
+                      }, fail() {
+                        i3({ confirm: false, cancel: true });
+                      } });
+                    });
+                  }({ title: "提示", content: e3, showCancel: i2.retry, cancelText: "取消", confirmText: i2.retry ? "重试" : "确定" });
+                  if (i2.retry && t3)
+                    return s4(...h2);
+                }
+              }
+            const n3 = new te({ subject: f2, code: g2, message: m2, requestId: l2.requestId });
+            throw n3.detail = l2.result, Y(j, { type: z, content: n3 }), n3;
+          }
+          return Y(j, { type: z, content: l2.result }), l2.result;
+        }, interceptorName: "callObject", getCallbackArgs: function({ params: e3 } = {}) {
+          return { objectName: t2, methodName: c2, params: e3 };
+        } });
+      } });
     };
   }
-  function Ls(e2) {
+  function Rs(e2) {
     return L("_globalUniCloudSecureNetworkCache__{spaceId}".replace("{spaceId}", e2.config.spaceId));
   }
-  async function Rs({ openid: e2, callLoginByWeixin: t2 = false } = {}) {
-    Ls(this);
+  async function Us({ openid: e2, callLoginByWeixin: t2 = false } = {}) {
+    Rs(this);
     throw new Error(`[SecureNetwork] API \`initSecureNetworkByWeixin\` is not supported on platform \`${P}\``);
   }
-  async function Us(e2) {
-    const t2 = Ls(this);
-    return t2.initPromise || (t2.initPromise = Rs.call(this, e2)), t2.initPromise;
-  }
-  function Ns(e2) {
-    return function({ openid: t2, callLoginByWeixin: n2 = false } = {}) {
-      return Us.call(e2, { openid: t2, callLoginByWeixin: n2 });
-    };
+  async function Ns(e2) {
+    const t2 = Rs(this);
+    return t2.initPromise || (t2.initPromise = Us.call(this, e2)), t2.initPromise;
   }
   function Ds(e2) {
+    return function({ openid: t2, callLoginByWeixin: n2 = false } = {}) {
+      return Ns.call(e2, { openid: t2, callLoginByWeixin: n2 });
+    };
+  }
+  function Ms(e2) {
     const t2 = { getSystemInfo: uni.getSystemInfo, getPushClientId: uni.getPushClientId };
     return function(n2) {
       return new Promise((s2, r2) => {
@@ -10217,7 +10229,7 @@ ${i3}
       });
     };
   }
-  class Ms extends class {
+  class qs extends class {
     constructor() {
       this._callback = {};
     }
@@ -10258,7 +10270,7 @@ ${i3}
       super(), this._uniPushMessageCallback = this._receivePushMessage.bind(this), this._currentMessageId = -1, this._payloadQueue = [];
     }
     init() {
-      return Promise.all([Ds("getSystemInfo")(), Ds("getPushClientId")()]).then(([{ appId: e2 } = {}, { cid: t2 } = {}] = []) => {
+      return Promise.all([Ms("getSystemInfo")(), Ms("getPushClientId")()]).then(([{ appId: e2 } = {}, { cid: t2 } = {}] = []) => {
         if (!e2)
           throw new Error("Invalid appId, please check the manifest.json file");
         if (!t2)
@@ -10314,7 +10326,7 @@ ${i3}
       this._destroy(), this.emit("close");
     }
   }
-  async function qs(e2, t2) {
+  async function Fs(e2, t2) {
     const n2 = `http://${e2}:${t2}/system/ping`;
     try {
       const e3 = await (s2 = { url: n2, timeout: 500 }, new Promise((e4, t3) => {
@@ -10330,7 +10342,7 @@ ${i3}
     }
     var s2;
   }
-  async function Fs(e2) {
+  async function Ks(e2) {
     {
       const { osName: e3, osVersion: t3 } = ce();
       "ios" === e3 && function(e4) {
@@ -10347,7 +10359,7 @@ ${i3}
       let n3;
       for (let s3 = 0; s3 < e3.length; s3++) {
         const r3 = e3[s3];
-        if (await qs(r3, t3)) {
+        if (await Fs(r3, t3)) {
           n3 = r3;
           break;
         }
@@ -10362,7 +10374,7 @@ ${i3}
       throw new Error(o2);
     i2(o2);
   }
-  function Ks(e2) {
+  function js(e2) {
     e2._initPromiseHub || (e2._initPromiseHub = new v({ createPromise: function() {
       let t2 = Promise.resolve();
       var n2;
@@ -10375,11 +10387,11 @@ ${i3}
       return t2.then(() => s2.getLoginState()).then((e3) => e3 ? Promise.resolve() : s2.signInAnonymously());
     } }));
   }
-  const js = { tcb: St, tencent: St, aliyun: pe, private: kt, alipay: Et };
-  let $s = new class {
+  const $s = { tcb: St, tencent: St, aliyun: pe, private: kt, alipay: Lt };
+  let Bs = new class {
     init(e2) {
       let t2 = {};
-      const n2 = js[e2.provider];
+      const n2 = $s[e2.provider];
       if (!n2)
         throw new Error("未提供正确的provider参数");
       t2 = n2.init(e2), function(e3) {
@@ -10388,12 +10400,12 @@ ${i3}
         const n3 = T;
         n3 && !n3.code && (t3.debugInfo = n3);
         const s2 = new v({ createPromise: function() {
-          return Fs(e3);
+          return Ks(e3);
         } });
         t3.initLocalNetwork = function() {
           return s2.exec();
         };
-      }(t2), Ks(t2), Fn(t2), function(e3) {
+      }(t2), js(t2), Kn(t2), function(e3) {
         const t3 = e3.uploadFile;
         e3.uploadFile = function(e4) {
           return t3.call(this, e4);
@@ -10404,20 +10416,20 @@ ${i3}
             return e3.init(t3).database();
           if (this._database)
             return this._database;
-          const n3 = Yn(Qn, { uniClient: e3 });
+          const n3 = Qn(Xn, { uniClient: e3 });
           return this._database = n3, n3;
         }, e3.databaseForJQL = function(t3) {
           if (t3 && Object.keys(t3).length > 0)
             return e3.init(t3).databaseForJQL();
           if (this._databaseForJQL)
             return this._databaseForJQL;
-          const n3 = Yn(Qn, { uniClient: e3, isJQL: true });
+          const n3 = Qn(Xn, { uniClient: e3, isJQL: true });
           return this._databaseForJQL = n3, n3;
         };
       }(t2), function(e3) {
-        e3.getCurrentUserInfo = Ps, e3.chooseAndUploadFile = Cs.initChooseAndUploadFile(e3), Object.assign(e3, { get mixinDatacom() {
-          return Os(e3);
-        } }), e3.SSEChannel = Ms, e3.initSecureNetworkByWeixin = Ns(e3), e3.importObject = Es(e3);
+        e3.getCurrentUserInfo = Ts, e3.chooseAndUploadFile = xs.initChooseAndUploadFile(e3), Object.assign(e3, { get mixinDatacom() {
+          return Es(e3);
+        } }), e3.SSEChannel = qs, e3.initSecureNetworkByWeixin = Ds(e3), e3.importObject = Ls(e3);
       }(t2);
       return ["callFunction", "uploadFile", "deleteFile", "getTempFileURL", "downloadFile", "chooseAndUploadFile"].forEach((e3) => {
         if (!t2[e3])
@@ -10451,21 +10463,21 @@ ${i3}
     const e2 = C;
     let t2 = {};
     if (e2 && 1 === e2.length)
-      t2 = e2[0], $s = $s.init(t2), $s._isDefault = true;
+      t2 = e2[0], Bs = Bs.init(t2), Bs._isDefault = true;
     else {
       const t3 = ["auth", "callFunction", "uploadFile", "deleteFile", "getTempFileURL", "downloadFile", "database", "getCurrentUSerInfo", "importObject"];
       let n2;
       n2 = e2 && e2.length > 0 ? "应用有多个服务空间，请通过uniCloud.init方法指定要使用的服务空间" : "应用未关联服务空间，请在uniCloud目录右键关联服务空间", t3.forEach((e3) => {
-        $s[e3] = function() {
+        Bs[e3] = function() {
           return console.error(n2), Promise.reject(new te({ code: "SYS_ERR", message: n2 }));
         };
       });
     }
-    Object.assign($s, { get mixinDatacom() {
-      return Os($s);
-    } }), Ss($s), $s.addInterceptor = N, $s.removeInterceptor = D, $s.interceptObject = F;
+    Object.assign(Bs, { get mixinDatacom() {
+      return Es(Bs);
+    } }), bs(Bs), Bs.addInterceptor = N, Bs.removeInterceptor = D, Bs.interceptObject = F;
   })();
-  var Bs = $s;
+  var Ws = Bs;
   const ERR_MSG_OK = "chooseAndUploadFile:ok";
   const ERR_MSG_FAIL = "chooseAndUploadFile:fail";
   function chooseImage(opts) {
@@ -10605,7 +10617,7 @@ ${i3}
         const index2 = self2.files.findIndex((v2) => v2.uuid === fileItem.uuid);
         fileItem.url = "";
         delete fileItem.errMsg;
-        Bs.uploadFile({
+        Ws.uploadFile({
           filePath: fileItem.path,
           cloudPath: fileItem.cloudPath,
           fileType: fileItem.fileType,
@@ -11352,9 +11364,9 @@ ${i3}
       }
     },
     created() {
-      if (!(Bs.config && Bs.config.provider)) {
+      if (!(Ws.config && Ws.config.provider)) {
         this.noSpace = true;
-        Bs.chooseAndUploadFile = chooseAndUploadFile;
+        Ws.chooseAndUploadFile = chooseAndUploadFile;
       }
       this.form = this.getForm("uniForms");
       this.formItem = this.getForm("uniFormsItem");
@@ -11454,7 +11466,7 @@ ${i3}
        */
       chooseFiles() {
         const _extname = get_extname(this.fileExtname);
-        Bs.chooseAndUploadFile({
+        Ws.chooseAndUploadFile({
           type: this.fileMediatype,
           compressed: false,
           sizeType: this.sizeType,
@@ -11670,7 +11682,7 @@ ${i3}
         fileList = {
           fileList: [].concat(fileList)
         };
-        const urls = await Bs.getTempFileURL(fileList);
+        const urls = await Ws.getTempFileURL(fileList);
         return urls.fileList[0].tempFileURL || "";
       },
       /**
@@ -15781,6 +15793,15 @@ ${i3}
     ]);
   }
   const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$e], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-swipe-action/components/uni-swipe-action/uni-swipe-action.vue"]]);
+  const statusStore = defineStore("status", {
+    state: () => ({
+      userList: [],
+      //好友列表
+      socket: null,
+      avatar: ""
+      //chat界面朋友头像
+    })
+  });
   const _sfc_main$s = {
     __name: "apply",
     setup(__props) {
@@ -15800,6 +15821,7 @@ ${i3}
         path: "/pages/linkman/linkman"
       });
       const user = userStore();
+      const statusInfo = statusStore();
       onLoad((option) => {
         getApplyList();
       });
@@ -15824,7 +15846,7 @@ ${i3}
             sendId: info.sendId,
             acceptId: info.acceptId
           });
-          formatAppLog("log", "at pages/apply/apply.vue:106", res);
+          formatAppLog("log", "at pages/apply/apply.vue:110", res);
           if (res.code == 200) {
             showMsg$1("已成功删除该条记录", 1e3, "loading");
             getApplyList();
@@ -15857,7 +15879,17 @@ ${i3}
         }
       }
       async function dialogInputConfirm(val) {
+        var _a;
         if (val) {
+          let obj = {
+            fromUid: seletedDate.value.sendId,
+            toUid: user.id,
+            message: seletedDate.value.content,
+            type: 0,
+            status: 0,
+            createTime: Date.now()
+          };
+          (_a = statusInfo.socket) == null ? void 0 : _a.emit("chat", obj);
           let {
             data: res
           } = await request("/user/createShip", "post", {
@@ -17583,7 +17615,7 @@ ${i3}
       avatar: {
         handler(avatar) {
           if (avatar.substr(0, 8) == "cloud://") {
-            Bs.getTempFileURL({
+            Ws.getTempFileURL({
               fileList: [avatar]
             }).then((res) => {
               let fileList = res.fileList || res.result.fileList;
@@ -17935,15 +17967,6 @@ ${i3}
     }
   };
   const friendItem = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__scopeId", "data-v-dd3f64b3"], ["__file", "D:/uniapp毕设/lucky/component/friendItem.vue"]]);
-  const statusStore = defineStore("status", {
-    state: () => ({
-      userList: [],
-      //好友列表
-      socket: null,
-      avatar: ""
-      //chat界面朋友头像
-    })
-  });
   var uniSocket_ioExports = {};
   var uniSocket_io = {
     get exports() {
@@ -20440,7 +20463,7 @@ ${i3}
       function scanCode() {
         uni.scanCode({
           success: function(res) {
-            formatAppLog("log", "at pages/home/home.vue:147", "条码内容：" + res.result);
+            formatAppLog("log", "at pages/home/home.vue:150", "条码内容：" + res.result);
             uni.navigateTo({
               url: `/pages/addFriend/addFriend?username=${res.result}`
             });
@@ -20456,12 +20479,55 @@ ${i3}
         });
         if (res.code != 200)
           return showMsg("获取数据失败");
-        friendList.value = res.data;
-        friendList.value.forEach((item) => {
+        res.data.forEach((item) => {
           if (item.id == userPower.id) {
             item["remarked"] = item.nickname;
           }
         });
+        let {
+          data: otherData
+        } = await request("/user/getFriendStatus", "get", {
+          id: userPower.id
+        });
+        res.data.forEach((item) => {
+          item.total = 0;
+          otherData.data.total.forEach((val) => {
+            if (userPower.id == val.toUid) {
+              if (item.id == val.fromUid) {
+                item.total += 1;
+              }
+            }
+          });
+        });
+        let categorizedArr = {};
+        otherData.data.datas.forEach((item) => {
+          let key = item.fromUid < item.toUid ? `${item.fromUid}-${item.toUid}` : `${item.toUid}-${item.fromUid}`;
+          categorizedArr[key] = item;
+        });
+        let result = Object.values(categorizedArr);
+        friendList.value = res.data;
+        friendList.value.forEach((item) => {
+          item.message = "";
+          result.forEach((val) => {
+            if (userPower.id == val.fromUid && item.id == val.toUid || userPower.id == val.toUid && item.id == val.fromUid) {
+              item.createTime = getTimeFormat(Number(val.createTime));
+              if (val.type == 0) {
+                item.message = val.message;
+              } else if (val.type == 1) {
+                item.message = "图片";
+              } else if (val.type == 2) {
+                item.message = "语音";
+              } else if (val.type == 3) {
+                item.message = "位置";
+              } else if (val.type == 4) {
+                item.message = "视频";
+              } else {
+                item.message = "";
+              }
+            }
+          });
+        });
+        formatAppLog("log", "at pages/home/home.vue:238", friendList.value, 9999);
       }
       function socketIo() {
         socket.value = io(mainUrl, {
@@ -20580,9 +20646,11 @@ ${i3}
                         title: item.remarked,
                         avatar: item.avatar,
                         onClick: ($event) => goChat(item),
-                        note: "您收到一条新的消息",
-                        time: item.createTime
-                      }, null, 8, ["title", "avatar", "onClick", "time"]);
+                        note: item.message,
+                        time: item.createTime,
+                        showBadge: true,
+                        "badge-text": item.total
+                      }, null, 8, ["title", "avatar", "onClick", "note", "time", "badge-text"]);
                     }),
                     128
                     /* KEYED_FRAGMENT */
@@ -21636,7 +21704,6 @@ ${i3}
   const _sfc_main$b = {
     __name: "addFriend",
     setup(__props) {
-      const statusInfo = statusStore();
       let user = userStore();
       let data = vue.ref({
         leftFont: "icon-zuojiantou",
@@ -21683,17 +21750,6 @@ ${i3}
         } = await request("/user/sendApply", "post", applyInfo.value);
         if (res.code != 200)
           return showMsg$1("发送失败");
-        let obj = {
-          fromUid: user.id,
-          toUid: userInfo.value.id,
-          message: {
-            text: applyInfo.value.content,
-            img: ""
-          },
-          createTime: Date.now(),
-          status: 0
-        };
-        statusInfo.socket.emit("chat", obj);
         showMsg$1(res.msg, 500, "loading");
         uni.switchTab({
           url: "/pages/home/home"
@@ -25094,8 +25150,9 @@ ${i3}
           objs.audioTime = time;
           messages2.value.push(objs);
           pathToBase64(res.tempFilePath).then((base64) => {
+            var _a2;
             objs.message = base64;
-            statusInfo.socket.emit("getChatVoice", objs);
+            (_a2 = statusInfo.socket) == null ? void 0 : _a2.emit("getChatVoice", objs);
             scrollBottom();
           }).catch((err) => {
             showMsg$1("信息错误");
@@ -25119,6 +25176,7 @@ ${i3}
         getChatList(obj.value);
       }
       onLoad(async (option) => {
+        var _a2;
         getHeight();
         itemId.value = option.id;
         objDate.value.title = option.remarked;
@@ -25127,7 +25185,7 @@ ${i3}
         obj.value.page = page2.value;
         obj.value.pageNum = pageNum.value;
         getChatList(obj.value);
-        statusInfo.socket.on("msgNotice", (data) => {
+        (_a2 = statusInfo.socket) == null ? void 0 : _a2.on("msgNotice", (data) => {
           if (data.toUid == userInfo.id && itemId.value == data.fromUid) {
             data.avatar = statusInfo.avatar;
             messages2.value.push(data);
@@ -25143,7 +25201,8 @@ ${i3}
         }
       });
       function getChatList(obj2) {
-        statusInfo.socket.emit("getMsgList", obj2);
+        var _a2;
+        (_a2 = statusInfo.socket) == null ? void 0 : _a2.emit("getMsgList", obj2);
       }
       (_a = statusInfo.socket) == null ? void 0 : _a.on("msgList", (msgs) => {
         if (msgs.total == 0) {
@@ -25231,17 +25290,9 @@ ${i3}
         } else if (type == 3) {
           sendAddress();
         } else if (type == 4) {
-          let data = {
-            type: 3,
-            //发起视频通话
-            avatar: statusInfo.avatar,
-            fromUid: userInfo.id,
-            toUid: itemId.value
-          };
           uni.navigateTo({
-            url: "/pages/play/play?data=" + JSON.stringify(data)
+            url: `/pages/videoCall/videoCall?fromId=${userInfo.id}&toUid=${itemId.value}&type=4`
           });
-          formatAppLog("log", "at pages/chat/chat.vue:477", "我是视频通话");
         } else {
           showMsg$1("功能尚未开发");
         }
@@ -25303,9 +25354,10 @@ ${i3}
       }
       function addEmoji(index2) {
         newMessage.value += emoji[index2];
-        formatAppLog("log", "at pages/chat/chat.vue:557", emoji[index2]);
+        formatAppLog("log", "at pages/chat/chat.vue:546", emoji[index2]);
       }
       const sendMessage = () => {
+        var _a2;
         if (newMessage.value == "")
           return showMsg$1("你还未输入内容");
         let objs = {
@@ -25317,7 +25369,7 @@ ${i3}
           createTime: Date.now(),
           status: 0
         };
-        statusInfo.socket.emit("chat", objs);
+        (_a2 = statusInfo.socket) == null ? void 0 : _a2.emit("chat", objs);
         objs.avatar = userInfo.avatar;
         if (messages2.value.length % 30 == 0) {
           page2.value += 1;
@@ -25330,7 +25382,7 @@ ${i3}
         let objs = {
           fromUid: userInfo.id,
           toUid: itemId.value,
-          message: "",
+          message: "图片",
           type: 1,
           createTime: Date.now(),
           status: 0
@@ -25344,14 +25396,15 @@ ${i3}
               src: res.tempFilePaths[0],
               success: function(image2) {
                 pathToBase64(image2.path).then((base64) => {
+                  var _a2;
                   objs.message = base64;
                   objs.avatar = userInfo.avatar;
                   messages2.value.push(objs);
-                  statusInfo.socket.emit("getChatImg", objs);
+                  (_a2 = statusInfo.socket) == null ? void 0 : _a2.emit("getChatImg", objs);
                   scrollBottom();
                   newMessage.value = "";
                 }).catch((error2) => {
-                  formatAppLog("error", "at pages/chat/chat.vue:607", error2);
+                  formatAppLog("error", "at pages/chat/chat.vue:596", error2);
                 });
               }
             });
@@ -25367,12 +25420,12 @@ ${i3}
               uni.saveImageToPhotosAlbum({
                 filePath: url2,
                 success: function() {
-                  formatAppLog("log", "at pages/chat/chat.vue:628", "save success");
+                  formatAppLog("log", "at pages/chat/chat.vue:617", "save success");
                 }
               });
             },
             fail: function(err) {
-              formatAppLog("log", "at pages/chat/chat.vue:633", err.errMsg);
+              formatAppLog("log", "at pages/chat/chat.vue:622", err.errMsg);
             }
           }
         });
@@ -25387,14 +25440,14 @@ ${i3}
         audioAni.value.close();
       }
       function playVoice() {
-        formatAppLog("log", "at pages/chat/chat.vue:657", "播放录音");
+        formatAppLog("log", "at pages/chat/chat.vue:646", "播放录音");
         if (voicePath.value) {
           innerAudioContext.src = voicePath.value;
           innerAudioContext.play();
         }
       }
       function changeStatus(message, index2) {
-        formatAppLog("log", "at pages/chat/chat.vue:665", message, index2);
+        formatAppLog("log", "at pages/chat/chat.vue:654", message, index2);
         audioIndex.value = index2;
         innerAudioContext.src = message;
         innerAudioContext.play();
@@ -25406,9 +25459,11 @@ ${i3}
       function sendAddress() {
         uni.chooseLocation({
           success: function(res) {
+            var _a2;
             let obj2 = {
               fromUid: userInfo.id,
               toUid: itemId.value,
+              message: "位置",
               type: 3,
               createTime: Date.now(),
               status: 0,
@@ -25419,13 +25474,13 @@ ${i3}
               }
             };
             messages2.value.push(obj2);
-            statusInfo.socket.emit("getLocal", obj2);
+            (_a2 = statusInfo.socket) == null ? void 0 : _a2.emit("getLocal", obj2);
             scrollBottom();
           }
         });
       }
       function openMap(info) {
-        formatAppLog("log", "at pages/chat/chat.vue:700", info);
+        formatAppLog("log", "at pages/chat/chat.vue:690", info);
         uni.openLocation({
           latitude: info.latitude,
           //要去的纬度-地址
@@ -25472,7 +25527,7 @@ ${i3}
                 vue.renderList(messages2.value, (item, index2) => {
                   return vue.openBlock(), vue.createElementBlock("view", {
                     class: "messageList",
-                    key: _ctx.createTime
+                    key: index2
                   }, [
                     getTime(item.createTime, index2) ? (vue.openBlock(), vue.createElementBlock("view", {
                       key: 0,
@@ -25865,16 +25920,146 @@ ${i3}
   const _sfc_main$1 = {
     __name: "videoCall",
     setup(__props) {
+      let context = vue.ref(null);
+      let windowWidth = vue.ref(0);
+      let windowHeight = vue.ref(0);
+      let statusNav = vue.ref(0);
+      let fromUid = vue.ref();
+      let toUid = vue.ref();
+      let avatar = vue.ref("");
+      let type = vue.ref("");
+      let isSwitch = vue.ref(false);
+      let enableCamera = vue.ref(true);
+      const statusInfo = statusStore();
+      onLoad((option) => {
+        let sys2 = uni.getSystemInfoSync();
+        windowWidth.value = sys2.windowWidth;
+        windowHeight.value = sys2.windowHeight;
+        statusNav.value = sys2.statusBarHeight;
+        try {
+          fromUid.value = option.fromUid;
+          toUid.value = option.toUid;
+          avatar.value = statusInfo.avatar;
+          type.value = option.type;
+          context.value = uni.createLivePusherContext("livePusher", vue.getCurrentInstance().proxy);
+        } catch (error3) {
+          formatAppLog("error", "at pages/videoCall/videoCall.vue:86", "Error in onLoad:", error3);
+        }
+      });
+      function handUp() {
+        stopPreview();
+        uni.navigateBack();
+      }
+      function statechange(e2) {
+        formatAppLog("log", "at pages/videoCall/videoCall.vue:96", "statechange:" + JSON.stringify(e2));
+      }
+      function netstatus(e2) {
+        formatAppLog("log", "at pages/videoCall/videoCall.vue:100", "netstatus:" + JSON.stringify(e2));
+      }
+      function error2(e2) {
+        formatAppLog("log", "at pages/videoCall/videoCall.vue:104", "error:" + JSON.stringify(e2));
+      }
+      function switchCamera() {
+        formatAppLog("log", "at pages/videoCall/videoCall.vue:156", 88);
+        context.value.switchCamera({
+          success: (a2) => {
+            formatAppLog("log", "at pages/videoCall/videoCall.vue:159", "切换摄像头" + JSON.stringify(a2));
+          }
+        });
+      }
+      function stopPreview() {
+        formatAppLog("log", "at pages/videoCall/videoCall.vue:173", "关闭摄像头预览");
+        context.value.stopPreview({
+          success: (a2) => {
+            formatAppLog("log", "at pages/videoCall/videoCall.vue:176", "livePusher.stopPreview:" + JSON.stringify(a2));
+          }
+        });
+      }
       return (_ctx, _cache) => {
-        const _component_stastuBar = vue.resolveComponent("stastuBar");
         return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
-          vue.createVNode(_component_stastuBar),
-          vue.createElementVNode("view", { class: "header" }, " 我是视频通话界面 ")
+          vue.createElementVNode("live-pusher", {
+            id: "livePusher",
+            class: vue.normalizeClass([{ "video_box": vue.unref(isSwitch) }, "livePusher"]),
+            ref: "livePusher",
+            url: "rtmp://192.168.105.20/live/" + vue.unref(fromUid),
+            mode: "SD",
+            muted: true,
+            style: vue.normalizeStyle({ width: !vue.unref(isSwitch) ? vue.unref(windowWidth) + "px" : "175px", height: !vue.unref(isSwitch) ? vue.unref(windowHeight) + "px" : "500rpx" }),
+            "enable-camera": vue.unref(enableCamera),
+            "auto-focus": true,
+            beauty: 1,
+            whiteness: "2",
+            aspect: "9:16",
+            "audio-quality": "high",
+            onStatechange: statechange,
+            onNetstatus: netstatus,
+            onError: error2
+          }, null, 46, ["url", "enable-camera"]),
+          vue.createCommentVNode(" 远程视频 "),
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass({ "video_box": !vue.unref(isSwitch) })
+            },
+            [
+              vue.createElementVNode("video", {
+                onClick: _cache[0] || (_cache[0] = ($event) => vue.isRef(isSwitch) ? isSwitch.value = true : isSwitch = true),
+                src: `http://192.168.105.20:8000/live/${vue.unref(toUid)}.flv`,
+                autoplay: "true",
+                controls: "false",
+                "object-fit": "fill",
+                muted: "false",
+                style: vue.normalizeStyle({ width: (vue.unref(isSwitch) ? vue.unref(windowWidth) : "175") + "px", height: vue.unref(isSwitch) ? vue.unref(windowHeight) + "px" : "500rpx" })
+              }, null, 12, ["src"])
+            ],
+            2
+            /* CLASS */
+          ),
+          vue.createCommentVNode(" 背景图 "),
+          vue.createCommentVNode("v-if", true),
+          vue.createCommentVNode(" 头部区域 "),
+          vue.createElementVNode(
+            "view",
+            {
+              class: "head",
+              style: vue.normalizeStyle({ marginTop: vue.unref(statusNav) + "px" })
+            },
+            [
+              vue.createElementVNode("text", { class: "iconfont" }, ""),
+              vue.createElementVNode("text", { class: "head_msg" }, "等待好友接收邀请..."),
+              vue.createElementVNode("text")
+            ],
+            4
+            /* STYLE */
+          ),
+          vue.createCommentVNode(" 按钮区域 "),
+          vue.createElementVNode("view", { class: "btn" }, [
+            vue.createElementVNode("view", { class: "btn_wrap" }, [
+              vue.createElementVNode("view", {
+                class: "box",
+                onClick: handUp
+              }, [
+                vue.createElementVNode("view", { class: "item item1" }, [
+                  vue.createElementVNode("text", { class: "iconfont" }, "")
+                ]),
+                vue.createElementVNode("text", { class: "item_text" }, "结束")
+              ]),
+              vue.createElementVNode("view", {
+                class: "box",
+                onClick: vue.withModifiers(switchCamera, ["prevent"])
+              }, [
+                vue.createElementVNode("view", { class: "item item2" }, [
+                  vue.createElementVNode("text", { class: "iconfont" }, "")
+                ]),
+                vue.createElementVNode("text", { class: "item_text" }, "切换语音通话")
+              ], 8, ["onClick"])
+            ])
+          ])
         ]);
       };
     }
   };
-  const PagesVideoCallVideoCall = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__file", "D:/uniapp毕设/lucky/pages/videoCall/videoCall.vue"]]);
+  const PagesVideoCallVideoCall = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-dd14bb92"], ["__file", "D:/uniapp毕设/lucky/pages/videoCall/videoCall.vue"]]);
   __definePage("pages/login/login", PagesLoginLogin);
   __definePage("pages/register/register", PagesRegisterRegister);
   __definePage("pages/sendDynamic/sendDynamic", PagesSendDynamicSendDynamic);
