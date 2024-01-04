@@ -10,71 +10,93 @@
 		<view class="divide" @click="playVoice">
 		</view>
 		<view class="infoList">
-			<!-- height: wh+'px' -->
 			<scroll-view refresher-background="#f5f5f5" :refresher-enabled="refreshFlag" :refresher-threshold="40"
 				:refresher-triggered="triggered" :scroll-top="scrollTop" class="scroll" scroll-y="true"
 				:style="{ height: wh+'px' }" @scrolltoupper="onSrcollTop">
-				<view v-for="(item,index) in messages" class="messageList" :key="index">
+				<view v-for="(item,index) in messages" class="messageList" :key="item">
 					<view class="time" v-if="getTime(item.createTime,index)">
 						<view class="time_text">{{getTime(item.createTime,index)}}</view>
-						<view class="time_text" v-if="index==0">你们已经成功添加为好友,现在可以开始聊天了</view>
+						<view class="time_text" v-if="index==0 && chatType==0">你们已经成功添加为好友,现在可以开始聊天了</view>
+						<view class="time_text" v-if="index==0 && chatType==1">群聊创建成功,现在可以开始聊天了</view>
 					</view>
 					<view class="info right" v-if="item.fromUid==userInfo.id">
-						<!-- 文字消息 -->
-						<view class="content" v-if="item.type==0">
-							<text>{{item.message}}</text>
-						</view>
-						<!-- 图片消息 -->
-						<view class="contentImg" v-if="item.type==1">
-							<image :lazy-load="true" class="imgMsg" @click="previewImg(item.message)"
-								:src="item.message" mode="">
-							</image>
-						</view>
-						<!-- 语音消息 -->
-						<view class="content" v-if="item.type==2">
-							<!-- <image @click="changeStatus(item.message, index)"
+						<view class="contents">
+							<view class="nickname" v-if="chatType==1">
+								{{item.remarked}}
+							</view>
+							<!-- 文字消息 -->
+							<view class="content" v-if="item.type==0">
+								<text>{{item.message}}</text>
+							</view>
+							<!-- 图片消息 -->
+							<view class="contentImg" v-if="item.type==1">
+								<image :lazy-load="true" class="imgMsg" @click="previewImg(item.message)"
+									:src="item.message" mode="">
+								</image>
+							</view>
+							<!-- 语音消息 -->
+							<view class="content" v-if="item.type==2">
+								<!-- <image @click="changeStatus(item.message, index)"
 								:src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'"
 								:lazy-load="true"></image> -->
-							<text>{{item.audioTime}}</text>
-							<image @click="changeStatus(item.message,index)"
-								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image>
-						</view>
-						<!-- 位置 -->
-						<view class="mapBox" v-if="item.type === 3">
-							<map @tap="openMap(item)" :scale="12" :latitude="item.latitude" :longitude="item.longitude"
-								:markers="item.address.markers" style="width: 500rpx; height: 300rpx;"></map>
+								<text>{{item.audioTime}}</text>
+								<image @click="changeStatus(item.message,index)"
+									:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image>
+							</view>
+							<!-- scroll-view里面用Map在手机上滚动会出问题，map不会跟着滚动，像是被施加了固定定位 -->
+							<!-- 位置 -->
+							<!-- 		<view class="mapBox" v-if="item.type === 3">
+								<map @tap="openMap(item)" :scale="12" :latitude="item.latitude"
+									:longitude="item.longitude" :markers="item.address.markers"
+									style="width: 470rpx; height: 300rpx;"></map>
+							</view> -->
+							<view class="mapBox" v-if="item.type === 3" @click="openMap(item)">
+								<view class="address">
+									{{item.address.descript}}
+								</view>
+							</view>
 						</view>
 
 						<image :lazy-load="true" class="img" :src="item.avatar"></image>
 					</view>
 					<view class="info" v-else>
-						<image :lazy-load="true" class="img" :src="item.avatar" @click="goDetail"></image>
-						<!-- 文本 -->
-						<view class="content" v-if="item.type==0">
-							<text>{{item.message}}</text>
-						</view>
-						<!-- 图片 -->
-						<view class="contentImg" v-if="item.type==1">
-							<image :lazy-load="true" @click="previewImg(item.message.img)" class="imgMsg"
-								:src="item.message" mode="">
-							</image>
-						</view>
-						<!-- 语音 -->
-						<view class="content" v-if="item.type==2">
-							<!-- 	<image @click="changeStatus(item.message, index)"
-								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image> -->
+						<image :lazy-load="true" class="img" :src="item.avatar" @click="goDetail(item)"></image>
+						<view class="contents">
+							<view class="nickname" v-if="chatType==1">
+								{{item.remarked}}
+							</view>
+							<!-- 文本 -->
+							<view class="content" v-if="item.type==0">
+								<text>{{item.message}}</text>
+							</view>
+							<!-- 图片 -->
+							<view class="contentImg" v-if="item.type==1">
+								<image :lazy-load="true" @click="previewImg(item.message.img)" class="imgMsg"
+									:src="item.message" mode="">
+								</image>
+							</view>
+							<!-- 语音 -->
+							<view class="content" v-if="item.type==2">
+								<!-- 	<image @click="changeStatus(item.message, index)"
+									:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image> -->
 
-							<image @click="changeStatus(item.message,index)"
-								:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image>
-							<text>{{item.audioTime}}</text>
-							<!-- 	<image @click="changeStatus(item.message, index)" :src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'" :lazy-load="true"></image> -->
+								<image @click="changeStatus(item.message,index)"
+									:src="index === audioIndex ? audioImg : audioShowImg" :lazy-load="true"></image>
+								<text>{{item.audioTime}}</text>
+								<!-- 	<image @click="changeStatus(item.message, index)" :src="index === audioIndex ? '../static/images/voice.gif' : '../static/images/voice_shop.png'" :lazy-load="true"></image> -->
+							</view>
+							<!-- 位置 -->
+							<!-- 		<view class="mapBox" v-if="item.type === 3">
+								<map @tap="openMap(item)" :scale="12" :latitude="item.latitude"
+									:longitude="item.longitude" :markers="item.address.markers"
+									style="width: 470rpx; height: 300rpx;"></map>
+							</view> -->
+							<view class="mapBox" v-if="item.type === 3" @click="openMap(item)">
+								<view class="address">
+									{{item.address.descript}}
+								</view>
+							</view>
 						</view>
-						<!-- 位置 -->
-						<view class="mapBox" v-if="item.type === 3">
-							<map @tap="openMap(item)" :scale="12" :latitude="item.latitude" :longitude="item.longitude"
-								:markers="item.address.markers" style="width: 470rpx; height: 300rpx;"></map>
-						</view>
-
 					</view>
 				</view>
 			</scroll-view>
@@ -87,7 +109,7 @@
 				auto-height />
 			<block v-else>
 				<view class="input" style="display: flex;justify-content: center;flex-direction: row; "
-					@touchstart="startRecord" @touchend.prevent="touchEnd">
+					@touchstart.stop="startRecord" @touchend.prevent="touchEnd">
 					<text style="color: #707070;">按住说话</text>
 				</view>
 			</block>
@@ -173,6 +195,7 @@
 	import {
 		onLoad,
 		onShow,
+		onUnload
 	} from "@dcloudio/uni-app";
 	import {
 		ref,
@@ -227,24 +250,26 @@
 	let objDate = ref({
 		leftFont: 'icon-zuojiantou',
 		title: '',
-		path: '/pages/home/home'
+		// path: '/pages/home/home'
 	})
-
+	let chatType = ref(0); //判断群聊私聊，0为私聊，1为群聊
 	let audioIndex = ref(-1) //判断点击了哪个语音
 	let scrollTop = ref(0); //滚动距离
 	let refreshFlag = ref(true); //是否开启下拉刷新
 	let triggered = ref(false); //是否处触发下拉刷新
-	let page = ref(1)
-	let pageNum = ref(30);
+	let page = ref(1) //页数
+	let pageNum = ref(30); //每页信息条数
 	let total = ref(0) //总消息数
+	let starTime = ref(''); //录音开始时间
 	let obj = ref({
 		fromUid: userInfo.id,
 		toUid: itemId.value ? itemId.value : 0,
 		page: page.value,
 		pageNum: pageNum.value
 	})
-
-	let scrollHeight = ref(99999999)
+	let groupId = ref(); //群聊id,也用来判断是否是群聊还是私聊
+	let scrollHeight = ref(9999999999); //直接给超大数值，这样就直接触底了
+	let names = ref([]); //建群邀请人员
 	// 触底事件
 	function scrollBottom() {
 		setTimeout(() => {
@@ -253,18 +278,27 @@
 		}, 20)
 	}
 	// 点击头像去friend的detail页面
-	function goDetail() {
-		uni.navigateTo({
-			url: `/pages/detail/detail?id=${itemId.value}`
-		})
+	function goDetail(item) {
+		if(chatType.value==0){
+			uni.navigateTo({
+				url: `/pages/detail/detail?id=${itemId.value}`
+			})
+		}else{
+			uni.navigateTo({
+				url: `/pages/detail/detail?id=${item.fromUid}`
+			})
+			console.log(item,88);
+		}
+
 	}
+	// 监听给定位地址赋值
 	watch(messages, (val) => {
 		messages.value.forEach(item => {
 			if (item.type === 3) {
 				item.address.markers = [{
 					id: 1,
-					width: 10,
-					height: 10,
+					width: 30,
+					height: 30,
 					latitude: item.latitude,
 					longitude: item.longitude,
 					iconPath: '/static/images/address.png'
@@ -272,29 +306,59 @@
 			}
 		});
 	}, {
-		deep: true,
 		immediate: true
 	});
 	onShow(() => {
 		recorderManager.onStop(function(res) {
 			voicePath.value = res.tempFilePath;
-			let objs = {
-				fromUid: userInfo.id,
-				toUid: itemId.value,
-				message: voicePath.value,
-				type: 2,
-				createTime: Date.now(),
-				status: 0,
-				audioTime: ''
+			let objs = {}
+			if (chatType.value == 0) {
+				objs = {
+					fromUid: userInfo.id,
+					toUid: itemId.value,
+					message: voicePath.value,
+					type: 2,
+					createTime: Date.now(),
+					status: 0,
+					audioTime: ''
+				}
+			} else {
+				objs = {
+					fromUid: userInfo.id,
+					groupId: groupId.value,
+					message: voicePath.value,
+					type: 2,
+					createTime: Date.now(),
+					status: 0,
+					audioTime: '',
+					remarked:userInfo.nickname
+				}
 			}
+
 			let time = Math.ceil((Date.now() - starTime.value) / 1000);
 			objs.avatar = userInfo.avatar;
 			objs.audioTime = time;
-			messages.value.push(objs)
+
 			pathToBase64(res.tempFilePath)
 				.then(base64 => {
 					objs.message = base64;
-					statusInfo.socket?.emit("getChatVoice", objs);
+					// messages.value.push(objs)
+					if (chatType.value == 0) {
+
+						statusInfo.socket?.emit("getChatVoice", objs);
+						statusInfo.socket?.on("audio", data => {
+							objs.message = data.message;
+							messages.value.push(objs)
+							console.log(data, 987);
+						})
+					} else {
+
+						statusInfo.socket?.emit("groupMsg", objs);
+						statusInfo.socket?.on("audio", data => {
+							objs.message = data.message;
+							messages.value.push(objs)
+						})
+					}
 					scrollBottom()
 				}).catch(err => {
 					showMsg("信息错误")
@@ -302,7 +366,13 @@
 		});
 		scrollBottom();
 	})
-
+	// 离开群聊
+	onUnload(() => {
+		statusInfo.socket.emit("leave", {
+			id: userInfo.id,
+			groupId: groupId.value
+		})
+	})
 	// 触发下拉加载事件
 	function onSrcollTop(e) {
 		triggered.value = true;
@@ -314,29 +384,123 @@
 				refreshFlag.value = false;
 				return showMsg('已经没有数据了')
 			}
+		} else {
+			triggered.value = false;
+			refreshFlag.value = false;
+			// return showMsg('已经没有数据了')
 		}
 		page.value += 1;
 		obj.value.page = page.value;
-		getChatList(obj.value)
+
+		if (chatType.value == 0) {
+			getChatList(obj.value)
+		} else {
+			let obj = {
+				groupId: groupId.value,
+				page: page.value,
+				pageNum: pageNum.value
+			}
+			getGroupChatList(obj)
+		}
 	}
 
-	onLoad(async (option) => {
-		getHeight();
-		itemId.value = option.id; //toUserId
-		objDate.value.title = option.remarked;
-		obj.value.fromUid = userInfo.id
-		obj.value.toUid = option.id
-		obj.value.page = page.value;
-		obj.value.pageNum = pageNum.value
-		getChatList(obj.value);
-		statusInfo.socket?.on('msgNotice', data => {
-			//判断消息是否展示在当前页面
-			if (data.toUid == userInfo.id && itemId.value == data.fromUid) {
-				data.avatar = statusInfo.avatar
-				messages.value.push(data)
-				scrollBottom()
-			}
+	let groupUsers = ref([]); //群友列表
+	// 获取群聊信息列表
+	async function getGroupChatList(groupId) {
+		let {
+			data: res
+		} = await request("/user/getGroupChats", "get", {
+			groupId
 		})
+		// messages.value = res.data
+		return res.data
+		// console.log(res, 666666);
+	}
+	// 获取群友数据
+	const getGroupUsers = async (groupId) => {
+		let {
+			data: res
+		} = await request("/user/groupUserList", "get", {
+			groupId,
+			myId: userInfo.id
+		})
+		if (res.code != 200) {
+			return showMsg("获取数据失败")
+		} else {
+			groupUsers.value = res.data;
+			return res.data
+		}
+	}
+	onLoad(async (option) => {
+		if (option.groupId) {
+			chatType.value = 1;
+			groupId.value = option.groupId
+			joinGroup(option.groupId);
+			let chatList = await getGroupChatList(option.groupId); //群聊信息
+			let userList = await getGroupUsers(option.groupId); //群友数据包括自己
+
+			chatList.forEach(item => {
+				userList.forEach(val => {
+					if (item.fromUid == val.id) {
+						if (val.remarked) {
+							item.avatar = val.avatar;
+							return item.remarked = val.remarked
+						} else {
+							item.avatar = val.avatar;
+							return item.remarked = val.nickname
+						}
+					}
+				})
+			})
+			messages.value = chatList;
+			// console.log(userList, 789);
+			console.log(chatList, 333);
+			objDate.value.title = `${option.groupName} ( ${userList.length} )`
+			obj.value.page = page.value;
+			obj.value.pageNum = pageNum.value
+			//监听群消息
+			statusInfo.socket.on('listToGroupMsg', data => {
+				// console.log(data, 111);
+				groupUsers.value.forEach(item => {
+					if (item.id == data.fromUid) {
+						data.avatar = item.avatar;
+						if (data.fromUid == userInfo.id) {
+							return data.remarked == item.nickname
+						} else {
+							return data.remarked == item.remarked
+						}
+
+					}
+				})
+
+				if (data.fromUid != userInfo.id) {
+					messages.value.push(data)
+				}
+
+				//chatList.push(data)
+				//console.log(data, 99);
+				scrollBottom()
+			})
+			scrollBottom()
+		} else {
+			chatType.value = 0;
+			itemId.value = option.id; //toUserId
+			objDate.value.title = option.remarked;
+			obj.value.fromUid = userInfo.id
+			obj.value.toUid = option.id
+			obj.value.page = page.value;
+			obj.value.pageNum = pageNum.value
+			getChatList(obj.value);
+			statusInfo.socket.on('msgNotice', data => {
+				//判断消息是否展示在当前页面
+				if (data.toUid == userInfo.id && itemId.value == data.fromUid) {
+					data.avatar = statusInfo.avatar
+					messages.value.push(data)
+					scrollBottom()
+				}
+			})
+		}
+		getHeight();
 	})
 	// 判断是否显示发送
 	const sendFlag = computed(() => {
@@ -468,28 +632,32 @@
 			showMsg("功能尚未开发")
 		}
 	}
-	let starTime = ref(''); //录音开始时间
+
 	// 改变语音标志
 	function transForm() {
 		isVoice.value = !isVoice.value
 	}
-	const debouncedInputChange = debounce(function inputChange(val) {
-		newMessage.value = val
-	}, 800); // 使用防抖函数包装inputChange
-	const handleInput = (e) => {
-		debouncedInputChange(e.detail.value); // 调用防抖函数处理@input事件
-	};
+	// 使用防抖函数包装inputChange
+	const handleInput = debounce((e) => {
+		newMessage.value = e.detail.value
+	}, 500)
 
 	// 点击右上角进入界面
 	function goInfo() {
-		if (itemId.value == userInfo.id) {
+		if (groupId.value) {
 			uni.navigateTo({
-				url: "/pages/editUser/editUser"
+				url: `/pages/groupInfo/groupInfo?groupId=${groupId.value}`
 			})
 		} else {
-			uni.navigateTo({
-				url: `/pages/friendInfo/friendInfo?id=${itemId.value}`
-			})
+			if (itemId.value == userInfo.id) {
+				uni.navigateTo({
+					url: "/pages/editUser/editUser"
+				})
+			} else {
+				uni.navigateTo({
+					url: `/pages/friendInfo/friendInfo?id=${itemId.value}`
+				})
+			}
 		}
 	}
 	// 打开表情包弹出层
@@ -548,34 +716,65 @@
 	//发送文本消息
 	const sendMessage = () => {
 		if (newMessage.value == '') return showMsg('你还未输入内容')
-		let objs = {
-			fromUid: userInfo.id,
-			toUid: itemId.value,
-			message: newMessage.value,
-			type: 0, //0为文本，1为图片，2为语音，3为位置
-			createTime: Date.now(),
-			status: 0
+		if (chatType.value == 0) {
+			let objs = {
+				fromUid: userInfo.id,
+				toUid: itemId.value,
+				message: newMessage.value,
+				type: 0, //0为文本，1为图片，2为语音，3为位置
+				createTime: Date.now(),
+				status: 0
+			}
+			statusInfo.socket?.emit("chat", objs);
+			objs.avatar = userInfo.avatar;
+			messages.value.push(objs)
+			newMessage.value = ''
+		} else {
+			let obj = {
+				groupId: groupId.value,
+				fromUid: userInfo.id,
+				message: newMessage.value,
+				type: 0,
+				createTime: Date.now(),
+				status: 0,
+				remarked:userInfo.nickname
+			}
+			obj.avatar = userInfo.avatar;
+			statusInfo.socket?.emit("groupMsg", obj);
+			messages.value.push(obj)
+			newMessage.value = ''
 		}
-		statusInfo.socket?.emit("chat", objs);
-		// statusInfo.socket.emit("chat", objs);
-		objs.avatar = userInfo.avatar;
+
 		if (messages.value.length % 30 == 0) {
 			page.value += 1
 		}
-		messages.value.push(objs)
 		newMessage.value = ''
 		scrollBottom()
 	};
 	// 相册或拍摄
 	function selectImg(type) {
-		let objs = {
-			fromUid: userInfo.id,
-			toUid: itemId.value,
-			message: '图片',
-			type: 1,
-			createTime: Date.now(),
-			status: 0
+		let objs = {}
+		if (chatType.value == 0) {
+			objs = {
+				fromUid: userInfo.id,
+				toUid: itemId.value,
+				message: '图片',
+				type: 1,
+				createTime: Date.now(),
+				status: 0
+			}
+		} else {
+			objs = {
+				groupId: groupId.value,
+				fromUid: userInfo.id,
+				message: '图片',
+				type: 1,
+				createTime: Date.now(),
+				status: 0,
+				remarked:userInfo.nickname
+			}
 		}
+
 		uni.chooseImage({
 			sizeType: ['compressed'], //这个不能写，否则手机端会出现问题
 			sourceType: [type],
@@ -588,7 +787,12 @@
 								objs.message = base64;
 								objs.avatar = userInfo.avatar;
 								messages.value.push(objs);
-								statusInfo.socket?.emit("getChatImg", objs);
+								if (chatType.value == 0) {
+									statusInfo.socket?.emit("getChatImg", objs);
+								} else {
+									statusInfo.socket?.emit("groupMsg", objs);
+								}
+
 								scrollBottom()
 								newMessage.value = ''
 							})
@@ -651,7 +855,7 @@
 	}
 	// 动态切换语音状态
 	function changeStatus(message, index) {
-		console.log(message, index);
+		//console.log(message, index);
 		audioIndex.value = index;
 		innerAudioContext.src = message;
 		innerAudioContext.play();
@@ -664,21 +868,43 @@
 	function sendAddress() {
 		uni.chooseLocation({
 			success: function(res) {
-				let obj = {
-					fromUid: userInfo.id,
-					toUid: itemId.value,
-					message:"位置",
-					type: 3,
-					createTime: Date.now(),
-					status: 0,
-					latitude: res.latitude,
-					longitude: res.longitude,
-					address: {
-						descript: res.address
+				let obj = {};
+				if (chatType.value == 0) {
+					obj = {
+						fromUid: userInfo.id,
+						toUid: itemId.value,
+						message: "位置",
+						type: 3,
+						createTime: Date.now(),
+						status: 0,
+						latitude: res.latitude,
+						longitude: res.longitude,
+						address: {
+							descript: res.address
+						}
+					}
+				} else {
+					obj = {
+						fromUid: userInfo.id,
+						groupId: groupId.value,
+						message: "位置",
+						type: 3,
+						createTime: Date.now(),
+						status: 0,
+						latitude: res.latitude,
+						longitude: res.longitude,
+						address: {
+							descript: res.address
+						},
+						remarked:userInfo.nickname
 					}
 				}
 				messages.value.push(obj);
-				statusInfo.socket?.emit('getLocal', obj)
+				if (chatType.value == 0) {
+					statusInfo.socket?.emit('getLocal', obj)
+				} else {
+					statusInfo.socket?.emit("groupMsg", obj);
+				}
 				scrollBottom()
 			}
 		});
@@ -687,12 +913,21 @@
 	 * 地图位置
 	 * */
 	function openMap(info) {
-		console.log(info);
+		console.log(info, 3535);
 		uni.openLocation({
-			latitude: info.latitude, //要去的纬度-地址
-			longitude: info.longitude, //要去的经度-地址
+			// 必须转数字，否则可能会打不开地图
+			latitude: Number(info.latitude), //要去的纬度-地址
+			longitude: Number(info.longitude), //要去的经度-地址
 			address: info.address.descript
 		})
+	}
+	//进入群聊
+	function joinGroup(groupId) {
+		let data = {
+			id: userInfo.id,
+			groupId
+		}
+		statusInfo.socket?.emit('join', data)
 	}
 </script>
 
@@ -701,10 +936,6 @@
 		background-color: transparent;
 		box-shadow: none;
 	}
-
-	// :deep(.uni-scroll-view-refresh__spinner > circle) {
-	// 	color: #d1d1d1 !important;
-	// }
 
 	.box {
 		height: 100vh;
@@ -756,6 +987,24 @@
 					flex: 1;
 					display: flex;
 
+					.contents {
+						display: flex;
+						flex-direction: column;
+						max-width: 75%;
+
+						.contentInfo {
+							display: flex;
+							flex-direction: column;
+						}
+
+						.nickname {
+							text-align: left;
+							color: #515151;
+							padding-left: 25rpx;
+							font-size: 26rpx;
+						}
+					}
+
 					.img {
 						height: 80rpx;
 						width: 80rpx;
@@ -767,7 +1016,6 @@
 						position: relative;
 						box-sizing: border-box;
 						min-height: 80rpx;
-						max-width: 70%;
 						border-radius: 10rpx;
 						margin-left: 20rpx;
 						font-size: 30rpx;
@@ -780,7 +1028,7 @@
 							display: block;
 							content: "";
 							position: absolute;
-							left: -25rpx;
+							left: -23rpx;
 							top: 28rpx;
 							width: 0;
 							height: 0;
@@ -809,7 +1057,25 @@
 						min-width: 30%;
 
 						.imgMsg {
-							width: 100%;
+							max-height: 220rpx;
+							max-width: 450rpx;
+						}
+					}
+
+					.mapBox {
+						overflow: hidden;
+						position: relative;
+						margin-left: 20rpx;
+						width: 470rpx;
+						height: 300rpx;
+						background: url("../../static/images/map.png") no-repeat;
+						background-size: 100%;
+
+						.address {
+							background-color: #fff;
+							padding: 15rpx;
+							font-size: 24rpx;
+							color: #6c6c6c;
 						}
 					}
 				}
@@ -818,12 +1084,32 @@
 					display: flex;
 					justify-content: flex-end;
 
+					.contents {
+						display: flex;
+						flex-direction: column;
+						max-width: 70%;
+
+						.mapBox {
+							margin-left: 0;
+							margin-right: 20rpx;
+						}
+
+						.nickname {
+							text-align: right;
+							color: #515151;
+							padding-right: 25rpx;
+							font-size: 26rpx;
+						}
+					}
+
 					.contentImg {
 						flex: 1;
 						margin-right: 20rpx;
 					}
 
+
 					.content {
+						flex: 1;
 						position: relative;
 						margin-left: 0;
 						margin-right: 20rpx;

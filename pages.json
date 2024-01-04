@@ -152,9 +152,9 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
-				"backgroundColorBottom":"f5f5f5"
+				"backgroundColorBottom": "f5f5f5"
 			}
-		
+
 		},
 		{
 			"path": "pages/videoCall/videoCall",
@@ -162,9 +162,24 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
+
+		},
+		{
+			"path": "pages/createGroup/createGroup",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		
+		},
+		{
+			"path": "pages/groupInfo/groupInfo",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 		
 		}
-		
 	],
 	"globalStyle": {
 		"navigationStyle": "custom",

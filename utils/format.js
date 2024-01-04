@@ -17,7 +17,7 @@ export function dayFormat(val) {
 export function getTimeFormat(timestamp) {
 	//console.log(dayjs(Number(timestamp)));//一定要把字符串转数字,这边我我传过来之前已经转了
 
-	// console.log(dayjs(timestamp).format("YYYY-MM-DD"));
+	//console.log(dayjs(1703670843192).format("YYYY-MM-DD"));
 	const now = Date.now(); // 获取当前时间戳  
 	const date = dayjs(timestamp);
 	let dayType; //时间范围
@@ -29,10 +29,10 @@ export function getTimeFormat(timestamp) {
 	} else {
 		if (date.year() === dayjs(now).year()) {
 			// 年份相同，返回格式：12/24 15:09  
-			dayType = date.format('MM-dd'); 
+			dayType = date.format('MM-DD'); 
 			}
 			else {
-				dayType = date.format('YYYY-MM-dd');
+				dayType = date.format('YYYY/MM/DD');
 			}
 		}
 		const hour = date.hour();

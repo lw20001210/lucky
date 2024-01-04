@@ -92,7 +92,7 @@
 	<view class="two">
 		<view class="list">
 			<view class="remove">
-				<text @click="removeUser">删除</text>
+				<text @click="removeUser">删除好友</text>
 			</view>
 		</view>
 	</view>
@@ -148,7 +148,6 @@
 			friendId: parseInt(friend)
 		})
 		if (res.code == 200) {
-			// console.log(res.data, 111);
 			infoDate.value = res.data
 		} else {
 			showMsg("获取数据失败")

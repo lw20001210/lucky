@@ -21,7 +21,7 @@
 					<view class="iconfont">&#xe75c</view>
 					<text>添加好友</text>
 				</view>
-				<view class="downup_item">
+				<view class="downup_item" @click="goCreateGroup">
 					<view class="iconfont">&#xe616</view>
 					<text>创建群聊</text>
 				</view>
@@ -42,9 +42,11 @@
 			</view>
 			<uni-list :border="false">
 				<!-- 显示圆形头像 -->
-				<uni-list-chat :clickable="true" v-for="item in friendList" :key="item.id" :avatar-circle="true"
-					:title="item.remarked" :avatar="item.avatar" @click="goChat(item)" :note="item.message"
-					:time="item.createTime" :showBadge="true" :badge-text="item.total"></uni-list-chat>
+				<uni-list-chat :clickable="true" v-for="(item,index) in friendList" :key="index" :avatar-circle="true"
+					:title="item.adminId?item.nickname:item.remarked"
+					:avatar="item.adminId?(item.avatar?item.avatar:'../../static/images/groupAvatar.jpg'):item.avatar"
+					@click="goChat(item)" :note="item.message?item.message:item.intro" :time="item.createTime"
+					:showBadge="true" :badge-text="item.adminId?'':item.total"></uni-list-chat>
 			</uni-list>
 		</scroll-view>
 	</view>
@@ -87,6 +89,12 @@
 	let socket = ref(null); // 提前声明socket变量
 	const userPower = new userStore();
 	const statusInfo = statusStore();
+
+	function goCreateGroup() {
+		uni.navigateTo({
+			url: '/pages/search/search?url=group',
+		});
+	}
 	// 打开菜单
 	function openPopup() {
 		if (!animation.value) {
@@ -119,7 +127,13 @@
 	function getHeight() {
 		const val = uni.getSystemInfoSync()
 		// 要减去tabbar的高度和搜索栏的高度
+		// #ifdef APP-PLUS
 		wh.value = val.windowHeight - 82
+		// #endif
+		// #ifdef H5
+		wh.value = val.windowHeight - 40;
+		// #endif
+
 	}
 	onMounted(() => {
 		getHeight();
@@ -129,18 +143,28 @@
 		uni.navigateTo({
 			url: `/pages/detail/detail?id=${userPower.id}`
 		})
+		close()
 	}
 	const goSearch = () => {
 		uni.navigateTo({
 			url: '/pages/search/search',
 		});
+		close()
 	}
 
 	function goChat(item) {
-		statusInfo.avatar = item.avatar
-		uni.navigateTo({
-			url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
-		})
+		if (item.adminId) {
+			uni.navigateTo({
+				url: `/pages/chat/chat?groupId=${item.id}&groupName=${item.nickname}`
+			})
+		} else {
+			console.log(35356);
+			statusInfo.avatar = item.avatar
+			uni.navigateTo({
+				url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
+			})
+		}
+		close()
 	}
 	// 扫码加好友功能
 	function scanCode() {
@@ -155,39 +179,27 @@
 		});
 	}
 	let friendList = ref([])
+	// 获取消息列表数据
 	async function getData() {
+		// 私聊列表
 		let {
 			data: res
 		} = await request("/user/getFriendList", "get", {
 			id: userPower.id
 		})
 		if (res.code != 200) return showMsg("获取数据失败")
-		// friendList.value = res.data;
-		// friendList.value.forEach(item => {
-		// 	if (item.id == userPower.id) {
-		// 		item["remarked"] = item.nickname
-		// 	}
-		// })
 		res.data.forEach(item => {
 			if (item.id == userPower.id) {
+				item.createTime = getTimeFormat(Number(userPower.createTime))
 				item["remarked"] = item.nickname
 			}
 		})
 		let {
+			// 获取朋友列表最新消息的状态
 			data: otherData
 		} = await request("/user/getFriendStatus", "get", {
 			id: userPower.id
 		})
-		// friendList.value.forEach(item => {
-		// 	item.total = 0
-		// 	otherData.data.total.forEach(val => {
-		// 		if (userPower.id == val.toUid) {
-		// 			if (item.id == val.fromUid) {
-		// 				item.total += 1
-		// 			}
-		// 		}
-		// 	})
-		// })
 		res.data.forEach(item => {
 			item.total = 0
 			otherData.data.total.forEach(val => {
@@ -203,22 +215,16 @@
 		otherData.data.datas.forEach(item => {
 			let key = item.fromUid < item.toUid ? `${item.fromUid}-${item.toUid}` :
 				`${item.toUid}-${item.fromUid}`;
-			// if (!categorizedArr[key]) {
-			//     categorizedArr[key] = [];
-			// }
-			// categorizedArr[key].push(item);
 			categorizedArr[key] = item;
 		});
 
 		let result = Object.values(categorizedArr);
-		friendList.value=res.data;
-		friendList.value.forEach((item => {
+		res.data.forEach((item => {
 			item.message = ''
 			result.forEach(val => {
-				if ((userPower.id == val.fromUid && item.id == val.toUid) || userPower.id == val
-					.toUid && item.id == val.fromUid) {
-
-					item.createTime = getTimeFormat(Number(val.createTime))
+				if ((userPower.id == val.fromUid && item.id == val.toUid) || (userPower.id == val
+						.toUid && item.id == val.fromUid)) {
+					item.createTime = val.createTime
 					if (val.type == 0) {
 						item.message = val.message
 					} else if (val.type == 1) {
@@ -235,8 +241,57 @@
 				}
 			})
 		}))
-		console.log(friendList.value, 9999);
+		let {
+			data: groups
+		} = await request("/user/getGroupList", "get", {
+			uid: userPower.id
+		})
+		groups.data.forEach(item => [
+			groups.endMsgs.forEach(val => {
+				if (item.id == val.groupId) {
+					item.createTime = val.createTime
+					if (val.type == 0) {
+						item.message = val.message
+					} else if (val.type == 1) {
+						item.message = "图片"
+					} else if (val.type == 2) {
+						item.message = "语音"
+					} else if (val.type == 3) {
+						item.message = "位置"
+					} else if (val.type == 4) {
+						item.message = "视频"
+					} else {
+						item.message = ''
+					}
+				}
+			})
+		])
+		res.data = [...res.data, ...groups.data];
+		res.data.sort(function(a, b) {
+			return b.createTime - a.createTime
+		})
+		console.log(res.data,777);
+		// 处理私聊
+		res.data.forEach(item => {
+			result.forEach(val => {
+				if (!item.adminId&&(userPower.id == val.fromUid && item.id == val.toUid) ||!item.adminId&& (userPower.id == val
+						.toUid && item.id == val.fromUid)) {
+					item.createTime = getTimeFormat(Number(val.createTime))
+				}
+			})
+		})
+		console.log(groups.endMsgs,999);
+		// 处理群聊
+		res.data.forEach(item=>{
+			groups.endMsgs.forEach(val=>{
+				if(item.adminId&&(item.id==val.groupId)){
+					item.createTime= getTimeFormat(Number(item.createTime))
+				}
+			})
+		})
+		friendList.value = res.data;
 	}
+	
 
 	function socketIo() {
 		socket.value = io(mainUrl, {
@@ -258,9 +313,10 @@
 	onShow(() => {
 		userPower.getUserInfo();
 		getData();
+		socketIo()
 	})
 	onLoad(() => {
-		socketIo()	
+		socketIo()
 	})
 </script>
 <style scoped lang="scss">

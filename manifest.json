@@ -21,7 +21,9 @@
             "Camera" : {},
             "Barcode" : {},
             "Geolocation" : {},
-            "Maps" : {}
+            "Maps" : {},
+            "Record" : {},
+            "LivePusher" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -79,13 +81,18 @@
                     "amap" : {
                         "__platform__" : [ "ios", "android" ],
                         "appkey_ios" : "",
-                        "appkey_android" : "e61612c29d31f13b39d47c24e274671c"
+                        "appkey_android" : "e61612c29d31f13b39d47c24e274671c",
+                        "name" : "amapAfETiyTbk"
+                    },
+                    "system" : {
+                        "__platform__" : [ "android" ]
                     }
                 },
                 "maps" : {
                     "amap" : {
                         "appkey_ios" : "",
-                        "appkey_android" : "e61612c29d31f13b39d47c24e274671c"
+                        "appkey_android" : "e61612c29d31f13b39d47c24e274671c",
+                        "name" : "amapAfETiyTbk"
                     }
                 }
             },
@@ -158,7 +165,7 @@
                     // 高德地图安全密钥（HBuilderX 3.6.0+）https://console.amap.com/dev/key/app
                     "securityJsCode" : "a51a29eedb8370e0f047d65e13f07e39",
                     // 高德地图安全密钥代理服务器地址（HBuilderX 3.6.0+）https://lbs.amap.com/api/jsapi-v2/guide/abc/prepare
-                    "serviceHost" : "http://192.168.167.20:3000/_AMapService/v4/maps"
+                    "serviceHost" : "http://192.168.74.20:3000/_AMapService/v4/maps"
                 }
             }
         }

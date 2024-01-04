@@ -14,8 +14,7 @@
 		<view class="divide">
 			<uni-badge v-if="friendNum!=0" class="uni-badge-left-margin fixed" :text="friendNum" />
 		</view>
-		<view class="friendList">
-			<!-- <scroll-view class="scroll" scroll-y="true">	</scroll-view> -->
+		<scroll-view class="scroll" scroll-y="true" :style="{height: wh+'px'}">
 			<uni-collapse ref="collapse" v-model="value" @change="change">
 				<uni-collapse-item title="我的好友">
 					<view class="content">
@@ -23,7 +22,7 @@
 					</view>
 				</uni-collapse-item>
 			</uni-collapse>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 <script setup>
@@ -95,16 +94,14 @@
 				item["remarked"] = item.nickname
 			}
 		})
-		// console.log(friendList.value);
-		// console.log(statusInfo.userList);
-		
-	    let newIds =  statusInfo.userList.map(val => val.uid);
+
+		let newIds = statusInfo.userList.map(val => val.uid);
 		friendList.value.forEach((item) => {
-			 if (newIds.includes(`${item.id}`)) {
-				  item.status = 1;
-			 } else {
-				 item.status = 0
-			 }
+			if (newIds.includes(`${item.id}`)) {
+				item.status = 1;
+			} else {
+				item.status = 0
+			}
 		})
 		let {
 			data: result
@@ -118,12 +115,28 @@
 	onShow((option) => {
 		getData()
 	})
+	onLoad(() => {
+		getHeight();
+	})
 	// 监听折叠面板的变化
 	function change(e) {
 		getData()
 	}
+	// 滚动栏的高度
+	let wh = ref()
+
+	function getHeight() {
+		const val = uni.getSystemInfoSync()
+		// 要减去tabbar的高度和搜索栏的高度
+		// #ifdef APP-PLUS
+		wh.value = val.windowHeight - 295
+		// #endif
+		// #ifdef H5
+		wh.value = val.windowHeight - 250;
+		// #endif
+	}
 </script>
-<style scoped lang="scss">
+<style scoped lang="less">
 	image {
 		will-change: transform
 	}
@@ -132,7 +145,6 @@
 		overflow-x: hidden;
 		padding: 15rpx 20rpx 0;
 		font-family: STKaiti;
-
 		.title {
 			text-align: center;
 			margin: 12rpx 0 22rpx;

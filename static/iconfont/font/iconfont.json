@@ -6,6 +6,13 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "1136701",
+      "name": "减",
+      "font_class": "jian",
+      "unicode": "e68e",
+      "unicode_decimal": 59022
+    },
+    {
       "icon_id": "9241143",
       "name": "跳转",
       "font_class": "iconzhengli_tiaozhuan",
@@ -298,6 +305,13 @@
       "font_class": "jiahao",
       "unicode": "e615",
       "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "38784317",
+      "name": "加号-copy",
+      "font_class": "jiahao-copy",
+      "unicode": "eb4f",
+      "unicode_decimal": 60239
     },
     {
       "icon_id": "34279452",

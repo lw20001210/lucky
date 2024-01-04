@@ -6,6 +6,76 @@
   "description": "思环聊天app",
   "glyphs": [
     {
+      "icon_id": "1136701",
+      "name": "减",
+      "font_class": "jian",
+      "unicode": "e68e",
+      "unicode_decimal": 59022
+    },
+    {
+      "icon_id": "9241143",
+      "name": "跳转",
+      "font_class": "iconzhengli_tiaozhuan",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "33151439",
+      "name": "电话-挂断_fill",
+      "font_class": "telephone-hang-up_fill",
+      "unicode": "e852",
+      "unicode_decimal": 59474
+    },
+    {
+      "icon_id": "1725972",
+      "name": "语音",
+      "font_class": "yuyin1",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "201564",
+      "name": "3.1拍摄-选中",
+      "font_class": "31paishexuanzhong",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "22280762",
+      "name": "转账",
+      "font_class": "zhuanzhang",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "827636",
+      "name": "红包",
+      "font_class": "hongbao",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "6129258",
+      "name": "219相册",
+      "font_class": "xiangce",
+      "unicode": "e7be",
+      "unicode_decimal": 59326
+    },
+    {
+      "icon_id": "612664",
+      "name": "01_位置_fill",
+      "font_class": "01weizhifill",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "795513",
+      "name": "视频",
+      "font_class": "ai-video",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
       "icon_id": "16372258",
       "name": "键盘",
       "font_class": "jianpan",
@@ -235,6 +305,13 @@
       "font_class": "jiahao",
       "unicode": "e615",
       "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "38784317",
+      "name": "加号-copy",
+      "font_class": "jiahao-copy",
+      "unicode": "eb4f",
+      "unicode_decimal": 60239
     },
     {
       "icon_id": "34279452",

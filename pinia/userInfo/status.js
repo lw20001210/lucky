@@ -9,6 +9,7 @@ export const statusStore = defineStore('status', {
 	state: () => ({
 		userList:[],//好友列表
 		socket:null,
-		avatar:''//chat界面朋友头像
+		avatar:'',//chat界面朋友头像,
+		groupUserIds:[],//群聊成员id
 	}),
 })

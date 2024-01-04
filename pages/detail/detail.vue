@@ -44,7 +44,8 @@
 			<view class="info" v-if="spaceInfo&&flag">
 				<image :src="spaceInfo&&spaceInfo.avatar"></image>
 				<view class="infoDetail">
-					<text>{{spaceInfo&&spaceInfo.nickname}} <text v-if="itemId!=userInfo.id">({{spaceInfo.remarked}})</text> </text>
+					<text>{{spaceInfo&&spaceInfo.nickname}} <text
+							v-if="itemId!=userInfo.id">({{spaceInfo.remarked}})</text> </text>
 					<text class="size">{{dayFormat(spaceInfo?.result[0]?.createTime)}}</text>
 				</view>
 			</view>
@@ -96,12 +97,28 @@
 		path: '/pages/home/home'
 	})
 	let spaceInfo = ref({})
-	let itemId = ref()
+	let itemId = ref(); //用来判断是自己主页还是好友主页
+	let friendFlag = ref(false)
 	onLoad(async (option) => {
+		option.id=Number(option.id)
 		try {
 			itemId.value = option.id
 			// 获取最新动态信息
-			if(!itemId.value) return
+			if (!itemId.value) return
+			let {
+				data: friendList
+			} = await request("/user/getFriendList", "get", {
+				id: userInfo.id
+			})
+			console.log(friendList, 990);
+			let ids = friendList.data.map(item => {
+				return item.id
+			})
+			console.log(ids.includes(option.id));
+			if (ids.includes(option.id)) {
+				friendFlag.value=true	
+			}
+			console.log(ids, 11);
 			let {
 				data: res
 			} = await request("/user/getNewSpace", "get", {
@@ -110,16 +127,14 @@
 			if (res.code != 200) return showMsg()
 			if (res.data && res.data.result.length == 0) {
 				spaceInfo.value = res.data;
-			 console.log(spaceInfo.value,444);
+				// console.log(spaceInfo.value, 444);
 				flag.value = false;
 			} else {
 				flag.value = true;
 				spaceInfo.value = res.data;
-				//console.log(spaceInfo.value,666);
 			}
 		} catch (e) {
 			console.log(e);
-			//TODO handle the exception
 		}
 	})
 	// 图片预览
@@ -141,15 +156,26 @@
 				url: "/pages/editUser/editUser"
 			})
 		} else {
-			uni.navigateTo({
-				url: `/pages/friendInfo/friendInfo?id=${itemId.value}`
-			})
+			if(friendFlag.value){
+				uni.navigateTo({
+					url: `/pages/friendInfo/friendInfo?id=${itemId.value}`
+				})
+			}else{
+				showMsg("你们还不是好友!")
+			}
+		
 		}
 	}
-	function goChat(){
-		uni.navigateTo({
-			url: `/pages/chat/chat?id=${itemId.value}&remarked=${spaceInfo.value.remarked}`
-		})
+
+	function goChat() {
+		if(friendFlag.value){
+			uni.navigateTo({
+				url: `/pages/chat/chat?id=${itemId.value}&remarked=${spaceInfo.value.remarked}`
+			})
+		}else{
+			return showMsg("你们还不是好友!")
+		}
+		
 	}
 </script>
 

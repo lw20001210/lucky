@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
 		<live-pusher id='livePusher' :class="{'video_box':isSwitch}" ref="livePusher" class="livePusher"
-			:url="'rtmp://192.168.105.20/live/' + fromUid " mode="SD" :muted="true"
+			:url="'rtmp://192.168.241.20/live/' + fromUid " mode="SD" :muted="true"
 			:style="{ width: (!isSwitch ? windowWidth + 'px' : '175px'), height: (!isSwitch ? windowHeight + 'px' : '500rpx') }"
 			:enable-camera="enableCamera" :auto-focus="true" :beauty="1" whiteness="2" aspect="9:16"
 			audio-quality="high" @statechange="statechange" @netstatus="netstatus" @error="error"></live-pusher>
 		<!-- 远程视频 -->
 		<view :class="{'video_box':!isSwitch}">
-			<video @click="isSwitch=true" :src="`http://192.168.105.20:8000/live/${toUid}.flv`" autoplay="true"
+			<video @click="isSwitch=true" :src="`http://192.168.241.20:8000/live/${toUid}.flv`" autoplay="true"
 				controls="false" object-fit="fill" muted="false"
 				:style="{width: (isSwitch?windowWidth : '175') + 'px',height: isSwitch? (windowHeight  + 'px') : '500rpx'}"></video>
 		</view>

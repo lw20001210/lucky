@@ -6,34 +6,38 @@
 			</view>
 			暂无好友申请
 		</view>
-		<view class="detail" v-else>
-			<uni-swipe-action>
-				<uni-swipe-action-item v-for="item in applyList" :right-options="options2" :show="item.isOpened"
-					:auto-close="false" @click="bindClick($event,item)">
-					<view class="itemContent">
-						<view class="left">
-							<view class="avatar">
-								<image class='img' :src="item.avatar"></image>
+
+		<scroll-view class="scroll" v-else scroll-y="true" :style="{height: wh+'px'}">
+			<!-- <view class="detail" > -->
+				<uni-swipe-action>
+					<uni-swipe-action-item v-for="item in applyList" :right-options="options2" :show="item.isOpened"
+						:auto-close="false" @click="bindClick($event,item)">
+						<view class="itemContent">
+							<view class="left">
+								<view class="avatar">
+									<image class='img' :src="item.avatar"></image>
+								</view>
+								<view class="descript">
+									<text class="chat">{{item.content}}</text>
+									<text>{{item.username}}&nbsp;&nbsp;<text
+											style="color: #939393;font-size: 25rpx;">{{dayFormat(item.createTime)}}</text>
+									</text>
+								</view>
 							</view>
-							<view class="descript">
-								<text class="chat">{{item.content}}</text>
-								<text>{{item.username}}&nbsp;&nbsp;<text
-										style="color: #939393;font-size: 25rpx;">{{dayFormat(item.createTime)}}</text>
-								</text>
+							<view class="right" v-if="item.status==0">
+								<text @click="reject(item)">拒绝</text>
+								<text @click="validate(item)">同意</text>
+								{{formatStatus(item)}}
+							</view>
+							<view class="right" v-else>
+								{{formatStatus(item)}}
 							</view>
 						</view>
-						<view class="right" v-if="item.status==0">
-							<text @click="reject(item)">拒绝</text>
-							<text @click="validate(item)">同意</text>
-							{{formatStatus(item)}}
-						</view>
-						<view class="right" v-else>
-							{{formatStatus(item)}}
-						</view>
-					</view>
-				</uni-swipe-action-item>
-			</uni-swipe-action>
-		</view>
+					</uni-swipe-action-item>
+				</uni-swipe-action>
+	<!-- 		</view> -->
+		</scroll-view>
+
 		<uni-popup ref="inputDialog" type="dialog">
 			<uni-popup-dialog mode="input" title="同意该好友申请" :value="nickname" placeholder="请输入备注"
 				@confirm="dialogInputConfirm"></uni-popup-dialog>
@@ -81,7 +85,21 @@
 	})
 	const user = userStore();
 	const statusInfo = statusStore();
+	// 滚动栏的高度
+	let wh = ref()
+
+	function getHeight() {
+		const val = uni.getSystemInfoSync()
+		// 要减去tabbar的高度和搜索栏的高度
+		// #ifdef APP-PLUS
+		wh.value = val.windowHeight - 90
+		// #endif
+		// #ifdef H5
+		wh.value = val.windowHeight - 50;
+		// #endif
+	}
 	onLoad((option) => {
+		getHeight()
 		// 获取好友申请列表信息
 		getApplyList();
 	})
@@ -175,7 +193,7 @@
 	}
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
 	* {
 		overflow-x: scroll !important;
 	}
@@ -195,9 +213,7 @@
 			}
 		}
 
-		.detail {
-			padding: 0 10rpx;
-
+		.scroll {
 			.uni-swipe {
 				display: block;
 				height: 100% !important;
@@ -207,7 +223,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				padding: 20rpx 0;
+				padding: 20rpx 10rpx 20rpx 5rpx;
 				font-size: 28rpx;
 
 				.left {

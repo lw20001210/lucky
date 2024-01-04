@@ -41,7 +41,7 @@
 > 		// #ifdef H5
 > 		wh.value = val.windowHeight - 120;
 > 		// #endif
-> 			
+> 						
 > 	}
 
 ## dayjs问题
@@ -943,6 +943,8 @@ onLoad(() => {
 
   * 服务端
 
+  * 如果想要实时更新，私聊要socket.to
+  
     ```js
     const express = require("express");
     const { Server } = require("socket.io");
@@ -968,7 +970,7 @@ onLoad(() => {
     ```
 
     * 客户端
-
+  
       ```vue
       <template>
         <div class="container">
@@ -1001,7 +1003,7 @@ onLoad(() => {
       </style>
       
       ```
-
+  
     
 ## 处理上传图片
 

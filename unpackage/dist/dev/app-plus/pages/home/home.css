@@ -808,6 +808,10 @@
   height: 10px;
   padding: 0;
 }
+uni-view[data-v-20df4ef0] {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 /**
  * 这里是uni-app内置的常用样式变量
  *

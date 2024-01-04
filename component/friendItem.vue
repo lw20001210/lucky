@@ -1,7 +1,7 @@
 <template>
 	<view class="menuList">
 		<view class="imgBg" @click="goDetail(obj)">
-			<image :src="obj.avatar" mode=""></image>
+			<image :lazy-load="true" :src="obj.avatar" mode=""></image>
 		</view>
 		<view class="describe">
 			<text style="font-size: 28rpx;">{{obj.remarked}}</text>

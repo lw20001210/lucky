@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1702470855006') format('woff2'),
-       url('iconfont.woff?t=1702470855006') format('woff'),
-       url('iconfont.ttf?t=1702470855006') format('truetype');
+       url('iconfont.woff2?t=1703943136999') format('woff2'),
+       url('iconfont.woff?t=1703943136999') format('woff'),
+       url('iconfont.ttf?t=1703943136999') format('truetype');
 }
 
 .iconfont {
@@ -13,6 +13,46 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jian:before {
+  content: "\e68e";
+}
+
+.icon-iconzhengli_tiaozhuan:before {
+  content: "\e648";
+}
+
+.icon-telephone-hang-up_fill:before {
+  content: "\e852";
+}
+
+.icon-yuyin1:before {
+  content: "\e61c";
+}
+
+.icon-31paishexuanzhong:before {
+  content: "\e601";
+}
+
+.icon-zhuanzhang:before {
+  content: "\e608";
+}
+
+.icon-hongbao:before {
+  content: "\e656";
+}
+
+.icon-xiangce:before {
+  content: "\e7be";
+}
+
+.icon-01weizhifill:before {
+  content: "\e662";
+}
+
+.icon-ai-video:before {
+  content: "\e66b";
 }
 
 .icon-jianpan:before {
@@ -145,6 +185,10 @@
 
 .icon-jiahao:before {
   content: "\e615";
+}
+
+.icon-jiahao-copy:before {
+  content: "\eb4f";
 }
 
 .icon-a-xiangjipaizhao:before {

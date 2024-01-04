@@ -590,4 +590,8 @@
 		left: 0;
 		/* #endif */
 	}
+	uni-view{
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
 </style>

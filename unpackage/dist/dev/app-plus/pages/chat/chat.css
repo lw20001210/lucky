@@ -454,6 +454,21 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
   flex: 1;
   display: flex;
 }
+.box .scroll .messageList .info .contents[data-v-0a633310] {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+.box .scroll .messageList .info .contents .contentInfo[data-v-0a633310] {
+  display: flex;
+  flex-direction: column;
+}
+.box .scroll .messageList .info .contents .nickname[data-v-0a633310] {
+  text-align: left;
+  color: #515151;
+  padding-left: 0.78125rem;
+  font-size: 0.8125rem;
+}
 .box .scroll .messageList .info .img[data-v-0a633310] {
   height: 2.5rem;
   width: 2.5rem;
@@ -464,7 +479,6 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
   position: relative;
   box-sizing: border-box;
   min-height: 2.5rem;
-  max-width: 70%;
   border-radius: 0.3125rem;
   margin-left: 0.625rem;
   font-size: 0.9375rem;
@@ -477,7 +491,7 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
   display: block;
   content: "";
   position: absolute;
-  left: -0.78125rem;
+  left: -0.71875rem;
   top: 0.875rem;
   width: 0;
   height: 0;
@@ -501,17 +515,49 @@ uni-view[data-v-b7a6dd5d], uni-scroll-view[data-v-b7a6dd5d], uni-swiper-item[dat
   min-width: 30%;
 }
 .box .scroll .messageList .info .contentImg .imgMsg[data-v-0a633310] {
-  width: 100%;
+  max-height: 6.875rem;
+  max-width: 14.0625rem;
+}
+.box .scroll .messageList .info .mapBox[data-v-0a633310] {
+  overflow: hidden;
+  position: relative;
+  margin-left: 0.625rem;
+  width: 14.6875rem;
+  height: 9.375rem;
+  background: url("../../static/images/map.png") no-repeat;
+  background-size: 100%;
+}
+.box .scroll .messageList .info .mapBox .address[data-v-0a633310] {
+  background-color: #fff;
+  padding: 0.46875rem;
+  font-size: 0.75rem;
+  color: #6c6c6c;
 }
 .box .scroll .messageList .right[data-v-0a633310] {
   display: flex;
   justify-content: flex-end;
+}
+.box .scroll .messageList .right .contents[data-v-0a633310] {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+.box .scroll .messageList .right .contents .mapBox[data-v-0a633310] {
+  margin-left: 0;
+  margin-right: 0.625rem;
+}
+.box .scroll .messageList .right .contents .nickname[data-v-0a633310] {
+  text-align: right;
+  color: #515151;
+  padding-right: 0.78125rem;
+  font-size: 0.8125rem;
 }
 .box .scroll .messageList .right .contentImg[data-v-0a633310] {
   flex: 1;
   margin-right: 0.625rem;
 }
 .box .scroll .messageList .right .content[data-v-0a633310] {
+  flex: 1;
   position: relative;
   margin-left: 0;
   margin-right: 0.625rem;
