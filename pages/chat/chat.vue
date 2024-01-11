@@ -279,15 +279,15 @@
 	}
 	// 点击头像去friend的detail页面
 	function goDetail(item) {
-		if(chatType.value==0){
+		if (chatType.value == 0) {
 			uni.navigateTo({
 				url: `/pages/detail/detail?id=${itemId.value}`
 			})
-		}else{
+		} else {
 			uni.navigateTo({
 				url: `/pages/detail/detail?id=${item.fromUid}`
 			})
-			console.log(item,88);
+			console.log(item, 88);
 		}
 
 	}
@@ -331,7 +331,7 @@
 					createTime: Date.now(),
 					status: 0,
 					audioTime: '',
-					remarked:userInfo.nickname
+					remarked: userInfo.nickname
 				}
 			}
 
@@ -368,10 +368,17 @@
 	})
 	// 离开群聊
 	onUnload(() => {
-		statusInfo.socket.emit("leave", {
-			id: userInfo.id,
-			groupId: groupId.value
-		})
+		if (chatType.value == 1) {
+			statusInfo.socket.emit("leave", {
+				id: userInfo.id,
+				groupId: groupId.value
+			})
+		} else {
+			statusInfo.socket.emit("leaveChatRoom", {
+				id: userInfo.id
+			})
+		}
+
 	})
 	// 触发下拉加载事件
 	function onSrcollTop(e) {
@@ -476,13 +483,11 @@
 				if (data.fromUid != userInfo.id) {
 					messages.value.push(data)
 				}
-
-				//chatList.push(data)
-				//console.log(data, 99);
 				scrollBottom()
 			})
 			scrollBottom()
 		} else {
+			joinChat(option.id)
 			chatType.value = 0;
 			itemId.value = option.id; //toUserId
 			objDate.value.title = option.remarked;
@@ -737,7 +742,7 @@
 				type: 0,
 				createTime: Date.now(),
 				status: 0,
-				remarked:userInfo.nickname
+				remarked: userInfo.nickname
 			}
 			obj.avatar = userInfo.avatar;
 			statusInfo.socket?.emit("groupMsg", obj);
@@ -771,7 +776,7 @@
 				type: 1,
 				createTime: Date.now(),
 				status: 0,
-				remarked:userInfo.nickname
+				remarked: userInfo.nickname
 			}
 		}
 
@@ -896,7 +901,7 @@
 						address: {
 							descript: res.address
 						},
-						remarked:userInfo.nickname
+						remarked: userInfo.nickname
 					}
 				}
 				messages.value.push(obj);
@@ -928,6 +933,14 @@
 			groupId
 		}
 		statusInfo.socket?.emit('join', data)
+	}
+	// 进入私聊房间
+	function joinChat(friendId) {
+		let data = {
+			id: userInfo.id,
+			friendId
+		}
+		statusInfo.socket.emit("joinChatRoom", data)
 	}
 </script>
 

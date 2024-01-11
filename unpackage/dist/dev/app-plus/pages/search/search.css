@@ -23,6 +23,12 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.uniui-cart-filled[data-v-d31e1c47]:before {
+  content: "\e6d0";
+}
+.uniui-gift-filled[data-v-d31e1c47]:before {
+  content: "\e6c4";
+}
 .uniui-color[data-v-d31e1c47]:before {
   content: "\e6cf";
 }
@@ -68,9 +74,6 @@
 .uniui-medal-filled[data-v-d31e1c47]:before {
   content: "\e6c3";
 }
-.uniui-gift-filled[data-v-d31e1c47]:before {
-  content: "\e6c4";
-}
 .uniui-fire-filled[data-v-d31e1c47]:before {
   content: "\e6c5";
 }
@@ -86,6 +89,15 @@
 .uniui-personadd-filled[data-v-d31e1c47]:before {
   content: "\e698";
 }
+.uniui-arrowthinleft[data-v-d31e1c47]:before {
+  content: "\e6d2";
+}
+.uniui-arrowthinup[data-v-d31e1c47]:before {
+  content: "\e6d3";
+}
+.uniui-arrowthindown[data-v-d31e1c47]:before {
+  content: "\e6d4";
+}
 .uniui-back[data-v-d31e1c47]:before {
   content: "\e6b9";
 }
@@ -95,50 +107,41 @@
 .uniui-arrow-right[data-v-d31e1c47]:before {
   content: "\e6bb";
 }
-.uniui-arrowthinright[data-v-d31e1c47]:before {
-  content: "\e6bb";
-}
 .uniui-arrow-left[data-v-d31e1c47]:before {
-  content: "\e6bc";
-}
-.uniui-arrowthinleft[data-v-d31e1c47]:before {
   content: "\e6bc";
 }
 .uniui-arrow-up[data-v-d31e1c47]:before {
   content: "\e6bd";
 }
-.uniui-arrowthinup[data-v-d31e1c47]:before {
-  content: "\e6bd";
-}
 .uniui-arrow-down[data-v-d31e1c47]:before {
   content: "\e6be";
 }
-.uniui-arrowthindown[data-v-d31e1c47]:before {
-  content: "\e6be";
+.uniui-arrowthinright[data-v-d31e1c47]:before {
+  content: "\e6d1";
+}
+.uniui-down[data-v-d31e1c47]:before {
+  content: "\e6b8";
 }
 .uniui-bottom[data-v-d31e1c47]:before {
   content: "\e6b8";
 }
-.uniui-arrowdown[data-v-d31e1c47]:before {
-  content: "\e6b8";
+.uniui-arrowright[data-v-d31e1c47]:before {
+  content: "\e6d5";
 }
 .uniui-right[data-v-d31e1c47]:before {
   content: "\e6b5";
 }
-.uniui-arrowright[data-v-d31e1c47]:before {
-  content: "\e6b5";
-}
-.uniui-top[data-v-d31e1c47]:before {
+.uniui-up[data-v-d31e1c47]:before {
   content: "\e6b6";
 }
-.uniui-arrowup[data-v-d31e1c47]:before {
+.uniui-top[data-v-d31e1c47]:before {
   content: "\e6b6";
 }
 .uniui-left[data-v-d31e1c47]:before {
   content: "\e6b7";
 }
-.uniui-arrowleft[data-v-d31e1c47]:before {
-  content: "\e6b7";
+.uniui-arrowup[data-v-d31e1c47]:before {
+  content: "\e6d6";
 }
 .uniui-eye[data-v-d31e1c47]:before {
   content: "\e651";
@@ -503,9 +506,6 @@
 .uniui-bars[data-v-d31e1c47]:before {
   content: "\e627";
 }
-.uniui-cart-filled[data-v-d31e1c47]:before {
-  content: "\e629";
-}
 .uniui-checkbox[data-v-d31e1c47]:before {
   content: "\e62b";
 }
@@ -523,7 +523,7 @@
 }
 @font-face {
   font-family: uniicons;
-  src: url("../../assets/uniicons.89ed7d6d.ttf") format("truetype");
+  src: url("../../assets/uniicons.32e978a5.ttf");
 }
 .uni-icons[data-v-d31e1c47] {
   font-family: uniicons;
@@ -1302,8 +1302,9 @@ uni-view[data-v-ae8e42c7], uni-scroll-view[data-v-ae8e42c7], uni-swiper-item[dat
   display: flex;
   justify-content: space-around;
 }
-.container .other_login_icon .iconfont[data-v-e4e4508d] {
-  font-size: 2.8125rem;
+.container .other_login_icon .img[data-v-e4e4508d] {
+  width: 2.8125rem;
+  height: 2.8125rem;
 }
 
 /**

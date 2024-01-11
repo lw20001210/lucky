@@ -8,7 +8,7 @@
 						<text class="iconfont size">&#xeb4e;</text>
 					</template>
 					<template #right>
-						<text class="iconfont icon-xiangji" style="font-size: 50rpx;"></text>
+						<text class="size iconfont icon-xiangji" style="font-size: 50rpx;"></text>
 					</template>
 				</Header>
 				<view class="avatar">
@@ -77,7 +77,8 @@
 								</text>
 								<view class="replyInfo" v-for="reply in com.replyList">
 									<text> <text class="remarked">{{reply.replyName}}</text> 回复 <text
-											class="remarked">{{com.remarked}}:</text> {{reply.replyComment}}</text>
+											class="remarked">{{reply.remarked}} : </text>
+										<text @click="replyComments(reply,true)">{{reply.replyComment}}</text> </text>
 								</view>
 							</view>
 						</view>
@@ -174,7 +175,13 @@
 
 	function getHeight() {
 		const val = uni.getSystemInfoSync()
+		// 要减去tabbar的高度和搜索栏的高度
+		// #ifdef APP-PLUS
 		wh.value = val.windowHeight - 270
+		// #endif
+		// #ifdef H5
+		wh.value = val.windowHeight - 240;
+		// #endif
 	}
 	// 判断点击了哪个编辑框
 	function editContent(index) {
@@ -253,16 +260,22 @@
 	};
 	let judgeComment = ref(false); //判断是评论还是回复
 	// 点击评论内容回复评论
-	function replyComments(commentInfo) {
+	function replyComments(commentInfo, replyFlag) {
 		console.log(commentInfo, 123);
-		if (userPower.id == commentInfo.commentId) {
+		let uid;
+		if (replyFlag) {
+			uid = commentInfo.replyId
+		} else {
+			uid = commentInfo.commentId;
+		}
+		console.log(uid, 88);
+		if (userPower.id == uid) {
 			return false
 		} else {
 			judgeComment.value = true;
-			temporary.value = commentInfo;
 			foucsFlag.value = true;
 			flag.value = 'a'
-
+			temporary.value = commentInfo;
 		}
 	}
 	// 发送
@@ -273,13 +286,25 @@
 		} else {
 			if (judgeComment.value) {
 				console.log("我是点击了回复");
-				let replyobj = {
-					spaceId: temporary.value.spaceId,
-					replyComment: comment.value,
-					commentUid: temporary.value.commentId,
-					replyId: userPower.id,
-					commentId: temporary.value.id
+				let replyobj = {};
+				if (temporary.value.replyComment) {
+					replyobj = {
+						spaceId: temporary.value.spaceId,
+						replyComment: comment.value,
+						commentUid: temporary.value.replyId,
+						replyId: userPower.id,
+						commentId: temporary.value.id
+					}
+				} else {
+					replyobj = {
+						spaceId: temporary.value.spaceId,
+						replyComment: comment.value,
+						commentUid: temporary.value.commentId,
+						replyId: userPower.id,
+						commentId: temporary.value.id
+					}
 				}
+
 				let {
 					data: res
 				} = await request("/user/replyComment", "post", replyobj);
@@ -324,6 +349,7 @@
 
 		.size {
 			font-size: 55rpx;
+			color: white;
 		}
 
 		.bg {

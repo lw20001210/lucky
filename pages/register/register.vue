@@ -40,13 +40,13 @@
     </view>
     <view class="other_login_icon">
       <view class="wx ">
-        <view class="iconfont">&#xe607</view>
+        <image class="img" src="../../static/images/wx.png" mode=""></image>
       </view>
       <view class="qq">
-        <view class="iconfont">&#xe66a</view>
+		  <image class="img" src="../../static/images/QQ.png" mode=""></image>
       </view>
       <view class="wb">
-        <view class="iconfont">&#xe619</view>
+         <image class="img" src="../../static/images/wb.png" mode=""></image>
       </view>
     </view>
   </view>
@@ -260,10 +260,10 @@
     .other_login_icon {
       display: flex;
       justify-content: space-around;
-
-      .iconfont {
-        font-size: 90rpx;
-      }
+	  .img{
+		  width: 90rpx;
+		  height: 90rpx;
+	  }
     }
 
     .back {

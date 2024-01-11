@@ -765,8 +765,9 @@ uni-view[data-v-ae8e42c7], uni-scroll-view[data-v-ae8e42c7], uni-swiper-item[dat
   display: flex;
   justify-content: space-around;
 }
-.container .other_login_icon .iconfont[data-v-e4e4508d] {
-  font-size: 2.8125rem;
+.container .other_login_icon .img[data-v-e4e4508d] {
+  width: 2.8125rem;
+  height: 2.8125rem;
 }
 
 .container[data-v-4c1a2246] {

@@ -11,7 +11,7 @@
 						<text style="font-size: 30rpx;color: #fff;">个人空间</text>
 					</template>
 					<template #right>
-						<text @click="goSendDynamic" class="iconfont icon-xiangji color"
+						<text @click="goSendDynamic" class="size iconfont icon-xiangji"
 							style="font-size: 50rpx"></text>
 					</template>
 				</Header>
@@ -30,7 +30,7 @@
 				</view>
 				<view class="right">
 					<view class="rImg">
-						<text @click="goSendDynamic" class="color iconfont icon-xiangji"></text>
+						<text @click="goSendDynamic" class="iconfont icon-xiangji size"></text>
 					</view>
 					<text class="vir">今天写点什么呢...</text>
 				</view>
@@ -83,7 +83,7 @@
 						<view class="showInfo" v-if="(item.likes.length!=0)|| item.comments.length!=0">
 							<view class="likesList" v-if="item.likes.length!=0">
 								<text class="iconfont pad">&#xeb47;</text>
-								<text @click="goDetail(val)" v-for="(val, index) in item.likes"
+								<text @click="goDetail(val,true)" v-for="(val, index) in item.likes"
 									:key="val.id">{{ index > 0 ? ',' : '' }}
 									{{ val.remarked }}</text>
 							</view>
@@ -94,7 +94,7 @@
 								<view v-if="com.replyList.length!=0">
 									<view class="replyInfo" v-for="reply in com.replyList">
 										<text> <text class="remarked">{{reply.replyName}}</text> 回复 <text
-												class="remarked">{{com.remarked}}:</text> {{reply.replyComment}}</text>
+												class="remarked">{{reply.remarked}} : </text> <text @click="replyComments(reply,true)">{{reply.replyComment}}</text></text>
 									</view>
 								</view>
 							</view>
@@ -289,16 +289,22 @@
 	};
 	let judgeComment = ref(false)
 	// 点击评论内容回复评论
-	function replyComments(commentInfo) {
-	//	console.log(commentInfo, 123);
-		if (userPower.id == commentInfo.commentId) {
+	function replyComments(commentInfo, replyFlag) {
+		console.log(commentInfo, 123);
+		let uid;
+		if (replyFlag) {
+			uid = commentInfo.replyId
+		} else {
+			uid = commentInfo.commentId;
+		}
+		console.log(uid, 88);
+		if (userPower.id == uid) {
 			return false
 		} else {
 			judgeComment.value = true;
-			temporary.value = commentInfo;
 			foucsFlag.value = true;
 			flag.value = 'a'
-
+			temporary.value = commentInfo;
 		}
 	}
 	// 发送
@@ -308,13 +314,23 @@
 			showMsg("评论不能为空")
 		} else {
 			if (judgeComment.value) {
-				console.log("我是点击了回复");
-				let replyobj = {
-					spaceId: temporary.value.spaceId,
-					replyComment: comment.value,
-					commentUid: temporary.value.commentId,
-					replyId: userPower.id,
-					commentId: temporary.value.id
+				let replyobj = {};
+				if (temporary.value.replyComment) {
+					replyobj = {
+						spaceId: temporary.value.spaceId,
+						replyComment: comment.value,
+						commentUid: temporary.value.replyId,
+						replyId: userPower.id,
+						commentId: temporary.value.id
+					}
+				} else {
+					replyobj = {
+						spaceId: temporary.value.spaceId,
+						replyComment: comment.value,
+						commentUid: temporary.value.commentId,
+						replyId: userPower.id,
+						commentId: temporary.value.id
+					}
 				}
 				let {
 					data: res
@@ -346,11 +362,18 @@
 		}
 	}
 	// 点击昵称跳转页面
-	function goDetail(info) {
-		// console.log(info,77);
-		uni.navigateTo({
-			url: `/pages/detail/detail?id=${info.commentId}`
-		})
+	function goDetail(info,flag) {
+		if(flag){
+			uni.navigateTo({
+				url: `/pages/detail/detail?id=${info.uid}`
+			})
+		}else{
+			uni.navigateTo({
+				url: `/pages/detail/detail?id=${info.commentId}`
+			})
+		}
+		console.log(info,77);
+		
 	}
 </script>
 
@@ -362,6 +385,7 @@
 
 		.size {
 			font-size: 55rpx;
+			color: white;
 		}
 
 		.bg {

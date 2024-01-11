@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1703943136999') format('woff2'),
-       url('iconfont.woff?t=1703943136999') format('woff'),
-       url('iconfont.ttf?t=1703943136999') format('truetype');
+       url('iconfont.woff2?t=1704809025781') format('woff2'),
+       url('iconfont.woff?t=1704809025781') format('woff'),
+       url('iconfont.ttf?t=1704809025781') format('truetype');
 }
 
 .iconfont {
@@ -15,8 +15,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-jian:before {
-  content: "\e68e";
+.icon-jianhao:before {
+  content: "\e617";
 }
 
 .icon-iconzhengli_tiaozhuan:before {
@@ -197,17 +197,5 @@
 
 .icon-xiangji:before {
   content: "\e614";
-}
-
-.icon-qq:before {
-  content: "\e66a";
-}
-
-.icon-weibo1:before {
-  content: "\e619";
-}
-
-.icon-weixin:before {
-  content: "\e607";
 }
 

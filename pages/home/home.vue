@@ -158,7 +158,6 @@
 				url: `/pages/chat/chat?groupId=${item.id}&groupName=${item.nickname}`
 			})
 		} else {
-			console.log(35356);
 			statusInfo.avatar = item.avatar
 			uni.navigateTo({
 				url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
@@ -270,7 +269,7 @@
 		res.data.sort(function(a, b) {
 			return b.createTime - a.createTime
 		})
-		console.log(res.data,777);
+		// console.log(res.data,777);
 		// 处理私聊
 		res.data.forEach(item => {
 			result.forEach(val => {
@@ -280,7 +279,7 @@
 				}
 			})
 		})
-		console.log(groups.endMsgs,999);
+		// console.log(groups.endMsgs,999);
 		// 处理群聊
 		res.data.forEach(item=>{
 			groups.endMsgs.forEach(val=>{

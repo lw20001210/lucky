@@ -138,8 +138,9 @@
   display: flex;
   justify-content: space-around;
 }
-.container .other_login_icon .iconfont[data-v-e4e4508d] {
-  font-size: 2.8125rem;
+.container .other_login_icon .img[data-v-e4e4508d] {
+  width: 2.8125rem;
+  height: 2.8125rem;
 }
 
 /**
@@ -172,12 +173,13 @@
 }
 .container .size[data-v-1cb7f60c] {
   font-size: 1.71875rem;
+  color: white;
 }
 .container .bg[data-v-1cb7f60c] {
   position: relative;
   height: 14.0625rem;
   width: 100%;
-  background: url("../../static/images/bgg.jpg") no-repeat;
+  background: url("../../static/images/spaceBg.jpg") no-repeat;
   background-size: cover;
   overflow: visible;
 }

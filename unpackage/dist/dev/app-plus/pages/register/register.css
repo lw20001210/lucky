@@ -373,8 +373,9 @@
   display: flex;
   justify-content: space-around;
 }
-.container .other_login_icon .iconfont[data-v-bac4a35d] {
-  font-size: 2.8125rem;
+.container .other_login_icon .img[data-v-bac4a35d] {
+  width: 2.8125rem;
+  height: 2.8125rem;
 }
 .container .back[data-v-bac4a35d] {
   position: absolute;

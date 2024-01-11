@@ -61,7 +61,7 @@
 
 	}, {
 		textFont: 'icon-chuangjianqunliao',
-		title: '创建群聊',
+		title: '我的群聊',
 		bgColor: ' rgb(61, 203, 242)'
 	}])
 
@@ -70,7 +70,7 @@
 			uni.navigateTo({
 				url: '/pages/apply/apply',
 			});
-		} else if (val == '创建群聊') {
+		} else if (val == '我的群聊') {
 			uni.navigateTo({
 				url: '/pages/groupChat/groupChat',
 			});

@@ -16,7 +16,7 @@
 		</view>
 		<view class="userItem" @click="removeFriend" v-if="groupLeaderId==userInfo.id">
 			<view class="content">
-				<text class="iconfont size">&#xe68e;</text>
+				<text class="iconfont size">&#xe617;</text>
 			</view>
 		</view>
 	</view>

@@ -73,8 +73,9 @@
   display: flex;
   justify-content: space-around;
 }
-.container .other_login_icon .iconfont[data-v-e4e4508d] {
-  font-size: 2.8125rem;
+.container .other_login_icon .img[data-v-e4e4508d] {
+  width: 2.8125rem;
+  height: 2.8125rem;
 }
 
 
@@ -83,9 +84,9 @@
   font-family: "iconfont"; /* Project id 4044756 */
   /* Color fonts */
   src: 
-       url('static/iconfont/font/iconfont.woff2?t=1703943136999') format('woff2'),
-       url('static/iconfont/font/iconfont.woff?t=1703943136999') format('woff'),
-       url('static/iconfont/font/iconfont.ttf?t=1703943136999') format('truetype');
+       url('static/iconfont/font/iconfont.woff2?t=1704809025781') format('woff2'),
+       url('static/iconfont/font/iconfont.woff?t=1704809025781') format('woff'),
+       url('static/iconfont/font/iconfont.ttf?t=1704809025781') format('truetype');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -94,8 +95,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-jian:before {
-  content: "\e68e";
+.icon-jianhao:before {
+  content: "\e617";
 }
 .icon-iconzhengli_tiaozhuan:before {
   content: "\e648";
@@ -232,27 +233,18 @@
 .icon-xiangji:before {
   content: "\e614";
 }
-.icon-qq:before {
-  content: "\e66a";
-}
-.icon-weibo1:before {
-  content: "\e619";
-}
-.icon-weixin:before {
-  content: "\e607";
-}
 * {
     touch-action: pan-y;
    /* overflow-x: hidden; */
 }
 	/* 引入iconfont */
+	/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "iconfont"; /* Project id 4044756 */
-  /* Color fonts */
+  font-family: 'iconfont';  /* Project id 4044756 */
   src: 
-       url('//at.alicdn.com/t/c/font_4044756_cxs1dgam41t.woff2?t=1701605974874') format('woff2'),
-       url('//at.alicdn.com/t/c/font_4044756_cxs1dgam41t.woff?t=1701605974874') format('woff'),
-       url('//at.alicdn.com/t/c/font_4044756_cxs1dgam41t.ttf?t=1701605974874') format('truetype');
+       url('//at.alicdn.com/t/c/font_4044756_s4rrqpxr3hh.woff2?t=1704700249170') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4044756_s4rrqpxr3hh.woff?t=1704700249170') format('woff'),
+       url('//at.alicdn.com/t/c/font_4044756_s4rrqpxr3hh.ttf?t=1704700249170') format('truetype');
 }
 .iconfont {
   font-family: "iconfont" !important;

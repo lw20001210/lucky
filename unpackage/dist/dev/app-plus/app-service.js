@@ -1533,7 +1533,7 @@ This will fail in production.`);
       }
     });
   }
-  const mainUrl = "http://192.168.74.20:3000";
+  const mainUrl = "http://192.168.136.20:3000";
   const request = (url2, method, data = null) => {
     return new Promise((resolve, reject) => {
       uni.request({
@@ -7489,7 +7489,7 @@ This will fail in production.`);
     }
     return target;
   };
-  const _sfc_main$S = {
+  const _sfc_main$R = {
     __name: "login",
     setup(__props) {
       let userInfo = vue.reactive({
@@ -7574,20 +7574,32 @@ This will fail in production.`);
           ]),
           vue.createElementVNode("view", { class: "other_login_icon" }, [
             vue.createElementVNode("view", { class: "wx" }, [
-              vue.createElementVNode("view", { class: "iconfont icon-weixin" })
+              vue.createElementVNode("image", {
+                class: "img",
+                src: "/static/images/wx.png",
+                mode: ""
+              })
             ]),
             vue.createElementVNode("view", { class: "qq" }, [
-              vue.createElementVNode("view", { class: "iconfont icon-qq" })
+              vue.createElementVNode("image", {
+                class: "img",
+                src: "/static/images/QQ.png",
+                mode: ""
+              })
             ]),
             vue.createElementVNode("view", { class: "wb" }, [
-              vue.createElementVNode("view", { class: "iconfont icon-weibo1" })
+              vue.createElementVNode("image", {
+                class: "img",
+                src: "/static/images/wb.png",
+                mode: ""
+              })
             ])
           ])
         ]);
       };
     }
   };
-  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$S, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/uniapp毕设/lucky/pages/login/login.vue"]]);
+  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$R, [["__scopeId", "data-v-e4e4508d"], ["__file", "D:/uniapp毕设/lucky/pages/login/login.vue"]]);
   const pages$1 = [
     {
       path: "pages/login/login",
@@ -7700,13 +7712,6 @@ This will fail in production.`);
     },
     {
       path: "pages/search/search",
-      style: {
-        navigationBarTitleText: "",
-        enablePullDownRefresh: false
-      }
-    },
-    {
-      path: "pages/homePaeg/homePage",
       style: {
         navigationBarTitleText: "",
         enablePullDownRefresh: false
@@ -10773,7 +10778,7 @@ ${i3}
     }
     return filedata;
   };
-  const _sfc_main$R = {
+  const _sfc_main$Q = {
     name: "uploadImage",
     emits: ["uploadFiles", "choose", "delFile"],
     props: {
@@ -10920,7 +10925,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker__container" }, [
       (vue.openBlock(true), vue.createElementBlock(
         vue.Fragment,
@@ -11013,8 +11018,8 @@ ${i3}
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$R, [["render", _sfc_render$s], ["__scopeId", "data-v-bdfc07e0"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
-  const _sfc_main$Q = {
+  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$Q, [["render", _sfc_render$r], ["__scopeId", "data-v-bdfc07e0"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
+  const _sfc_main$P = {
     name: "uploadFile",
     emits: ["uploadFiles", "choose", "delFile"],
     props: {
@@ -11150,7 +11155,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker__files" }, [
       !$props.readonly ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -11232,8 +11237,8 @@ ${i3}
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$Q, [["render", _sfc_render$r], ["__scopeId", "data-v-a54939c6"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
-  const _sfc_main$P = {
+  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$P, [["render", _sfc_render$q], ["__scopeId", "data-v-a54939c6"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
+  const _sfc_main$O = {
     name: "uniFilePicker",
     components: {
       uploadImage,
@@ -11715,7 +11720,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_upload_image = vue.resolveComponent("upload-image");
     const _component_upload_file = vue.resolveComponent("upload-file");
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker" }, [
@@ -11785,8 +11790,8 @@ ${i3}
       }, 8, ["readonly", "list-styles", "files-list", "showType", "delIcon", "onUploadFiles", "onChoose", "onDelFile"])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_0$9 = /* @__PURE__ */ _export_sfc(_sfc_main$P, [["render", _sfc_render$q], ["__scopeId", "data-v-6223573f"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
-  const _sfc_main$O = /* @__PURE__ */ vue.defineComponent({
+  const __easycom_0$9 = /* @__PURE__ */ _export_sfc(_sfc_main$O, [["render", _sfc_render$p], ["__scopeId", "data-v-6223573f"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
+  const _sfc_main$N = /* @__PURE__ */ vue.defineComponent({
     __name: "register",
     setup(__props) {
       let userInfo = vue.reactive({
@@ -11965,28 +11970,40 @@ ${i3}
           ]),
           vue.createElementVNode("view", { class: "other_login_icon" }, [
             vue.createElementVNode("view", { class: "wx" }, [
-              vue.createElementVNode("view", { class: "iconfont" }, "")
+              vue.createElementVNode("image", {
+                class: "img",
+                src: "/static/images/wx.png",
+                mode: ""
+              })
             ]),
             vue.createElementVNode("view", { class: "qq" }, [
-              vue.createElementVNode("view", { class: "iconfont" }, "")
+              vue.createElementVNode("image", {
+                class: "img",
+                src: "/static/images/QQ.png",
+                mode: ""
+              })
             ]),
             vue.createElementVNode("view", { class: "wb" }, [
-              vue.createElementVNode("view", { class: "iconfont" }, "")
+              vue.createElementVNode("image", {
+                class: "img",
+                src: "/static/images/wb.png",
+                mode: ""
+              })
             ])
           ])
         ]);
       };
     }
   });
-  const PagesRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$O, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/uniapp毕设/lucky/pages/register/register.vue"]]);
-  const _sfc_main$N = {};
-  function _sfc_render$p(_ctx, _cache) {
+  const PagesRegisterRegister = /* @__PURE__ */ _export_sfc(_sfc_main$N, [["__scopeId", "data-v-bac4a35d"], ["__file", "D:/uniapp毕设/lucky/pages/register/register.vue"]]);
+  const _sfc_main$M = {};
+  function _sfc_render$o(_ctx, _cache) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "status_bar" }, [
       vue.createCommentVNode(" 这是状态栏。防止顶到手机信息栏 ")
     ]);
   }
-  const statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$N, [["render", _sfc_render$p], ["__scopeId", "data-v-8caa3c28"], ["__file", "D:/uniapp毕设/lucky/component/statusBar.vue"]]);
-  const _sfc_main$M = {
+  const statusBar = /* @__PURE__ */ _export_sfc(_sfc_main$M, [["render", _sfc_render$o], ["__scopeId", "data-v-8caa3c28"], ["__file", "D:/uniapp毕设/lucky/component/statusBar.vue"]]);
+  const _sfc_main$L = {
     __name: "header",
     props: ["obj"],
     setup(__props) {
@@ -12047,8 +12064,8 @@ ${i3}
       };
     }
   };
-  const Header = /* @__PURE__ */ _export_sfc(_sfc_main$M, [["__scopeId", "data-v-8548c3e5"], ["__file", "D:/uniapp毕设/lucky/component/header.vue"]]);
-  const _sfc_main$L = {
+  const Header = /* @__PURE__ */ _export_sfc(_sfc_main$L, [["__scopeId", "data-v-8548c3e5"], ["__file", "D:/uniapp毕设/lucky/component/header.vue"]]);
+  const _sfc_main$K = {
     __name: "sendDynamic",
     setup(__props) {
       const userRef = userStore();
@@ -12256,9 +12273,9 @@ ${i3}
       };
     }
   };
-  const PagesSendDynamicSendDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$L, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/uniapp毕设/lucky/pages/sendDynamic/sendDynamic.vue"]]);
+  const PagesSendDynamicSendDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$K, [["__scopeId", "data-v-a04d0646"], ["__file", "D:/uniapp毕设/lucky/pages/sendDynamic/sendDynamic.vue"]]);
   const img$1 = "/static/images/sys.png";
-  const _sfc_main$K = {
+  const _sfc_main$J = {
     __name: "sys",
     setup(__props) {
       let headObj = vue.ref({
@@ -12300,7 +12317,7 @@ ${i3}
       };
     }
   };
-  const PagesSysSys = /* @__PURE__ */ _export_sfc(_sfc_main$K, [["__scopeId", "data-v-e8c9a334"], ["__file", "D:/uniapp毕设/lucky/pages/sys/sys.vue"]]);
+  const PagesSysSys = /* @__PURE__ */ _export_sfc(_sfc_main$J, [["__scopeId", "data-v-e8c9a334"], ["__file", "D:/uniapp毕设/lucky/pages/sys/sys.vue"]]);
   var dayjs_minExports = {};
   var dayjs_min = {
     get exports() {
@@ -12730,7 +12747,7 @@ ${i3}
       reject(new Error("not support"));
     });
   }
-  const _sfc_main$J = {
+  const _sfc_main$I = {
     __name: "selfStar",
     setup(__props) {
       const userPower = new userStore();
@@ -12857,14 +12874,22 @@ ${i3}
         debouncedInputChange(e2.detail.value);
       };
       let judgeComment = vue.ref(false);
-      function replyComments(commentInfo) {
-        if (userPower.id == commentInfo.commentId) {
+      function replyComments(commentInfo, replyFlag) {
+        formatAppLog("log", "at pages/selfStar/selfStar.vue:293", commentInfo, 123);
+        let uid;
+        if (replyFlag) {
+          uid = commentInfo.replyId;
+        } else {
+          uid = commentInfo.commentId;
+        }
+        formatAppLog("log", "at pages/selfStar/selfStar.vue:300", uid, 88);
+        if (userPower.id == uid) {
           return false;
         } else {
           judgeComment.value = true;
-          temporary.value = commentInfo;
           foucsFlag.value = true;
           flag2.value = "a";
+          temporary.value = commentInfo;
         }
       }
       async function acheveComment() {
@@ -12872,14 +12897,24 @@ ${i3}
           showMsg$1("评论不能为空");
         } else {
           if (judgeComment.value) {
-            formatAppLog("log", "at pages/selfStar/selfStar.vue:311", "我是点击了回复");
-            let replyobj = {
-              spaceId: temporary.value.spaceId,
-              replyComment: comment.value,
-              commentUid: temporary.value.commentId,
-              replyId: userPower.id,
-              commentId: temporary.value.id
-            };
+            let replyobj = {};
+            if (temporary.value.replyComment) {
+              replyobj = {
+                spaceId: temporary.value.spaceId,
+                replyComment: comment.value,
+                commentUid: temporary.value.replyId,
+                replyId: userPower.id,
+                commentId: temporary.value.id
+              };
+            } else {
+              replyobj = {
+                spaceId: temporary.value.spaceId,
+                replyComment: comment.value,
+                commentUid: temporary.value.commentId,
+                replyId: userPower.id,
+                commentId: temporary.value.id
+              };
+            }
             let {
               data: res
             } = await request("/user/replyComment", "post", replyobj);
@@ -12888,7 +12923,7 @@ ${i3}
               temporary.value = {};
               judgeComment.value = false;
               getmySpaceInfo();
-              formatAppLog("log", "at pages/selfStar/selfStar.vue:327", res.data, 33333);
+              formatAppLog("log", "at pages/selfStar/selfStar.vue:343", res.data, 33333);
             }
           } else {
             let obj = {
@@ -12908,10 +12943,17 @@ ${i3}
           }
         }
       }
-      function goDetail(info) {
-        uni.navigateTo({
-          url: `/pages/detail/detail?id=${info.commentId}`
-        });
+      function goDetail(info, flag3) {
+        if (flag3) {
+          uni.navigateTo({
+            url: `/pages/detail/detail?id=${info.uid}`
+          });
+        } else {
+          uni.navigateTo({
+            url: `/pages/detail/detail?id=${info.commentId}`
+          });
+        }
+        formatAppLog("log", "at pages/selfStar/selfStar.vue:375", info, 77);
       }
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock(
@@ -12932,7 +12974,7 @@ ${i3}
                     right: vue.withCtx(() => [
                       vue.createElementVNode("text", {
                         onClick: goSendDynamic,
-                        class: "iconfont icon-xiangji color",
+                        class: "size iconfont icon-xiangji",
                         style: { "font-size": "50rpx" }
                       })
                     ]),
@@ -12962,7 +13004,7 @@ ${i3}
                     vue.createElementVNode("view", { class: "rImg" }, [
                       vue.createElementVNode("text", {
                         onClick: goSendDynamic,
-                        class: "color iconfont icon-xiangji"
+                        class: "iconfont icon-xiangji size"
                       })
                     ]),
                     vue.createElementVNode("text", { class: "vir" }, "今天写点什么呢...")
@@ -13117,7 +13159,7 @@ ${i3}
                                   null,
                                   vue.renderList(item.likes, (val, index3) => {
                                     return vue.openBlock(), vue.createElementBlock("text", {
-                                      onClick: ($event) => goDetail(val),
+                                      onClick: ($event) => goDetail(val, true),
                                       key: val.id
                                     }, vue.toDisplayString(index3 > 0 ? "," : "") + " " + vue.toDisplayString(val.remarked), 9, ["onClick"]);
                                   }),
@@ -13159,15 +13201,14 @@ ${i3}
                                               vue.createElementVNode(
                                                 "text",
                                                 { class: "remarked" },
-                                                vue.toDisplayString(com.remarked) + ":",
+                                                vue.toDisplayString(reply.remarked) + " : ",
                                                 1
                                                 /* TEXT */
                                               ),
-                                              vue.createTextVNode(
-                                                " " + vue.toDisplayString(reply.replyComment),
-                                                1
-                                                /* TEXT */
-                                              )
+                                              vue.createTextVNode(),
+                                              vue.createElementVNode("text", {
+                                                onClick: ($event) => replyComments(reply, true)
+                                              }, vue.toDisplayString(reply.replyComment), 9, ["onClick"])
                                             ])
                                           ]);
                                         }),
@@ -13228,8 +13269,8 @@ ${i3}
       };
     }
   };
-  const PagesSelfStarSelfStar = /* @__PURE__ */ _export_sfc(_sfc_main$J, [["__scopeId", "data-v-1cb7f60c"], ["__file", "D:/uniapp毕设/lucky/pages/selfStar/selfStar.vue"]]);
-  const _sfc_main$I = {
+  const PagesSelfStarSelfStar = /* @__PURE__ */ _export_sfc(_sfc_main$I, [["__scopeId", "data-v-1cb7f60c"], ["__file", "D:/uniapp毕设/lucky/pages/selfStar/selfStar.vue"]]);
+  const _sfc_main$H = {
     __name: "dynamic",
     setup(__props) {
       let List = vue.ref([]);
@@ -13276,7 +13317,7 @@ ${i3}
             List.value = res.data.reverse();
           }
         }
-        formatAppLog("log", "at pages/dynamic/dynamic.vue:170", List.value, 55);
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:171", List.value, 55);
       }
       let wh = vue.ref();
       function getHeight() {
@@ -13318,7 +13359,7 @@ ${i3}
       let foucsFlag = vue.ref(false);
       let comment = vue.ref("");
       function validate(info) {
-        formatAppLog("log", "at pages/dynamic/dynamic.vue:220", info, 66666);
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:227", info, 66666);
         temporary.value = info;
         foucsFlag.value = true;
         flag2.value = "a";
@@ -13327,11 +13368,11 @@ ${i3}
       function getInputHeight(e2) {
         if (e2.detail.height != 0) {
           keyboardHeight.value = parseInt(e2.detail.height) * 2 - 25;
-          formatAppLog("log", "at pages/dynamic/dynamic.vue:230", keyboardHeight.value);
+          formatAppLog("log", "at pages/dynamic/dynamic.vue:237", keyboardHeight.value);
         }
       }
       function closeKeyBorder(e2) {
-        formatAppLog("log", "at pages/dynamic/dynamic.vue:235", e2);
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:242", e2);
         if (e2.detail.height == 0) {
           flag2.value = "a";
           keyboardHeight.value = 10;
@@ -13349,15 +13390,22 @@ ${i3}
         debouncedInputChange(e2.detail.value);
       };
       let judgeComment = vue.ref(false);
-      function replyComments(commentInfo) {
-        formatAppLog("log", "at pages/dynamic/dynamic.vue:257", commentInfo, 123);
-        if (userPower.id == commentInfo.commentId) {
+      function replyComments(commentInfo, replyFlag) {
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:264", commentInfo, 123);
+        let uid;
+        if (replyFlag) {
+          uid = commentInfo.replyId;
+        } else {
+          uid = commentInfo.commentId;
+        }
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:271", uid, 88);
+        if (userPower.id == uid) {
           return false;
         } else {
           judgeComment.value = true;
-          temporary.value = commentInfo;
           foucsFlag.value = true;
           flag2.value = "a";
+          temporary.value = commentInfo;
         }
       }
       async function acheveComment() {
@@ -13365,14 +13413,25 @@ ${i3}
           showMsg$1("评论不能为空");
         } else {
           if (judgeComment.value) {
-            formatAppLog("log", "at pages/dynamic/dynamic.vue:275", "我是点击了回复");
-            let replyobj = {
-              spaceId: temporary.value.spaceId,
-              replyComment: comment.value,
-              commentUid: temporary.value.commentId,
-              replyId: userPower.id,
-              commentId: temporary.value.id
-            };
+            formatAppLog("log", "at pages/dynamic/dynamic.vue:288", "我是点击了回复");
+            let replyobj = {};
+            if (temporary.value.replyComment) {
+              replyobj = {
+                spaceId: temporary.value.spaceId,
+                replyComment: comment.value,
+                commentUid: temporary.value.replyId,
+                replyId: userPower.id,
+                commentId: temporary.value.id
+              };
+            } else {
+              replyobj = {
+                spaceId: temporary.value.spaceId,
+                replyComment: comment.value,
+                commentUid: temporary.value.commentId,
+                replyId: userPower.id,
+                commentId: temporary.value.id
+              };
+            }
             let {
               data: res
             } = await request("/user/replyComment", "post", replyobj);
@@ -13381,10 +13440,10 @@ ${i3}
               temporary.value = {};
               judgeComment.value = false;
               getList();
-              formatAppLog("log", "at pages/dynamic/dynamic.vue:291", res.data, 33333);
+              formatAppLog("log", "at pages/dynamic/dynamic.vue:316", res.data, 33333);
             }
           } else {
-            formatAppLog("log", "at pages/dynamic/dynamic.vue:294", temporary.value, 111);
+            formatAppLog("log", "at pages/dynamic/dynamic.vue:319", temporary.value, 111);
             let obj = {
               commentId: userPower.id,
               spaceId: temporary.value.id,
@@ -13402,7 +13461,7 @@ ${i3}
         }
       }
       function goDetail(info) {
-        formatAppLog("log", "at pages/dynamic/dynamic.vue:314", info, 777);
+        formatAppLog("log", "at pages/dynamic/dynamic.vue:339", info, 777);
         uni.navigateTo({
           url: `/pages/detail/detail?id=${info.commentId}`
         });
@@ -13422,7 +13481,7 @@ ${i3}
                     ]),
                     right: vue.withCtx(() => [
                       vue.createElementVNode("text", {
-                        class: "iconfont icon-xiangji",
+                        class: "size iconfont icon-xiangji",
                         style: { "font-size": "50rpx" }
                       })
                     ]),
@@ -13631,15 +13690,13 @@ ${i3}
                                             vue.createElementVNode(
                                               "text",
                                               { class: "remarked" },
-                                              vue.toDisplayString(com.remarked) + ":",
+                                              vue.toDisplayString(reply.remarked) + " : ",
                                               1
                                               /* TEXT */
                                             ),
-                                            vue.createTextVNode(
-                                              " " + vue.toDisplayString(reply.replyComment),
-                                              1
-                                              /* TEXT */
-                                            )
+                                            vue.createElementVNode("text", {
+                                              onClick: ($event) => replyComments(reply, true)
+                                            }, vue.toDisplayString(reply.replyComment), 9, ["onClick"])
                                           ])
                                         ]);
                                       }),
@@ -13699,9 +13756,9 @@ ${i3}
       };
     }
   };
-  const PagesDynamicDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$I, [["__scopeId", "data-v-e73567d5"], ["__file", "D:/uniapp毕设/lucky/pages/dynamic/dynamic.vue"]]);
+  const PagesDynamicDynamic = /* @__PURE__ */ _export_sfc(_sfc_main$H, [["__scopeId", "data-v-e73567d5"], ["__file", "D:/uniapp毕设/lucky/pages/dynamic/dynamic.vue"]]);
   const img = "/static/img/bg.jpg";
-  const _sfc_main$H = {
+  const _sfc_main$G = {
     __name: "qrcode",
     setup(__props) {
       let headObj = vue.ref({
@@ -13788,7 +13845,7 @@ ${i3}
       };
     }
   };
-  const PagesQrcodeQrcode = /* @__PURE__ */ _export_sfc(_sfc_main$H, [["__scopeId", "data-v-a7a2e00e"], ["__file", "D:/uniapp毕设/lucky/pages/qrcode/qrcode.vue"]]);
+  const PagesQrcodeQrcode = /* @__PURE__ */ _export_sfc(_sfc_main$G, [["__scopeId", "data-v-a7a2e00e"], ["__file", "D:/uniapp毕设/lucky/pages/qrcode/qrcode.vue"]]);
   const popup = {
     data() {
       return {};
@@ -14124,7 +14181,7 @@ ${i3}
     "zh-Hant": zhHant$1
   };
   const { t: t$1 } = initVueI18n(messages$1);
-  const _sfc_main$G = {
+  const _sfc_main$F = {
     name: "uniPopupDialog",
     mixins: [popup],
     emits: ["confirm", "close"],
@@ -14244,7 +14301,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-popup-dialog" }, [
       vue.createElementVNode("view", { class: "uni-dialog-title" }, [
         vue.createElementVNode(
@@ -14314,7 +14371,7 @@ ${i3}
       ])
     ]);
   }
-  const __easycom_2$4 = /* @__PURE__ */ _export_sfc(_sfc_main$G, [["render", _sfc_render$o], ["__scopeId", "data-v-d78c88b7"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog.vue"]]);
+  const __easycom_2$4 = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["render", _sfc_render$n], ["__scopeId", "data-v-d78c88b7"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog.vue"]]);
   let MPAnimation$1 = class MPAnimation {
     constructor(options, _this) {
       this.options = options;
@@ -14427,7 +14484,7 @@ ${i3}
     clearTimeout(_this.timer);
     return new MPAnimation$1(option, _this);
   }
-  const _sfc_main$F = {
+  const _sfc_main$E = {
     name: "uniTransition",
     emits: ["click", "change"],
     props: {
@@ -14678,7 +14735,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
       ref: "ani",
       animation: $data.animationData,
@@ -14691,8 +14748,8 @@ ${i3}
       [vue.vShow, $data.isShow]
     ]);
   }
-  const __easycom_0$8 = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["render", _sfc_render$n], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
-  const _sfc_main$E = {
+  const __easycom_0$8 = /* @__PURE__ */ _export_sfc(_sfc_main$E, [["render", _sfc_render$m], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
+  const _sfc_main$D = {
     name: "uniPopup",
     components: {},
     emits: ["change", "maskClick"],
@@ -15019,7 +15076,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_transition = resolveEasycom(vue.resolveDynamicComponent("uni-transition"), __easycom_0$8);
     return $data.showPopup ? (vue.openBlock(), vue.createElementBlock(
       "view",
@@ -15079,8 +15136,8 @@ ${i3}
       /* CLASS */
     )) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$E, [["render", _sfc_render$m], ["__scopeId", "data-v-4dd3c44b"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
-  const _sfc_main$D = {
+  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$D, [["render", _sfc_render$l], ["__scopeId", "data-v-4dd3c44b"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const _sfc_main$C = {
     __name: "editUser",
     setup(__props) {
       let headObj = vue.ref({
@@ -15532,7 +15589,7 @@ ${i3}
       };
     }
   };
-  const PagesEditUserEditUser = /* @__PURE__ */ _export_sfc(_sfc_main$D, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/uniapp毕设/lucky/pages/editUser/editUser.vue"]]);
+  const PagesEditUserEditUser = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["__scopeId", "data-v-24ea2ac3"], ["__file", "D:/uniapp毕设/lucky/pages/editUser/editUser.vue"]]);
   let mpMixins = {};
   mpMixins = {
     data() {
@@ -15604,7 +15661,7 @@ ${i3}
     (Comp.$renderjs || (Comp.$renderjs = [])).push("renderswipe");
     (Comp.$renderjsModules || (Comp.$renderjsModules = {}))["renderswipe"] = "5a1e922e";
   };
-  const _sfc_main$C = {
+  const _sfc_main$B = {
     mixins: [mpwxs, bindIngXMixins, otherMixins],
     emits: ["click", "change"],
     props: {
@@ -15674,7 +15731,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -15771,11 +15828,11 @@ ${i3}
     );
   }
   if (typeof block0 === "function")
-    block0(_sfc_main$C);
+    block0(_sfc_main$B);
   if (typeof block1 === "function")
-    block1(_sfc_main$C);
-  const __easycom_0$7 = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["render", _sfc_render$l], ["__scopeId", "data-v-8ff2a577"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-swipe-action/components/uni-swipe-action-item/uni-swipe-action-item.vue"]]);
-  const _sfc_main$B = {
+    block1(_sfc_main$B);
+  const __easycom_0$7 = /* @__PURE__ */ _export_sfc(_sfc_main$B, [["render", _sfc_render$k], ["__scopeId", "data-v-8ff2a577"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-swipe-action/components/uni-swipe-action-item/uni-swipe-action-item.vue"]]);
+  const _sfc_main$A = {
     name: "uniSwipeAction",
     data() {
       return {};
@@ -15801,12 +15858,12 @@ ${i3}
       }
     }
   };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", null, [
       vue.renderSlot(_ctx.$slots, "default")
     ]);
   }
-  const __easycom_1$6 = /* @__PURE__ */ _export_sfc(_sfc_main$B, [["render", _sfc_render$k], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-swipe-action/components/uni-swipe-action/uni-swipe-action.vue"]]);
+  const __easycom_1$6 = /* @__PURE__ */ _export_sfc(_sfc_main$A, [["render", _sfc_render$j], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-swipe-action/components/uni-swipe-action/uni-swipe-action.vue"]]);
   const statusStore = defineStore("status", {
     state: () => ({
       userList: [],
@@ -15818,7 +15875,7 @@ ${i3}
       //群聊成员id
     })
   });
-  const _sfc_main$A = {
+  const _sfc_main$z = {
     __name: "apply",
     setup(__props) {
       let nickname = vue.ref();
@@ -16066,1183 +16123,658 @@ ${i3}
       };
     }
   };
-  const PagesApplyApply = /* @__PURE__ */ _export_sfc(_sfc_main$A, [["__scopeId", "data-v-426a9ebe"], ["__file", "D:/uniapp毕设/lucky/pages/apply/apply.vue"]]);
-  const icons$1 = {
-    "id": "2852637",
-    "name": "uniui图标库",
-    "font_family": "uniicons",
-    "css_prefix_text": "uniui-",
-    "description": "",
-    "glyphs": [
-      {
-        "icon_id": "25027049",
-        "name": "yanse",
-        "font_class": "color",
-        "unicode": "e6cf",
-        "unicode_decimal": 59087
-      },
-      {
-        "icon_id": "25027048",
-        "name": "wallet",
-        "font_class": "wallet",
-        "unicode": "e6b1",
-        "unicode_decimal": 59057
-      },
-      {
-        "icon_id": "25015720",
-        "name": "settings-filled",
-        "font_class": "settings-filled",
-        "unicode": "e6ce",
-        "unicode_decimal": 59086
-      },
-      {
-        "icon_id": "25015434",
-        "name": "shimingrenzheng-filled",
-        "font_class": "auth-filled",
-        "unicode": "e6cc",
-        "unicode_decimal": 59084
-      },
-      {
-        "icon_id": "24934246",
-        "name": "shop-filled",
-        "font_class": "shop-filled",
-        "unicode": "e6cd",
-        "unicode_decimal": 59085
-      },
-      {
-        "icon_id": "24934159",
-        "name": "staff-filled-01",
-        "font_class": "staff-filled",
-        "unicode": "e6cb",
-        "unicode_decimal": 59083
-      },
-      {
-        "icon_id": "24932461",
-        "name": "VIP-filled",
-        "font_class": "vip-filled",
-        "unicode": "e6c6",
-        "unicode_decimal": 59078
-      },
-      {
-        "icon_id": "24932462",
-        "name": "plus_circle_fill",
-        "font_class": "plus-filled",
-        "unicode": "e6c7",
-        "unicode_decimal": 59079
-      },
-      {
-        "icon_id": "24932463",
-        "name": "folder_add-filled",
-        "font_class": "folder-add-filled",
-        "unicode": "e6c8",
-        "unicode_decimal": 59080
-      },
-      {
-        "icon_id": "24932464",
-        "name": "yanse-filled",
-        "font_class": "color-filled",
-        "unicode": "e6c9",
-        "unicode_decimal": 59081
-      },
-      {
-        "icon_id": "24932465",
-        "name": "tune-filled",
-        "font_class": "tune-filled",
-        "unicode": "e6ca",
-        "unicode_decimal": 59082
-      },
-      {
-        "icon_id": "24932455",
-        "name": "a-rilidaka-filled",
-        "font_class": "calendar-filled",
-        "unicode": "e6c0",
-        "unicode_decimal": 59072
-      },
-      {
-        "icon_id": "24932456",
-        "name": "notification-filled",
-        "font_class": "notification-filled",
-        "unicode": "e6c1",
-        "unicode_decimal": 59073
-      },
-      {
-        "icon_id": "24932457",
-        "name": "wallet-filled",
-        "font_class": "wallet-filled",
-        "unicode": "e6c2",
-        "unicode_decimal": 59074
-      },
-      {
-        "icon_id": "24932458",
-        "name": "paihangbang-filled",
-        "font_class": "medal-filled",
-        "unicode": "e6c3",
-        "unicode_decimal": 59075
-      },
-      {
-        "icon_id": "24932459",
-        "name": "gift-filled",
-        "font_class": "gift-filled",
-        "unicode": "e6c4",
-        "unicode_decimal": 59076
-      },
-      {
-        "icon_id": "24932460",
-        "name": "fire-filled",
-        "font_class": "fire-filled",
-        "unicode": "e6c5",
-        "unicode_decimal": 59077
-      },
-      {
-        "icon_id": "24928001",
-        "name": "refreshempty",
-        "font_class": "refreshempty",
-        "unicode": "e6bf",
-        "unicode_decimal": 59071
-      },
-      {
-        "icon_id": "24926853",
-        "name": "location-ellipse",
-        "font_class": "location-filled",
-        "unicode": "e6af",
-        "unicode_decimal": 59055
-      },
-      {
-        "icon_id": "24926735",
-        "name": "person-filled",
-        "font_class": "person-filled",
-        "unicode": "e69d",
-        "unicode_decimal": 59037
-      },
-      {
-        "icon_id": "24926703",
-        "name": "personadd-filled",
-        "font_class": "personadd-filled",
-        "unicode": "e698",
-        "unicode_decimal": 59032
-      },
-      {
-        "icon_id": "24923351",
-        "name": "back",
-        "font_class": "back",
-        "unicode": "e6b9",
-        "unicode_decimal": 59065
-      },
-      {
-        "icon_id": "24923352",
-        "name": "forward",
-        "font_class": "forward",
-        "unicode": "e6ba",
-        "unicode_decimal": 59066
-      },
-      {
-        "icon_id": "24923353",
-        "name": "arrowthinright",
-        "font_class": "arrow-right",
-        "unicode": "e6bb",
-        "unicode_decimal": 59067
-      },
-      {
-        "icon_id": "24923353",
-        "name": "arrowthinright",
-        "font_class": "arrowthinright",
-        "unicode": "e6bb",
-        "unicode_decimal": 59067
-      },
-      {
-        "icon_id": "24923354",
-        "name": "arrowthinleft",
-        "font_class": "arrow-left",
-        "unicode": "e6bc",
-        "unicode_decimal": 59068
-      },
-      {
-        "icon_id": "24923354",
-        "name": "arrowthinleft",
-        "font_class": "arrowthinleft",
-        "unicode": "e6bc",
-        "unicode_decimal": 59068
-      },
-      {
-        "icon_id": "24923355",
-        "name": "arrowthinup",
-        "font_class": "arrow-up",
-        "unicode": "e6bd",
-        "unicode_decimal": 59069
-      },
-      {
-        "icon_id": "24923355",
-        "name": "arrowthinup",
-        "font_class": "arrowthinup",
-        "unicode": "e6bd",
-        "unicode_decimal": 59069
-      },
-      {
-        "icon_id": "24923356",
-        "name": "arrowthindown",
-        "font_class": "arrow-down",
-        "unicode": "e6be",
-        "unicode_decimal": 59070
-      },
-      {
-        "icon_id": "24923356",
-        "name": "arrowthindown",
-        "font_class": "arrowthindown",
-        "unicode": "e6be",
-        "unicode_decimal": 59070
-      },
-      {
-        "icon_id": "24923349",
-        "name": "arrowdown",
-        "font_class": "bottom",
-        "unicode": "e6b8",
-        "unicode_decimal": 59064
-      },
-      {
-        "icon_id": "24923349",
-        "name": "arrowdown",
-        "font_class": "arrowdown",
-        "unicode": "e6b8",
-        "unicode_decimal": 59064
-      },
-      {
-        "icon_id": "24923346",
-        "name": "arrowright",
-        "font_class": "right",
-        "unicode": "e6b5",
-        "unicode_decimal": 59061
-      },
-      {
-        "icon_id": "24923346",
-        "name": "arrowright",
-        "font_class": "arrowright",
-        "unicode": "e6b5",
-        "unicode_decimal": 59061
-      },
-      {
-        "icon_id": "24923347",
-        "name": "arrowup",
-        "font_class": "top",
-        "unicode": "e6b6",
-        "unicode_decimal": 59062
-      },
-      {
-        "icon_id": "24923347",
-        "name": "arrowup",
-        "font_class": "arrowup",
-        "unicode": "e6b6",
-        "unicode_decimal": 59062
-      },
-      {
-        "icon_id": "24923348",
-        "name": "arrowleft",
-        "font_class": "left",
-        "unicode": "e6b7",
-        "unicode_decimal": 59063
-      },
-      {
-        "icon_id": "24923348",
-        "name": "arrowleft",
-        "font_class": "arrowleft",
-        "unicode": "e6b7",
-        "unicode_decimal": 59063
-      },
-      {
-        "icon_id": "24923334",
-        "name": "eye",
-        "font_class": "eye",
-        "unicode": "e651",
-        "unicode_decimal": 58961
-      },
-      {
-        "icon_id": "24923335",
-        "name": "eye-filled",
-        "font_class": "eye-filled",
-        "unicode": "e66a",
-        "unicode_decimal": 58986
-      },
-      {
-        "icon_id": "24923336",
-        "name": "eye-slash",
-        "font_class": "eye-slash",
-        "unicode": "e6b3",
-        "unicode_decimal": 59059
-      },
-      {
-        "icon_id": "24923337",
-        "name": "eye-slash-filled",
-        "font_class": "eye-slash-filled",
-        "unicode": "e6b4",
-        "unicode_decimal": 59060
-      },
-      {
-        "icon_id": "24923305",
-        "name": "info-filled",
-        "font_class": "info-filled",
-        "unicode": "e649",
-        "unicode_decimal": 58953
-      },
-      {
-        "icon_id": "24923299",
-        "name": "reload-01",
-        "font_class": "reload",
-        "unicode": "e6b2",
-        "unicode_decimal": 59058
-      },
-      {
-        "icon_id": "24923195",
-        "name": "mic_slash_fill",
-        "font_class": "micoff-filled",
-        "unicode": "e6b0",
-        "unicode_decimal": 59056
-      },
-      {
-        "icon_id": "24923165",
-        "name": "map-pin-ellipse",
-        "font_class": "map-pin-ellipse",
-        "unicode": "e6ac",
-        "unicode_decimal": 59052
-      },
-      {
-        "icon_id": "24923166",
-        "name": "map-pin",
-        "font_class": "map-pin",
-        "unicode": "e6ad",
-        "unicode_decimal": 59053
-      },
-      {
-        "icon_id": "24923167",
-        "name": "location",
-        "font_class": "location",
-        "unicode": "e6ae",
-        "unicode_decimal": 59054
-      },
-      {
-        "icon_id": "24923064",
-        "name": "starhalf",
-        "font_class": "starhalf",
-        "unicode": "e683",
-        "unicode_decimal": 59011
-      },
-      {
-        "icon_id": "24923065",
-        "name": "star",
-        "font_class": "star",
-        "unicode": "e688",
-        "unicode_decimal": 59016
-      },
-      {
-        "icon_id": "24923066",
-        "name": "star-filled",
-        "font_class": "star-filled",
-        "unicode": "e68f",
-        "unicode_decimal": 59023
-      },
-      {
-        "icon_id": "24899646",
-        "name": "a-rilidaka",
-        "font_class": "calendar",
-        "unicode": "e6a0",
-        "unicode_decimal": 59040
-      },
-      {
-        "icon_id": "24899647",
-        "name": "fire",
-        "font_class": "fire",
-        "unicode": "e6a1",
-        "unicode_decimal": 59041
-      },
-      {
-        "icon_id": "24899648",
-        "name": "paihangbang",
-        "font_class": "medal",
-        "unicode": "e6a2",
-        "unicode_decimal": 59042
-      },
-      {
-        "icon_id": "24899649",
-        "name": "font",
-        "font_class": "font",
-        "unicode": "e6a3",
-        "unicode_decimal": 59043
-      },
-      {
-        "icon_id": "24899650",
-        "name": "gift",
-        "font_class": "gift",
-        "unicode": "e6a4",
-        "unicode_decimal": 59044
-      },
-      {
-        "icon_id": "24899651",
-        "name": "link",
-        "font_class": "link",
-        "unicode": "e6a5",
-        "unicode_decimal": 59045
-      },
-      {
-        "icon_id": "24899652",
-        "name": "notification",
-        "font_class": "notification",
-        "unicode": "e6a6",
-        "unicode_decimal": 59046
-      },
-      {
-        "icon_id": "24899653",
-        "name": "staff",
-        "font_class": "staff",
-        "unicode": "e6a7",
-        "unicode_decimal": 59047
-      },
-      {
-        "icon_id": "24899654",
-        "name": "VIP",
-        "font_class": "vip",
-        "unicode": "e6a8",
-        "unicode_decimal": 59048
-      },
-      {
-        "icon_id": "24899655",
-        "name": "folder_add",
-        "font_class": "folder-add",
-        "unicode": "e6a9",
-        "unicode_decimal": 59049
-      },
-      {
-        "icon_id": "24899656",
-        "name": "tune",
-        "font_class": "tune",
-        "unicode": "e6aa",
-        "unicode_decimal": 59050
-      },
-      {
-        "icon_id": "24899657",
-        "name": "shimingrenzheng",
-        "font_class": "auth",
-        "unicode": "e6ab",
-        "unicode_decimal": 59051
-      },
-      {
-        "icon_id": "24899565",
-        "name": "person",
-        "font_class": "person",
-        "unicode": "e699",
-        "unicode_decimal": 59033
-      },
-      {
-        "icon_id": "24899566",
-        "name": "email-filled",
-        "font_class": "email-filled",
-        "unicode": "e69a",
-        "unicode_decimal": 59034
-      },
-      {
-        "icon_id": "24899567",
-        "name": "phone-filled",
-        "font_class": "phone-filled",
-        "unicode": "e69b",
-        "unicode_decimal": 59035
-      },
-      {
-        "icon_id": "24899568",
-        "name": "phone",
-        "font_class": "phone",
-        "unicode": "e69c",
-        "unicode_decimal": 59036
-      },
-      {
-        "icon_id": "24899570",
-        "name": "email",
-        "font_class": "email",
-        "unicode": "e69e",
-        "unicode_decimal": 59038
-      },
-      {
-        "icon_id": "24899571",
-        "name": "personadd",
-        "font_class": "personadd",
-        "unicode": "e69f",
-        "unicode_decimal": 59039
-      },
-      {
-        "icon_id": "24899558",
-        "name": "chatboxes-filled",
-        "font_class": "chatboxes-filled",
-        "unicode": "e692",
-        "unicode_decimal": 59026
-      },
-      {
-        "icon_id": "24899559",
-        "name": "contact",
-        "font_class": "contact",
-        "unicode": "e693",
-        "unicode_decimal": 59027
-      },
-      {
-        "icon_id": "24899560",
-        "name": "chatbubble-filled",
-        "font_class": "chatbubble-filled",
-        "unicode": "e694",
-        "unicode_decimal": 59028
-      },
-      {
-        "icon_id": "24899561",
-        "name": "contact-filled",
-        "font_class": "contact-filled",
-        "unicode": "e695",
-        "unicode_decimal": 59029
-      },
-      {
-        "icon_id": "24899562",
-        "name": "chatboxes",
-        "font_class": "chatboxes",
-        "unicode": "e696",
-        "unicode_decimal": 59030
-      },
-      {
-        "icon_id": "24899563",
-        "name": "chatbubble",
-        "font_class": "chatbubble",
-        "unicode": "e697",
-        "unicode_decimal": 59031
-      },
-      {
-        "icon_id": "24881290",
-        "name": "upload-filled",
-        "font_class": "upload-filled",
-        "unicode": "e68e",
-        "unicode_decimal": 59022
-      },
-      {
-        "icon_id": "24881292",
-        "name": "upload",
-        "font_class": "upload",
-        "unicode": "e690",
-        "unicode_decimal": 59024
-      },
-      {
-        "icon_id": "24881293",
-        "name": "weixin",
-        "font_class": "weixin",
-        "unicode": "e691",
-        "unicode_decimal": 59025
-      },
-      {
-        "icon_id": "24881274",
-        "name": "compose",
-        "font_class": "compose",
-        "unicode": "e67f",
-        "unicode_decimal": 59007
-      },
-      {
-        "icon_id": "24881275",
-        "name": "qq",
-        "font_class": "qq",
-        "unicode": "e680",
-        "unicode_decimal": 59008
-      },
-      {
-        "icon_id": "24881276",
-        "name": "download-filled",
-        "font_class": "download-filled",
-        "unicode": "e681",
-        "unicode_decimal": 59009
-      },
-      {
-        "icon_id": "24881277",
-        "name": "pengyouquan",
-        "font_class": "pyq",
-        "unicode": "e682",
-        "unicode_decimal": 59010
-      },
-      {
-        "icon_id": "24881279",
-        "name": "sound",
-        "font_class": "sound",
-        "unicode": "e684",
-        "unicode_decimal": 59012
-      },
-      {
-        "icon_id": "24881280",
-        "name": "trash-filled",
-        "font_class": "trash-filled",
-        "unicode": "e685",
-        "unicode_decimal": 59013
-      },
-      {
-        "icon_id": "24881281",
-        "name": "sound-filled",
-        "font_class": "sound-filled",
-        "unicode": "e686",
-        "unicode_decimal": 59014
-      },
-      {
-        "icon_id": "24881282",
-        "name": "trash",
-        "font_class": "trash",
-        "unicode": "e687",
-        "unicode_decimal": 59015
-      },
-      {
-        "icon_id": "24881284",
-        "name": "videocam-filled",
-        "font_class": "videocam-filled",
-        "unicode": "e689",
-        "unicode_decimal": 59017
-      },
-      {
-        "icon_id": "24881285",
-        "name": "spinner-cycle",
-        "font_class": "spinner-cycle",
-        "unicode": "e68a",
-        "unicode_decimal": 59018
-      },
-      {
-        "icon_id": "24881286",
-        "name": "weibo",
-        "font_class": "weibo",
-        "unicode": "e68b",
-        "unicode_decimal": 59019
-      },
-      {
-        "icon_id": "24881288",
-        "name": "videocam",
-        "font_class": "videocam",
-        "unicode": "e68c",
-        "unicode_decimal": 59020
-      },
-      {
-        "icon_id": "24881289",
-        "name": "download",
-        "font_class": "download",
-        "unicode": "e68d",
-        "unicode_decimal": 59021
-      },
-      {
-        "icon_id": "24879601",
-        "name": "help",
-        "font_class": "help",
-        "unicode": "e679",
-        "unicode_decimal": 59001
-      },
-      {
-        "icon_id": "24879602",
-        "name": "navigate-filled",
-        "font_class": "navigate-filled",
-        "unicode": "e67a",
-        "unicode_decimal": 59002
-      },
-      {
-        "icon_id": "24879603",
-        "name": "plusempty",
-        "font_class": "plusempty",
-        "unicode": "e67b",
-        "unicode_decimal": 59003
-      },
-      {
-        "icon_id": "24879604",
-        "name": "smallcircle",
-        "font_class": "smallcircle",
-        "unicode": "e67c",
-        "unicode_decimal": 59004
-      },
-      {
-        "icon_id": "24879605",
-        "name": "minus-filled",
-        "font_class": "minus-filled",
-        "unicode": "e67d",
-        "unicode_decimal": 59005
-      },
-      {
-        "icon_id": "24879606",
-        "name": "micoff",
-        "font_class": "micoff",
-        "unicode": "e67e",
-        "unicode_decimal": 59006
-      },
-      {
-        "icon_id": "24879588",
-        "name": "closeempty",
-        "font_class": "closeempty",
-        "unicode": "e66c",
-        "unicode_decimal": 58988
-      },
-      {
-        "icon_id": "24879589",
-        "name": "clear",
-        "font_class": "clear",
-        "unicode": "e66d",
-        "unicode_decimal": 58989
-      },
-      {
-        "icon_id": "24879590",
-        "name": "navigate",
-        "font_class": "navigate",
-        "unicode": "e66e",
-        "unicode_decimal": 58990
-      },
-      {
-        "icon_id": "24879591",
-        "name": "minus",
-        "font_class": "minus",
-        "unicode": "e66f",
-        "unicode_decimal": 58991
-      },
-      {
-        "icon_id": "24879592",
-        "name": "image",
-        "font_class": "image",
-        "unicode": "e670",
-        "unicode_decimal": 58992
-      },
-      {
-        "icon_id": "24879593",
-        "name": "mic",
-        "font_class": "mic",
-        "unicode": "e671",
-        "unicode_decimal": 58993
-      },
-      {
-        "icon_id": "24879594",
-        "name": "paperplane",
-        "font_class": "paperplane",
-        "unicode": "e672",
-        "unicode_decimal": 58994
-      },
-      {
-        "icon_id": "24879595",
-        "name": "close",
-        "font_class": "close",
-        "unicode": "e673",
-        "unicode_decimal": 58995
-      },
-      {
-        "icon_id": "24879596",
-        "name": "help-filled",
-        "font_class": "help-filled",
-        "unicode": "e674",
-        "unicode_decimal": 58996
-      },
-      {
-        "icon_id": "24879597",
-        "name": "plus-filled",
-        "font_class": "paperplane-filled",
-        "unicode": "e675",
-        "unicode_decimal": 58997
-      },
-      {
-        "icon_id": "24879598",
-        "name": "plus",
-        "font_class": "plus",
-        "unicode": "e676",
-        "unicode_decimal": 58998
-      },
-      {
-        "icon_id": "24879599",
-        "name": "mic-filled",
-        "font_class": "mic-filled",
-        "unicode": "e677",
-        "unicode_decimal": 58999
-      },
-      {
-        "icon_id": "24879600",
-        "name": "image-filled",
-        "font_class": "image-filled",
-        "unicode": "e678",
-        "unicode_decimal": 59e3
-      },
-      {
-        "icon_id": "24855900",
-        "name": "locked-filled",
-        "font_class": "locked-filled",
-        "unicode": "e668",
-        "unicode_decimal": 58984
-      },
-      {
-        "icon_id": "24855901",
-        "name": "info",
-        "font_class": "info",
-        "unicode": "e669",
-        "unicode_decimal": 58985
-      },
-      {
-        "icon_id": "24855903",
-        "name": "locked",
-        "font_class": "locked",
-        "unicode": "e66b",
-        "unicode_decimal": 58987
-      },
-      {
-        "icon_id": "24855884",
-        "name": "camera-filled",
-        "font_class": "camera-filled",
-        "unicode": "e658",
-        "unicode_decimal": 58968
-      },
-      {
-        "icon_id": "24855885",
-        "name": "chat-filled",
-        "font_class": "chat-filled",
-        "unicode": "e659",
-        "unicode_decimal": 58969
-      },
-      {
-        "icon_id": "24855886",
-        "name": "camera",
-        "font_class": "camera",
-        "unicode": "e65a",
-        "unicode_decimal": 58970
-      },
-      {
-        "icon_id": "24855887",
-        "name": "circle",
-        "font_class": "circle",
-        "unicode": "e65b",
-        "unicode_decimal": 58971
-      },
-      {
-        "icon_id": "24855888",
-        "name": "checkmarkempty",
-        "font_class": "checkmarkempty",
-        "unicode": "e65c",
-        "unicode_decimal": 58972
-      },
-      {
-        "icon_id": "24855889",
-        "name": "chat",
-        "font_class": "chat",
-        "unicode": "e65d",
-        "unicode_decimal": 58973
-      },
-      {
-        "icon_id": "24855890",
-        "name": "circle-filled",
-        "font_class": "circle-filled",
-        "unicode": "e65e",
-        "unicode_decimal": 58974
-      },
-      {
-        "icon_id": "24855891",
-        "name": "flag",
-        "font_class": "flag",
-        "unicode": "e65f",
-        "unicode_decimal": 58975
-      },
-      {
-        "icon_id": "24855892",
-        "name": "flag-filled",
-        "font_class": "flag-filled",
-        "unicode": "e660",
-        "unicode_decimal": 58976
-      },
-      {
-        "icon_id": "24855893",
-        "name": "gear-filled",
-        "font_class": "gear-filled",
-        "unicode": "e661",
-        "unicode_decimal": 58977
-      },
-      {
-        "icon_id": "24855894",
-        "name": "home",
-        "font_class": "home",
-        "unicode": "e662",
-        "unicode_decimal": 58978
-      },
-      {
-        "icon_id": "24855895",
-        "name": "home-filled",
-        "font_class": "home-filled",
-        "unicode": "e663",
-        "unicode_decimal": 58979
-      },
-      {
-        "icon_id": "24855896",
-        "name": "gear",
-        "font_class": "gear",
-        "unicode": "e664",
-        "unicode_decimal": 58980
-      },
-      {
-        "icon_id": "24855897",
-        "name": "smallcircle-filled",
-        "font_class": "smallcircle-filled",
-        "unicode": "e665",
-        "unicode_decimal": 58981
-      },
-      {
-        "icon_id": "24855898",
-        "name": "map-filled",
-        "font_class": "map-filled",
-        "unicode": "e666",
-        "unicode_decimal": 58982
-      },
-      {
-        "icon_id": "24855899",
-        "name": "map",
-        "font_class": "map",
-        "unicode": "e667",
-        "unicode_decimal": 58983
-      },
-      {
-        "icon_id": "24855825",
-        "name": "refresh-filled",
-        "font_class": "refresh-filled",
-        "unicode": "e656",
-        "unicode_decimal": 58966
-      },
-      {
-        "icon_id": "24855826",
-        "name": "refresh",
-        "font_class": "refresh",
-        "unicode": "e657",
-        "unicode_decimal": 58967
-      },
-      {
-        "icon_id": "24855808",
-        "name": "cloud-upload",
-        "font_class": "cloud-upload",
-        "unicode": "e645",
-        "unicode_decimal": 58949
-      },
-      {
-        "icon_id": "24855809",
-        "name": "cloud-download-filled",
-        "font_class": "cloud-download-filled",
-        "unicode": "e646",
-        "unicode_decimal": 58950
-      },
-      {
-        "icon_id": "24855810",
-        "name": "cloud-download",
-        "font_class": "cloud-download",
-        "unicode": "e647",
-        "unicode_decimal": 58951
-      },
-      {
-        "icon_id": "24855811",
-        "name": "cloud-upload-filled",
-        "font_class": "cloud-upload-filled",
-        "unicode": "e648",
-        "unicode_decimal": 58952
-      },
-      {
-        "icon_id": "24855813",
-        "name": "redo",
-        "font_class": "redo",
-        "unicode": "e64a",
-        "unicode_decimal": 58954
-      },
-      {
-        "icon_id": "24855814",
-        "name": "images-filled",
-        "font_class": "images-filled",
-        "unicode": "e64b",
-        "unicode_decimal": 58955
-      },
-      {
-        "icon_id": "24855815",
-        "name": "undo-filled",
-        "font_class": "undo-filled",
-        "unicode": "e64c",
-        "unicode_decimal": 58956
-      },
-      {
-        "icon_id": "24855816",
-        "name": "more",
-        "font_class": "more",
-        "unicode": "e64d",
-        "unicode_decimal": 58957
-      },
-      {
-        "icon_id": "24855817",
-        "name": "more-filled",
-        "font_class": "more-filled",
-        "unicode": "e64e",
-        "unicode_decimal": 58958
-      },
-      {
-        "icon_id": "24855818",
-        "name": "undo",
-        "font_class": "undo",
-        "unicode": "e64f",
-        "unicode_decimal": 58959
-      },
-      {
-        "icon_id": "24855819",
-        "name": "images",
-        "font_class": "images",
-        "unicode": "e650",
-        "unicode_decimal": 58960
-      },
-      {
-        "icon_id": "24855821",
-        "name": "paperclip",
-        "font_class": "paperclip",
-        "unicode": "e652",
-        "unicode_decimal": 58962
-      },
-      {
-        "icon_id": "24855822",
-        "name": "settings",
-        "font_class": "settings",
-        "unicode": "e653",
-        "unicode_decimal": 58963
-      },
-      {
-        "icon_id": "24855823",
-        "name": "search",
-        "font_class": "search",
-        "unicode": "e654",
-        "unicode_decimal": 58964
-      },
-      {
-        "icon_id": "24855824",
-        "name": "redo-filled",
-        "font_class": "redo-filled",
-        "unicode": "e655",
-        "unicode_decimal": 58965
-      },
-      {
-        "icon_id": "24841702",
-        "name": "list",
-        "font_class": "list",
-        "unicode": "e644",
-        "unicode_decimal": 58948
-      },
-      {
-        "icon_id": "24841489",
-        "name": "mail-open-filled",
-        "font_class": "mail-open-filled",
-        "unicode": "e63a",
-        "unicode_decimal": 58938
-      },
-      {
-        "icon_id": "24841491",
-        "name": "hand-thumbsdown-filled",
-        "font_class": "hand-down-filled",
-        "unicode": "e63c",
-        "unicode_decimal": 58940
-      },
-      {
-        "icon_id": "24841492",
-        "name": "hand-thumbsdown",
-        "font_class": "hand-down",
-        "unicode": "e63d",
-        "unicode_decimal": 58941
-      },
-      {
-        "icon_id": "24841493",
-        "name": "hand-thumbsup-filled",
-        "font_class": "hand-up-filled",
-        "unicode": "e63e",
-        "unicode_decimal": 58942
-      },
-      {
-        "icon_id": "24841494",
-        "name": "hand-thumbsup",
-        "font_class": "hand-up",
-        "unicode": "e63f",
-        "unicode_decimal": 58943
-      },
-      {
-        "icon_id": "24841496",
-        "name": "heart-filled",
-        "font_class": "heart-filled",
-        "unicode": "e641",
-        "unicode_decimal": 58945
-      },
-      {
-        "icon_id": "24841498",
-        "name": "mail-open",
-        "font_class": "mail-open",
-        "unicode": "e643",
-        "unicode_decimal": 58947
-      },
-      {
-        "icon_id": "24841488",
-        "name": "heart",
-        "font_class": "heart",
-        "unicode": "e639",
-        "unicode_decimal": 58937
-      },
-      {
-        "icon_id": "24839963",
-        "name": "loop",
-        "font_class": "loop",
-        "unicode": "e633",
-        "unicode_decimal": 58931
-      },
-      {
-        "icon_id": "24839866",
-        "name": "pulldown",
-        "font_class": "pulldown",
-        "unicode": "e632",
-        "unicode_decimal": 58930
-      },
-      {
-        "icon_id": "24813798",
-        "name": "scan",
-        "font_class": "scan",
-        "unicode": "e62a",
-        "unicode_decimal": 58922
-      },
-      {
-        "icon_id": "24813786",
-        "name": "bars",
-        "font_class": "bars",
-        "unicode": "e627",
-        "unicode_decimal": 58919
-      },
-      {
-        "icon_id": "24813788",
-        "name": "cart-filled",
-        "font_class": "cart-filled",
-        "unicode": "e629",
-        "unicode_decimal": 58921
-      },
-      {
-        "icon_id": "24813790",
-        "name": "checkbox",
-        "font_class": "checkbox",
-        "unicode": "e62b",
-        "unicode_decimal": 58923
-      },
-      {
-        "icon_id": "24813791",
-        "name": "checkbox-filled",
-        "font_class": "checkbox-filled",
-        "unicode": "e62c",
-        "unicode_decimal": 58924
-      },
-      {
-        "icon_id": "24813794",
-        "name": "shop",
-        "font_class": "shop",
-        "unicode": "e62f",
-        "unicode_decimal": 58927
-      },
-      {
-        "icon_id": "24813795",
-        "name": "headphones",
-        "font_class": "headphones",
-        "unicode": "e630",
-        "unicode_decimal": 58928
-      },
-      {
-        "icon_id": "24813796",
-        "name": "cart",
-        "font_class": "cart",
-        "unicode": "e631",
-        "unicode_decimal": 58929
-      }
-    ]
-  };
+  const PagesApplyApply = /* @__PURE__ */ _export_sfc(_sfc_main$z, [["__scopeId", "data-v-426a9ebe"], ["__file", "D:/uniapp毕设/lucky/pages/apply/apply.vue"]]);
+  const fontData = [
+    {
+      "font_class": "arrow-down",
+      "unicode": ""
+    },
+    {
+      "font_class": "arrow-left",
+      "unicode": ""
+    },
+    {
+      "font_class": "arrow-right",
+      "unicode": ""
+    },
+    {
+      "font_class": "arrow-up",
+      "unicode": ""
+    },
+    {
+      "font_class": "auth",
+      "unicode": ""
+    },
+    {
+      "font_class": "auth-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "back",
+      "unicode": ""
+    },
+    {
+      "font_class": "bars",
+      "unicode": ""
+    },
+    {
+      "font_class": "calendar",
+      "unicode": ""
+    },
+    {
+      "font_class": "calendar-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "camera",
+      "unicode": ""
+    },
+    {
+      "font_class": "camera-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "cart",
+      "unicode": ""
+    },
+    {
+      "font_class": "cart-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "chat",
+      "unicode": ""
+    },
+    {
+      "font_class": "chat-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "chatboxes",
+      "unicode": ""
+    },
+    {
+      "font_class": "chatboxes-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "chatbubble",
+      "unicode": ""
+    },
+    {
+      "font_class": "chatbubble-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "checkbox",
+      "unicode": ""
+    },
+    {
+      "font_class": "checkbox-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "checkmarkempty",
+      "unicode": ""
+    },
+    {
+      "font_class": "circle",
+      "unicode": ""
+    },
+    {
+      "font_class": "circle-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "clear",
+      "unicode": ""
+    },
+    {
+      "font_class": "close",
+      "unicode": ""
+    },
+    {
+      "font_class": "closeempty",
+      "unicode": ""
+    },
+    {
+      "font_class": "cloud-download",
+      "unicode": ""
+    },
+    {
+      "font_class": "cloud-download-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "cloud-upload",
+      "unicode": ""
+    },
+    {
+      "font_class": "cloud-upload-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "color",
+      "unicode": ""
+    },
+    {
+      "font_class": "color-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "compose",
+      "unicode": ""
+    },
+    {
+      "font_class": "contact",
+      "unicode": ""
+    },
+    {
+      "font_class": "contact-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "down",
+      "unicode": ""
+    },
+    {
+      "font_class": "bottom",
+      "unicode": ""
+    },
+    {
+      "font_class": "download",
+      "unicode": ""
+    },
+    {
+      "font_class": "download-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "email",
+      "unicode": ""
+    },
+    {
+      "font_class": "email-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "eye",
+      "unicode": ""
+    },
+    {
+      "font_class": "eye-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "eye-slash",
+      "unicode": ""
+    },
+    {
+      "font_class": "eye-slash-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "fire",
+      "unicode": ""
+    },
+    {
+      "font_class": "fire-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "flag",
+      "unicode": ""
+    },
+    {
+      "font_class": "flag-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "folder-add",
+      "unicode": ""
+    },
+    {
+      "font_class": "folder-add-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "font",
+      "unicode": ""
+    },
+    {
+      "font_class": "forward",
+      "unicode": ""
+    },
+    {
+      "font_class": "gear",
+      "unicode": ""
+    },
+    {
+      "font_class": "gear-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "gift",
+      "unicode": ""
+    },
+    {
+      "font_class": "gift-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "hand-down",
+      "unicode": ""
+    },
+    {
+      "font_class": "hand-down-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "hand-up",
+      "unicode": ""
+    },
+    {
+      "font_class": "hand-up-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "headphones",
+      "unicode": ""
+    },
+    {
+      "font_class": "heart",
+      "unicode": ""
+    },
+    {
+      "font_class": "heart-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "help",
+      "unicode": ""
+    },
+    {
+      "font_class": "help-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "home",
+      "unicode": ""
+    },
+    {
+      "font_class": "home-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "image",
+      "unicode": ""
+    },
+    {
+      "font_class": "image-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "images",
+      "unicode": ""
+    },
+    {
+      "font_class": "images-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "info",
+      "unicode": ""
+    },
+    {
+      "font_class": "info-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "left",
+      "unicode": ""
+    },
+    {
+      "font_class": "link",
+      "unicode": ""
+    },
+    {
+      "font_class": "list",
+      "unicode": ""
+    },
+    {
+      "font_class": "location",
+      "unicode": ""
+    },
+    {
+      "font_class": "location-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "locked",
+      "unicode": ""
+    },
+    {
+      "font_class": "locked-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "loop",
+      "unicode": ""
+    },
+    {
+      "font_class": "mail-open",
+      "unicode": ""
+    },
+    {
+      "font_class": "mail-open-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "map",
+      "unicode": ""
+    },
+    {
+      "font_class": "map-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "map-pin",
+      "unicode": ""
+    },
+    {
+      "font_class": "map-pin-ellipse",
+      "unicode": ""
+    },
+    {
+      "font_class": "medal",
+      "unicode": ""
+    },
+    {
+      "font_class": "medal-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "mic",
+      "unicode": ""
+    },
+    {
+      "font_class": "mic-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "micoff",
+      "unicode": ""
+    },
+    {
+      "font_class": "micoff-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "minus",
+      "unicode": ""
+    },
+    {
+      "font_class": "minus-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "more",
+      "unicode": ""
+    },
+    {
+      "font_class": "more-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "navigate",
+      "unicode": ""
+    },
+    {
+      "font_class": "navigate-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "notification",
+      "unicode": ""
+    },
+    {
+      "font_class": "notification-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "paperclip",
+      "unicode": ""
+    },
+    {
+      "font_class": "paperplane",
+      "unicode": ""
+    },
+    {
+      "font_class": "paperplane-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "person",
+      "unicode": ""
+    },
+    {
+      "font_class": "person-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "personadd",
+      "unicode": ""
+    },
+    {
+      "font_class": "personadd-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "personadd-filled-copy",
+      "unicode": ""
+    },
+    {
+      "font_class": "phone",
+      "unicode": ""
+    },
+    {
+      "font_class": "phone-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "plus",
+      "unicode": ""
+    },
+    {
+      "font_class": "plus-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "plusempty",
+      "unicode": ""
+    },
+    {
+      "font_class": "pulldown",
+      "unicode": ""
+    },
+    {
+      "font_class": "pyq",
+      "unicode": ""
+    },
+    {
+      "font_class": "qq",
+      "unicode": ""
+    },
+    {
+      "font_class": "redo",
+      "unicode": ""
+    },
+    {
+      "font_class": "redo-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "refresh",
+      "unicode": ""
+    },
+    {
+      "font_class": "refresh-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "refreshempty",
+      "unicode": ""
+    },
+    {
+      "font_class": "reload",
+      "unicode": ""
+    },
+    {
+      "font_class": "right",
+      "unicode": ""
+    },
+    {
+      "font_class": "scan",
+      "unicode": ""
+    },
+    {
+      "font_class": "search",
+      "unicode": ""
+    },
+    {
+      "font_class": "settings",
+      "unicode": ""
+    },
+    {
+      "font_class": "settings-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "shop",
+      "unicode": ""
+    },
+    {
+      "font_class": "shop-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "smallcircle",
+      "unicode": ""
+    },
+    {
+      "font_class": "smallcircle-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "sound",
+      "unicode": ""
+    },
+    {
+      "font_class": "sound-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "spinner-cycle",
+      "unicode": ""
+    },
+    {
+      "font_class": "staff",
+      "unicode": ""
+    },
+    {
+      "font_class": "staff-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "star",
+      "unicode": ""
+    },
+    {
+      "font_class": "star-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "starhalf",
+      "unicode": ""
+    },
+    {
+      "font_class": "trash",
+      "unicode": ""
+    },
+    {
+      "font_class": "trash-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "tune",
+      "unicode": ""
+    },
+    {
+      "font_class": "tune-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "undo",
+      "unicode": ""
+    },
+    {
+      "font_class": "undo-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "up",
+      "unicode": ""
+    },
+    {
+      "font_class": "top",
+      "unicode": ""
+    },
+    {
+      "font_class": "upload",
+      "unicode": ""
+    },
+    {
+      "font_class": "upload-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "videocam",
+      "unicode": ""
+    },
+    {
+      "font_class": "videocam-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "vip",
+      "unicode": ""
+    },
+    {
+      "font_class": "vip-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "wallet",
+      "unicode": ""
+    },
+    {
+      "font_class": "wallet-filled",
+      "unicode": ""
+    },
+    {
+      "font_class": "weibo",
+      "unicode": ""
+    },
+    {
+      "font_class": "weixin",
+      "unicode": ""
+    }
+  ];
   const getVal = (val) => {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$z = {
+  const _sfc_main$y = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -17256,28 +16788,38 @@ ${i3}
       },
       size: {
         type: [Number, String],
-        default: 16
+        default: 24
       },
       customPrefix: {
+        type: String,
+        default: ""
+      },
+      fontFamily: {
         type: String,
         default: ""
       }
     },
     data() {
       return {
-        icons: icons$1.glyphs
+        icons: fontData
       };
     },
     computed: {
       unicode() {
         let code2 = this.icons.find((v2) => v2.font_class === this.type);
         if (code2) {
-          return unescape(`%u${code2.unicode}`);
+          return code2.unicode;
         }
         return "";
       },
       iconSize() {
         return getVal(this.size);
+      },
+      styleObj() {
+        if (this.fontFamily !== "") {
+          return `color: ${this.color}; font-size: ${this.iconSize}; font-family: ${this.fontFamily};`;
+        }
+        return `color: ${this.color}; font-size: ${this.iconSize};`;
       }
     },
     methods: {
@@ -17286,20 +16828,22 @@ ${i3}
       }
     }
   };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
-        style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
+        style: vue.normalizeStyle($options.styleObj),
         class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
         onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
       },
-      null,
+      [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ],
       6
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$6 = /* @__PURE__ */ _export_sfc(_sfc_main$z, [["render", _sfc_render$j], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0$6 = /* @__PURE__ */ _export_sfc(_sfc_main$y, [["render", _sfc_render$i], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const en = {
     "uni-search-bar.cancel": "cancel",
     "uni-search-bar.placeholder": "Search enter content"
@@ -17320,7 +16864,7 @@ ${i3}
   const {
     t
   } = initVueI18n(messages);
-  const _sfc_main$y = {
+  const _sfc_main$x = {
     name: "UniSearchBar",
     emits: ["input", "update:modelValue", "clear", "cancel", "confirm", "blur", "focus"],
     props: {
@@ -17458,7 +17002,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$6);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-searchbar" }, [
       vue.createElementVNode(
@@ -17533,9 +17077,9 @@ ${i3}
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_0$5 = /* @__PURE__ */ _export_sfc(_sfc_main$y, [["render", _sfc_render$i], ["__scopeId", "data-v-f07ef577"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
+  const __easycom_0$5 = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["render", _sfc_render$h], ["__scopeId", "data-v-f07ef577"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
   const groupAvatar = "/static/images/groupAvatar.jpg";
-  const _sfc_main$x = {
+  const _sfc_main$w = {
     __name: "groupChat",
     setup(__props) {
       const userInfo = userStore();
@@ -17641,9 +17185,9 @@ ${i3}
       };
     }
   };
-  const PagesGroupChatGroupChat = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["__scopeId", "data-v-70ae8d23"], ["__file", "D:/uniapp毕设/lucky/pages/groupChat/groupChat.vue"]]);
+  const PagesGroupChatGroupChat = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["__scopeId", "data-v-70ae8d23"], ["__file", "D:/uniapp毕设/lucky/pages/groupChat/groupChat.vue"]]);
   const avatarWidth = 45;
-  const _sfc_main$w = {
+  const _sfc_main$v = {
     name: "UniListChat",
     emits: ["click"],
     props: {
@@ -17826,7 +17370,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       "hover-class": !$props.clickable && !$props.link ? "" : "uni-list-chat--hover",
       class: "uni-list-chat",
@@ -17971,8 +17515,8 @@ ${i3}
       ])
     ], 8, ["hover-class"]);
   }
-  const __easycom_1$5 = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["render", _sfc_render$h], ["__scopeId", "data-v-20df4ef0"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list-chat/uni-list-chat.vue"]]);
-  const _sfc_main$v = {
+  const __easycom_1$5 = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$g], ["__scopeId", "data-v-20df4ef0"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list-chat/uni-list-chat.vue"]]);
+  const _sfc_main$u = {
     name: "uniList",
     "mp-weixin": {
       options: {
@@ -18018,7 +17562,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
       $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -18031,8 +17575,8 @@ ${i3}
       })) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$g], ["__scopeId", "data-v-c2f1266a"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
-  const _sfc_main$u = {
+  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$f], ["__scopeId", "data-v-c2f1266a"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
+  const _sfc_main$t = {
     __name: "friendItem",
     props: ["obj"],
     setup(__props) {
@@ -18080,7 +17624,7 @@ ${i3}
       };
     }
   };
-  const friendItem = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["__scopeId", "data-v-dd3f64b3"], ["__file", "D:/uniapp毕设/lucky/component/friendItem.vue"]]);
+  const friendItem = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["__scopeId", "data-v-dd3f64b3"], ["__file", "D:/uniapp毕设/lucky/component/friendItem.vue"]]);
   var uniSocket_ioExports = {};
   var uniSocket_io = {
     get exports() {
@@ -20516,7 +20060,7 @@ ${i3}
     });
   })(uniSocket_io);
   const io = /* @__PURE__ */ getDefaultExportFromCjs(uniSocket_ioExports);
-  const _sfc_main$t = {
+  const _sfc_main$s = {
     __name: "home",
     setup(__props) {
       let animationData = vue.ref({});
@@ -20581,7 +20125,6 @@ ${i3}
             url: `/pages/chat/chat?groupId=${item.id}&groupName=${item.nickname}`
           });
         } else {
-          formatAppLog("log", "at pages/home/home.vue:161", 35356);
           statusInfo.avatar = item.avatar;
           uni.navigateTo({
             url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
@@ -20592,7 +20135,7 @@ ${i3}
       function scanCode() {
         uni.scanCode({
           success: function(res) {
-            formatAppLog("log", "at pages/home/home.vue:174", "条码内容：" + res.result);
+            formatAppLog("log", "at pages/home/home.vue:173", "条码内容：" + res.result);
             uni.navigateTo({
               url: `/pages/addFriend/addFriend?username=${res.result}`
             });
@@ -20686,7 +20229,6 @@ ${i3}
         res.data.sort(function(a2, b2) {
           return b2.createTime - a2.createTime;
         });
-        formatAppLog("log", "at pages/home/home.vue:273", res.data, 777);
         res.data.forEach((item) => {
           result.forEach((val) => {
             if (!item.adminId && (userPower.id == val.fromUid && item.id == val.toUid) || !item.adminId && (userPower.id == val.toUid && item.id == val.fromUid)) {
@@ -20694,7 +20236,6 @@ ${i3}
             }
           });
         });
-        formatAppLog("log", "at pages/home/home.vue:283", groups.endMsgs, 999);
         res.data.forEach((item) => {
           groups.endMsgs.forEach((val) => {
             if (item.adminId && item.id == val.groupId) {
@@ -20846,8 +20387,8 @@ ${i3}
       };
     }
   };
-  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["__scopeId", "data-v-07e72d3c"], ["__file", "D:/uniapp毕设/lucky/pages/home/home.vue"]]);
-  const _sfc_main$s = {
+  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["__scopeId", "data-v-07e72d3c"], ["__file", "D:/uniapp毕设/lucky/pages/home/home.vue"]]);
+  const _sfc_main$r = {
     name: "UniBadge",
     emits: ["click"],
     props: {
@@ -20970,7 +20511,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-badge--x" }, [
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
       $props.text ? (vue.openBlock(), vue.createElementBlock(
@@ -20987,8 +20528,8 @@ ${i3}
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$f], ["__scopeId", "data-v-c97cb896"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-badge/components/uni-badge/uni-badge.vue"]]);
-  const _sfc_main$r = {
+  const __easycom_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$e], ["__scopeId", "data-v-c97cb896"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-badge/components/uni-badge/uni-badge.vue"]]);
+  const _sfc_main$q = {
     name: "uniCollapseItem",
     props: {
       // 列表标题
@@ -21158,7 +20699,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$6);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse-item" }, [
       vue.createCommentVNode(" onClick(!isOpen) "),
@@ -21235,8 +20776,8 @@ ${i3}
       )
     ]);
   }
-  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$e], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
-  const _sfc_main$q = {
+  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$d], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
+  const _sfc_main$p = {
     name: "uniCollapse",
     emits: ["change", "activeItem", "input", "update:modelValue"],
     props: {
@@ -21347,13 +20888,13 @@ ${i3}
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse" }, [
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$d], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
-  const _sfc_main$p = {
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$c], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
+  const _sfc_main$o = {
     __name: "featureItem",
     props: ["objData"],
     setup(__props) {
@@ -21395,8 +20936,8 @@ ${i3}
       };
     }
   };
-  const featureItem = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["__scopeId", "data-v-887da2a3"], ["__file", "D:/uniapp毕设/lucky/component/featureItem.vue"]]);
-  const _sfc_main$o = {
+  const featureItem = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["__scopeId", "data-v-887da2a3"], ["__file", "D:/uniapp毕设/lucky/component/featureItem.vue"]]);
+  const _sfc_main$n = {
     __name: "linkman",
     setup(__props) {
       const userInfo = userStore();
@@ -21413,7 +20954,7 @@ ${i3}
         bgColor: "rgb(255, 166, 102)"
       }, {
         textFont: "icon-chuangjianqunliao",
-        title: "创建群聊",
+        title: "我的群聊",
         bgColor: " rgb(61, 203, 242)"
       }]);
       function goDetail(val) {
@@ -21421,7 +20962,7 @@ ${i3}
           uni.navigateTo({
             url: "/pages/apply/apply"
           });
-        } else if (val == "创建群聊") {
+        } else if (val == "我的群聊") {
           uni.navigateTo({
             url: "/pages/groupChat/groupChat"
           });
@@ -21558,8 +21099,8 @@ ${i3}
       };
     }
   };
-  const PagesLinkmanLinkman = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["__scopeId", "data-v-dd0bc604"], ["__file", "D:/uniapp毕设/lucky/pages/linkman/linkman.vue"]]);
-  const _sfc_main$n = {
+  const PagesLinkmanLinkman = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["__scopeId", "data-v-dd0bc604"], ["__file", "D:/uniapp毕设/lucky/pages/linkman/linkman.vue"]]);
+  const _sfc_main$m = {
     __name: "video",
     setup(__props) {
       return (_ctx, _cache) => {
@@ -21570,8 +21111,8 @@ ${i3}
       };
     }
   };
-  const PagesVideoVideo = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["__file", "D:/uniapp毕设/lucky/pages/video/video.vue"]]);
-  const _sfc_main$m = {
+  const PagesVideoVideo = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__file", "D:/uniapp毕设/lucky/pages/video/video.vue"]]);
+  const _sfc_main$l = {
     __name: "star",
     setup(__props) {
       const userPower = new userStore();
@@ -21750,7 +21291,7 @@ ${i3}
       };
     }
   };
-  const PagesStarStar = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/uniapp毕设/lucky/pages/star/star.vue"]]);
+  const PagesStarStar = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["__scopeId", "data-v-611ff4ad"], ["__file", "D:/uniapp毕设/lucky/pages/star/star.vue"]]);
   const mpMixin = {};
   function email(value) {
     return /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(value);
@@ -23009,7 +22550,7 @@ ${i3}
       ...(_f = (_e2 = uni.$uv) == null ? void 0 : _e2.props) == null ? void 0 : _f.icon
     }
   };
-  const _sfc_main$l = {
+  const _sfc_main$k = {
     name: "uv-icon",
     emits: ["click"],
     mixins: [mpMixin, mixin, props$8],
@@ -23070,7 +22611,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -23114,7 +22655,7 @@ ${i3}
       /* CLASS */
     );
   }
-  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$c], ["__scopeId", "data-v-b7a6dd5d"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-icon/components/uv-icon/uv-icon.vue"]]);
+  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$b], ["__scopeId", "data-v-b7a6dd5d"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-icon/components/uv-icon/uv-icon.vue"]]);
   const props$7 = {
     props: {
       // checkbox的名称
@@ -23185,7 +22726,7 @@ ${i3}
       ...(_h = (_g = uni.$uv) == null ? void 0 : _g.props) == null ? void 0 : _h.checkbox
     }
   };
-  const _sfc_main$k = {
+  const _sfc_main$j = {
     name: "uv-checkbox",
     mixins: [mpMixin, mixin, props$7],
     data() {
@@ -23357,7 +22898,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uv_icon = resolveEasycom(vue.resolveDynamicComponent("uv-icon"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -23412,7 +22953,7 @@ ${i3}
       /* CLASS, STYLE */
     );
   }
-  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$b], ["__scopeId", "data-v-a311a468"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-checkbox/components/uv-checkbox/uv-checkbox.vue"]]);
+  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$a], ["__scopeId", "data-v-a311a468"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-checkbox/components/uv-checkbox/uv-checkbox.vue"]]);
   const props$6 = {
     props: {
       // 绑定的值
@@ -23497,7 +23038,7 @@ ${i3}
       ...(_j = (_i = uni.$uv) == null ? void 0 : _i.props) == null ? void 0 : _j.checkboxGroup
     }
   };
-  const _sfc_main$j = {
+  const _sfc_main$i = {
     name: "uv-checkbox-group",
     mixins: [mpMixin, mixin, props$6],
     computed: {
@@ -23560,7 +23101,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -23574,7 +23115,7 @@ ${i3}
       /* CLASS, STYLE */
     );
   }
-  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$a], ["__scopeId", "data-v-0735f505"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-checkbox/components/uv-checkbox-group/uv-checkbox-group.vue"]]);
+  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$9], ["__scopeId", "data-v-0735f505"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-checkbox/components/uv-checkbox-group/uv-checkbox-group.vue"]]);
   function colorGradient(startColor = "rgb(0, 0, 0)", endColor = "rgb(255, 255, 255)", step = 10) {
     const startRGB = hexToRgb(startColor, false);
     const startR = startRGB[0];
@@ -23726,7 +23267,7 @@ ${i3}
       ...(_l = (_k = uni.$uv) == null ? void 0 : _k.props) == null ? void 0 : _l.loadingIcon
     }
   };
-  const _sfc_main$i = {
+  const _sfc_main$h = {
     name: "uv-loading-icon",
     mixins: [mpMixin, mixin, props$5],
     data() {
@@ -23786,7 +23327,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     return _ctx.show ? (vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -23849,7 +23390,7 @@ ${i3}
       /* CLASS, STYLE */
     )) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$9], ["__scopeId", "data-v-29b619ea"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-loading-icon/components/uv-loading-icon/uv-loading-icon.vue"]]);
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$8], ["__scopeId", "data-v-29b619ea"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-loading-icon/components/uv-loading-icon/uv-loading-icon.vue"]]);
   const props$4 = {
     props: {
       // 是否细边框
@@ -24014,7 +23555,7 @@ ${i3}
       ...(_n = (_m = uni.$uv) == null ? void 0 : _m.props) == null ? void 0 : _n.button
     }
   };
-  const _sfc_main$h = {
+  const _sfc_main$g = {
     name: "uv-button",
     mixins: [mpMixin, mixin, props$4],
     emits: ["click"],
@@ -24128,7 +23669,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uv_loading_icon = resolveEasycom(vue.resolveDynamicComponent("uv-loading-icon"), __easycom_0$3);
     const _component_uv_icon = resolveEasycom(vue.resolveDynamicComponent("uv-icon"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock(
@@ -24219,8 +23760,8 @@ ${i3}
       /* STYLE */
     );
   }
-  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$8], ["__scopeId", "data-v-ae8e42c7"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-button/components/uv-button/uv-button.vue"]]);
-  const _sfc_main$g = {
+  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$7], ["__scopeId", "data-v-ae8e42c7"], ["__file", "D:/uniapp毕设/lucky/uni_modules/uv-button/components/uv-button/uv-button.vue"]]);
+  const _sfc_main$f = {
     __name: "search",
     setup(__props) {
       const userPower = new userStore();
@@ -24649,12 +24190,7 @@ ${i3}
       };
     }
   };
-  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-c10c040c"], ["__file", "D:/uniapp毕设/lucky/pages/search/search.vue"]]);
-  const _sfc_main$f = {};
-  function _sfc_render$7(_ctx, _cache) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, " 我是个人主页 ");
-  }
-  const PagesHomePaegHomePage = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$7], ["__scopeId", "data-v-79f9f0b8"], ["__file", "D:/uniapp毕设/lucky/pages/homePaeg/homePage.vue"]]);
+  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-c10c040c"], ["__file", "D:/uniapp毕设/lucky/pages/search/search.vue"]]);
   const _sfc_main$e = {
     __name: "addFriend",
     setup(__props) {
@@ -26810,10 +26346,16 @@ ${i3}
         scrollBottom();
       });
       onUnload(() => {
-        statusInfo.socket.emit("leave", {
-          id: userInfo.id,
-          groupId: groupId.value
-        });
+        if (chatType.value == 1) {
+          statusInfo.socket.emit("leave", {
+            id: userInfo.id,
+            groupId: groupId.value
+          });
+        } else {
+          statusInfo.socket.emit("leaveChatRoom", {
+            id: userInfo.id
+          });
+        }
       });
       function onSrcollTop(e2) {
         triggered.value = true;
@@ -26886,7 +26428,7 @@ ${i3}
             });
           });
           messages2.value = chatList;
-          formatAppLog("log", "at pages/chat/chat.vue:457", chatList, 333);
+          formatAppLog("log", "at pages/chat/chat.vue:464", chatList, 333);
           objDate.value.title = `${option.groupName} ( ${userList.length} )`;
           obj.value.page = page2.value;
           obj.value.pageNum = pageNum.value;
@@ -26908,6 +26450,7 @@ ${i3}
           });
           scrollBottom();
         } else {
+          joinChat(option.id);
           chatType.value = 0;
           itemId.value = option.id;
           objDate.value.title = option.remarked;
@@ -27089,7 +26632,7 @@ ${i3}
       }
       function addEmoji(index2) {
         newMessage.value += emoji[index2];
-        formatAppLog("log", "at pages/chat/chat.vue:714", emoji[index2]);
+        formatAppLog("log", "at pages/chat/chat.vue:719", emoji[index2]);
       }
       const sendMessage = () => {
         var _a2, _b;
@@ -27173,7 +26716,7 @@ ${i3}
                   scrollBottom();
                   newMessage.value = "";
                 }).catch((error2) => {
-                  formatAppLog("error", "at pages/chat/chat.vue:800", error2);
+                  formatAppLog("error", "at pages/chat/chat.vue:805", error2);
                 });
               }
             });
@@ -27189,12 +26732,12 @@ ${i3}
               uni.saveImageToPhotosAlbum({
                 filePath: url2,
                 success: function() {
-                  formatAppLog("log", "at pages/chat/chat.vue:821", "save success");
+                  formatAppLog("log", "at pages/chat/chat.vue:826", "save success");
                 }
               });
             },
             fail: function(err) {
-              formatAppLog("log", "at pages/chat/chat.vue:826", err.errMsg);
+              formatAppLog("log", "at pages/chat/chat.vue:831", err.errMsg);
             }
           }
         });
@@ -27209,7 +26752,7 @@ ${i3}
         audioAni.value.close();
       }
       function playVoice() {
-        formatAppLog("log", "at pages/chat/chat.vue:850", "播放录音");
+        formatAppLog("log", "at pages/chat/chat.vue:855", "播放录音");
         if (voicePath.value) {
           innerAudioContext.src = voicePath.value;
           innerAudioContext.play();
@@ -27270,7 +26813,7 @@ ${i3}
         });
       }
       function openMap(info) {
-        formatAppLog("log", "at pages/chat/chat.vue:916", info, 3535);
+        formatAppLog("log", "at pages/chat/chat.vue:921", info, 3535);
         uni.openLocation({
           // 必须转数字，否则可能会打不开地图
           latitude: Number(info.latitude),
@@ -27287,6 +26830,13 @@ ${i3}
           groupId: groupId2
         };
         (_a2 = statusInfo.socket) == null ? void 0 : _a2.emit("join", data);
+      }
+      function joinChat(friendId) {
+        let data = {
+          id: userInfo.id,
+          friendId
+        };
+        statusInfo.socket.emit("joinChatRoom", data);
       }
       return (_ctx, _cache) => {
         const _component_uv_popup = resolveEasycom(vue.resolveDynamicComponent("uv-popup"), __easycom_0$1);
@@ -28931,7 +28481,7 @@ ${i3}
                 onClick: removeFriend
               }, [
                 vue.createElementVNode("view", { class: "content" }, [
-                  vue.createElementVNode("text", { class: "iconfont size" }, "")
+                  vue.createElementVNode("text", { class: "iconfont size" }, "")
                 ])
               ])) : vue.createCommentVNode("v-if", true)
             ]),
@@ -29063,7 +28613,6 @@ ${i3}
   __definePage("pages/video/video", PagesVideoVideo);
   __definePage("pages/star/star", PagesStarStar);
   __definePage("pages/search/search", PagesSearchSearch);
-  __definePage("pages/homePaeg/homePage", PagesHomePaegHomePage);
   __definePage("pages/addFriend/addFriend", PagesAddFriendAddFriend);
   __definePage("pages/detail/detail", PagesDetailDetail);
   __definePage("pages/friendInfo/friendInfo", PagesFriendInfoFriendInfo);

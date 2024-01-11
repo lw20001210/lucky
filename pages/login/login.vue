@@ -11,7 +11,7 @@
       </view>
       <view class="password">
         <text class="mark">密码:</text>
-        <input type="password" v-model="userInfo.password" placeholder="请输入你的密码">
+       <input type="password"  v-model="userInfo.password" placeholder="请输入你的密码">
       </view>
     </view>
     <text class="forget">忘记密码？</text>
@@ -24,13 +24,13 @@
     </view>
     <view class="other_login_icon">
       <view class="wx ">
-        <view class="iconfont icon-weixin"></view>
+        <image class="img" src="../../static/images/wx.png" mode=""></image>
       </view>
       <view class="qq">
-        <view class="iconfont icon-qq"></view>
+		  <image class="img" src="../../static/images/QQ.png" mode=""></image>
       </view>
       <view class="wb">
-        <view class="iconfont icon-weibo1"></view>
+         <image class="img" src="../../static/images/wb.png" mode=""></image>
       </view>
     </view>
   </view>
@@ -156,8 +156,9 @@ onLoad((option)=>{
       display: flex;
       justify-content: space-around;
 
-      .iconfont {
-        font-size: 90rpx;
+      .img{
+		width: 90rpx;
+		height: 90rpx;
       }
     }
 

@@ -116,14 +116,6 @@
 
 		},
 		{
-			"path": "pages/homePaeg/homePage",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
 			"path": "pages/addFriend/addFriend",
 			"style": {
 				"navigationBarTitleText": "",
