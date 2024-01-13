@@ -23,11 +23,13 @@ if (!Math) {
   "./pages/video/video.js";
   "./pages/star/star.js";
   "./pages/search/search.js";
-  "./pages/homePaeg/homePage.js";
   "./pages/addFriend/addFriend.js";
   "./pages/detail/detail.js";
   "./pages/friendInfo/friendInfo.js";
   "./pages/chat/chat.js";
+  "./pages/videoCall/videoCall.js";
+  "./pages/createGroup/createGroup.js";
+  "./pages/groupInfo/groupInfo.js";
 }
 const _sfc_main = {
   onLaunch: function(options) {

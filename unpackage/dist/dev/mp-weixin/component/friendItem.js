@@ -14,7 +14,8 @@ const _sfc_main = {
         a: __props.obj.avatar,
         b: common_vendor.o(($event) => goDetail(__props.obj)),
         c: common_vendor.t(__props.obj.remarked),
-        d: common_vendor.t(__props.obj.signature)
+        d: common_vendor.t(__props.obj.status == 1 ? "在线" : "离线"),
+        e: common_vendor.t(__props.obj.signature)
       };
     };
   }

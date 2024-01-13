@@ -1,0 +1,93 @@
+.container.data-v-0f05e0bf {
+  padding: 15rpx 15rpx 0;
+}
+.divide.data-v-0f05e0bf {
+  height: 12rpx;
+  background-color: #f2f2f2;
+}
+.list.data-v-0f05e0bf {
+  font-family: STKaiti;
+  margin: 30rpx 0 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.list .userItem.data-v-0f05e0bf {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 25rpx;
+  margin-bottom: 20rpx;
+}
+.list .userItem image.data-v-0f05e0bf {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 10rpx;
+}
+.list .userItem text.data-v-0f05e0bf {
+  font-weight: bold;
+}
+.list .userItem:nth-last-child(-n+2) .content.data-v-0f05e0bf {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 10rpx;
+  background: #3e6fac;
+}
+.list .userItem:nth-last-child(-n+2) .content .size.data-v-0f05e0bf {
+  font-size: 75rpx;
+  color: #fff;
+  font-weight: normal;
+}
+.introduce.data-v-0f05e0bf {
+  font-family: STKaiti;
+  padding: 15rpx 30rpx 0;
+}
+.introduce .title.data-v-0f05e0bf {
+  font-size: 34rpx;
+}
+.introduce .item.data-v-0f05e0bf {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30rpx 0;
+}
+.introduce .item .detail.data-v-0f05e0bf {
+  display: flex;
+  align-items: center;
+}
+.introduce .item .detail .default.data-v-0f05e0bf {
+  font-size: 28rpx;
+  color: #818181;
+}
+.introduce .item .detail text.data-v-0f05e0bf {
+  font-size: 45rpx;
+}
+.introduce .notice.data-v-0f05e0bf {
+  margin-bottom: 20rpx;
+}
+.introduce .notice .notice.data-v-0f05e0bf {
+  margin-bottom: 10rpx;
+}
+.introduce .notice .detail.data-v-0f05e0bf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.introduce .notice .detail .default.data-v-0f05e0bf {
+  font-size: 28rpx;
+  color: #818181;
+}
+.introduce .notice .detail .intro.data-v-0f05e0bf {
+  font-size: 26rpx;
+}
+.introduce .notice .detail text.data-v-0f05e0bf {
+  text-align: right;
+  width: 80rpx;
+  font-size: 45rpx;
+}
+.operate.data-v-0f05e0bf {
+  font-family: STKaiti;
+}

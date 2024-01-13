@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "uv-input": "../../uni_modules/uv-input/components/uv-input/uv-input",
+    "uv-textarea": "../../uni_modules/uv-textarea/components/uv-textarea/uv-textarea",
+    "uv-button": "../../uni_modules/uv-button/components/uv-button/uv-button",
+    "header": "../../component/header"
+  }
+}

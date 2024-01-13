@@ -97,8 +97,9 @@
   display: flex;
   justify-content: space-around;
 }
-.container .other_login_icon .iconfont.data-v-bac4a35d {
-  font-size: 90rpx;
+.container .other_login_icon .img.data-v-bac4a35d {
+  width: 90rpx;
+  height: 90rpx;
 }
 .container .back.data-v-bac4a35d {
   position: absolute;

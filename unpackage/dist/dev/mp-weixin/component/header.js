@@ -8,8 +8,19 @@ const _sfc_main = {
   __name: "header",
   props: ["obj"],
   setup(__props) {
+    let pages = getCurrentPages();
+    let currentPage = pages[pages.length - 1];
+    let prePage = pages[pages.length - 2];
     function goBack() {
-      common_vendor.index.navigateBack();
+      var _a;
+      if (((_a = prePage == null ? void 0 : prePage.$page) == null ? void 0 : _a.fullPath) == "/pages/selfStar/selfStar" || currentPage.$page.fullPath == "/pages/selfStar/selfStar") {
+        console.log(345);
+        common_vendor.index.reLaunch({
+          url: "/pages/star/star"
+        });
+      } else {
+        common_vendor.index.navigateBack();
+      }
     }
     return (_ctx, _cache) => {
       return {

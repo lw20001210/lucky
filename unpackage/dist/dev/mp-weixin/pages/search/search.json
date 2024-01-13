@@ -3,6 +3,10 @@
   "enablePullDownRefresh": false,
   "usingComponents": {
     "uni-search-bar": "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar",
-    "status-bar": "../../component/statusBar"
+    "uv-checkbox": "../../uni_modules/uv-checkbox/components/uv-checkbox/uv-checkbox",
+    "uv-checkbox-group": "../../uni_modules/uv-checkbox/components/uv-checkbox-group/uv-checkbox-group",
+    "uv-button": "../../uni_modules/uv-button/components/uv-button/uv-button",
+    "status-bar": "../../component/statusBar",
+    "header": "../../component/header"
   }
 }

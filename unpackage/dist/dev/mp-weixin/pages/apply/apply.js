@@ -4,6 +4,7 @@ const utils_request = require("../../utils/request.js");
 const utils_format = require("../../utils/format.js");
 const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
 const utils_Toast = require("../../utils/Toast.js");
+const pinia_userInfo_status = require("../../pinia/userInfo/status.js");
 require("../../utils/config.js");
 require("../../utils/local.js");
 if (!Array) {
@@ -40,7 +41,13 @@ const _sfc_main = {
       path: "/pages/linkman/linkman"
     });
     const user = pinia_userInfo_userInfo.userStore();
+    const statusInfo = pinia_userInfo_status.statusStore();
+    let wh = common_vendor.ref();
+    function getHeight() {
+      common_vendor.index.getSystemInfoSync();
+    }
     common_vendor.onLoad((option) => {
+      getHeight();
       getApplyList();
     });
     async function getApplyList() {
@@ -97,7 +104,17 @@ const _sfc_main = {
       }
     }
     async function dialogInputConfirm(val) {
+      var _a;
       if (val) {
+        let obj = {
+          fromUid: seletedDate.value.sendId,
+          toUid: user.id,
+          message: seletedDate.value.content,
+          type: 0,
+          status: 0,
+          createTime: Date.now()
+        };
+        (_a = statusInfo.socket) == null ? void 0 : _a.emit("chat", obj);
         let {
           data: res
         } = await utils_request.request("/user/createShip", "post", {
@@ -143,19 +160,20 @@ const _sfc_main = {
               ["auto-close"]: false
             })
           });
-        })
+        }),
+        d: common_vendor.unref(wh) + "px"
       }, {
-        d: common_vendor.o(dialogInputConfirm),
-        e: common_vendor.p({
+        e: common_vendor.o(dialogInputConfirm),
+        f: common_vendor.p({
           mode: "input",
           title: "同意该好友申请",
           value: common_vendor.unref(nickname),
           placeholder: "请输入备注"
         }),
-        f: common_vendor.sr(inputDialog, "426a9ebe-3", {
+        g: common_vendor.sr(inputDialog, "426a9ebe-3", {
           "k": "inputDialog"
         }),
-        g: common_vendor.p({
+        h: common_vendor.p({
           type: "dialog"
         })
       });

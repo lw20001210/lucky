@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
+const pinia_userInfo_status = require("../../pinia/userInfo/status.js");
 const utils_request = require("../../utils/request.js");
 const utils_Toast = require("../../utils/Toast.js");
 require("../../utils/local.js");
@@ -26,7 +27,8 @@ const _sfc_main = {
   __name: "linkman",
   setup(__props) {
     const userInfo = pinia_userInfo_userInfo.userStore();
-    let friendList = common_vendor.ref(["0"]);
+    const statusInfo = pinia_userInfo_status.statusStore();
+    let friendList = common_vendor.ref([]);
     const goSearch = () => {
       common_vendor.index.navigateTo({
         url: "/pages/search/search"
@@ -38,7 +40,7 @@ const _sfc_main = {
       bgColor: "rgb(255, 166, 102)"
     }, {
       textFont: "icon-chuangjianqunliao",
-      title: "创建群聊",
+      title: "我的群聊",
       bgColor: " rgb(61, 203, 242)"
     }]);
     function goDetail(val) {
@@ -46,7 +48,7 @@ const _sfc_main = {
         common_vendor.index.navigateTo({
           url: "/pages/apply/apply"
         });
-      } else if (val == "创建群聊") {
+      } else if (val == "我的群聊") {
         common_vendor.index.navigateTo({
           url: "/pages/groupChat/groupChat"
         });
@@ -68,6 +70,14 @@ const _sfc_main = {
           item["remarked"] = item.nickname;
         }
       });
+      let newIds = statusInfo.userList.map((val) => val.uid);
+      friendList.value.forEach((item) => {
+        if (newIds.includes(`${item.id}`)) {
+          item.status = 1;
+        } else {
+          item.status = 0;
+        }
+      });
       let {
         data: result
       } = await utils_request.request("/user/getFriendNum", "get", {
@@ -77,14 +87,18 @@ const _sfc_main = {
         return utils_Toast.showMsg("获取数据失败");
       return friendNum.value = result.data.length;
     }
-    common_vendor.onLoad((option) => {
-      getData();
-    });
     common_vendor.onShow((option) => {
       getData();
     });
+    common_vendor.onLoad(() => {
+      getHeight();
+    });
     function change(e) {
       getData();
+    }
+    let wh = common_vendor.ref();
+    function getHeight() {
+      common_vendor.index.getSystemInfoSync();
     }
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -126,7 +140,8 @@ const _sfc_main = {
         j: common_vendor.o(($event) => common_vendor.isRef(value) ? value.value = $event : value = $event),
         k: common_vendor.p({
           modelValue: common_vendor.unref(value)
-        })
+        }),
+        l: common_vendor.unref(wh) + "px"
       });
     };
   }

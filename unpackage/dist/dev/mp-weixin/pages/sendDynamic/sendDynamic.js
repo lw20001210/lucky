@@ -90,6 +90,7 @@ const _sfc_main = {
       }
     }
     function distribute() {
+      var _a, _b;
       let obj = {
         uid: userRef.id,
         content: resultData.value.content.title,
@@ -100,12 +101,15 @@ const _sfc_main = {
         return utils_Toast.showMsg("未填写发布内容");
       if (resultData.value.status != 0 && resultData.value.status != 1)
         return utils_Toast.showMsg("未选择权限");
-      const fileList = resultData.value.content.imgArr.map((item, index) => {
-        return {
-          name: index,
-          uri: item
-        };
-      });
+      let fileList = [{ uri: "我没有上传图片" }];
+      if (((_a = resultData.value.content) == null ? void 0 : _a.imgArr.length) != 0) {
+        fileList = (_b = resultData.value.content) == null ? void 0 : _b.imgArr.map((item, index) => {
+          return {
+            name: index,
+            uri: item
+          };
+        });
+      }
       common_vendor.index.uploadFile({
         url: `${utils_config.mainUrl}/user/sedSpace`,
         files: fileList,

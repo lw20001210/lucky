@@ -15,11 +15,13 @@
     "pages/video/video",
     "pages/star/star",
     "pages/search/search",
-    "pages/homePaeg/homePage",
     "pages/addFriend/addFriend",
     "pages/detail/detail",
     "pages/friendInfo/friendInfo",
-    "pages/chat/chat"
+    "pages/chat/chat",
+    "pages/videoCall/videoCall",
+    "pages/createGroup/createGroup",
+    "pages/groupInfo/groupInfo"
   ],
   "window": {
     "navigationStyle": "custom",

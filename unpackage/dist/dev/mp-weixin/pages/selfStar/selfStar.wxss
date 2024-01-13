@@ -28,6 +28,7 @@
 }
 .container .size.data-v-1cb7f60c {
   font-size: 55rpx;
+  color: white;
 }
 .container .bg.data-v-1cb7f60c {
   position: relative;

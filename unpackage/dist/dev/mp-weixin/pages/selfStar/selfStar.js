@@ -139,14 +139,22 @@ const _sfc_main = {
       debouncedInputChange(e.detail.value);
     };
     let judgeComment = common_vendor.ref(false);
-    function replyComments(commentInfo) {
-      if (userPower.id == commentInfo.commentId) {
+    function replyComments(commentInfo, replyFlag) {
+      console.log(commentInfo, 123);
+      let uid;
+      if (replyFlag) {
+        uid = commentInfo.replyId;
+      } else {
+        uid = commentInfo.commentId;
+      }
+      console.log(uid, 88);
+      if (userPower.id == uid) {
         return false;
       } else {
         judgeComment.value = true;
-        temporary.value = commentInfo;
         foucsFlag.value = true;
         flag.value = "a";
+        temporary.value = commentInfo;
       }
     }
     async function acheveComment() {
@@ -154,14 +162,24 @@ const _sfc_main = {
         utils_Toast.showMsg("评论不能为空");
       } else {
         if (judgeComment.value) {
-          console.log("我是点击了回复");
-          let replyobj = {
-            spaceId: temporary.value.spaceId,
-            replyComment: comment.value,
-            commentUid: temporary.value.commentId,
-            replyId: userPower.id,
-            commentId: temporary.value.id
-          };
+          let replyobj = {};
+          if (temporary.value.replyComment) {
+            replyobj = {
+              spaceId: temporary.value.spaceId,
+              replyComment: comment.value,
+              commentUid: temporary.value.replyId,
+              replyId: userPower.id,
+              commentId: temporary.value.id
+            };
+          } else {
+            replyobj = {
+              spaceId: temporary.value.spaceId,
+              replyComment: comment.value,
+              commentUid: temporary.value.commentId,
+              replyId: userPower.id,
+              commentId: temporary.value.id
+            };
+          }
           let {
             data: res
           } = await utils_request.request("/user/replyComment", "post", replyobj);
@@ -190,10 +208,17 @@ const _sfc_main = {
         }
       }
     }
-    function goDetail(info) {
-      common_vendor.index.navigateTo({
-        url: `/pages/detail/detail?id=${info.commentId}`
-      });
+    function goDetail(info, flag2) {
+      if (flag2) {
+        common_vendor.index.navigateTo({
+          url: `/pages/detail/detail?id=${info.uid}`
+        });
+      } else {
+        common_vendor.index.navigateTo({
+          url: `/pages/detail/detail?id=${info.commentId}`
+        });
+      }
+      console.log(info, 77);
     }
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -242,7 +267,7 @@ const _sfc_main = {
               return {
                 a: common_vendor.t(index2 > 0 ? "," : ""),
                 b: common_vendor.t(val.remarked),
-                c: common_vendor.o(($event) => goDetail(val), val.id),
+                c: common_vendor.o(($event) => goDetail(val, true), val.id),
                 d: val.id
               };
             })
@@ -258,10 +283,11 @@ const _sfc_main = {
                 f: common_vendor.f(com.replyList, (reply, k2, i2) => {
                   return {
                     a: common_vendor.t(reply.replyName),
-                    b: common_vendor.t(reply.replyComment)
+                    b: common_vendor.t(reply.remarked),
+                    c: common_vendor.t(reply.replyComment),
+                    d: common_vendor.o(($event) => replyComments(reply, true))
                   };
-                }),
-                g: common_vendor.t(com.remarked)
+                })
               } : {});
             })
           }) : {}, {

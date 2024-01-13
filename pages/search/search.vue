@@ -199,6 +199,7 @@
 		idList.value = res.data.map(item => {
 			return item.id
 		})
+		// console.log(idList.value,99);
 		if (res.code != 200) return showMsg()
 		return res.data
 	}
@@ -253,6 +254,10 @@
 	}
 
 	function formatContent(item) {
+		// console.log(idList.value,88);
+		if(!idList.value.includes(userPower.id)){
+			idList.value.push(userPower.id)
+		}
 		if (Object.values(idList.value).includes(item.id)) {
 			return "发信息"
 		} else {

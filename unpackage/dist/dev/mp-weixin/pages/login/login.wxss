@@ -71,6 +71,7 @@
   display: flex;
   justify-content: space-around;
 }
-.container .other_login_icon .iconfont.data-v-e4e4508d {
-  font-size: 90rpx;
+.container .other_login_icon .img.data-v-e4e4508d {
+  width: 90rpx;
+  height: 90rpx;
 }

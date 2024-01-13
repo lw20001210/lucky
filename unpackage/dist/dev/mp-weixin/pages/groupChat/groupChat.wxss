@@ -26,3 +26,30 @@
 .container.data-v-70ae8d23 {
   padding: 15rpx 20rpx 0;
 }
+.container .groupList .groupItem.data-v-70ae8d23 {
+  display: flex;
+  padding: 15rpx 0;
+}
+.container .groupList .groupItem .img.data-v-70ae8d23 {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 10rpx !important;
+  overflow: hidden;
+}
+.container .groupList .groupItem .info.data-v-70ae8d23 {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 30rpx;
+}
+.container .groupList .groupItem .info text.data-v-70ae8d23 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.container .groupList .groupItem text.data-v-70ae8d23:last-child {
+  font-size: 26rpx;
+  color: #585858;
+}

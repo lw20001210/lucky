@@ -28,6 +28,7 @@
 }
 .container .size.data-v-e73567d5 {
   font-size: 55rpx;
+  color: white;
 }
 .container .bg.data-v-e73567d5 {
   height: 450rpx;

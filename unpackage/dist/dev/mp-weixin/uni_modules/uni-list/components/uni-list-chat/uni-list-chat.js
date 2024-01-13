@@ -86,7 +86,7 @@ const _sfc_main = {
     avatar: {
       handler(avatar) {
         if (avatar.substr(0, 8) == "cloud://") {
-          common_vendor.Bs.getTempFileURL({
+          common_vendor.Ws.getTempFileURL({
             fileList: [avatar]
           }).then((res) => {
             let fileList = res.fileList || res.result.fileList;

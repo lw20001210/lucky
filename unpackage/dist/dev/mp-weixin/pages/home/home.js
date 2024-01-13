@@ -1,8 +1,10 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const utils_format = require("../../utils/format.js");
 const utils_request = require("../../utils/request.js");
+const pinia_userInfo_status = require("../../pinia/userInfo/status.js");
 const pinia_userInfo_userInfo = require("../../pinia/userInfo/userInfo.js");
-require("../../utils/config.js");
+const utils_config = require("../../utils/config.js");
 require("../../utils/local.js");
 require("../../utils/Toast.js");
 if (!Array) {
@@ -24,7 +26,14 @@ const _sfc_main = {
     let animationData = common_vendor.ref({});
     let animation = common_vendor.ref(null);
     let isShow = common_vendor.ref(false);
+    let socket = common_vendor.ref(null);
     const userPower = new pinia_userInfo_userInfo.userStore();
+    const statusInfo = pinia_userInfo_status.statusStore();
+    function goCreateGroup() {
+      common_vendor.index.navigateTo({
+        url: "/pages/search/search?url=group"
+      });
+    }
     function openPopup() {
       if (!animation.value) {
         animation.value = common_vendor.index.createAnimation({
@@ -52,8 +61,7 @@ const _sfc_main = {
     }
     let wh = common_vendor.ref();
     function getHeight() {
-      const val = common_vendor.index.getSystemInfoSync();
-      wh.value = val.windowHeight - 82;
+      common_vendor.index.getSystemInfoSync();
     }
     common_vendor.onMounted(() => {
       getHeight();
@@ -62,19 +70,28 @@ const _sfc_main = {
       common_vendor.index.navigateTo({
         url: `/pages/detail/detail?id=${userPower.id}`
       });
+      close();
     }
     const goSearch = () => {
       common_vendor.index.navigateTo({
         url: "/pages/search/search"
       });
+      close();
     };
     function goChat(item) {
-      common_vendor.index.navigateTo({
-        url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
-      });
+      if (item.adminId) {
+        common_vendor.index.navigateTo({
+          url: `/pages/chat/chat?groupId=${item.id}&groupName=${item.nickname}`
+        });
+      } else {
+        statusInfo.avatar = item.avatar;
+        common_vendor.index.navigateTo({
+          url: `/pages/chat/chat?id=${item.id}&remarked=${item.remarked}`
+        });
+      }
+      close();
     }
     function scanCode() {
-      console.log(1);
       common_vendor.index.scanCode({
         success: function(res) {
           console.log("条码内容：" + res.result);
@@ -84,7 +101,7 @@ const _sfc_main = {
         }
       });
     }
-    let friendList = common_vendor.ref(["0"]);
+    let friendList = common_vendor.ref([]);
     async function getData() {
       let {
         data: res
@@ -93,16 +110,122 @@ const _sfc_main = {
       });
       if (res.code != 200)
         return showMsg("获取数据失败");
-      friendList.value = res.data;
-      friendList.value.forEach((item) => {
+      res.data.forEach((item) => {
         if (item.id == userPower.id) {
+          item.createTime = utils_format.getTimeFormat(Number(userPower.createTime));
           item["remarked"] = item.nickname;
         }
+      });
+      let {
+        // 获取朋友列表最新消息的状态
+        data: otherData
+      } = await utils_request.request("/user/getFriendStatus", "get", {
+        id: userPower.id
+      });
+      res.data.forEach((item) => {
+        item.total = 0;
+        otherData.data.total.forEach((val) => {
+          if (userPower.id == val.toUid) {
+            if (item.id == val.fromUid) {
+              item.total += 1;
+            }
+          }
+        });
+      });
+      let categorizedArr = {};
+      otherData.data.datas.forEach((item) => {
+        let key = item.fromUid < item.toUid ? `${item.fromUid}-${item.toUid}` : `${item.toUid}-${item.fromUid}`;
+        categorizedArr[key] = item;
+      });
+      let result = Object.values(categorizedArr);
+      res.data.forEach((item) => {
+        item.message = "";
+        result.forEach((val) => {
+          if (userPower.id == val.fromUid && item.id == val.toUid || userPower.id == val.toUid && item.id == val.fromUid) {
+            item.createTime = val.createTime;
+            if (val.type == 0) {
+              item.message = val.message;
+            } else if (val.type == 1) {
+              item.message = "图片";
+            } else if (val.type == 2) {
+              item.message = "语音";
+            } else if (val.type == 3) {
+              item.message = "位置";
+            } else if (val.type == 4) {
+              item.message = "视频";
+            } else {
+              item.message = "";
+            }
+          }
+        });
+      });
+      let {
+        data: groups
+      } = await utils_request.request("/user/getGroupList", "get", {
+        uid: userPower.id
+      });
+      groups.data.forEach((item) => [
+        groups.endMsgs.forEach((val) => {
+          if (item.id == val.groupId) {
+            item.createTime = val.createTime;
+            if (val.type == 0) {
+              item.message = val.message;
+            } else if (val.type == 1) {
+              item.message = "图片";
+            } else if (val.type == 2) {
+              item.message = "语音";
+            } else if (val.type == 3) {
+              item.message = "位置";
+            } else if (val.type == 4) {
+              item.message = "视频";
+            } else {
+              item.message = "";
+            }
+          }
+        })
+      ]);
+      res.data = [...res.data, ...groups.data];
+      res.data.sort(function(a, b) {
+        return b.createTime - a.createTime;
+      });
+      res.data.forEach((item) => {
+        result.forEach((val) => {
+          if (!item.adminId && (userPower.id == val.fromUid && item.id == val.toUid) || !item.adminId && (userPower.id == val.toUid && item.id == val.fromUid)) {
+            item.createTime = utils_format.getTimeFormat(Number(val.createTime));
+          }
+        });
+      });
+      res.data.forEach((item) => {
+        groups.endMsgs.forEach((val) => {
+          if (item.adminId && item.id == val.groupId) {
+            item.createTime = utils_format.getTimeFormat(Number(item.createTime));
+          }
+        });
+      });
+      friendList.value = res.data;
+    }
+    function socketIo() {
+      socket.value = common_vendor.io(utils_config.mainUrl, {
+        transports: ["websocket", "polling"],
+        timeout: 5e3,
+        query: {
+          id: userPower.id
+        }
+      });
+      statusInfo.socket = socket.value;
+      socket.value.on("connect", () => {
+      });
+      socket.value.on("init", (msg) => {
+        statusInfo.userList = msg;
       });
     }
     common_vendor.onShow(() => {
       userPower.getUserInfo();
       getData();
+      socketIo();
+    });
+    common_vendor.onLoad(() => {
+      socketIo();
     });
     return (_ctx, _cache) => {
       return {
@@ -111,33 +234,36 @@ const _sfc_main = {
         c: common_vendor.t(common_vendor.unref(userPower).nickname),
         d: common_vendor.o(openPopup),
         e: common_vendor.o(goSearch),
-        f: common_vendor.o(scanCode),
-        g: common_vendor.o(close),
-        h: common_vendor.unref(animationData),
-        i: common_vendor.p({
+        f: common_vendor.o(goCreateGroup),
+        g: common_vendor.o(scanCode),
+        h: common_vendor.o(close),
+        i: common_vendor.unref(animationData),
+        j: common_vendor.p({
           placeholder: "搜索",
           readonly: true
         }),
-        j: common_vendor.o(goSearch),
-        k: common_vendor.f(common_vendor.unref(friendList), (item, k0, i0) => {
+        k: common_vendor.o(goSearch),
+        l: common_vendor.f(common_vendor.unref(friendList), (item, index, i0) => {
           return {
-            a: item.id,
-            b: common_vendor.o(($event) => goChat(item), item.id),
+            a: index,
+            b: common_vendor.o(($event) => goChat(item), index),
             c: "07e72d3c-3-" + i0 + ",07e72d3c-2",
             d: common_vendor.p({
               clickable: true,
               ["avatar-circle"]: true,
-              title: item.remarked,
-              avatar: item.avatar,
-              note: "您收到一条新的消息",
-              time: item.createTime
+              title: item.adminId ? item.nickname : item.remarked,
+              avatar: item.adminId ? item.avatar ? item.avatar : "../../static/images/groupAvatar.jpg" : item.avatar,
+              note: item.message ? item.message : item.intro,
+              time: item.createTime,
+              showBadge: true,
+              ["badge-text"]: item.adminId ? "" : item.total
             })
           };
         }),
-        l: common_vendor.p({
+        m: common_vendor.p({
           border: false
         }),
-        m: common_vendor.unref(wh) + "px"
+        n: common_vendor.unref(wh) + "px"
       };
     };
   }

@@ -22,11 +22,27 @@ const _sfc_main = {
     });
     let spaceInfo = common_vendor.ref({});
     let itemId = common_vendor.ref();
+    let friendFlag = common_vendor.ref(false);
     common_vendor.onLoad(async (option) => {
+      option.id = Number(option.id);
       try {
         itemId.value = option.id;
         if (!itemId.value)
           return;
+        let {
+          data: friendList
+        } = await utils_request.request("/user/getFriendList", "get", {
+          id: userInfo.id
+        });
+        console.log(friendList, 990);
+        let ids = friendList.data.map((item) => {
+          return item.id;
+        });
+        console.log(ids.includes(option.id));
+        if (ids.includes(option.id)) {
+          friendFlag.value = true;
+        }
+        console.log(ids, 11);
         let {
           data: res
         } = await utils_request.request("/user/getNewSpace", "get", {
@@ -36,7 +52,6 @@ const _sfc_main = {
           return utils_Toast.showMsg();
         if (res.data && res.data.result.length == 0) {
           spaceInfo.value = res.data;
-          console.log(spaceInfo.value, 444);
           flag.value = false;
         } else {
           flag.value = true;
@@ -62,9 +77,22 @@ const _sfc_main = {
           url: "/pages/editUser/editUser"
         });
       } else {
+        if (friendFlag.value) {
+          common_vendor.index.navigateTo({
+            url: `/pages/friendInfo/friendInfo?id=${itemId.value}`
+          });
+        } else {
+          utils_Toast.showMsg("你们还不是好友!");
+        }
+      }
+    }
+    function goChat() {
+      if (friendFlag.value) {
         common_vendor.index.navigateTo({
-          url: `/pages/friendInfo/friendInfo?id=${itemId.value}`
+          url: `/pages/chat/chat?id=${itemId.value}&remarked=${spaceInfo.value.remarked}`
         });
+      } else {
+        return utils_Toast.showMsg("你们还不是好友!");
       }
     }
     return (_ctx, _cache) => {
@@ -81,22 +109,23 @@ const _sfc_main = {
         f: common_vendor.t(common_vendor.unref(spaceInfo).remarked)
       } : {}, {
         g: common_vendor.t((_b = common_vendor.unref(spaceInfo)) == null ? void 0 : _b.username),
-        h: common_vendor.unref(spaceInfo) && common_vendor.unref(flag)
+        h: common_vendor.o(goChat),
+        i: common_vendor.unref(spaceInfo) && common_vendor.unref(flag)
       }, common_vendor.unref(spaceInfo) && common_vendor.unref(flag) ? common_vendor.e({
-        i: common_vendor.unref(spaceInfo) && common_vendor.unref(spaceInfo).avatar,
-        j: common_vendor.t(common_vendor.unref(spaceInfo) && common_vendor.unref(spaceInfo).nickname),
-        k: common_vendor.unref(itemId) != common_vendor.unref(userInfo).id
+        j: common_vendor.unref(spaceInfo) && common_vendor.unref(spaceInfo).avatar,
+        k: common_vendor.t(common_vendor.unref(spaceInfo) && common_vendor.unref(spaceInfo).nickname),
+        l: common_vendor.unref(itemId) != common_vendor.unref(userInfo).id
       }, common_vendor.unref(itemId) != common_vendor.unref(userInfo).id ? {
-        l: common_vendor.t(common_vendor.unref(spaceInfo).remarked)
+        m: common_vendor.t(common_vendor.unref(spaceInfo).remarked)
       } : {}, {
-        m: common_vendor.t(common_vendor.unref(utils_format.dayFormat)((_d = (_c = common_vendor.unref(spaceInfo)) == null ? void 0 : _c.result[0]) == null ? void 0 : _d.createTime))
+        n: common_vendor.t(common_vendor.unref(utils_format.dayFormat)((_d = (_c = common_vendor.unref(spaceInfo)) == null ? void 0 : _c.result[0]) == null ? void 0 : _d.createTime))
       }) : {}, {
-        n: common_vendor.unref(spaceInfo) && common_vendor.unref(flag)
+        o: common_vendor.unref(spaceInfo) && common_vendor.unref(flag)
       }, common_vendor.unref(spaceInfo) && common_vendor.unref(flag) ? common_vendor.e({
-        o: common_vendor.t((_e = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _e.title),
-        p: ((_f = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _f.imgArr) != []
+        p: common_vendor.t((_e = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _e.title),
+        q: ((_f = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _f.imgArr) != []
       }, ((_g = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _g.imgArr) != [] ? {
-        q: common_vendor.f((_h = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _h.imgArr, (img, inde, i0) => {
+        r: common_vendor.f((_h = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _h.imgArr, (img, inde, i0) => {
           return {
             a: common_vendor.o(($event) => {
               var _a2;
@@ -106,14 +135,14 @@ const _sfc_main = {
             c: inde
           };
         }),
-        r: ((_i = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _i.imgArr.length) == 1 ? "90%" : ((_j = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _j.imgArr) == 2 ? "38%" : "32%",
-        s: ((_k = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _k.imgArr.length) <= 3 ? "100%" : ((_l = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _l.imgArr.length) <= 6 ? "48%" : "32%"
+        s: ((_i = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _i.imgArr.length) == 1 ? "90%" : ((_j = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _j.imgArr) == 2 ? "38%" : "32%",
+        t: ((_k = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _k.imgArr.length) <= 3 ? "100%" : ((_l = common_vendor.unref(spaceInfo).result[0].content) == null ? void 0 : _l.imgArr.length) <= 6 ? "48%" : "32%"
       } : {}, {
-        t: common_vendor.t((_m = common_vendor.unref(spaceInfo).result[0]) == null ? void 0 : _m.position)
+        v: common_vendor.t((_m = common_vendor.unref(spaceInfo).result[0]) == null ? void 0 : _m.position)
       }) : {}, {
-        v: !common_vendor.unref(flag)
+        w: !common_vendor.unref(flag)
       }, !common_vendor.unref(flag) ? {
-        w: common_vendor.unref(codeImg)
+        x: common_vendor.unref(codeImg)
       } : {});
     };
   }

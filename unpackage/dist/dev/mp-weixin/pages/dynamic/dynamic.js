@@ -63,8 +63,7 @@ const _sfc_main = {
     }
     let wh = common_vendor.ref();
     function getHeight() {
-      const val = common_vendor.index.getSystemInfoSync();
-      wh.value = val.windowHeight - 270;
+      common_vendor.index.getSystemInfoSync();
     }
     function editContent(index) {
       if (flag.value == index) {
@@ -132,15 +131,22 @@ const _sfc_main = {
       debouncedInputChange(e.detail.value);
     };
     let judgeComment = common_vendor.ref(false);
-    function replyComments(commentInfo) {
+    function replyComments(commentInfo, replyFlag) {
       console.log(commentInfo, 123);
-      if (userPower.id == commentInfo.commentId) {
+      let uid;
+      if (replyFlag) {
+        uid = commentInfo.replyId;
+      } else {
+        uid = commentInfo.commentId;
+      }
+      console.log(uid, 88);
+      if (userPower.id == uid) {
         return false;
       } else {
         judgeComment.value = true;
-        temporary.value = commentInfo;
         foucsFlag.value = true;
         flag.value = "a";
+        temporary.value = commentInfo;
       }
     }
     async function acheveComment() {
@@ -149,13 +155,24 @@ const _sfc_main = {
       } else {
         if (judgeComment.value) {
           console.log("我是点击了回复");
-          let replyobj = {
-            spaceId: temporary.value.spaceId,
-            replyComment: comment.value,
-            commentUid: temporary.value.commentId,
-            replyId: userPower.id,
-            commentId: temporary.value.id
-          };
+          let replyobj = {};
+          if (temporary.value.replyComment) {
+            replyobj = {
+              spaceId: temporary.value.spaceId,
+              replyComment: comment.value,
+              commentUid: temporary.value.replyId,
+              replyId: userPower.id,
+              commentId: temporary.value.id
+            };
+          } else {
+            replyobj = {
+              spaceId: temporary.value.spaceId,
+              replyComment: comment.value,
+              commentUid: temporary.value.commentId,
+              replyId: userPower.id,
+              commentId: temporary.value.id
+            };
+          }
           let {
             data: res
           } = await utils_request.request("/user/replyComment", "post", replyobj);
@@ -250,10 +267,11 @@ const _sfc_main = {
                 e: common_vendor.f(com.replyList, (reply, k2, i2) => {
                   return {
                     a: common_vendor.t(reply.replyName),
-                    b: common_vendor.t(reply.replyComment)
+                    b: common_vendor.t(reply.remarked),
+                    c: common_vendor.t(reply.replyComment),
+                    d: common_vendor.o(($event) => replyComments(reply, true))
                   };
-                }),
-                f: common_vendor.t(com.remarked)
+                })
               };
             })
           }) : {}, {
