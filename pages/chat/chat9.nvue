@@ -1,0 +1,13 @@
+<template>
+	<view>
+		<text>哈哈哈</text>
+	</view>
+</template>
+
+<script setup>
+
+</script>
+
+<style>
+
+</style>
