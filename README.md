@@ -41,7 +41,7 @@
 > 		// #ifdef H5
 > 		wh.value = val.windowHeight - 120;
 > 		// #endif
-> 							
+> 									
 > 	}
 
 ## dayjs问题
@@ -71,7 +71,7 @@
 > 所以需要把初始路径改为局域网ip地址
 
 ```js
-const BASE_URL = 'http://192.168.242.20:3000'
+const BASE_URL = 'http://********:3000'
 ```
 
 ## uni.showloading于Toast兼容性问题
@@ -113,7 +113,7 @@ const md5 = require("md5");
     Keys: "lw",
     // token 的有效期
     times: "10h",
-    mainUrl: "http://192.168.242.20:3000",
+    mainUrl: "http://**:3000",
   };
   ```
 

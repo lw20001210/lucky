@@ -36,7 +36,7 @@
 						<view class="imgs" v-if="item.content.imgArr.length!=0">
 							<template v-for="(img,inde) in item?.content?.imgArr" :key="inde">
 								<image @click="preView(inde,item?.content.imgArr)" :src="img" :style="{ 
-					      width: item?.content.imgArr.length == 1 ? '90%' : (item?.content.imgArr.length == 2 ? '38%' : '32%'),
+					      width: item?.content.imgArr.length == 1 ? '90%' : (item?.content.imgArr.length == 2 ? '48%' : '32%'),
 					   height: item?.content.imgArr.length <= 3 ? '100%' : (item?.content.imgArr.length <= 6 ? '48%' : '32%'),
 					  }">
 								</image>
