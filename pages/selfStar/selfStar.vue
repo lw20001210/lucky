@@ -163,7 +163,7 @@
 	let totalList = ref([])
 
 	function goSendDynamic() {
-		uni.navigateTo({
+		uni.redirectTo({
 			url: '/pages/sendDynamic/sendDynamic'
 		});
 	}
