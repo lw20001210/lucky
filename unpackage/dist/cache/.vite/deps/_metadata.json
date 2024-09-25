@@ -1,0 +1,46 @@
+{
+  "hash": "0e496088",
+  "configHash": "c07f90be",
+  "lockfileHash": "ecc48293",
+  "browserHash": "aecb1115",
+  "optimized": {
+    "crypto-js": {
+      "src": "../../../../../node_modules/crypto-js/index.js",
+      "file": "crypto-js.js",
+      "fileHash": "b5229c23",
+      "needsInterop": true
+    },
+    "@hyoga/uni-socket.io": {
+      "src": "../../../../../node_modules/@hyoga/uni-socket.io/dist/uni-socket.io.js",
+      "file": "@hyoga_uni-socket__io.js",
+      "fileHash": "6bbf88c1",
+      "needsInterop": true
+    },
+    "dayjs": {
+      "src": "../../../../../node_modules/dayjs/dayjs.min.js",
+      "file": "dayjs.js",
+      "fileHash": "9301b526",
+      "needsInterop": true
+    },
+    "dayjs/plugin/relativeTime": {
+      "src": "../../../../../node_modules/dayjs/plugin/relativeTime.js",
+      "file": "dayjs_plugin_relativeTime.js",
+      "fileHash": "82e998dd",
+      "needsInterop": true
+    },
+    "dayjs/locale/zh-cn": {
+      "src": "../../../../../node_modules/dayjs/locale/zh-cn.js",
+      "file": "dayjs_locale_zh-cn.js",
+      "fileHash": "9ebcd9df",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-SZBW35QJ": {
+      "file": "chunk-SZBW35QJ.js"
+    },
+    "chunk-TDUMLE5V": {
+      "file": "chunk-TDUMLE5V.js"
+    }
+  }
+}

@@ -146,7 +146,14 @@
 				"enablePullDownRefresh": false,
 				"backgroundColorBottom": "f5f5f5"
 			}
-
+		},
+		{
+			"path": "pages/chat/chat9",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"backgroundColorBottom": "f5f5f5"
+			}
 		},
 		{
 			"path": "pages/videoCall/videoCall",

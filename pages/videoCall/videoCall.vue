@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
 		<live-pusher id='livePusher' :class="{'video_box':isSwitch}" ref="livePusher" class="livePusher"
-			:url="'rtmp://192.168.241.20/live/' + fromUid " mode="SD" :muted="true"
+			:url="'rtmp://192.168.136.20/live/video' " mode="SD" :muted="true"
 			:style="{ width: (!isSwitch ? windowWidth + 'px' : '175px'), height: (!isSwitch ? windowHeight + 'px' : '500rpx') }"
 			:enable-camera="enableCamera" :auto-focus="true" :beauty="1" whiteness="2" aspect="9:16"
 			audio-quality="high" @statechange="statechange" @netstatus="netstatus" @error="error"></live-pusher>
 		<!-- 远程视频 -->
 		<view :class="{'video_box':!isSwitch}">
-			<video @click="isSwitch=true" :src="`http://192.168.241.20:8000/live/${toUid}.flv`" autoplay="true"
+			<video @click="isSwitch=true" :src="`http://192.168.136.20:8000/live/video.flv`" autoplay="true"
 				controls="false" object-fit="fill" muted="false"
 				:style="{width: (isSwitch?windowWidth : '175') + 'px',height: isSwitch? (windowHeight  + 'px') : '500rpx'}"></video>
 		</view>
@@ -68,25 +68,31 @@
 	let type = ref(''); //消息类型
 	let isSwitch = ref(false) //远程是否为大窗口，
 	let enableCamera = ref(true); //是否开启摄像头
+	let livePusher = ref(null)
 	const statusInfo = statusStore()
 	onLoad((option) => {
 		let sys = uni.getSystemInfoSync();
 		windowWidth.value = sys.windowWidth;
 		windowHeight.value = sys.windowHeight;
 		statusNav.value = sys.statusBarHeight
+		// console.log(livePusher.value);
 		try {
 			fromUid.value = option.fromUid;
 			toUid.value = option.toUid;
 			avatar.value = statusInfo.avatar;
 			type.value = option.type;
-			//context.value = uni.createLivePusherContext("livePusher", this);//vue2
+			// context.value = uni.createLivePusherContext("livePusher", livePusher.value);//vue2
 			context.value = uni.createLivePusherContext('livePusher', getCurrentInstance().proxy); //vue3
 			// console.log(context.value, 8);
 		} catch (error) {
 			console.error('Error in onLoad:', error);
 		}
 	});
-
+	onShow(()=>{
+		console.log(context.value,'6');
+		startPreview()
+		start()
+	})
 	function handUp() {
 		stopPreview()
 		uni.navigateBack()
@@ -105,10 +111,15 @@
 	}
 	//开始推流
 	function start() {
+		console.log('开始推流');
 		context.value.start({
 			success: (a) => {
 				console.log("livePusher.start:" + JSON.stringify(a));
-			}
+			},
+		complete(err){
+			console.log('失败',err);
+		}
+			
 		})
 	}
 	//关闭推流
